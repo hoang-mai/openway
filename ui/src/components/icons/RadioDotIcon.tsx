@@ -1,0 +1,7 @@
+export default function RadioDotIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 10 10" className={className} fill="currentColor" aria-hidden="true">
+      <circle cx="5" cy="5" r="5" />
+    </svg>
+  );
+}

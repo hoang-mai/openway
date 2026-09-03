@@ -1,0 +1,465 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #f4f8fb;
+  --color-primary-100: #e9f0f5;
+  --color-primary-200: #cedfe9;
+  --color-primary-300: #a2c4d7;
+  --color-primary-400: #6ba1bd;
+  --color-primary-500: #4e8aa9;
+  --color-primary-600: #3c6f8d;
+  --color-primary-700: #325972;
+  --color-primary-800: #2c4c60;
+  --color-primary-900: #294151;
+  --color-primary-950: #1b2a36;
+
+  --color-secondary-50: #faf6ec;
+  --color-secondary-100: #f4e8cd;
+  --color-secondary-200: #ead09e;
+  --color-secondary-300: #deb066;
+  --color-secondary-400: #d4943e;
+  --color-secondary-500: #c47e2e;
+  --color-secondary-600: #a96125;
+  --color-secondary-700: #874621;
+  --color-secondary-800: #713a22;
+  --color-secondary-900: #613222;
+  --color-secondary-950: #381810;
+
+  --color-neutral-white: #fcfdfd;
+  --color-neutral-50: #f9fbfb;
+  --color-neutral-100: #f3f5f6;
+  --color-neutral-200: #e5e9eb;
+  --color-neutral-300: #d2d8da;
+  --color-neutral-400: #9daaae;
+  --color-neutral-500: #7d8b90;
+  --color-neutral-600: #4c5e62;
+  --color-neutral-700: #394a4f;
+  --color-neutral-800: #203236;
+  --color-neutral-900: #122026;
+  --color-neutral-950: #040d11;
+  --color-neutral-black: #020709;
+
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
+
+  --color-success-50: #ecfdf6;
+  --color-success-100: #d2f9e6;
+  --color-success-200: #a9f1d2;
+  --color-success-300: #71e4ba;
+  --color-success-400: #38cf9d;
+  --color-success-500: #12a176;
+  --color-success-600: #09926c;
+  --color-success-700: #077559;
+  --color-success-800: #085d48;
+  --color-success-900: #084c3c;
+  --color-success-950: #032b23;
+
+  --color-warning-50: #fefce8;
+  --color-warning-100: #fef9c3;
+  --color-warning-200: #fef08a;
+  --color-warning-300: #fde047;
+  --color-warning-400: #facc15;
+  --color-warning-500: #eab308;
+  --color-warning-600: #ca8a04;
+  --color-warning-700: #a16207;
+  --color-warning-800: #854d0e;
+  --color-warning-900: #713f12;
+  --color-warning-950: #422006;
+
+  --color-info-50: #f0fafb;
+  --color-info-100: #d9f1f4;
+  --color-info-200: #b7e3ea;
+  --color-info-300: #85cedb;
+  --color-info-400: #4cafc4;
+  --color-info-500: #349eb6;
+  --color-info-600: #2b788f;
+  --color-info-700: #296275;
+  --color-info-800: #295161;
+  --color-info-900: #264553;
+  --color-info-950: #142c38;
+}
+
+:root {
+  /* Primary Palette (Steel Blue) */
+  --color-primary-50: #f4f8fb;
+  --color-primary-100: #e9f0f5;
+  --color-primary-200: #cedfe9;
+  --color-primary-300: #a2c4d7;
+  --color-primary-400: #6ba1bd;
+  --color-primary-500: #4e8aa9;
+  --color-primary-600: #3c6f8d;
+  --color-primary-700: #325972;
+  --color-primary-800: #2c4c60;
+  --color-primary-900: #294151;
+  --color-primary-950: #1b2a36;
+
+  /* Secondary Palette (Warm Bronze / Gold Amber) */
+  --color-secondary-50: #faf6ec;
+  --color-secondary-100: #f4e8cd;
+  --color-secondary-200: #ead09e;
+  --color-secondary-300: #deb066;
+  --color-secondary-400: #d4943e;
+  --color-secondary-500: #c47e2e;
+  --color-secondary-600: #a96125;
+  --color-secondary-700: #874621;
+  --color-secondary-800: #713a22;
+  --color-secondary-900: #613222;
+  --color-secondary-950: #381810;
+
+  /* Neutral Palette (Slate Grey Neutral) */
+  --color-neutral-white: #fcfdfd;
+  --color-neutral-50: #f9fbfb;
+  --color-neutral-100: #f3f5f6;
+  --color-neutral-200: #e5e9eb;
+  --color-neutral-300: #d2d8da;
+  --color-neutral-400: #9daaae;
+  --color-neutral-500: #7d8b90;
+  --color-neutral-600: #4c5e62;
+  --color-neutral-700: #394a4f;
+  --color-neutral-800: #203236;
+  --color-neutral-900: #122026;
+  --color-neutral-950: #040d11;
+  --color-neutral-black: #020709;
+
+  /* Error Palette (Vibrant Red) */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
+
+  /* Success Palette (Emerald Green) */
+  --color-success-50: #ecfdf6;
+  --color-success-100: #d2f9e6;
+  --color-success-200: #a9f1d2;
+  --color-success-300: #71e4ba;
+  --color-success-400: #38cf9d;
+  --color-success-500: #12a176;
+  --color-success-600: #09926c;
+  --color-success-700: #077559;
+  --color-success-800: #085d48;
+  --color-success-900: #084c3c;
+  --color-success-950: #032b23;
+
+  /* Warning Palette (Yellow / Amber) */
+  --color-warning-50: #fefce8;
+  --color-warning-100: #fef9c3;
+  --color-warning-200: #fef08a;
+  --color-warning-300: #fde047;
+  --color-warning-400: #facc15;
+  --color-warning-500: #eab308;
+  --color-warning-600: #ca8a04;
+  --color-warning-700: #a16207;
+  --color-warning-800: #854d0e;
+  --color-warning-900: #713f12;
+  --color-warning-950: #422006;
+
+  /* Info Palette (Teal / Cyan Info) */
+  --color-info-50: #f0fafb;
+  --color-info-100: #d9f1f4;
+  --color-info-200: #b7e3ea;
+  --color-info-300: #85cedb;
+  --color-info-400: #4cafc4;
+  --color-info-500: #349eb6;
+  --color-info-600: #2b788f;
+  --color-info-700: #296275;
+  --color-info-800: #295161;
+  --color-info-900: #264553;
+  --color-info-950: #142c38;
+}
+
+@keyframes errorSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes errorSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.animate-error-in {
+  animation: errorSlideIn 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-error-out {
+  animation: errorSlideOut 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@keyframes alertSlideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes alertSlideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes alertSlideOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes alertSlideOutTop {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 200px;
+    margin-bottom: 8px;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.96);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@keyframes alertSlideOutBottom {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 200px;
+    margin-bottom: 8px;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.animate-alert-in-top {
+  animation: alertSlideInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-alert-in-bottom {
+  animation: alertSlideInUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-alert-out-top {
+  animation: alertSlideOutTop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-alert-out-bottom {
+  animation: alertSlideOutBottom 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-alert-out {
+  animation: alertSlideOutTop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Confirm Dialog Animations */
+@keyframes confirmBackdropFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes confirmBackdropFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes confirmZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes confirmZoomOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.94) translateY(6px);
+  }
+}
+
+.animate-confirm-backdrop-in {
+  animation: confirmBackdropFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-confirm-backdrop-out {
+  animation: confirmBackdropFadeOut 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-confirm-in {
+  animation: confirmZoomIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-confirm-out {
+  animation: confirmZoomOut 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Modal Dialog Animations */
+@keyframes modalBackdropFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modalBackdropFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes modalZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalZoomOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95) translateY(6px);
+  }
+}
+
+.animate-modal-backdrop-in {
+  animation: modalBackdropFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-backdrop-out {
+  animation: modalBackdropFadeOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-in {
+  animation: modalZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-out {
+  animation: modalZoomOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Reset native HTML dialog backdrop to prevent browser grey flash */
+dialog::backdrop {
+  background: transparent;
+}
+
+/* Custom Thin Modern Scrollbars for UI components */
+.ui-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+}
+
+.ui-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.ui-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ui-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.4);
+  border-radius: 9999px;
+}
+
+.ui-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(107, 114, 128, 0.7);
+}
+
+/* ==================== Skeleton Wave Animation ==================== */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% -200%;
+  }
+  100% {
+    background-position: 200% 200%;
+  }
+}
+
+.skeleton-wave {
+  background: linear-gradient(
+    135deg,
+    var(--color-neutral-200) 25%,
+    var(--color-neutral-100) 50%,
+    var(--color-neutral-200) 75%
+  );
+  background-size: 200% 200%;
+  animation: skeleton-shimmer 2.2s ease-in-out infinite;
+}

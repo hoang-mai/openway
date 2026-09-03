@@ -1,0 +1,70 @@
+{
+  "name": "@openway/ui",
+  "version": "1.0.0",
+  "private": false,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "pnpm build",
+    "lint": "eslint",
+    "check-types": "tsc --noEmit",
+    "doctor": "pnpm dlx react-doctor@latest",
+    "cypress:open": "cypress open --component",
+    "cypress:run": "cypress run --component"
+  },
+  "peerDependencies": {
+    "next": ">=16.0.0",
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "tailwindcss": ">=4.0.0"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/modifiers": "^9.0.0",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@floating-ui/react": "^0.27.20",
+    "@radix-ui/react-slider": "^1.4.7",
+    "@tanstack/match-sorter-utils": "^9.1.2",
+    "@tanstack/react-table": "^9.2.4",
+    "react-dropzone": "^20.1.1",
+    "react-easy-crop": "^6.2.3",
+    "react-textarea-autosize": "^8.5.9",
+    "sonner": "^2.0.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "cypress": "^15.21.0",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "16.3.4",
+    "eslint-config-prettier": "^10.1.8",
+    "next": "16.3.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.3.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.2"
+  }
+}

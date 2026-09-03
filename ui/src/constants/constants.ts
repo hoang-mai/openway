@@ -1,0 +1,13 @@
+export const DEFAULT_DEBOUNCE_DELAY = 300;
+
+export const DEFAULT_Z_INDEX = {
+  BASE: 0,
+  STICKY: 10,
+  DROPDOWN: 50,
+  POPOVER: 50,
+  SELECT: 50,
+  PICKER: 50,
+  TOOLTIP: 60,
+  SELECT_FILTER: 100,
+  MAX: 99999,
+} as const;
