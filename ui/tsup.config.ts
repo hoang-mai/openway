@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/query.ts"],
   format: ["esm", "cjs"],
   dts: true,
   clean: true,
@@ -15,6 +15,7 @@ export default defineConfig({
     "next/image",
     "next/link",
     "next/navigation",
+    "@tanstack/react-query",
   ],
   banner: {
     js: '"use client";',

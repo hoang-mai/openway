@@ -24,7 +24,7 @@ import ResetIcon from "@/components/icons/ResetIcon";
 import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
-import { radiusConfig, menuRadiusConfig, badgeRadiusMap } from "./constants";
+import { menuRadiusConfig } from "./constants";
 
 export interface SelectMenuFilterProps<TFilters extends Record<string, unknown> = Record<string, unknown>> {
   filters: SelectFilterField<unknown>[];
@@ -76,7 +76,6 @@ function FilterBadgeChip({
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
 
-  const badgeRadius = getSafeConfig(radius, badgeRadiusMap, "md");
   const popoverRadius = getSafeConfig(radius, menuRadiusConfig, "md");
 
   const click = useClick(context);
@@ -378,7 +377,6 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
 
   const activeFieldNameSet = useMemo(() => new Set(activeFieldNames), [activeFieldNames]);
   const hasAnyFilter = activeFieldNames.length > 0;
-  const buttonRadius = getSafeConfig(radius, radiusConfig, "md");
   const dropdownRadius = getSafeConfig(radius, menuRadiusConfig, "md");
 
   if (!filters || filters.length === 0) return null;

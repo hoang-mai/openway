@@ -36,6 +36,7 @@ export interface SelectMenuProps<TData = unknown, TFilters extends Record<string
   emptyProps?: Partial<EmptyProps>;
   menuHeader?: ReactNode;
   menuFooter?: ReactNode;
+  listFooter?: ReactNode;
   menuFilters?: SelectFilterField<unknown>[];
   menuFilterValues?: Partial<TFilters>;
   menuFilterLayout?: SelectFilterLayout;
@@ -74,6 +75,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
   emptyProps,
   menuHeader,
   menuFooter,
+  listFooter,
   menuFilters,
   menuFilterValues = DEFAULT_MENU_FILTER_VALUES as Partial<TFilters>,
   menuFilterLayout = "vertical",
@@ -157,32 +159,35 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
             </div>
           )
         ) : (
-          (() => {
-            const selectedValuesSet = new Set(selectedValues);
-            return options.map((option, index) => {
-              const isSelected = selectedValuesSet.has(option.value);
-              const isActive = activeIndex === index;
+          <>
+            {(() => {
+              const selectedValuesSet = new Set(selectedValues);
+              return options.map((option, index) => {
+                const isSelected = selectedValuesSet.has(option.value);
+                const isActive = activeIndex === index;
 
-              return (
-                <SelectOption
-                  key={String(option.value)}
-                  ref={(node) => {
-                    listElementsRef.current[index] = node;
-                  }}
-                  option={option}
-                  isSelected={isSelected}
-                  isActive={isActive}
-                  size={size}
-                  color={color}
-                  radius={radius}
-                  disabled={option.disabled}
-                  renderOption={renderOption}
-                  onClick={() => onSelectOption(option)}
-                  onMouseEnter={() => onOptionMouseEnter(index)}
-                />
-              );
-            });
-          })()
+                return (
+                  <SelectOption
+                    key={String(option.value)}
+                    ref={(node) => {
+                      listElementsRef.current[index] = node;
+                    }}
+                    option={option}
+                    isSelected={isSelected}
+                    isActive={isActive}
+                    size={size}
+                    color={color}
+                    radius={radius}
+                    disabled={option.disabled}
+                    renderOption={renderOption}
+                    onClick={() => onSelectOption(option)}
+                    onMouseEnter={() => onOptionMouseEnter(index)}
+                  />
+                );
+              });
+            })()}
+            {listFooter}
+          </>
         )}
       </div>
 

@@ -128,6 +128,8 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   menuHeader?: ReactNode;
   /** Nội dung tùy biến dưới đáy menu */
   menuFooter?: ReactNode;
+  /** Nội dung tùy biến ở đáy danh sách tùy chọn bên trong vùng cuộn (ví dụ: Sentinel/Skeleton/Spinner khi phân trang Infinite Scroll) */
+  listFooter?: ReactNode;
 
   // ==================== SERVER SEARCH CALLBACK & DEBOUNCE ====================
   /** Callback được gọi sau khi debounce khi search query hoặc menu filters thay đổi (ở Server mode) */

@@ -162,7 +162,29 @@ export default function Page() {
 
 ---
 
-## 4. Danh sách các Token màu sắc được hỗ trợ
+## 4. Tài liệu Chi tiết & Tích hợp Antigravity AI (`docs/`)
+
+Toàn bộ tài liệu chi tiết của 32 components và các hooks được đóng gói sẵn trong thư mục `node_modules/@openway/ui/docs/`:
+
+- **[Tài liệu Trung tâm (Master Guide)](./docs/README.md)**: Danh mục toàn bộ components và hướng dẫn chi tiết.
+- **[Antigravity Agent Guide](./docs/AGENTS.md)**: Chỉ dẫn chuyên biệt cho Antigravity AI.
+- **[Antigravity Skill](./docs/SKILL.md)**: Định dạng Skill chuẩn của Antigravity (`openway-ui`).
+- **[Thư mục Components](./docs/components/)**: 32 tài liệu hướng dẫn và bảng props chi tiết của từng component.
+- **[Thư mục Hooks](./docs/hooks/)**: Tài liệu `useInfiniteScroll`, `useTableQuery`, `useSelectInfiniteQuery`, `useDebounce`.
+
+---
+
+## 5. Tích hợp TanStack Query v5 (`@openway/ui/query`)
+
+Dành cho các tính năng phân trang máy chủ (Server-side Pagination), sắp xếp, lọc và cuộn vô tận:
+
+```tsx
+import { useTableQuery, useSelectInfiniteQuery } from "@openway/ui/query";
+```
+
+---
+
+## 6. Danh sách các Token màu sắc được hỗ trợ
 
 | Tên Token | Mô tả | Các sắc độ khuyên dùng |
 | :--- | :--- | :--- |
@@ -176,6 +198,6 @@ export default function Page() {
 
 ---
 
-## 5. Giấy phép
+## 7. Giấy phép
 
 Phát hành dưới giấy phép [MIT](LICENSE).

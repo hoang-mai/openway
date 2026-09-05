@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import type { Row } from "@tanstack/react-table";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Table,
   TableHeader,
@@ -15,6 +16,7 @@ import {
   type TableFilterDef,
   type ColumnFiltersState,
 } from "./index";
+import { useTableQuery, type TableQueryParams } from "../../query";
 import { Button } from "../button";
 
 interface User {
@@ -1169,6 +1171,131 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
     cy.contains("label", "Email").click();
     cy.get("[data-testid='full-featured-table-section']").within(() => {
       cy.contains("th", "Email").should("exist");
+    });
+  });
+
+  it("verifies TanStack Query adapter hook (useTableQuery) integrates seamlessly with DataTable", () => {
+    interface ServerUser {
+      id: string;
+      name: string;
+      email: string;
+      role: string;
+    }
+
+    const mockServerDb: ServerUser[] = [
+      { id: "1", name: "Nguyễn Văn A", email: "vana@example.com", role: "Admin" },
+      { id: "2", name: "Trần Thị B", email: "thib@example.com", role: "Editor" },
+      { id: "3", name: "Lê Văn C", email: "vanc@example.com", role: "Viewer" },
+      { id: "4", name: "Phạm Minh D", email: "minhd@example.com", role: "Admin" },
+      { id: "5", name: "Hoàng Tuấn E", email: "tuane@example.com", role: "Editor" },
+      { id: "6", name: "Đỗ Mai F", email: "maif@example.com", role: "Viewer" },
+      { id: "7", name: "Vũ Hải G", email: "haig@example.com", role: "Admin" },
+      { id: "8", name: "Bùi Kiên H", email: "kienh@example.com", role: "Editor" },
+    ];
+
+    function TableQueryInner() {
+      const helper = createTableColumnHelper<ServerUser>();
+      const columns = useMemo(
+        () => [
+          helper.accessor("id", { header: "ID" }),
+          helper.accessor("name", { header: "Họ và tên" }),
+          helper.accessor("email", { header: "Email" }),
+          helper.accessor("role", { header: "Vai trò" }),
+        ],
+        [helper]
+      );
+
+      const { tableProps, queryParams, resetAll } = useTableQuery<
+        ServerUser,
+        { items: ServerUser[]; total: number }
+      >({
+        queryKey: ["test-users"],
+        initialPagination: { pageSize: 3 },
+        queryFn: async (params: TableQueryParams) => {
+          let result = [...mockServerDb];
+          if (params.filters?.role && Array.isArray(params.filters.role) && params.filters.role.length > 0) {
+            result = result.filter((u) => (params.filters?.role as string[]).includes(u.role));
+          }
+          const total = result.length;
+          const start = (params.page - 1) * params.pageSize;
+          const paged = result.slice(start, start + params.pageSize);
+          return { items: paged, total };
+        },
+      });
+
+      return (
+        <div data-testid="table-query-section" className="p-4 bg-white dark:bg-neutral-900 rounded-lg">
+          <div className="flex justify-between items-center mb-2">
+            <span data-testid="query-page-display">Trang: {queryParams.page}</span>
+            <button data-testid="reset-query-btn" onClick={resetAll}>
+              Reset Query
+            </button>
+          </div>
+          <DataTable
+            columns={columns}
+            filters={[
+              {
+                name: "role",
+                label: "Vai trò",
+                type: "select",
+                options: [
+                  { label: "Admin", value: "Admin" },
+                  { label: "Editor", value: "Editor" },
+                ],
+              },
+            ]}
+            {...tableProps}
+          />
+        </div>
+      );
+    }
+
+    function TableQueryDemo() {
+      const queryClient = useMemo(
+        () =>
+          new QueryClient({
+            defaultOptions: {
+              queries: {
+                retry: false,
+              },
+            },
+          }),
+        []
+      );
+
+      return (
+        <QueryClientProvider client={queryClient}>
+          <TableQueryInner />
+        </QueryClientProvider>
+      );
+    }
+
+    cy.mount(<TableQueryDemo />);
+
+    // Kiểm tra dữ liệu khởi tạo (trang 1 có 3 dòng trên tổng số 8 dòng)
+    cy.get("[data-testid='table-query-section']").within(() => {
+      cy.get("tbody tr").should("have.length", 3);
+      cy.contains("span", "Tổng 8 dòng").should("be.visible");
+      cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 1");
+
+      // Chuyển sang trang 2
+      cy.get("button[aria-label='Trang tiếp theo']").click();
+      cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 2");
+      cy.get("tbody tr").should("have.length", 3);
+
+      // Tìm kiếm toàn bảng lọc client-side trên trang hiện tại (Hoàng Tuấn E)
+      cy.get("[data-testid='table-search-input']").type("Hoàng");
+      cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 2");
+      cy.get("tbody tr").should("have.length", 1);
+      cy.contains("td", "Hoàng Tuấn E").should("be.visible");
+
+      // Xóa từ khóa search
+      cy.get("[data-testid='table-clear-search-button']").click();
+      cy.get("tbody tr").should("have.length", 3);
+
+      // Reset toàn bộ query
+      cy.get("[data-testid='reset-query-btn']").click();
+      cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 1");
     });
   });
 });

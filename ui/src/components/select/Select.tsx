@@ -47,6 +47,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   onMenuFilterChange,
   menuHeader,
   menuFooter,
+  listFooter,
   onSearch,
   debounceMs = 300,
   filterFn,
@@ -260,6 +261,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
           emptyProps={emptyProps}
           menuHeader={menuHeader}
           menuFooter={menuFooter}
+          listFooter={listFooter}
           menuFilters={menuFilters}
           menuFilterValues={currentFilters}
           menuFilterLayout={menuFilterLayout}

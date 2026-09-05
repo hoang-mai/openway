@@ -281,8 +281,13 @@ export {
   useDebounce,
   useDebouncedCallback,
   useFloatingTransition,
+  useInfiniteScroll,
 } from "./hooks";
-export type { UseFloatingTransitionOptions } from "./hooks";
+export type {
+  UseFloatingTransitionOptions,
+  UseInfiniteScrollOptions,
+  UseInfiniteScrollReturn,
+} from "./hooks";
 
 // Utils
 export { getSafeConfig, rankAndFilterItems } from "./utils/function";

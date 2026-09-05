@@ -50,6 +50,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   onMenuFilterChange,
   menuHeader,
   menuFooter,
+  listFooter,
   onSearch,
   debounceMs = 300,
   filterFn,
@@ -319,6 +320,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
           emptyProps={emptyProps}
           menuHeader={menuHeader}
           menuFooter={menuFooter}
+          listFooter={listFooter}
           menuFilters={menuFilters}
           menuFilterValues={currentFilters}
           menuFilterLayout={menuFilterLayout}

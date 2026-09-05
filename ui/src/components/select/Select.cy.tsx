@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Select, MultiSelect } from "./index";
+import { useSelectInfiniteQuery } from "../../query";
 import {
   SelectOptionItem,
   SelectFilterField,
@@ -911,5 +913,115 @@ describe("<Select /> Component Tests (Single Mount Harness)", () => {
 
     // CRITICAL: Previously selected option 'Emily Johnson' is STILL rendered as Badge in trigger!
     cy.get("#section-server-search").contains("Emily Johnson").should("be.visible");
+  });
+});
+
+// ==========================================
+// TEST SUITE: useSelectInfiniteQuery Adapter
+// ==========================================
+describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {
+  interface MockProduct {
+    id: number;
+    title: string;
+  }
+
+  const mockProductsPage1: MockProduct[] = Array.from({ length: 10 }, (_, i) => ({
+    id: i + 1,
+    title: `Sản phẩm A${i + 1}`,
+  }));
+
+  const mockProductsPage2: MockProduct[] = Array.from({ length: 5 }, (_, i) => ({
+    id: i + 11,
+    title: `Sản phẩm B${i + 11}`,
+  }));
+
+  const InfiniteSelectTestComponent = () => {
+    const [selectedVal, setSelectedVal] = useState<string | number | null>(null);
+
+    const { selectProps, query, search } = useSelectInfiniteQuery<
+      MockProduct,
+      { items: MockProduct[]; nextPage?: number },
+      number
+    >({
+      queryKey: ["test-infinite-products"],
+      queryFn: async ({ pageParam, search }) => {
+        if (search) {
+          return {
+            items: [{ id: 99, title: `Kết quả: ${search}` }],
+            nextPage: undefined,
+          };
+        }
+        if (pageParam === 1) {
+          return { items: mockProductsPage1, nextPage: 2 };
+        }
+        return { items: mockProductsPage2, nextPage: undefined };
+      },
+      initialPageParam: 1,
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+      mapOption: (item) => {
+        const prod = item as MockProduct;
+        return { value: prod.id, label: prod.title, data: prod };
+      },
+      debounceMs: 50,
+      endMessage: "Đã tải hết sản phẩm",
+    });
+
+    return (
+      <div className="p-8 max-w-md">
+        <div data-testid="search-display">Search: {search}</div>
+        <div data-testid="fetching-next-display">
+          FetchingNext: {query.isFetchingNextPage ? "yes" : "no"}
+        </div>
+        <Select
+          id="infinite-select"
+          label="Sản phẩm Infinite Scroll"
+          placeholder="Chọn sản phẩm..."
+          searchable
+          portal={false}
+          maxMenuHeight={160}
+          value={selectedVal}
+          onChange={(val) => setSelectedVal(val)}
+          {...selectProps}
+        />
+      </div>
+    );
+  };
+
+  it("loads first page, fetches next page on demand, and searches with debounce", () => {
+    const testClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+
+    cy.mount(
+      <QueryClientProvider client={testClient}>
+        <InfiniteSelectTestComponent />
+      </QueryClientProvider>
+    );
+
+    // 1. Initial Page 1: first items visible, Page 2 items not yet loaded
+    cy.get("#infinite-select").click();
+    cy.get("#infinite-select [role='listbox']").should("be.visible");
+    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("be.visible");
+    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").should("not.exist");
+
+    // 2. Scroll to bottom of listbox to trigger infinite scroll
+    cy.get("#infinite-select .overflow-y-auto").scrollTo("bottom");
+    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").should("exist");
+    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B15").should("exist");
+    cy.get("#infinite-select [role='listbox']").contains("Đã tải hết sản phẩm").should("exist");
+
+    // 3. Select an option from Page 2
+    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").click({ force: true });
+    cy.get("#infinite-select").contains("Sản phẩm B11").should("be.visible");
+
+    // 4. Server Search with debounce
+    cy.get("#infinite-select").click();
+    cy.get("input[aria-label='Search']").type("Laptop", { force: true });
+    cy.get("#infinite-select [role='listbox']").contains("Kết quả: Laptop").should("be.visible");
+    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("not.exist");
   });
 });
