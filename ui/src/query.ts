@@ -11,3 +11,12 @@ export {
   type UseSelectInfiniteQueryOptions,
   type UseSelectInfiniteQueryReturn,
 } from "./components/select/hooks/useSelectInfiniteQuery";
+
+export {
+  useMutationApp,
+  extractErrorMessage,
+  type InvalidateQueryTarget,
+  type UseMutationAppToastOptions,
+  type UseMutationAppOptions,
+  type UseMutationAppReturn,
+} from "./hooks/useMutationApp";
