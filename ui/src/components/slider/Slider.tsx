@@ -144,7 +144,7 @@ export default function Slider({
 
     const labelColorStyle = hasError
       ? "text-error-600 font-medium"
-      : "text-neutral-900 dark:text-neutral-100";
+      : "text-neutral-900";
 
     return (
       <div className="flex items-center justify-between gap-2 mb-1.5 select-none">
@@ -165,7 +165,7 @@ export default function Slider({
         )}
         {showValue && (
           <span
-            className={`select-none text-neutral-700 dark:text-neutral-300 ${currentSize.value} ${valueClassName}`}
+            className={`select-none text-neutral-700 ${currentSize.value} ${valueClassName}`}
             aria-hidden="true"
           >
             {displayText}
@@ -198,7 +198,7 @@ export default function Slider({
         {/* Start Content */}
         {startContent && (
           <div
-            className="inline-flex shrink-0 items-center justify-center select-none text-neutral-500 dark:text-neutral-400"
+            className="inline-flex shrink-0 items-center justify-center select-none text-neutral-500"
             aria-hidden="true"
           >
             {startContent}
@@ -292,7 +292,7 @@ export default function Slider({
         {/* End Content */}
         {endContent && (
           <div
-            className="inline-flex shrink-0 items-center justify-center select-none text-neutral-500 dark:text-neutral-400"
+            className="inline-flex shrink-0 items-center justify-center select-none text-neutral-500"
             aria-hidden="true"
           >
             {endContent}

@@ -189,10 +189,10 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
   const placements: LabelPlacement[] = ["top", "left", "floating"];
 
   return (
-    <div className="p-8 space-y-12 max-w-6xl mx-auto bg-neutral-50 dark:bg-zinc-950 text-neutral-900 dark:text-zinc-100 min-h-screen">
+    <div className="p-8 space-y-12 max-w-6xl mx-auto bg-neutral-50 text-neutral-900 min-h-screen">
       {/* HEADER */}
-      <header className="border-b border-neutral-200 dark:border-zinc-800 pb-5">
-        <h1 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
+      <header className="border-b border-neutral-200 pb-5">
+        <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">
           Select Component Showcase & Interactive Playground
         </h1>
         <p className="text-sm text-neutral-500 mt-1">

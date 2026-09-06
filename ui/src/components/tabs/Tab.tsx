@@ -132,7 +132,7 @@ export default function Tab({
 
         {badge !== undefined && badge !== null && (
           <span
-            className={`inline-flex items-center justify-center font-medium rounded-full bg-neutral-200/80 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 transition-colors duration-200 ${currentSize.badge}`}
+            className={`inline-flex items-center justify-center font-medium rounded-full bg-neutral-200/80 text-neutral-700 transition-colors duration-200 ${currentSize.badge}`}
           >
             {badge}
           </span>
@@ -155,7 +155,7 @@ export default function Tab({
           disabled={isDisabled}
           tabIndex={isActive ? 0 : -1}
           onClick={handleClose}
-          className={`shrink-0 cursor-pointer rounded-full hover:bg-neutral-200/80 dark:hover:bg-neutral-700 text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 transition-colors inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500 mr-2 ${currentSize.closeBtn}`}
+          className={`shrink-0 cursor-pointer rounded-full hover:bg-neutral-200/80 text-neutral-400 hover:text-neutral-700 transition-colors inline-flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500 mr-2 ${currentSize.closeBtn}`}
         >
           <CloseIcon className="size-full pointer-events-none" />
         </button>

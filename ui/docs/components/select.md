@@ -187,10 +187,10 @@ export function ServerInfiniteSelectExample() {
         className="w-7 h-7 rounded-full object-cover"
       />
       <div>
-        <div className="font-medium text-sm text-neutral-800 dark:text-neutral-100">
+        <div className="font-medium text-sm text-neutral-800">
           {option.label}
         </div>
-        <div className="text-xs text-neutral-400 dark:text-neutral-500">
+        <div className="text-xs text-neutral-400">
           {option.description}
         </div>
       </div>

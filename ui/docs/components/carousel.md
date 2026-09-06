@@ -1,4 +1,4 @@
-﻿# 🎠 Carousel Component (`@owa/ui`)
+# 🎠 Carousel Component (`@owa/ui`)
 
 Component **Carousel** (băng chuyền / slider) hiện đại, hiệu năng cao, thiết kế chuẩn **Compound Components Pattern** (`<Carousel>`, `<CarouselContent>`, `<CarouselSlide>`, `<CarouselPrevious>`, `<CarouselNext>`, `<CarouselPagination>`), hỗ trợ **Pointer Drag/Touch Gestures**, **Autoplay thông minh**, **Infinite Looping**, **Glassmorphism Design**, **Dynamic Slide Registration**, **Safe Config Fallback** (`getSafeConfig`) và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -12,7 +12,7 @@ Component **Carousel** (băng chuyền / slider) hiện đại, hiệu năng cao
 - **Autoplay thông minh**: Tự động chuyển slide theo chu kỳ `interval`, tự động tạm dừng khi rê chuột (`pauseOnHover`), khi focus (`pauseOnFocus`), hoặc khi đang kéo chuột/vuốt màn hình.
 - **Vòng lặp vô hạn (Infinite Loop)**: Tự động tính toán chuyển động vòng tròn liền mạch giữa slide đầu và slide cuối.
 - **Hiển thị nhiều slide cùng lúc (Multi-slides)**: Hỗ trợ `slidesToShow`, `slidesToScroll`, và khoảng cách gap `spacing` linh hoạt (nhận `number` theo px hoặc chuỗi CSS).
-- **Thiết kế Kính Mờ (Frosted Glass / Glassmorphism)**: Phong cách nút và thanh phân trang kính mờ hiện đại với `backdrop-blur-md`, tự động thích ứng hoàn hảo cho cả Light Mode và Dark Mode.
+- **Thiết kế Kính Mờ (Frosted Glass / Glassmorphism)**: Phong cách nút và thanh phân trang kính mờ hiện đại với `backdrop-blur-md`.
 - **Định vị mặc định thông minh**:
   - `CarouselPrevious`: Nút lùi kính mờ đặt sát mép trái (`absolute left-2 top-1/2 -translate-y-1/2`).
   - `CarouselNext`: Nút tiến kính mờ đặt sát mép phải (`absolute right-2 top-1/2 -translate-y-1/2`).
@@ -151,9 +151,9 @@ export function BasicCarousel() {
   <CarouselContent>
     {products.map((product) => (
       <CarouselSlide key={product.id}>
-        <div className="p-4 border border-neutral-200 dark:border-neutral-800 rounded-xl bg-white dark:bg-neutral-900 shadow-sm">
+        <div className="p-4 border border-neutral-200 rounded-xl bg-white shadow-sm">
           <img src={product.image} alt={product.name} className="h-40 w-full object-cover rounded-lg" />
-          <h3 className="mt-2 font-semibold text-neutral-900 dark:text-white">{product.name}</h3>
+          <h3 className="mt-2 font-semibold text-neutral-900">{product.name}</h3>
           <p className="text-primary-600 font-bold">{product.price}</p>
         </div>
       </CarouselSlide>
@@ -205,7 +205,7 @@ Hỗ trợ 4 biến thể giao diện: `glass` (*mặc định*), `filled`, `out
 Bạn có thể dễ dàng đặt nút điều hướng và phân trang vào trong một thanh công cụ tùy biến dưới đáy bằng cách thêm `className="static"` hoặc class định vị mong muốn:
 
 ```tsx
-<Carousel defaultIndex={1} className="w-full max-w-md border border-neutral-200 dark:border-neutral-700 p-2 rounded-xl">
+<Carousel defaultIndex={1} className="w-full max-w-md border border-neutral-200 p-2 rounded-xl">
   <CarouselContent>
     <CarouselSlide><div className="h-36 bg-linear-to-r from-primary-600 to-primary-800 text-white rounded-lg flex items-center justify-center font-semibold">Slide 1</div></CarouselSlide>
     <CarouselSlide><div className="h-36 bg-linear-to-r from-primary-700 to-primary-900 text-white rounded-lg flex items-center justify-center font-semibold">Slide 2</div></CarouselSlide>

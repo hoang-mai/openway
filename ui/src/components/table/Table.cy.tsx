@@ -1224,7 +1224,7 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
       });
 
       return (
-        <div data-testid="table-query-section" className="p-4 bg-white dark:bg-neutral-900 rounded-lg">
+        <div data-testid="table-query-section" className="p-4 bg-white rounded-lg">
           <div className="flex justify-between items-center mb-2">
             <span data-testid="query-page-display">Trang: {queryParams.page}</span>
             <button data-testid="reset-query-btn" onClick={resetAll}>

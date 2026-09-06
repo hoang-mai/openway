@@ -298,7 +298,7 @@ function TableFilterBadgeChip({
               zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
             }}
             {...getFloatingProps({
-              className: `bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg p-3 shadow-2xl ${
+              className: `bg-white border border-neutral-200 rounded-lg p-3 shadow-2xl ${
                 isDateOrDateRange
                   ? "w-auto min-w-[280px]"
                   : "min-w-64 max-w-xs"
@@ -306,14 +306,14 @@ function TableFilterBadgeChip({
             })}
           >
             {/* Popover Header */}
-            <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-100 dark:border-neutral-800">
-              <span className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+            <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-100">
+              <span className="text-xs font-bold text-neutral-800">
                 {field.label}
               </span>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-0.5 rounded transition-colors cursor-pointer"
+                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded transition-colors cursor-pointer"
                 title="Đóng"
               >
                 <CloseIcon className="w-3.5 h-3.5" />
@@ -324,7 +324,7 @@ function TableFilterBadgeChip({
             <div className="mt-1">{renderEditor()}</div>
 
             {/* Popover Footer */}
-            <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+            <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-100">
               <button
                 type="button"
                 onClick={onRemove}
@@ -335,7 +335,7 @@ function TableFilterBadgeChip({
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-[11px] font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 px-2 py-0.5 rounded border border-neutral-200 dark:border-neutral-700 transition-colors cursor-pointer"
+                className="text-[11px] font-medium text-neutral-700 hover:bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200 transition-colors cursor-pointer"
               >
                 Xong
               </button>
@@ -487,7 +487,7 @@ export function TableMenuFilter({
           data-testid="table-add-filter-button"
           {...getAddRefProps({
             className:
-              "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600 rounded-full transition-all shadow-xs hover:shadow-sm cursor-pointer active:scale-95",
+              "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-neutral-900 bg-white border border-neutral-300 hover:border-neutral-400 rounded-full transition-all shadow-xs hover:shadow-sm cursor-pointer active:scale-95",
           })}
         >
           <PlusIcon className="w-3.5 h-3.5 text-neutral-500" />
@@ -512,7 +512,7 @@ export function TableMenuFilter({
               }}
               {...getAddFloatingProps({
                 className:
-                  "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg p-1.5 shadow-xl min-w-48",
+                  "bg-white border border-neutral-200 rounded-lg p-1.5 shadow-xl min-w-48",
               })}
             >
               <div className="px-2 py-1 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
@@ -533,8 +533,8 @@ export function TableMenuFilter({
                       }}
                       className={`w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md text-left transition-colors cursor-pointer ${
                         isAlreadyActive
-                          ? "text-primary-600 font-medium bg-primary-50 dark:bg-primary-950/40"
-                          : "text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                          ? "text-primary-600 font-medium bg-primary-50"
+                          : "text-neutral-700 hover:bg-neutral-100"
                       }`}
                     >
                       <span>{field.label}</span>
@@ -579,7 +579,7 @@ export function TableMenuFilter({
           type="button"
           data-testid="table-filter-reset-button"
           onClick={handleResetAll}
-          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-neutral-500 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-neutral-500 hover:text-red-600 transition-colors cursor-pointer"
           title="Đặt lại toàn bộ bộ lọc"
         >
           <ResetIcon className="w-3.5 h-3.5" />

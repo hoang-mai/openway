@@ -143,7 +143,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
       >
         {options.length === 0 ? (
           isLoading ? (
-            <div className="flex items-center justify-center py-6 gap-2 text-zinc-500 dark:text-zinc-400 text-sm">
+            <div className="flex items-center justify-center py-6 gap-2 text-zinc-500 text-sm">
               <Spinner className="size-4 animate-spin text-current" />
               <span>Loading...</span>
             </div>

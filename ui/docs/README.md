@@ -147,4 +147,3 @@ Tài liệu chi tiết của các hooks được lưu trữ tại thư mục [`h
 1. **Zero `any`**: 100% các component và hook đều được khai báo TypeScript chặt chẽ, type-safe.
 2. **5 Kích thước Chuẩn (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - chuẩn form), `lg` (48px), `xl` (56px).
 3. **Độ Bo Góc Chuẩn (`radius`)**: `none` (0px), `sm` (4px), `md` (6px), `lg` (8px - chuẩn mặc định), `xl` (12px), `full` (tròn).
-4. **Dark Mode**: Toàn bộ component hỗ trợ tự động thích ứng qua selector `dark:`.

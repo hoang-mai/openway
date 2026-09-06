@@ -83,14 +83,14 @@ export default function Checkbox({
   } else {
     // Unchecked base style with focus ring according to color
     boxVariantStyles =
-      "bg-neutral-white border-neutral-300 hover:border-neutral-400 dark:bg-neutral-900 dark:border-neutral-700 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500";
+      "bg-neutral-white border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500";
   }
 
   // Error border overrides when invalid
   if (isInvalid) {
     boxVariantStyles = isCheckedOrIndeterminate
       ? getSafeConfig("error", safeVariant, "primary")
-      : "bg-neutral-white border-error-500 hover:border-error-600 text-error-600 dark:bg-neutral-900 dark:border-error-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400 peer-focus-visible:border-error-500";
+      : "bg-neutral-white border-error-500 hover:border-error-600 text-error-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400 peer-focus-visible:border-error-500";
   }
 
   const boxClasses = [
@@ -105,7 +105,7 @@ export default function Checkbox({
     .join(" ");
 
   const labelClasses = [
-    "select-none font-medium text-neutral-900 dark:text-neutral-100 transition-colors",
+    "select-none font-medium text-neutral-900 transition-colors",
     currentSize.label,
     disabled ? "opacity-60" : "",
     labelClassName,

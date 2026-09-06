@@ -93,85 +93,85 @@ export const variantColorConfig: Record<
     primary: {
       checked: {
         track:
-          "bg-primary-600 dark:bg-primary-500 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-neutral-white text-primary-600 dark:text-primary-500 shadow-sm",
+          "bg-primary-600 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
+        thumb: "bg-neutral-white text-primary-600 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border-transparent hover:bg-neutral-300 dark:hover:bg-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-neutral-white text-neutral-400 dark:bg-neutral-200 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-200 border-transparent hover:bg-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     secondary: {
       checked: {
         track:
-          "bg-secondary-600 dark:bg-secondary-500 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-neutral-white text-secondary-600 dark:text-secondary-500 shadow-sm",
+          "bg-secondary-600 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
+        thumb: "bg-neutral-white text-secondary-600 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border-transparent hover:bg-neutral-300 dark:hover:bg-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-neutral-white text-neutral-400 dark:bg-neutral-200 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-200 border-transparent hover:bg-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     error: {
       checked: {
         track:
-          "bg-error-600 dark:bg-error-500 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-neutral-white text-error-600 dark:text-error-500 shadow-sm",
+          "bg-error-600 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
+        thumb: "bg-neutral-white text-error-600 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border-transparent hover:bg-neutral-300 dark:hover:bg-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-neutral-white text-neutral-400 dark:bg-neutral-200 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-200 border-transparent hover:bg-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     success: {
       checked: {
         track:
-          "bg-success-600 dark:bg-success-500 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-neutral-white text-success-600 dark:text-success-500 shadow-sm",
+          "bg-success-600 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
+        thumb: "bg-neutral-white text-success-600 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border-transparent hover:bg-neutral-300 dark:hover:bg-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-neutral-white text-neutral-400 dark:bg-neutral-200 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-200 border-transparent hover:bg-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     warning: {
       checked: {
         track:
-          "bg-warning-500 dark:bg-warning-400 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
-        thumb: "bg-neutral-white text-warning-500 dark:bg-neutral-900 dark:text-warning-400 shadow-sm",
+          "bg-warning-500 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
+        thumb: "bg-neutral-white text-warning-500 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border-transparent hover:bg-neutral-300 dark:hover:bg-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
-        thumb: "bg-neutral-white text-neutral-400 dark:bg-neutral-200 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-200 border-transparent hover:bg-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     info: {
       checked: {
         track:
-          "bg-info-600 dark:bg-info-500 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-neutral-white text-info-600 dark:text-info-500 shadow-sm",
+          "bg-info-600 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
+        thumb: "bg-neutral-white text-info-600 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border-transparent hover:bg-neutral-300 dark:hover:bg-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-neutral-white text-neutral-400 dark:bg-neutral-200 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-200 border-transparent hover:bg-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     neutral: {
       checked: {
         track:
-          "bg-neutral-800 dark:bg-neutral-200 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 shadow-sm",
+          "bg-neutral-800 border-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
+        thumb: "bg-neutral-white text-neutral-800 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border-transparent hover:bg-neutral-300 dark:hover:bg-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-white text-neutral-400 dark:bg-neutral-200 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-200 border-transparent hover:bg-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
   },
@@ -179,85 +179,85 @@ export const variantColorConfig: Record<
     primary: {
       checked: {
         track:
-          "bg-primary-50 dark:bg-primary-950/40 border-2 border-primary-600 dark:border-primary-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-primary-600 dark:bg-primary-500 text-neutral-white shadow-sm",
+          "bg-primary-50 border-2 border-primary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
+        thumb: "bg-primary-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-transparent border-2 border-neutral-300 dark:border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-neutral-400 dark:bg-neutral-500 text-neutral-white shadow-sm",
+          "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
+        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
       },
     },
     secondary: {
       checked: {
         track:
-          "bg-secondary-50 dark:bg-secondary-950/40 border-2 border-secondary-600 dark:border-secondary-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-secondary-600 dark:bg-secondary-500 text-neutral-white shadow-sm",
+          "bg-secondary-50 border-2 border-secondary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
+        thumb: "bg-secondary-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-transparent border-2 border-neutral-300 dark:border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-neutral-400 dark:bg-neutral-500 text-neutral-white shadow-sm",
+          "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
+        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
       },
     },
     error: {
       checked: {
         track:
-          "bg-error-50 dark:bg-error-950/40 border-2 border-error-600 dark:border-error-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-error-600 dark:bg-error-500 text-neutral-white shadow-sm",
+          "bg-error-50 border-2 border-error-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
+        thumb: "bg-error-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-transparent border-2 border-neutral-300 dark:border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-neutral-400 dark:bg-neutral-500 text-neutral-white shadow-sm",
+          "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
+        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
       },
     },
     success: {
       checked: {
         track:
-          "bg-success-50 dark:bg-success-950/40 border-2 border-success-600 dark:border-success-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-success-600 dark:bg-success-500 text-neutral-white shadow-sm",
+          "bg-success-50 border-2 border-success-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
+        thumb: "bg-success-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-transparent border-2 border-neutral-300 dark:border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-neutral-400 dark:bg-neutral-500 text-neutral-white shadow-sm",
+          "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
+        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
       },
     },
     warning: {
       checked: {
         track:
-          "bg-warning-50 dark:bg-warning-950/40 border-2 border-warning-500 dark:border-warning-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
-        thumb: "bg-warning-500 dark:bg-warning-400 text-neutral-950 shadow-sm",
+          "bg-warning-50 border-2 border-warning-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
+        thumb: "bg-warning-500 text-neutral-950 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-transparent border-2 border-neutral-300 dark:border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
-        thumb: "bg-neutral-400 dark:bg-neutral-500 text-neutral-white shadow-sm",
+          "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
+        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
       },
     },
     info: {
       checked: {
         track:
-          "bg-info-50 dark:bg-info-950/40 border-2 border-info-600 dark:border-info-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-info-600 dark:bg-info-500 text-neutral-white shadow-sm",
+          "bg-info-50 border-2 border-info-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
+        thumb: "bg-info-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-transparent border-2 border-neutral-300 dark:border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-neutral-400 dark:bg-neutral-500 text-neutral-white shadow-sm",
+          "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
+        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
       },
     },
     neutral: {
       checked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border-2 border-neutral-800 dark:border-neutral-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-800 dark:bg-neutral-200 text-neutral-white dark:text-neutral-900 shadow-sm",
+          "bg-neutral-100 border-2 border-neutral-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
+        thumb: "bg-neutral-800 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-transparent border-2 border-neutral-300 dark:border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-400 dark:bg-neutral-500 text-neutral-white shadow-sm",
+          "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
+        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
       },
     },
   },
@@ -265,85 +265,85 @@ export const variantColorConfig: Record<
     primary: {
       checked: {
         track:
-          "bg-primary-100 dark:bg-primary-900/50 border border-primary-200 dark:border-primary-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-primary-600 dark:bg-primary-500 text-neutral-white shadow-sm",
+          "bg-primary-100 border border-primary-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
+        thumb: "bg-primary-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200/70 dark:hover:bg-neutral-700/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-neutral-white dark:bg-neutral-300 text-neutral-400 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-100 border border-neutral-200 hover:bg-neutral-200/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     secondary: {
       checked: {
         track:
-          "bg-secondary-100 dark:bg-secondary-900/50 border border-secondary-200 dark:border-secondary-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-secondary-600 dark:bg-secondary-500 text-neutral-white shadow-sm",
+          "bg-secondary-100 border border-secondary-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
+        thumb: "bg-secondary-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200/70 dark:hover:bg-neutral-700/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-neutral-white dark:bg-neutral-300 text-neutral-400 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-100 border border-neutral-200 hover:bg-neutral-200/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     error: {
       checked: {
         track:
-          "bg-error-100 dark:bg-error-900/50 border border-error-200 dark:border-error-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-error-600 dark:bg-error-500 text-neutral-white shadow-sm",
+          "bg-error-100 border border-error-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
+        thumb: "bg-error-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200/70 dark:hover:bg-neutral-700/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-neutral-white dark:bg-neutral-300 text-neutral-400 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-100 border border-neutral-200 hover:bg-neutral-200/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     success: {
       checked: {
         track:
-          "bg-success-100 dark:bg-success-900/50 border border-success-200 dark:border-success-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-success-600 dark:bg-success-500 text-neutral-white shadow-sm",
+          "bg-success-100 border border-success-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
+        thumb: "bg-success-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200/70 dark:hover:bg-neutral-700/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-neutral-white dark:bg-neutral-300 text-neutral-400 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-100 border border-neutral-200 hover:bg-neutral-200/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     warning: {
       checked: {
         track:
-          "bg-warning-100 dark:bg-warning-900/50 border border-warning-200 dark:border-warning-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
-        thumb: "bg-warning-500 dark:bg-warning-400 text-neutral-950 shadow-sm",
+          "bg-warning-100 border border-warning-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
+        thumb: "bg-warning-500 text-neutral-950 shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200/70 dark:hover:bg-neutral-700/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
-        thumb: "bg-neutral-white dark:bg-neutral-300 text-neutral-400 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-100 border border-neutral-200 hover:bg-neutral-200/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     info: {
       checked: {
         track:
-          "bg-info-100 dark:bg-info-900/50 border border-info-200 dark:border-info-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-info-600 dark:bg-info-500 text-neutral-white shadow-sm",
+          "bg-info-100 border border-info-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
+        thumb: "bg-info-600 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200/70 dark:hover:bg-neutral-700/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-neutral-white dark:bg-neutral-300 text-neutral-400 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-100 border border-neutral-200 hover:bg-neutral-200/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
     neutral: {
       checked: {
         track:
-          "bg-neutral-200 dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-800 dark:bg-neutral-200 text-neutral-white dark:text-neutral-900 shadow-sm",
+          "bg-neutral-200 border border-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
+        thumb: "bg-neutral-800 text-neutral-white shadow-sm",
       },
       unchecked: {
         track:
-          "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200/70 dark:hover:bg-neutral-700/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-white dark:bg-neutral-300 text-neutral-400 dark:text-neutral-600 shadow-sm",
+          "bg-neutral-100 border border-neutral-200 hover:bg-neutral-200/70 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
+        thumb: "bg-neutral-white text-neutral-400 shadow-sm",
       },
     },
   },

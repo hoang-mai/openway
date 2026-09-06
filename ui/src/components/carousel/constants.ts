@@ -63,25 +63,25 @@ export const radiusConfig: Record<CarouselRadius, string> = {
  */
 export const navVariantConfig: Record<CarouselNavigationVariant, string> = {
   glass:
-    "bg-white/40 dark:bg-black/35 backdrop-blur-md border border-white/40 dark:border-white/15 text-primary-950 dark:text-white shadow-md hover:bg-white/70 dark:hover:bg-black/60 active:scale-90 disabled:opacity-25 disabled:pointer-events-none",
+    "bg-white/40 backdrop-blur-md border border-white/40 text-primary-950 shadow-md hover:bg-white/70 active:scale-90 disabled:opacity-25 disabled:pointer-events-none",
   filled:
-    "bg-primary-600 text-white shadow-md hover:bg-primary-700 active:bg-primary-800 disabled:bg-neutral-300 dark:disabled:bg-neutral-800 disabled:text-neutral-500 disabled:opacity-50",
+    "bg-primary-600 text-white shadow-md hover:bg-primary-700 active:bg-primary-800 disabled:bg-neutral-300 disabled:text-neutral-500 disabled:opacity-50",
   outline:
-    "border border-primary-600 text-primary-600 bg-white/70 dark:bg-neutral-900/70 backdrop-blur-sm hover:bg-primary-50 dark:hover:bg-primary-950 disabled:border-neutral-300 disabled:text-neutral-400",
+    "border border-primary-600 text-primary-600 bg-white/70 backdrop-blur-sm hover:bg-primary-50 disabled:border-neutral-300 disabled:text-neutral-400",
   ghost:
-    "text-primary-600 hover:bg-primary-100/60 dark:hover:bg-primary-950/60 active:bg-primary-200/60 disabled:text-neutral-400",
+    "text-primary-600 hover:bg-primary-100/60 active:bg-primary-200/60 disabled:text-neutral-400",
 };
 
 /**
  * Phong cách kính mờ cho thanh phân trang (Pagination Wrapper)
  */
 export const glassPaginationWrapper =
-  "bg-black/25 dark:bg-white/15 backdrop-blur-md border border-white/20 dark:border-white/15 shadow-sm rounded-full";
+  "bg-black/25 backdrop-blur-md border border-white/20 shadow-sm rounded-full";
 
 /**
  * Màu sắc chuẩn Primary cho Dots / Lines
  */
 export const dotStyleConfig = {
-  active: "bg-primary-600 dark:bg-primary-400 shadow-sm",
-  inactive: "bg-white/60 dark:bg-white/40 hover:bg-white/90 dark:hover:bg-white/70 transition-colors",
+  active: "bg-primary-600 shadow-sm",
+  inactive: "bg-white/60 hover:bg-white/90 transition-colors",
 };

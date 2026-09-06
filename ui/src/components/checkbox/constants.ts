@@ -59,18 +59,18 @@ export const radiusConfig: Record<CheckboxRadius, string> = {
 export const variantColorConfig: Record<Exclude<CheckboxVariant, "other">, Record<CheckboxColor, string>> = {
   filled: {
     primary:
-      "bg-primary-600 text-neutral-white border-primary-600 dark:bg-primary-500 dark:border-primary-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500",
+      "bg-primary-600 text-neutral-white border-primary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500",
     secondary:
-      "bg-secondary-600 text-neutral-white border-secondary-600 dark:bg-secondary-500 dark:border-secondary-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400 peer-focus-visible:border-secondary-500",
+      "bg-secondary-600 text-neutral-white border-secondary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400 peer-focus-visible:border-secondary-500",
     error:
-      "bg-error-600 text-neutral-white border-error-600 dark:bg-error-500 dark:border-error-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400 peer-focus-visible:border-error-500",
+      "bg-error-600 text-neutral-white border-error-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400 peer-focus-visible:border-error-500",
     success:
-      "bg-success-600 text-neutral-white border-success-600 dark:bg-success-500 dark:border-success-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400 peer-focus-visible:border-success-500",
+      "bg-success-600 text-neutral-white border-success-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400 peer-focus-visible:border-success-500",
     warning:
-      "bg-warning-500 text-neutral-950 border-warning-500 dark:bg-warning-400 dark:border-warning-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400 peer-focus-visible:border-warning-500",
-    info: "bg-info-600 text-neutral-white border-info-600 dark:bg-info-500 dark:border-info-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400 peer-focus-visible:border-info-500",
+      "bg-warning-500 text-neutral-950 border-warning-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400 peer-focus-visible:border-warning-500",
+    info: "bg-info-600 text-neutral-white border-info-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400 peer-focus-visible:border-info-500",
     neutral:
-      "bg-neutral-800 text-neutral-white border-neutral-800 dark:bg-neutral-200 dark:text-neutral-900 dark:border-neutral-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400 peer-focus-visible:border-neutral-500",
+      "bg-neutral-800 text-neutral-white border-neutral-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400 peer-focus-visible:border-neutral-500",
   },
   outline: {
     primary:

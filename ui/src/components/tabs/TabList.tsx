@@ -78,7 +78,7 @@ export default function TabList({ children, className = "", extra, centered = fa
           aria-label="Scroll tabs left"
           disabled={!canScrollLeft}
           onClick={handleScrollLeft}
-          className="shrink-0 flex items-center justify-center size-7 rounded-md text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-20 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500"
+          className="shrink-0 flex items-center justify-center size-7 rounded-md text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 disabled:opacity-20 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500"
         >
           <ChevronLeftIcon className="size-4" />
         </button>
@@ -105,7 +105,7 @@ export default function TabList({ children, className = "", extra, centered = fa
           aria-label="Scroll tabs right"
           disabled={!canScrollRight}
           onClick={handleScrollRight}
-          className="shrink-0 flex items-center justify-center size-7 rounded-md text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-20 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500"
+          className="shrink-0 flex items-center justify-center size-7 rounded-md text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 disabled:opacity-20 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500"
         >
           <ChevronRightIcon className="size-4" />
         </button>

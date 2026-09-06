@@ -58,7 +58,7 @@ export function PostFeed() {
   return (
     <div className="max-w-md mx-auto space-y-3">
       {posts.map((post, idx) => (
-        <div key={idx} className="p-4 border rounded-lg shadow-sm bg-white dark:bg-neutral-900">
+        <div key={idx} className="p-4 border rounded-lg shadow-sm bg-white">
           {post}
         </div>
       ))}

@@ -268,10 +268,10 @@ describe("<Icons /> Component & Showcase Tests", () => {
 
     it("renders complete icon gallery showcase with all 27+ icons and empty illustrations", () => {
       cy.mount(
-        <div className="p-8 bg-neutral-50 dark:bg-neutral-950 min-h-screen text-neutral-900 dark:text-neutral-100 space-y-10 max-w-7xl mx-auto font-sans">
+        <div className="p-8 bg-neutral-50 min-h-screen text-neutral-900 space-y-10 max-w-7xl mx-auto font-sans">
           {/* Header */}
-          <div className="border-b border-neutral-200 dark:border-neutral-800 pb-5">
-            <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          <div className="border-b border-neutral-200 pb-5">
+            <h1 className="text-2xl font-bold tracking-tight text-neutral-900">
               Icons Component Gallery & Design System
             </h1>
             <p className="text-sm text-neutral-500 mt-1">
@@ -283,7 +283,7 @@ describe("<Icons /> Component & Showcase Tests", () => {
           {/* Section 1: Standard UI Icons Grid */}
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+              <h2 className="text-base font-semibold text-primary-600">
                 1. Standard UI Icons ({iconList.length} icons)
               </h2>
               <span className="text-xs text-neutral-400">Vector SVG Icons</span>
@@ -293,13 +293,13 @@ describe("<Icons /> Component & Showcase Tests", () => {
               {iconList.map((item) => (
                 <div
                   key={item.name}
-                  className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 flex flex-col items-center justify-center gap-3 shadow-xs hover:border-primary-400 hover:shadow-md transition-all group"
+                  className="bg-white border border-neutral-200 rounded-xl p-4 flex flex-col items-center justify-center gap-3 shadow-xs hover:border-primary-400 hover:shadow-md transition-all group"
                 >
-                  <div className="text-neutral-700 dark:text-neutral-200 group-hover:scale-110 transition-transform">
+                  <div className="text-neutral-700 group-hover:scale-110 transition-transform">
                     {item.component}
                   </div>
                   <div className="text-center w-full">
-                    <span className="text-xs font-mono font-medium text-neutral-800 dark:text-neutral-200 block truncate">
+                    <span className="text-xs font-mono font-medium text-neutral-800 block truncate">
                       {item.name}
                     </span>
                     <span className="text-[10px] text-neutral-400 block truncate mt-0.5">{item.category}</span>
@@ -312,13 +312,13 @@ describe("<Icons /> Component & Showcase Tests", () => {
           {/* Section 2: Sizes Showcase */}
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+              <h2 className="text-base font-semibold text-primary-600">
                 2. Sizing Variations (12px, 16px, 20px, 24px, 32px, 48px)
               </h2>
               <span className="text-xs text-neutral-400">Props & Tailwind Classes</span>
             </div>
 
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-xs flex flex-wrap items-end gap-8">
+            <div className="bg-white border border-neutral-200 rounded-xl p-6 shadow-xs flex flex-wrap items-end gap-8">
               <div className="flex flex-col items-center gap-2">
                 <SearchIcon width={12} height={12} className="text-primary-500" />
                 <span className="text-[11px] font-mono text-neutral-400">12px (xs)</span>
@@ -349,36 +349,36 @@ describe("<Icons /> Component & Showcase Tests", () => {
           {/* Section 3: Colors & Semantic Theme States */}
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+              <h2 className="text-base font-semibold text-primary-600">
                 3. Color Palettes & Semantic Statuses
               </h2>
               <span className="text-xs text-neutral-400">currentColor Support</span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
-              <div className="bg-primary-50 dark:bg-primary-950/40 border border-primary-200 dark:border-primary-800 rounded-xl p-4 flex flex-col items-center gap-2">
-                <CheckCircleIcon className="size-7 text-primary-600 dark:text-primary-400" />
-                <span className="text-xs font-semibold text-primary-700 dark:text-primary-300">Primary</span>
+              <div className="bg-primary-50 border border-primary-200 rounded-xl p-4 flex flex-col items-center gap-2">
+                <CheckCircleIcon className="size-7 text-primary-600" />
+                <span className="text-xs font-semibold text-primary-700">Primary</span>
               </div>
-              <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 flex flex-col items-center gap-2">
-                <CheckCircleIcon className="size-7 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">Success</span>
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex flex-col items-center gap-2">
+                <CheckCircleIcon className="size-7 text-emerald-600" />
+                <span className="text-xs font-semibold text-emerald-700">Success</span>
               </div>
-              <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex flex-col items-center gap-2">
-                <AlertCircleIcon className="size-7 text-amber-600 dark:text-amber-400" />
-                <span className="text-xs font-semibold text-amber-700 dark:text-amber-300">Warning</span>
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex flex-col items-center gap-2">
+                <AlertCircleIcon className="size-7 text-amber-600" />
+                <span className="text-xs font-semibold text-amber-700">Warning</span>
               </div>
-              <div className="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-xl p-4 flex flex-col items-center gap-2">
-                <AlertTriangleIcon className="size-7 text-rose-600 dark:text-rose-400" />
-                <span className="text-xs font-semibold text-rose-700 dark:text-rose-300">Error</span>
+              <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 flex flex-col items-center gap-2">
+                <AlertTriangleIcon className="size-7 text-rose-600" />
+                <span className="text-xs font-semibold text-rose-700">Error</span>
               </div>
-              <div className="bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 rounded-xl p-4 flex flex-col items-center gap-2">
-                <InfoCircleIcon className="size-7 text-sky-600 dark:text-sky-400" />
-                <span className="text-xs font-semibold text-sky-700 dark:text-sky-300">Info</span>
+              <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 flex flex-col items-center gap-2">
+                <InfoCircleIcon className="size-7 text-sky-600" />
+                <span className="text-xs font-semibold text-sky-700">Info</span>
               </div>
-              <div className="bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-xl p-4 flex flex-col items-center gap-2">
-                <ClockIcon className="size-7 text-neutral-600 dark:text-neutral-400" />
-                <span className="text-xs font-semibold text-neutral-700 dark:text-neutral-300">Neutral</span>
+              <div className="bg-neutral-100 border border-neutral-300 rounded-xl p-4 flex flex-col items-center gap-2">
+                <ClockIcon className="size-7 text-neutral-600" />
+                <span className="text-xs font-semibold text-neutral-700">Neutral</span>
               </div>
             </div>
           </section>
@@ -386,7 +386,7 @@ describe("<Icons /> Component & Showcase Tests", () => {
           {/* Section 4: Empty State Illustrations */}
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+              <h2 className="text-base font-semibold text-primary-600">
                 4. Empty State Multi-layer Illustrations ({emptyIllustrations.length} styles)
               </h2>
               <span className="text-xs text-neutral-400">SVG Illustrations</span>
@@ -396,11 +396,11 @@ describe("<Icons /> Component & Showcase Tests", () => {
               {emptyIllustrations.map((item) => (
                 <div
                   key={item.name}
-                  className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 flex flex-col items-center justify-between gap-4 shadow-xs"
+                  className="bg-white border border-neutral-200 rounded-xl p-5 flex flex-col items-center justify-between gap-4 shadow-xs"
                 >
                   <div className="flex items-center justify-center p-2">{item.component}</div>
-                  <div className="w-full pt-3 border-t border-neutral-100 dark:border-neutral-800 text-center">
-                    <code className="text-xs font-mono text-primary-600 dark:text-primary-400">
+                  <div className="w-full pt-3 border-t border-neutral-100 text-center">
+                    <code className="text-xs font-mono text-primary-600">
                       &lt;{item.name} /&gt;
                     </code>
                   </div>

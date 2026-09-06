@@ -131,8 +131,6 @@ Tất cả tài liệu chi tiết của từng component được lưu trữ t�
    - `xs` (24px), `sm` (32px), `md` (40px - chuẩn cho form input/nút), `lg` (48px), `xl` (56px).
 3. **Bo góc (`radius`)**:
    - `none` (0px), `sm` (4px), `md` (6px), `lg` (8px - chuẩn mặc định), `xl` (12px), `full` (tròn).
-4. **Hỗ trợ chế độ Tối (Dark Mode)**:
-   - Tất cả component tự động thích ứng qua class Tailwind `dark:`.
 
 ---
 

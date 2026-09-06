@@ -34,7 +34,7 @@ describe("<Carousel /> Comprehensive Component Tests", () => {
           <div className="flex items-center gap-3">
             <span
               data-testid="controlled-active-label"
-              className="text-sm font-semibold text-neutral-700 dark:text-neutral-300"
+              className="text-sm font-semibold text-neutral-700"
             >
               Current Index: {index}
             </span>
@@ -56,7 +56,7 @@ describe("<Carousel /> Comprehensive Component Tests", () => {
               setIndex(newIdx);
               controlledIndexChangeSpy(newIdx);
             }}
-            className="w-full max-w-md border border-neutral-200 dark:border-neutral-800"
+            className="w-full max-w-md border border-neutral-200"
           >
             <CarouselContent>
               {sampleSlides.map((slide, i) => (
@@ -193,7 +193,7 @@ describe("<Carousel /> Comprehensive Component Tests", () => {
           <Carousel
             data-testid="compound-carousel"
             defaultIndex={1}
-            className="w-full max-w-md border border-neutral-200 dark:border-neutral-700 p-2 rounded-xl"
+            className="w-full max-w-md border border-neutral-200 p-2 rounded-xl"
           >
             <CarouselContent>
               {sampleSlides.map((slide, i) => (

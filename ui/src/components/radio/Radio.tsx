@@ -73,7 +73,7 @@ export default function Radio({
     ? variantColorConfig[variant === "other" ? "filled" : variant]?.error || variantColorConfig.filled.error
     : isChecked
     ? safeVariantStyles
-    : "bg-neutral-white border-neutral-300 hover:border-neutral-400 dark:bg-neutral-900 dark:border-neutral-700 dark:hover:border-neutral-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500";
+    : "bg-neutral-white border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500";
 
   const boxClasses = [
     "inline-flex items-center justify-center shrink-0 border rounded-full transition-all duration-150 select-none",
@@ -86,7 +86,7 @@ export default function Radio({
     .join(" ");
 
   const labelClasses = [
-    "select-none font-medium text-neutral-900 dark:text-neutral-100 transition-colors",
+    "select-none font-medium text-neutral-900 transition-colors",
     currentSize.label,
     disabled ? "opacity-60" : "",
     labelClassName,

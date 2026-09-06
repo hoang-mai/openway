@@ -207,7 +207,7 @@ export default function RadioGroup<TData = unknown>({
   const searchInputSize = searchInputSizeProp ?? getSafeConfig(size, searchInputSizeConfig, "md");
 
   const groupLabelClasses = [
-    "text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-1.5 select-none",
+    "text-sm font-semibold text-neutral-900 mb-1.5 select-none",
     disabled ? "opacity-60" : "",
     labelClassName,
   ]

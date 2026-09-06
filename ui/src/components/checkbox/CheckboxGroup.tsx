@@ -225,7 +225,7 @@ export default function CheckboxGroup<TData = unknown>({
   const orientationClasses = getSafeConfig(orientation, orientationConfig, "vertical");
 
   const groupLabelClasses = [
-    "text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-1.5 select-none",
+    "text-sm font-semibold text-neutral-900 mb-1.5 select-none",
     disabled ? "opacity-60" : "",
     labelClassName,
   ]
@@ -325,7 +325,7 @@ export default function CheckboxGroup<TData = unknown>({
             );
           })
         ) : (
-          <div className="py-2 text-xs text-neutral-500 dark:text-neutral-400 italic">
+          <div className="py-2 text-xs text-neutral-500 italic">
             {!currentSearch.trim() && searchMode === "server"
               ? "Nhập từ khóa để tìm kiếm..."
               : emptyText}

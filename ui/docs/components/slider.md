@@ -159,8 +159,8 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
   variant="other"
   label="Custom Other"
   defaultValue={60}
-  trackClassName="bg-purple-200 dark:bg-purple-900/40"
-  fillerClassName="bg-purple-600 dark:bg-purple-500"
+  trackClassName="bg-purple-200"
+  fillerClassName="bg-purple-600"
   thumbClassName="border-purple-600"
 />
 ```

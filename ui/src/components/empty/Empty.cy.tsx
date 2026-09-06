@@ -6,10 +6,10 @@ import { EmptyDefaultIcon, EmptySearchIcon, EmptyErrorIcon, EmptyFolderIcon, Emp
 describe("<Empty /> - All Variants & States Showcase", () => {
   it("mounts all variants, presets, sizes, layouts, and custom states in a single mount", () => {
     cy.mount(
-      <div className="p-8 bg-neutral-50 dark:bg-neutral-950 min-h-screen text-neutral-900 dark:text-neutral-100 space-y-10 max-w-7xl mx-auto font-sans">
+      <div className="p-8 bg-neutral-50 min-h-screen text-neutral-900 space-y-10 max-w-7xl mx-auto font-sans">
         {/* Header */}
-        <div className="border-b border-neutral-200 dark:border-neutral-800 pb-5">
-          <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+        <div className="border-b border-neutral-200 pb-5">
+          <h1 className="text-2xl font-bold tracking-tight text-neutral-900">
             Empty Component - All Variants Showcase
           </h1>
           <p className="text-sm text-neutral-500 mt-1">
@@ -21,7 +21,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
         {/* 1. All Built-in Presets */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+            <h2 className="text-base font-semibold text-primary-600">
               1. Preset Illustrations (image="default" | "search" | "error" | "folder" | "simple")
             </h2>
             <span className="text-xs text-neutral-400">5 built-in SVG styles</span>
@@ -29,42 +29,42 @@ describe("<Empty /> - All Variants & States Showcase", () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {/* Default */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-primary-300 transition-colors">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-primary-300 transition-colors">
               <Empty size="sm" image="default" title="Default (No Data)" description="Không có dữ liệu hiển thị." />
-              <div className="mt-3 pt-2 border-t border-neutral-100 dark:border-neutral-800 text-center">
-                <code className="text-[11px] font-mono text-primary-600 dark:text-primary-400">image="default"</code>
+              <div className="mt-3 pt-2 border-t border-neutral-100 text-center">
+                <code className="text-[11px] font-mono text-primary-600">image="default"</code>
               </div>
             </div>
 
             {/* Search */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-primary-300 transition-colors">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-primary-300 transition-colors">
               <Empty size="sm" image="search" title="Search Not Found" description="Không tìm thấy kết quả phù hợp." />
-              <div className="mt-3 pt-2 border-t border-neutral-100 dark:border-neutral-800 text-center">
-                <code className="text-[11px] font-mono text-primary-600 dark:text-primary-400">image="search"</code>
+              <div className="mt-3 pt-2 border-t border-neutral-100 text-center">
+                <code className="text-[11px] font-mono text-primary-600">image="search"</code>
               </div>
             </div>
 
             {/* Error */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-error-300 transition-colors">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-error-300 transition-colors">
               <Empty size="sm" image="error" title="Load Failed" description="Không thể kết nối đến máy chủ." />
-              <div className="mt-3 pt-2 border-t border-neutral-100 dark:border-neutral-800 text-center">
-                <code className="text-[11px] font-mono text-error-600 dark:text-error-400">image="error"</code>
+              <div className="mt-3 pt-2 border-t border-neutral-100 text-center">
+                <code className="text-[11px] font-mono text-error-600">image="error"</code>
               </div>
             </div>
 
             {/* Folder */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-primary-300 transition-colors">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-primary-300 transition-colors">
               <Empty size="sm" image="folder" title="Empty Folder" description="Thư mục hiện đang trống." />
-              <div className="mt-3 pt-2 border-t border-neutral-100 dark:border-neutral-800 text-center">
-                <code className="text-[11px] font-mono text-primary-600 dark:text-primary-400">image="folder"</code>
+              <div className="mt-3 pt-2 border-t border-neutral-100 text-center">
+                <code className="text-[11px] font-mono text-primary-600">image="folder"</code>
               </div>
             </div>
 
             {/* Simple */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-neutral-400 transition-colors">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 flex flex-col justify-between shadow-xs hover:border-neutral-400 transition-colors">
               <Empty size="sm" image="simple" title="Simple Minimal" description="Minh họa tối giản gọn nhẹ." />
-              <div className="mt-3 pt-2 border-t border-neutral-100 dark:border-neutral-800 text-center">
-                <code className="text-[11px] font-mono text-neutral-600 dark:text-neutral-400">image="simple"</code>
+              <div className="mt-3 pt-2 border-t border-neutral-100 text-center">
+                <code className="text-[11px] font-mono text-neutral-600">image="simple"</code>
               </div>
             </div>
           </div>
@@ -73,7 +73,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
         {/* 2. Sizes (sm, md, lg) */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+            <h2 className="text-base font-semibold text-primary-600">
               2. Sizes (size="sm" | "md" | "lg")
             </h2>
             <span className="text-xs text-neutral-400">Small, Medium, Large</span>
@@ -81,7 +81,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {/* Size SM */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 shadow-xs flex flex-col justify-between">
+            <div className="bg-white border border-neutral-200 rounded-xl p-5 shadow-xs flex flex-col justify-between">
               <div>
                 <span className="text-xs font-mono font-bold text-neutral-400 block mb-1">SIZE="SM"</span>
                 <p className="text-xs text-neutral-500 mb-4">Dành cho Dropdown, Popover, Select, bảng nhỏ</p>
@@ -100,7 +100,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
             </div>
 
             {/* Size MD */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 shadow-xs flex flex-col justify-between">
+            <div className="bg-white border border-neutral-200 rounded-xl p-5 shadow-xs flex flex-col justify-between">
               <div>
                 <span className="text-xs font-mono font-bold text-primary-500 block mb-1">SIZE="MD" (Mặc định)</span>
                 <p className="text-xs text-neutral-500 mb-4">Dành cho Card, Modal, Section dữ liệu tiêu chuẩn</p>
@@ -119,7 +119,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
             </div>
 
             {/* Size LG */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 shadow-xs flex flex-col justify-between">
+            <div className="bg-white border border-neutral-200 rounded-xl p-5 shadow-xs flex flex-col justify-between">
               <div>
                 <span className="text-xs font-mono font-bold text-neutral-400 block mb-1">SIZE="LG"</span>
                 <p className="text-xs text-neutral-500 mb-4">Dành cho toàn trang (Full-page Empty State), Dashboard</p>
@@ -147,7 +147,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
         {/* 3. Layouts (Vertical vs Horizontal) */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+            <h2 className="text-base font-semibold text-primary-600">
               3. Layouts (layout="vertical" | "horizontal")
             </h2>
             <span className="text-xs text-neutral-400">Bố cục dọc và ngang</span>
@@ -155,7 +155,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Vertical Layout */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-xs">
+            <div className="bg-white border border-neutral-200 rounded-xl p-6 shadow-xs">
               <span className="text-xs font-mono font-bold text-neutral-400 block mb-3">
                 LAYOUT="VERTICAL" (Mặc định)
               </span>
@@ -178,7 +178,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
             </div>
 
             {/* Horizontal Layout */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 shadow-xs flex flex-col justify-center">
+            <div className="bg-white border border-neutral-200 rounded-xl p-6 shadow-xs flex flex-col justify-center">
               <span className="text-xs font-mono font-bold text-neutral-400 block mb-3">
                 LAYOUT="HORIZONTAL" (Ảnh bên trái, Nội dung bên phải)
               </span>
@@ -201,7 +201,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
         {/* 4. Custom Image Options (URL, ReactNode Icon, Folder, Custom Size) */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-primary-600 dark:text-primary-400">
+            <h2 className="text-base font-semibold text-primary-600">
               4. Custom Images & Custom Content
             </h2>
             <span className="text-xs text-neutral-400">URL, Custom ReactNode, Custom Size</span>
@@ -209,7 +209,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {/* Custom URL Image */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 shadow-xs flex flex-col justify-between">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 shadow-xs flex flex-col justify-between">
               <Empty
                 size="sm"
                 image="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=160&auto=format&fit=crop&q=60"
@@ -224,11 +224,11 @@ describe("<Empty /> - All Variants & States Showcase", () => {
             </div>
 
             {/* Custom ReactNode Emoji / Icon */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 shadow-xs flex flex-col justify-between">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 shadow-xs flex flex-col justify-between">
               <Empty
                 size="sm"
                 image={
-                  <div className="w-14 h-14 rounded-full bg-primary-50 dark:bg-primary-950 flex items-center justify-center text-3xl">
+                  <div className="w-14 h-14 rounded-full bg-primary-50 flex items-center justify-center text-3xl">
                     🚀
                   </div>
                 }
@@ -241,7 +241,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
             </div>
 
             {/* Custom imageSize */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 shadow-xs flex flex-col justify-between">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 shadow-xs flex flex-col justify-between">
               <Empty
                 size="sm"
                 image="folder"
@@ -255,7 +255,7 @@ describe("<Empty /> - All Variants & States Showcase", () => {
             </div>
 
             {/* Direct Icon Component */}
-            <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 shadow-xs flex flex-col justify-between">
+            <div className="bg-white border border-neutral-200 rounded-xl p-4 shadow-xs flex flex-col justify-between">
               <Empty
                 size="sm"
                 image={<EmptySimpleIcon className="w-12 h-12" />}

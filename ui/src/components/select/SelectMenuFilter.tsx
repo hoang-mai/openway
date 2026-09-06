@@ -241,7 +241,7 @@ function FilterBadgeChip({
               zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
             }}
             {...getFloatingProps({
-              className: `bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 ${popoverRadius} p-3 shadow-2xl ${
+              className: `bg-white border border-neutral-200 ${popoverRadius} p-3 shadow-2xl ${
                 field.type === "date" || field.type === "date-range"
                   ? "w-auto min-w-[280px]"
                   : "min-w-64 max-w-xs"
@@ -249,12 +249,12 @@ function FilterBadgeChip({
             })}
           >
             {/* Popover Header */}
-            <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-100 dark:border-neutral-800">
-              <span className="text-xs font-bold text-neutral-800 dark:text-neutral-200">{field.label}</span>
+            <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-100">
+              <span className="text-xs font-bold text-neutral-800">{field.label}</span>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-0.5 rounded transition-colors"
+                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded transition-colors"
                 title="Đóng"
               >
                 <CloseIcon className="size-3.5" />
@@ -265,7 +265,7 @@ function FilterBadgeChip({
             <div className="mt-1">{renderEditor()}</div>
 
             {/* Popover Footer */}
-            <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+            <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-100">
               <button
                 type="button"
                 onClick={onRemove}
@@ -276,7 +276,7 @@ function FilterBadgeChip({
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-[11px] font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-700 transition-colors cursor-pointer"
+                className="text-[11px] font-medium text-neutral-700 hover:bg-neutral-100 px-3 py-1 rounded-full border border-neutral-200 transition-colors cursor-pointer"
               >
                 Xong
               </button>
@@ -385,7 +385,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
     <div
       onClick={(e) => e.stopPropagation()}
       onMouseDown={(e) => e.stopPropagation()}
-      className="p-2.5 border-b border-neutral-200 dark:border-neutral-700 bg-neutral-50/90 dark:bg-neutral-900/80 rounded-t-lg select-text"
+      className="p-2.5 border-b border-neutral-200 bg-neutral-50/90 rounded-t-lg select-text"
     >
       <div className="flex flex-wrap items-center gap-1.5 min-h-7">
         {/* "+ Bộ lọc" Button & Dropdown */}
@@ -394,7 +394,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
             ref={setReference}
             type="button"
             {...getAddRefProps({
-              className: `inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600 rounded-full transition-all shadow-xs hover:shadow-sm cursor-pointer active:scale-95`,
+              className: `inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-neutral-900 bg-white border border-neutral-300 hover:border-neutral-400 rounded-full transition-all shadow-xs hover:shadow-sm cursor-pointer active:scale-95`,
             })}
           >
             <PlusIcon className="size-3.5 text-neutral-500" />
@@ -414,7 +414,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                   zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
                 }}
                 {...getAddFloatingProps({
-                  className: `bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 ${dropdownRadius} p-1 shadow-2xl min-w-44`,
+                  className: `bg-white border border-neutral-200 ${dropdownRadius} p-1 shadow-2xl min-w-44`,
                 })}
               >
                 <div className="px-2 py-1 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
@@ -436,7 +436,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                         className={`w-full flex items-center justify-between px-2 py-1.5 text-xs rounded text-left transition-colors ${
                           isAlreadyActive
                             ? "text-primary font-medium bg-primary/5 hover:bg-primary/10"
-                            : "text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                            : "text-neutral-700 hover:bg-neutral-100"
                         }`}
                       >
                         <span>{field.label}</span>
@@ -476,7 +476,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
           <button
             type="button"
             onClick={handleResetAll}
-            className="inline-flex items-center gap-1 text-[11px] text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 px-2.5 py-1 rounded-full border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors ml-auto cursor-pointer"
+            className="inline-flex items-center gap-1 text-[11px] text-neutral-500 hover:text-neutral-800 px-2.5 py-1 rounded-full border border-neutral-200 hover:bg-neutral-100 transition-colors ml-auto cursor-pointer"
             title="Đặt lại toàn bộ bộ lọc"
           >
             <ResetIcon className="size-3" />

@@ -454,7 +454,7 @@ export function useSelectInfiniteQuery<
 
     if (endMessage) {
       return (
-        <div className="py-2 px-1 text-center text-xs text-neutral-400 dark:text-neutral-500">
+        <div className="py-2 px-1 text-center text-xs text-neutral-400">
           {endMessage}
         </div>
       );

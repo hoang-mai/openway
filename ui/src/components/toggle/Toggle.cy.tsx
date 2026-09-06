@@ -486,20 +486,20 @@ describe("<Toggle /> Component Tests", () => {
         const [refLog, setRefLog] = useState("Sẵn sàng kiểm thử Ref");
 
         return (
-          <div className="p-8 bg-neutral-50 dark:bg-neutral-900 min-h-screen flex flex-col gap-8 font-sans text-neutral-900 dark:text-neutral-100">
+          <div className="p-8 bg-neutral-50 min-h-screen flex flex-col gap-8 font-sans text-neutral-900">
             {/* Header */}
-            <header className="border-b border-neutral-200 dark:border-neutral-700 pb-4">
+            <header className="border-b border-neutral-200 pb-4">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                  <h1 className="text-3xl font-extrabold tracking-tight text-primary-700 dark:text-primary-400">
+                  <h1 className="text-3xl font-extrabold tracking-tight text-primary-700">
                     🎚️ Toggle Component Showcase Dashboard
                   </h1>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+                  <p className="text-sm text-neutral-600 mt-1">
                     Tổng hợp toàn bộ tính năng: 5 Sizes, 7 Colors, 4 Variants, 6 Radii, States, Ref Forwarding &
                     Animations
                   </p>
                 </div>
-                <div className="flex items-center gap-3 bg-white dark:bg-neutral-800 px-4 py-2 rounded-xl shadow-xs border border-neutral-200 dark:border-neutral-700">
+                <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-xs border border-neutral-200">
                   <span className="text-xs font-semibold">Demo Live Toggle:</span>
                   <Toggle
                     checked={interactiveState}
@@ -515,12 +515,12 @@ describe("<Toggle /> Component Tests", () => {
             {/* Main Grid Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {/* Card 1: 5 Sizes */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     1. Sizes (5 Kích thước)
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600 font-medium">
                     xs → xl
                   </span>
                 </div>
@@ -539,12 +539,12 @@ describe("<Toggle /> Component Tests", () => {
               </div>
 
               {/* Card 2: 7 Colors */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     2. Colors (7 Bảng màu)
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600 font-medium">
                     Theme Tokens
                   </span>
                 </div>
@@ -564,12 +564,12 @@ describe("<Toggle /> Component Tests", () => {
               </div>
 
               {/* Card 3: Variants */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     3. Variants (Biến thể)
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600 font-medium">
                     4 Styles
                   </span>
                 </div>
@@ -607,12 +607,12 @@ describe("<Toggle /> Component Tests", () => {
               </div>
 
               {/* Card 4: Radii */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     4. Radius (Độ bo góc)
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600 font-medium">
                     6 Mức bo
                   </span>
                 </div>
@@ -631,12 +631,12 @@ describe("<Toggle /> Component Tests", () => {
               </div>
 
               {/* Card 5: States & Feedback */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     5. Trạng thái & Feedback
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600 font-medium">
                     Disabled & Error
                   </span>
                 </div>
@@ -661,12 +661,12 @@ describe("<Toggle /> Component Tests", () => {
               </div>
 
               {/* Card 6: Custom Icons & Content */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     6. Icons & In-Track Content
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600 font-medium">
                     Start/End & Thumb
                   </span>
                 </div>
@@ -697,12 +697,12 @@ describe("<Toggle /> Component Tests", () => {
               </div>
 
               {/* Card 7: Label Placement & Helper */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     7. Placement & Helper Text
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950 text-primary-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600 font-medium">
                     Layout
                   </span>
                 </div>
@@ -723,12 +723,12 @@ describe("<Toggle /> Component Tests", () => {
               </div>
 
               {/* Card 8: Ref Forwarding & Programmatic Actions */}
-              <div className="p-5 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200/80 dark:border-neutral-700 flex flex-col gap-4">
+              <div className="p-5 bg-white rounded-2xl shadow-sm border border-neutral-200/80 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-primary-700 dark:text-primary-300 text-sm uppercase tracking-wider">
+                  <h3 className="font-bold text-primary-700 text-sm uppercase tracking-wider">
                     8. Ref Forwarding & Controls
                   </h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-success-50 dark:bg-success-950 text-success-600 font-medium">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-success-50 text-success-600 font-medium">
                     React 19 Ref
                   </span>
                 </div>
@@ -749,7 +749,7 @@ describe("<Toggle /> Component Tests", () => {
                         refControlInput.current?.focus();
                         setRefLog("👉 Đã gọi ref.current.focus()");
                       }}
-                      className="px-2.5 py-1.5 bg-primary-50 hover:bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 rounded-lg text-xs font-semibold cursor-pointer border border-primary-200 dark:border-primary-800 transition"
+                      className="px-2.5 py-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg text-xs font-semibold cursor-pointer border border-primary-200 transition"
                     >
                       Focus Input
                     </button>
@@ -760,7 +760,7 @@ describe("<Toggle /> Component Tests", () => {
                         refControlInput.current?.click();
                         setRefLog("👆 Đã gọi ref.current.click()");
                       }}
-                      className="px-2.5 py-1.5 bg-secondary-50 hover:bg-secondary-100 dark:bg-secondary-900/40 text-secondary-700 dark:text-secondary-300 rounded-lg text-xs font-semibold cursor-pointer border border-secondary-200 dark:border-secondary-800 transition"
+                      className="px-2.5 py-1.5 bg-secondary-50 hover:bg-secondary-100 text-secondary-700 rounded-lg text-xs font-semibold cursor-pointer border border-secondary-200 transition"
                     >
                       Trigger Click
                     </button>
@@ -772,14 +772,14 @@ describe("<Toggle /> Component Tests", () => {
                         const val = refControlInput.current?.value;
                         setRefLog(`Checked: ${checked} | Value: ${val}`);
                       }}
-                      className="col-span-2 px-2.5 py-1.5 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-lg text-xs font-semibold cursor-pointer border border-neutral-300 dark:border-neutral-600 transition"
+                      className="col-span-2 px-2.5 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rounded-lg text-xs font-semibold cursor-pointer border border-neutral-300 transition"
                     >
                       Đọc Trạng thái từ Ref
                     </button>
                   </div>
                   <div
                     data-testid="ref-log-output"
-                    className="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-lg text-[11px] font-mono text-neutral-600 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800"
+                    className="p-2 bg-neutral-100 rounded-lg text-[11px] font-mono text-neutral-600 border border-neutral-200"
                   >
                     {refLog}
                   </div>

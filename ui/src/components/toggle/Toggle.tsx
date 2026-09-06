@@ -116,7 +116,7 @@ export default function Toggle({
     .join(" ");
 
   const labelClasses = [
-    "select-none font-medium text-neutral-900 dark:text-neutral-100 transition-colors",
+    "select-none font-medium text-neutral-900 transition-colors",
     currentSize.label,
     disabled ? "opacity-50" : "",
     labelClassName,

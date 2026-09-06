@@ -40,7 +40,7 @@ export function SliderMarks({ marks, min, max, step, orientation, size, markClas
         return (
           <div
             key={m.value}
-            className={`absolute flex items-center justify-center select-none text-neutral-500 dark:text-neutral-400 ${
+            className={`absolute flex items-center justify-center select-none text-neutral-500 ${
               currentSize.markText
             } ${markClassName}`}
             style={
@@ -102,7 +102,7 @@ export function SliderStepDots({
         aria-hidden="true"
         className={`absolute rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-colors duration-150 ${
           currentSize.stepDot
-        } ${isFilled ? "bg-white/80 dark:bg-neutral-900/80" : "bg-neutral-400/60 dark:bg-neutral-500/60"}`}
+        } ${isFilled ? "bg-white/80" : "bg-neutral-400/60"}`}
         style={orientation === "vertical" ? { bottom: `${pct}%`, left: "50%" } : { left: `${pct}%`, top: "50%" }}
       />
     );
