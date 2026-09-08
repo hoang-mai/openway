@@ -28,6 +28,8 @@ import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 export default function DateRangePicker({
   ref,
@@ -48,7 +50,7 @@ export default function DateRangePicker({
   color = "primary",
   radius,
   label,
-  labelPlacement = "top",
+  labelPlacement = "floating",
   placeholder,
   helperText,
   errorMessage,
@@ -71,13 +73,15 @@ export default function DateRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateRangePickerProps) {
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
     isLoading = false,
     showSpinner = false,
     isClearable = true,
-    isFullWidth = false,
+    isFullWidth = true,
     showWeekNumbers = false,
     showViewTabs = false,
     closeOnSelect = true,
@@ -232,10 +236,12 @@ export default function DateRangePicker({
     </span>
   );
 
+  const hasFloatingLabel = isFloating && Boolean(label);
+
   const fieldWrapperClasses = [
     "group/field group/daterangepicker relative flex",
     isHorizontal ? "flex-row items-center gap-3" : "flex-col",
-    isFloating ? "pt-2" : "",
+    hasFloatingLabel ? "pt-2" : "",
     isFullWidth ? "w-full" : "inline-flex",
     wrapperClassName,
   ]
@@ -361,7 +367,7 @@ export default function DateRangePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal>
+          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

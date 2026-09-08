@@ -15,6 +15,7 @@ import {
   type DefaultTableFeatures,
   type TableFilterDef,
   type ColumnFiltersState,
+  type ExpandedState,
 } from "./index";
 import { useTableQuery, type TableQueryParams } from "../../query";
 import { Button } from "../button";
@@ -235,7 +236,14 @@ function FullFeaturedTableDemo({
         enableRowSelection={true}
         enableColumnVisibility={true}
         enableColumnOrdering={true}
-        isRefresh={true}
+        enableExpanding={true}
+        renderExpandedRow={(row) => (
+          <div data-testid={`full-detail-${row.original.id}`} className="p-4 bg-neutral-50/80 rounded-lg space-y-1">
+            <h4 className="font-semibold text-neutral-800">Thông tin chi tiết: {row.original.name}</h4>
+            <p className="text-xs text-neutral-600">Email: {row.original.email} | Vai trò: {row.original.role}</p>
+            <p className="text-xs text-neutral-600">Trạng thái tài khoản: {row.original.status}</p>
+          </div>
+        )}
         onRefresh={onRefreshStub}
         pageSizeOptions={[5, 10, 20]}
         initialPageSize={5}
@@ -266,9 +274,685 @@ function FullFeaturedTableDemo({
   );
 }
 
+interface ServerUser {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+const mockServerDb: ServerUser[] = [
+  { id: "1", name: "Nguyễn Văn A", email: "vana@example.com", role: "Admin" },
+  { id: "2", name: "Trần Thị B", email: "thib@example.com", role: "Editor" },
+  { id: "3", name: "Lê Văn C", email: "vanc@example.com", role: "Viewer" },
+  { id: "4", name: "Phạm Minh D", email: "minhd@example.com", role: "Admin" },
+  { id: "5", name: "Hoàng Tuấn E", email: "tuane@example.com", role: "Editor" },
+  { id: "6", name: "Đỗ Mai F", email: "maif@example.com", role: "Viewer" },
+  { id: "7", name: "Vũ Hải G", email: "haig@example.com", role: "Admin" },
+  { id: "8", name: "Bùi Kiên H", email: "kienh@example.com", role: "Editor" },
+];
+
+function TableQueryInner() {
+  const helper = createTableColumnHelper<ServerUser>();
+  const columns = useMemo(
+    () => [
+      helper.accessor("id", { header: "ID" }),
+      helper.accessor("name", { header: "Họ và tên" }),
+      helper.accessor("email", { header: "Email" }),
+      helper.accessor("role", { header: "Vai trò" }),
+    ],
+    [helper]
+  );
+
+  const { tableProps, queryParams, resetAll } = useTableQuery<
+    ServerUser,
+    { items: ServerUser[]; total: number }
+  >({
+    queryKey: ["test-users"],
+    initialPagination: { pageSize: 3 },
+    queryFn: async (params: TableQueryParams) => {
+      let result = [...mockServerDb];
+      if (params.filters?.role && Array.isArray(params.filters.role) && params.filters.role.length > 0) {
+        result = result.filter((u) => (params.filters?.role as string[]).includes(u.role));
+      }
+      const total = result.length;
+      const start = (params.page - 1) * params.pageSize;
+      const paged = result.slice(start, start + params.pageSize);
+      return { items: paged, total };
+    },
+  });
+
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between items-center mb-2">
+        <div className="flex items-center gap-3">
+          <span data-testid="query-page-display">Trang: {queryParams.page}</span>
+          <span className="text-xs text-neutral-500">Tổng 8 dòng</span>
+        </div>
+        <Button id="reset-query-btn" data-testid="reset-query-btn" size="sm" variant="outline" onClick={resetAll}>
+          Reset Query
+        </Button>
+      </div>
+      <DataTable
+        columns={columns}
+        filters={[
+          {
+            name: "role",
+            label: "Vai trò",
+            type: "select",
+            options: [
+              { label: "Admin", value: "Admin" },
+              { label: "Editor", value: "Editor" },
+            ],
+          },
+        ]}
+        {...tableProps}
+      />
+    </div>
+  );
+}
+
+interface OrgNode {
+  id: string;
+  name: string;
+  leader: string;
+  subRows?: OrgNode[];
+}
+
+const orgData: OrgNode[] = [
+  {
+    id: "root-1",
+    name: "Khối Công Nghệ",
+    leader: "Nguyễn Văn A",
+    subRows: [
+      {
+        id: "child-1-1",
+        name: "Trung Tâm Phần Mềm",
+        leader: "Trần Văn B",
+        subRows: [
+          {
+            id: "grandchild-1-1-1",
+            name: "Nhóm Frontend",
+            leader: "Lê Thị C",
+          },
+        ],
+      },
+      {
+        id: "child-1-2",
+        name: "Trung Tâm Hạ Tầng",
+        leader: "Vũ Hải G",
+      },
+    ],
+  },
+  {
+    id: "root-2",
+    name: "Khối Kinh Doanh",
+    leader: "Đỗ Mai F",
+  },
+];
+
+const orgColumnHelper = createTableColumnHelper<OrgNode>();
+const orgCols = orgColumnHelper.columns([
+  orgColumnHelper.accessor("id", { header: "Mã" }),
+  orgColumnHelper.accessor("name", { header: "Tên đơn vị" }),
+  orgColumnHelper.accessor("leader", { header: "Trưởng đơn vị" }),
+]);
+
+const singleMountQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
+function PrimitivesDemo() {
+  return (
+    <section
+      data-testid="primitives-section"
+      className="space-y-6 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <h2 className="text-lg font-semibold text-neutral-900">
+        1. Low-level UI Primitives
+      </h2>
+
+      <div className="space-y-2">
+        <h3 className="text-sm font-medium text-neutral-700">
+          1.1 Bảng cơ bản (Default variant & md size)
+        </h3>
+        <Table data-testid="primitive-table" variant="default" size="md">
+          <TableCaption>Bảng kê doanh số mẫu</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Mã HĐ</TableHead>
+              <TableHead>Khách hàng</TableHead>
+              <TableHead align="right">Tổng tiền</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>#INV-001</TableCell>
+              <TableCell>Nguyễn Văn A</TableCell>
+              <TableCell align="right">1.200.000 đ</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>#INV-002</TableCell>
+              <TableCell>Trần Thị B</TableCell>
+              <TableCell align="right">850.000 đ</TableCell>
+            </TableRow>
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={2}>Tổng cộng</TableCell>
+              <TableCell align="right" className="font-bold">
+                2.050.000 đ
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div className="space-y-2">
+          <h3 className="text-sm font-medium text-neutral-700">
+            1.2 Striped Variant (Size sm)
+          </h3>
+          <Table variant="striped" size="sm" data-testid="striped-table">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Cột A</TableHead>
+                <TableHead>Cột B</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Dòng 1</TableCell>
+                <TableCell>Giá trị 1</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Dòng 2</TableCell>
+                <TableCell>Giá trị 2</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Dòng 3</TableCell>
+                <TableCell>Giá trị 3</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="text-sm font-medium text-neutral-700">
+            1.3 Bordered Variant (Size lg)
+          </h3>
+          <Table variant="bordered" size="lg" data-testid="bordered-table">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Cột X</TableHead>
+                <TableHead align="center">Trạng thái</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Dòng X1</TableCell>
+                <TableCell align="center">Hoàn tất</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Dòng X2</TableCell>
+                <TableCell align="center">Đang xử lý</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InteractiveTableDemo({
+  onRowClickStub,
+  onRefreshStub,
+}: {
+  onRowClickStub?: (row: Row<DefaultTableFeatures, User>) => void;
+  onRefreshStub?: () => void;
+}) {
+  return (
+    <section
+      data-testid="interactive-datatable-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          2. High-level DataTable (Đầy đủ tính năng TanStack Table v9)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Hỗ trợ sắp xếp (Sorting), tìm kiếm toàn bảng (Global filter), phân trang (Pagination), chọn dòng (Row selection) và ẩn/hiện cột (Column visibility).
+        </p>
+      </div>
+
+      <DataTable
+        columns={defaultColumns}
+        data={mockUsers}
+        isRefresh={true}
+        onRefresh={onRefreshStub}
+        enableSorting={true}
+        enableFiltering={true}
+        enablePagination={true}
+        enableRowSelection={true}
+        enableColumnVisibility={true}
+        enableColumnOrdering={true}
+        pageSizeOptions={[5, 10, 20]}
+        initialPageSize={5}
+        searchPlaceholder="Tìm kiếm trong bảng..."
+        onRowClick={onRowClickStub}
+        renderBulkActions={(selectedRows) => (
+          <Button
+            id="bulk-delete-btn"
+            size="sm"
+            color="error"
+            variant="soft"
+          >
+            Xóa ({selectedRows.length})
+          </Button>
+        )}
+      />
+    </section>
+  );
+}
+
+function LoadingTableDemo() {
+  return (
+    <section
+      data-testid="loading-datatable-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          3. DataTable ở trạng thái Đang tải (Loading Skeleton)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Tự động hiển thị các dòng Skeleton hoạt họa tương ứng số cột khi isLoading=true.
+        </p>
+      </div>
+
+      <DataTable
+        columns={defaultColumns}
+        data={[]}
+        isLoading={true}
+        loadingRowsCount={3}
+        enableFiltering={false}
+        enablePagination={false}
+      />
+    </section>
+  );
+}
+
+function EmptyTableDemo() {
+  return (
+    <section
+      data-testid="empty-datatable-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          4. DataTable ở trạng thái Rỗng (Empty State)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Hiển thị Empty illustration và thông điệp tùy biến khi data=[].
+        </p>
+      </div>
+
+      <DataTable
+        columns={defaultColumns}
+        data={[]}
+        emptyText="Không có dữ liệu trong bảng"
+        enableFiltering={false}
+        enablePagination={false}
+      />
+    </section>
+  );
+}
+
+function ManyPagesTableDemo() {
+  return (
+    <section
+      data-testid="many-pages-datatable-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          5. DataTable Phân trang Nhiều Trang (65 dòng - 13 trang &amp; Ellipsis &apos;...&apos;)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Kiểm thử phân trang danh sách lớn gồm 65 bản ghi (13 trang, 5 dòng/trang). Kiểm tra tính năng thu gọn dấu &apos;...&apos; khi ở trang đầu, trang cuối và các trang ở giữa.
+        </p>
+      </div>
+
+      <DataTable
+        columns={defaultColumns}
+        data={manyPagesMockUsers}
+        initialPageSize={5}
+        pageSizeOptions={[5, 10, 20]}
+        enablePagination={true}
+        enableSorting={true}
+        enableFiltering={true}
+        searchPlaceholder="Tìm kiếm trong 65 thành viên..."
+      />
+    </section>
+  );
+}
+
+function FilterTableDemo({
+  onColumnFiltersChangeStub,
+}: {
+  onColumnFiltersChangeStub?: (filters: ColumnFiltersState) => void;
+}) {
+  return (
+    <div className="space-y-6">
+      <section
+        data-testid="client-filter-datatable-section"
+        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+      >
+        <div>
+          <h2 className="text-lg font-semibold text-neutral-900">
+            7.1 DataTable Bộ Lọc Menu (Client-side Filtering &amp; Rounded Full UI)
+          </h2>
+          <p className="text-xs text-neutral-500">
+            Hỗ trợ hiển thị bộ lọc menu SelectMenuFilter với chip bo tròn rounded-full, ô tìm kiếm rounded-full, lọc tức thì trên client.
+          </p>
+        </div>
+
+        <DataTable
+          columns={defaultColumns}
+          data={mockUsers}
+          filters={testFilters}
+          manualFiltering={false}
+          enableFiltering={true}
+          enablePagination={false}
+          searchPlaceholder="Tìm kiếm nhanh client..."
+        />
+      </section>
+
+      <section
+        data-testid="server-filter-datatable-section"
+        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+      >
+        <div>
+          <h2 className="text-lg font-semibold text-neutral-900">
+            7.2 DataTable Bộ Lọc Menu (Server-side Filtering &amp; Client-side Global Search)
+          </h2>
+          <p className="text-xs text-neutral-500">
+            Khi manualFiltering=true, bộ lọc cột bắn sự kiện onColumnFiltersChange mà không lọc client, trong khi ô tìm kiếm toàn bảng (globalFilter) vẫn tự động lọc client-side native!
+          </p>
+        </div>
+
+        <DataTable
+          columns={defaultColumns}
+          data={mockUsers}
+          filters={testFilters}
+          manualFiltering={true}
+          onColumnFiltersChange={onColumnFiltersChangeStub}
+          enableFiltering={true}
+          enablePagination={false}
+          searchPlaceholder="Tìm kiếm nhanh server data..."
+        />
+      </section>
+    </div>
+  );
+}
+
+function TableQueryDemo() {
+  return (
+    <section
+      data-testid="table-query-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          8. Server-side Query DataTable (useTableQuery)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Tích hợp adapter hook useTableQuery từ @openway/ui kết nối TanStack Query với DataTable.
+        </p>
+      </div>
+      <QueryClientProvider client={singleMountQueryClient}>
+        <TableQueryInner />
+      </QueryClientProvider>
+    </section>
+  );
+}
+
+function DetailPanelDemo() {
+  return (
+    <section
+      data-testid="expanding-detail-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          9. DataTable Mở Rộng Dòng Chi Tiết (renderExpandedRow)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Nút mở rộng được tích hợp trực tiếp vào cột đầu tiên, tuyệt đối không có nút mở rộng trên header.
+        </p>
+      </div>
+      <DataTable
+        columns={defaultColumns}
+        data={mockUsers.slice(0, 3)}
+        enableExpanding={true}
+        renderExpandedRow={(row) => (
+          <div data-testid={`detail-content-${row.original.id}`} className="p-3">
+            <p>Chi tiết người dùng: {row.original.name}</p>
+            <p>Email: {row.original.email}</p>
+          </div>
+        )}
+      />
+    </section>
+  );
+}
+
+function TreeDataDemo() {
+  return (
+    <section
+      data-testid="expanding-tree-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          10. DataTable Dữ Liệu Cây Phân Cấp (Multi-level Tree Data)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Dòng con hiển thị cùng hàng và cột với cha, tự động thụt lề, dòng lá có ký hiệu ↳.
+        </p>
+      </div>
+      <DataTable
+        columns={orgCols}
+        data={orgData}
+        enableExpanding={true}
+        getSubRows={(row) => row.subRows}
+        maxIndentDepth={3}
+      />
+    </section>
+  );
+}
+
+function CustomExpandColumnDemo() {
+  return (
+    <section
+      data-testid="expanding-custom-col-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          11. DataTable Mở Rộng Cột Tùy Chọn (expandColumnId=&quot;email&quot;)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Tích hợp nút Chevron vào cột Email thay vì cột ID.
+        </p>
+      </div>
+      <DataTable
+        columns={defaultColumns}
+        data={mockUsers.slice(0, 3)}
+        enableExpanding={true}
+        expandColumnMode="integrated"
+        expandColumnId="email"
+        renderExpandedRow={(row) => (
+          <div data-testid={`custom-expand-detail-${row.original.id}`} className="p-3">
+            Detail of {row.original.name}
+          </div>
+        )}
+      />
+    </section>
+  );
+}
+
+function StandaloneExpandColumnDemo() {
+  return (
+    <section
+      data-testid="expanding-standalone-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          12. DataTable Mở Rộng Cột Độc Lập (expandColumnMode=&quot;standalone&quot;)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Cột expand riêng biệt (standalone), header không có nút toggle all.
+        </p>
+      </div>
+      <DataTable
+        columns={defaultColumns}
+        data={mockUsers.slice(0, 3)}
+        enableExpanding={true}
+        expandColumnMode="standalone"
+        renderExpandedRow={(row) => (
+          <div data-testid={`standalone-detail-${row.original.id}`} className="p-3">
+            Standalone detail: {row.original.name}
+          </div>
+        )}
+      />
+    </section>
+  );
+}
+
+function ControlledExpandDemo() {
+  const [expanded, setExpanded] = useState<ExpandedState>({ "0": true });
+
+  return (
+    <section
+      data-testid="expanding-controlled-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h2 className="text-lg font-semibold text-neutral-900">
+            13. DataTable Trạng Thái Mở Rộng Có Điều Khiển (Controlled Expanded State)
+          </h2>
+          <p className="text-xs text-neutral-500">
+            Điều khiển đóng/mở hàng từ state bên ngoài thông qua expanded và onExpandedChange.
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            id="btn-expand-all"
+            size="sm"
+            variant="outline"
+            onClick={() => setExpanded(true)}
+          >
+            Mở tất cả
+          </Button>
+          <Button
+            id="btn-collapse-all"
+            size="sm"
+            variant="ghost"
+            onClick={() => setExpanded({})}
+          >
+            Đóng tất cả
+          </Button>
+        </div>
+      </div>
+      <div
+        data-testid="controlled-state-display"
+        className="text-xs font-mono text-neutral-700 bg-neutral-100 px-3 py-2 rounded-lg border border-neutral-200"
+      >
+        State: {JSON.stringify(expanded)}
+      </div>
+      <DataTable
+        columns={defaultColumns}
+        data={mockUsers.slice(0, 3)}
+        enableExpanding={true}
+        expanded={expanded}
+        onExpandedChange={setExpanded}
+        renderExpandedRow={(row) => (
+          <div data-testid={`controlled-detail-${row.original.id}`} className="p-3">
+            Controlled detail: {row.original.name}
+          </div>
+        )}
+      />
+    </section>
+  );
+}
+
+function ServerDebounceFilterDemo({
+  queryFnStub,
+}: {
+  queryFnStub?: (params: TableQueryParams) => void;
+}) {
+  const debounceFilters: TableFilterDef[] = [
+    {
+      name: "name",
+      label: "Tên",
+      type: "text",
+      placeholder: "Nhập tên...",
+    },
+    {
+      name: "age",
+      label: "Tuổi",
+      type: "number",
+      placeholder: "Nhập tuổi...",
+    },
+    {
+      name: "role",
+      label: "Vai trò",
+      type: "select",
+      options: [
+        { label: "Admin", value: "Admin" },
+        { label: "Editor", value: "Editor" },
+      ],
+    },
+    {
+      name: "createdAt",
+      label: "Khoảng ngày",
+      type: "date-range",
+      placeholder: "Chọn khoảng ngày...",
+    },
+  ];
+
+  const { tableProps } = useTableQuery<User, { items: User[]; total: number }>({
+    queryKey: ["debounce-users"],
+    debounceMs: 150,
+    queryFn: async (params) => {
+      queryFnStub?.(params);
+      return { items: mockUsers, total: mockUsers.length };
+    },
+  });
+
+  return (
+    <div data-testid="server-debounce-section" className="p-6 bg-white rounded-xl">
+      <DataTable
+        columns={defaultColumns}
+        filters={debounceFilters}
+        {...tableProps}
+        enableFiltering={true}
+        enablePagination={false}
+      />
+    </div>
+  );
+}
+
 /**
  * Single Mount Test Harness Component
- * Gom toàn bộ các trường hợp kiểm thử (Primitives, DataTable, Loading, Empty, Ordering, Filters)
+ * Gom toàn bộ các trường hợp kiểm thử (Primitives, DataTable, Loading, Empty, Ordering, Filters, useTableQuery, Expanding)
  * vào chung một lần mount duy nhất để dễ dàng quan sát và kiểm thử trực quan trên Cypress.
  */
 function TableSingleMountHarness({
@@ -335,294 +1019,40 @@ function TableSingleMountHarness({
             onRefreshStub={onRefreshStub}
           />
 
-          {/* 1. Low-level Primitives Section */}
+          <PrimitivesDemo />
+          <InteractiveTableDemo
+            onRowClickStub={onRowClickStub}
+            onRefreshStub={onRefreshStub}
+          />
+          <LoadingTableDemo />
+          <EmptyTableDemo />
+          <ManyPagesTableDemo />
           <section
-        data-testid="primitives-section"
-        className="space-y-6 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <h2 className="text-lg font-semibold text-neutral-900">
-          1. Low-level UI Primitives
-        </h2>
-
-        {/* 1.1 Basic Semantic Table */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-medium text-neutral-700">
-            1.1 Bảng cơ bản (Default variant & md size)
-          </h3>
-          <Table data-testid="primitive-table" variant="default" size="md">
-            <TableCaption>Bảng kê doanh số mẫu</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Mã HĐ</TableHead>
-                <TableHead>Khách hàng</TableHead>
-                <TableHead align="right">Tổng tiền</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>#INV-001</TableCell>
-                <TableCell>Nguyễn Văn A</TableCell>
-                <TableCell align="right">1.200.000 đ</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>#INV-002</TableCell>
-                <TableCell>Trần Thị B</TableCell>
-                <TableCell align="right">850.000 đ</TableCell>
-              </TableRow>
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={2}>Tổng cộng</TableCell>
-                <TableCell align="right" className="font-bold">
-                  2.050.000 đ
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </div>
-
-        {/* 1.2 Variants & Sizes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-neutral-700">
-              1.2 Striped Variant (Size sm)
-            </h3>
-            <Table variant="striped" size="sm" data-testid="striped-table">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Cột A</TableHead>
-                  <TableHead>Cột B</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>Dòng 1</TableCell>
-                  <TableCell>Giá trị 1</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Dòng 2</TableCell>
-                  <TableCell>Giá trị 2</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Dòng 3</TableCell>
-                  <TableCell>Giá trị 3</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
-
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-neutral-700">
-              1.3 Bordered Variant (Size lg)
-            </h3>
-            <Table variant="bordered" size="lg" data-testid="bordered-table">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Cột X</TableHead>
-                  <TableHead align="center">Trạng thái</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>Dòng X1</TableCell>
-                  <TableCell align="center">Hoàn tất</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Dòng X2</TableCell>
-                  <TableCell align="center">Đang xử lý</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. High-level Interactive DataTable Section */}
-      <section
-        data-testid="interactive-datatable-section"
-        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <div>
-          <h2 className="text-lg font-semibold text-neutral-900">
-            2. High-level DataTable (Đầy đủ tính năng TanStack Table v9)
-          </h2>
-          <p className="text-xs text-neutral-500">
-            Hỗ trợ sắp xếp (Sorting), tìm kiếm toàn bảng (Global filter), phân trang (Pagination), chọn dòng (Row selection) và ẩn/hiện cột (Column visibility).
-          </p>
-        </div>
-
-        <DataTable
-          columns={defaultColumns}
-          data={mockUsers}
-          isRefresh={true}
-          onRefresh={onRefreshStub}
-          enableSorting={true}
-          enableFiltering={true}
-          enablePagination={true}
-          enableRowSelection={true}
-          enableColumnVisibility={true}
-          enableColumnOrdering={true}
-          pageSizeOptions={[5, 10, 20]}
-          initialPageSize={5}
-          searchPlaceholder="Tìm kiếm trong bảng..."
-          onRowClick={onRowClickStub}
-          renderBulkActions={(selectedRows) => (
-            <Button
-              id="bulk-delete-btn"
-              size="sm"
-              color="error"
-              variant="soft"
-            >
-              Xóa ({selectedRows.length})
-            </Button>
-          )}
-        />
-      </section>
-
-      {/* 3. Loading Skeleton State Section */}
-      <section
-        data-testid="loading-datatable-section"
-        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <div>
-          <h2 className="text-lg font-semibold text-neutral-900">
-            3. DataTable ở trạng thái Đang tải (Loading Skeleton)
-          </h2>
-          <p className="text-xs text-neutral-500">
-            Tự động hiển thị các dòng Skeleton hoạt họa tương ứng số cột khi isLoading=true.
-          </p>
-        </div>
-
-        <DataTable
-          columns={defaultColumns}
-          data={[]}
-          isLoading={true}
-          loadingRowsCount={3}
-          enableFiltering={false}
-          enablePagination={false}
-        />
-      </section>
-
-      {/* 4. Empty State Section */}
-      <section
-        data-testid="empty-datatable-section"
-        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <div>
-          <h2 className="text-lg font-semibold text-neutral-900">
-            4. DataTable ở trạng thái Rỗng (Empty State)
-          </h2>
-          <p className="text-xs text-neutral-500">
-            Hiển thị Empty illustration và thông điệp tùy biến khi data=[].
-          </p>
-        </div>
-
-        <DataTable
-          columns={defaultColumns}
-          data={[]}
-          emptyText="Không có dữ liệu trong bảng"
-          enableFiltering={false}
-          enablePagination={false}
-        />
-      </section>
-
-      {/* 5. Many Pages Pagination Section */}
-      <section
-        data-testid="many-pages-datatable-section"
-        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <div>
-          <h2 className="text-lg font-semibold text-neutral-900">
-            5. DataTable Phân trang Nhiều Trang (65 dòng - 13 trang &amp; Ellipsis &apos;...&apos;)
-          </h2>
-          <p className="text-xs text-neutral-500">
-            Kiểm thử phân trang danh sách lớn gồm 65 bản ghi (13 trang, 5 dòng/trang). Kiểm tra tính năng thu gọn dấu &apos;...&apos; khi ở trang đầu, trang cuối và các trang ở giữa.
-          </p>
-        </div>
-
-        <DataTable
-          columns={defaultColumns}
-          data={manyPagesMockUsers}
-          initialPageSize={5}
-          pageSizeOptions={[5, 10, 20]}
-          enablePagination={true}
-          enableSorting={true}
-          enableFiltering={true}
-          searchPlaceholder="Tìm kiếm trong 65 thành viên..."
-        />
-      </section>
-
-      {/* 6. Column Ordering & Drag-and-Drop Section */}
-      <section
-        data-testid="ordering-datatable-section"
-        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <ColumnOrderingDemo onColumnOrderChangeStub={onColumnOrderChangeStub} />
-      </section>
-
-      {/* 7.1 DataTable Bộ Lọc Menu (Client-side Filtering & Rounded Full UI) */}
-      <section
-        data-testid="client-filter-datatable-section"
-        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <div>
-          <h2 className="text-lg font-semibold text-neutral-900">
-            7.1 DataTable Bộ Lọc Menu (Client-side Filtering &amp; Rounded Full UI)
-          </h2>
-          <p className="text-xs text-neutral-500">
-            Hỗ trợ hiển thị bộ lọc menu SelectMenuFilter với chip bo tròn rounded-full, ô tìm kiếm rounded-full, lọc tức thì trên client.
-          </p>
-        </div>
-
-        <DataTable
-          columns={defaultColumns}
-          data={mockUsers}
-          filters={testFilters}
-          manualFiltering={false}
-          enableFiltering={true}
-          enablePagination={false}
-          searchPlaceholder="Tìm kiếm nhanh client..."
-        />
-      </section>
-
-      {/* 7.2 DataTable Bộ Lọc Menu (Server-side Filtering & Client-side Global Search) */}
-      <section
-        data-testid="server-filter-datatable-section"
-        className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
-      >
-        <div>
-          <h2 className="text-lg font-semibold text-neutral-900">
-            7.2 DataTable Bộ Lọc Menu (Server-side Filtering &amp; Client-side Global Search)
-          </h2>
-          <p className="text-xs text-neutral-500">
-            Khi manualFiltering=true, bộ lọc cột bắn sự kiện onColumnFiltersChange mà không lọc client, trong khi ô tìm kiếm toàn bảng (globalFilter) vẫn tự động lọc client-side native!
-          </p>
-        </div>
-
-        <DataTable
-          columns={defaultColumns}
-          data={mockUsers}
-          filters={testFilters}
-          manualFiltering={true}
-          onColumnFiltersChange={onColumnFiltersChangeStub}
-          enableFiltering={true}
-          enablePagination={false}
-          searchPlaceholder="Tìm kiếm nhanh server data..."
-        />
-      </section>
+            data-testid="ordering-datatable-section"
+            className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+          >
+            <ColumnOrderingDemo onColumnOrderChangeStub={onColumnOrderChangeStub} />
+          </section>
+          <FilterTableDemo onColumnFiltersChangeStub={onColumnFiltersChangeStub} />
+          <TableQueryDemo />
+          <DetailPanelDemo />
+          <TreeDataDemo />
+          <CustomExpandColumnDemo />
+          <StandaloneExpandColumnDemo />
+          <ControlledExpandDemo />
         </div>
       </div>
     </div>
   );
 }
 
-describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
+describe("Table & DataTable Component Tests", () => {
   beforeEach(() => {
     // Đặt khung nhìn chuẩn màn hình máy tính Desktop 1440 x 900
     cy.viewport(1440, 900);
   });
 
-  it("verifies all Table and DataTable functionalities in a single mount", () => {
+  it("1. Toàn bộ 11 Component trên cùng 1 màn hình máy tính (Single Mount Harness)", () => {
     const onRowClick = cy.stub().as("onRowClick");
     const onRefresh = cy.stub().as("onRefresh");
     const onColumnOrderChange = cy.stub().as("onColumnOrderChange");
@@ -696,7 +1126,7 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
       // Sắp xếp giảm dần
       cy.contains("button", "Họ và tên").click();
       cy.contains("th", "Họ và tên").should("have.attr", "aria-sort", "descending");
-      cy.get("tbody tr").first().should("contain.text", "Vũ Hải G");
+      cy.get("tbody tr").first().should("contain.text", "Đỗ Mai F");
 
       // Click sort lại ID để đưa về thứ tự chuẩn
       cy.contains("button", "ID").click();
@@ -726,7 +1156,9 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
 
       // Thay đổi page size sang 10 dòng/trang qua component Select
       cy.get("[data-testid='table-page-size-selector']").click();
-      cy.get("[role='listbox']").contains("10").click();
+    });
+    cy.get("[role='listbox']").contains("10").click();
+    cy.get("[data-testid='interactive-datatable-section']").within(() => {
       cy.get("tbody tr").should("have.length", 10);
       cy.get("button[aria-label='Trang 1']").should("have.attr", "aria-current", "page");
       cy.get("button[aria-label='Trang 2']").should("be.visible");
@@ -734,7 +1166,9 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
 
       // Đưa page size về lại 5 để kiểm tra chọn dòng theo trang
       cy.get("[data-testid='table-page-size-selector']").click();
-      cy.get("[role='listbox']").contains("5").click();
+    });
+    cy.get("[role='listbox']").contains("5").click();
+    cy.get("[data-testid='interactive-datatable-section']").within(() => {
       cy.get("tbody tr").should("have.length", 5);
 
       // 2.5 Kiểm tra Chọn dòng (Row Selection & Bulk Actions)
@@ -747,11 +1181,11 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
       cy.get("#bulk-delete-btn").should("not.exist");
 
       // Chọn 1 dòng đơn lẻ
-      cy.get("input[aria-label='Chọn dòng 0']").check({ force: true });
+      cy.get("tbody tr").first().find("input[type='checkbox']").check({ force: true });
       cy.get("#bulk-delete-btn").should("be.visible").and("contain.text", "Xóa (1)");
 
       // Bỏ chọn dòng đó
-      cy.get("input[aria-label='Chọn dòng 0']").uncheck({ force: true });
+      cy.get("tbody tr").first().find("input[type='checkbox']").uncheck({ force: true });
 
       // 2.6 Kiểm tra Ẩn/hiện cột (Column Visibility)
       cy.contains("button", "Cột").click();
@@ -782,7 +1216,9 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
     cy.get("@onRowClick").should("have.been.calledOnce");
 
     // 2.8 Kiểm tra nút làm mới dữ liệu chủ động (isRefresh / onRefresh)
-    cy.get("[data-testid='table-refresh-button']").should("be.visible").click();
+    cy.get("[data-testid='interactive-datatable-section'] [data-testid='table-refresh-button']")
+      .should("be.visible")
+      .click();
     cy.get("@onRefresh").should("have.been.calledOnce");
 
     // 2.9 Kiểm tra tính năng kéo thả sắp xếp cột (Column Ordering / Dnd)
@@ -924,12 +1360,13 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
             .trigger("pointerup", { force: true });
         });
       });
+    });
 
-      // ==========================================================
-      // 7. Kiểm tra DataTable Bộ Lọc Menu (SelectMenuFilter style)
-      // ==========================================================
-      // 7.1 Client-side Filtering & Rounded-full UI
-      cy.get("[data-testid='client-filter-datatable-section']").within(() => {
+    // ==========================================================
+    // 7. Kiểm tra DataTable Bộ Lọc Menu (SelectMenuFilter style)
+    // ==========================================================
+    // 7.1 Client-side Filtering & Rounded-full UI
+    cy.get("[data-testid='client-filter-datatable-section']").within(() => {
         // 7.1.1 Ô tìm kiếm Search có bo tròn full (rounded-full)
         cy.get("[data-testid='table-search-input']").should("have.class", "rounded-full");
 
@@ -1046,10 +1483,9 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
         cy.get("[data-testid='table-clear-search-button']").click();
         cy.get("tbody tr").should("have.length", 12);
       });
-    });
   });
 
-  it("verifies a full-featured all-in-one DataTable (complete feature test case)", () => {
+  it("2. Bảng Dữ Liệu Toàn Diện (Full-Featured DataTable - 100% Tính Năng)", () => {
     const onRowClick = cy.stub().as("onRowClick");
     const onRefresh = cy.stub().as("onRefresh");
 
@@ -1063,6 +1499,9 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
     );
 
     cy.get("[data-testid='full-featured-table-section']").within(() => {
+      // Header tuyệt đối KHÔNG có nút mở rộng / toggle all
+      cy.get("[data-testid='table-toggle-all-rows-expanded']").should("not.exist");
+
       // 1. Kiểm tra hiển thị thanh công cụ và dữ liệu ban đầu
       cy.get("[data-testid='table-search-input']").should("exist").and("be.visible");
       cy.get("[data-testid='table-add-filter-button']").should("exist").and("be.visible");
@@ -1079,6 +1518,14 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
       cy.contains("Nguyễn Văn A").should("be.visible");
       cy.contains("Trần Thị B").should("be.visible");
 
+      // Mở rộng dòng chi tiết (Expand Row - Nút chevron chỉ có trên dòng)
+      cy.get("[data-testid='full-detail-1']").should("not.exist");
+      cy.get("[data-testid='table-row-expand-button-0']").click();
+      cy.get("[data-testid='full-detail-1']").should("be.visible");
+      cy.contains("Thông tin chi tiết: Nguyễn Văn A").should("be.visible");
+      cy.get("[data-testid='table-row-expand-button-0']").click();
+      cy.get("[data-testid='full-detail-1']").should("not.exist");
+
       // 2. Tìm kiếm toàn bảng (Global Search)
       cy.get("[data-testid='table-search-input']").type("Nguyễn");
       cy.get("tbody tr").should("have.length", 1);
@@ -1087,29 +1534,30 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
       cy.get("tbody tr").should("have.length", 5);
 
       // 3. Sắp xếp cột (Sorting)
-      cy.contains("th", "Họ và tên").click();
+      cy.contains("button", "Họ và tên").click();
       cy.get("tbody tr").first().should("contain.text", "Bùi Kiên H");
-      cy.contains("th", "Họ và tên").click();
-      cy.get("tbody tr").first().should("contain.text", "Vũ Hải G");
-      cy.contains("th", "Họ và tên").click(); // Reset về ban đầu
+      cy.contains("button", "Họ và tên").click();
+      cy.get("tbody tr").first().should("contain.text", "Đỗ Mai F");
+      cy.contains("button", "ID").click(); // Sort desc theo ID
+      cy.contains("button", "ID").click(); // Sort asc theo ID đưa về dòng 1
       cy.get("tbody tr").first().should("contain.text", "Nguyễn Văn A");
 
       // 4. Chọn dòng & Hành động hàng loạt (Row Selection & Bulk Actions)
-      cy.get("tbody tr").first().find("input[type='checkbox']").click();
+      cy.get("tbody tr").first().find("input[type='checkbox']").click({ force: true });
       cy.get("#bulk-delete-btn").should("be.visible").and("contain.text", "Xóa (1)");
 
-      cy.get("tbody tr").eq(1).find("input[type='checkbox']").click();
+      cy.get("tbody tr").eq(1).find("input[type='checkbox']").click({ force: true });
       cy.get("#bulk-delete-btn").should("contain.text", "Xóa (2)");
 
       // Bỏ chọn từng dòng
-      cy.get("tbody tr").first().find("input[type='checkbox']").click();
-      cy.get("tbody tr").eq(1).find("input[type='checkbox']").click();
+      cy.get("tbody tr").first().find("input[type='checkbox']").click({ force: true });
+      cy.get("tbody tr").eq(1).find("input[type='checkbox']").click({ force: true });
       cy.get("#bulk-delete-btn").should("not.exist");
 
       // Chọn tất cả các dòng trên trang này qua header checkbox
-      cy.get("thead th").first().find("input[type='checkbox']").click();
+      cy.get("thead th").first().find("input[type='checkbox']").click({ force: true });
       cy.get("#bulk-delete-btn").should("be.visible").and("contain.text", "Xóa (5)");
-      cy.get("thead th").first().find("input[type='checkbox']").click();
+      cy.get("thead th").first().find("input[type='checkbox']").click({ force: true });
       cy.get("#bulk-delete-btn").should("not.exist");
 
       // 5. Tương tác click dòng (Row Click)
@@ -1174,128 +1622,472 @@ describe("Table & DataTable Component Tests (Single Mount Harness)", () => {
     });
   });
 
-  it("verifies TanStack Query adapter hook (useTableQuery) integrates seamlessly with DataTable", () => {
-    interface ServerUser {
-      id: string;
-      name: string;
-      email: string;
-      role: string;
-    }
+  it("3. Mở rộng xem chi tiết Sub-component (renderExpandedRow & Detail Panel - Nút chỉ có trên row)", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <DetailPanelDemo />
+      </div>
+    );
 
-    const mockServerDb: ServerUser[] = [
-      { id: "1", name: "Nguyễn Văn A", email: "vana@example.com", role: "Admin" },
-      { id: "2", name: "Trần Thị B", email: "thib@example.com", role: "Editor" },
-      { id: "3", name: "Lê Văn C", email: "vanc@example.com", role: "Viewer" },
-      { id: "4", name: "Phạm Minh D", email: "minhd@example.com", role: "Admin" },
-      { id: "5", name: "Hoàng Tuấn E", email: "tuane@example.com", role: "Editor" },
-      { id: "6", name: "Đỗ Mai F", email: "maif@example.com", role: "Viewer" },
-      { id: "7", name: "Vũ Hải G", email: "haig@example.com", role: "Admin" },
-      { id: "8", name: "Bùi Kiên H", email: "kienh@example.com", role: "Editor" },
-    ];
+    cy.get("[data-testid='expanding-detail-section']").within(() => {
+      // Header tuyệt đối KHÔNG có nút mở rộng / toggle-all
+      cy.get("[data-testid='table-toggle-all-rows-expanded']").should("not.exist");
+      cy.get("thead th [data-testid^='table-row-expand-button']").should("not.exist");
 
-    function TableQueryInner() {
-      const helper = createTableColumnHelper<ServerUser>();
-      const columns = useMemo(
-        () => [
-          helper.accessor("id", { header: "ID" }),
-          helper.accessor("name", { header: "Họ và tên" }),
-          helper.accessor("email", { header: "Email" }),
-          helper.accessor("role", { header: "Vai trò" }),
-        ],
-        [helper]
-      );
+      // Ban đầu hiển thị 3 dòng dữ liệu, chưa mở detail panel
+      cy.get("tbody tr").should("have.length", 3);
+      cy.get("[data-testid^='detail-content-']").should("not.exist");
 
-      const { tableProps, queryParams, resetAll } = useTableQuery<
-        ServerUser,
-        { items: ServerUser[]; total: number }
-      >({
-        queryKey: ["test-users"],
-        initialPagination: { pageSize: 3 },
-        queryFn: async (params: TableQueryParams) => {
-          let result = [...mockServerDb];
-          if (params.filters?.role && Array.isArray(params.filters.role) && params.filters.role.length > 0) {
-            result = result.filter((u) => (params.filters?.role as string[]).includes(u.role));
-          }
-          const total = result.length;
-          const start = (params.page - 1) * params.pageSize;
-          const paged = result.slice(start, start + params.pageSize);
-          return { items: paged, total };
-        },
+      // Bấm nút expand ở dòng 0 (ID: 1)
+      cy.get("[data-testid='table-row-expand-button-0']").click();
+
+      // Xuất hiện detail panel của dòng 0 cùng hiệu ứng animation
+      cy.get("[data-testid='detail-content-1']").should("be.visible");
+      cy.contains("Chi tiết người dùng: Nguyễn Văn A").should("be.visible");
+      cy.get("[data-testid='table-expanded-row-0'] .animate-table-expand-wrapper").should("exist");
+      cy.get("[data-testid='table-expanded-row-0'] .animate-table-expand-content").should("exist");
+      cy.get("[data-testid='table-row-expand-button-0'] svg").should("have.class", "rotate-90");
+
+      // Bấm thu gọn lại
+      cy.get("[data-testid='table-row-expand-button-0']").click();
+      cy.get("[data-testid='detail-content-1']").should("not.exist");
+    });
+  });
+
+  it("4. Dữ liệu cây phân cấp đa tầng (Multi-level Tree Data & getSubRows)", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <TreeDataDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='expanding-tree-section']").within(() => {
+      // Header không có nút expand
+      cy.get("[data-testid='table-toggle-all-rows-expanded']").should("not.exist");
+
+      // Ban đầu hiển thị 2 dòng gốc (root-1, root-2)
+      cy.get("tbody tr").should("have.length", 2);
+      cy.contains("td", "Khối Công Nghệ").should("be.visible");
+      cy.contains("td", "Khối Kinh Doanh").should("be.visible");
+      cy.contains("td", "Trung Tâm Phần Mềm").should("not.exist");
+
+      // Mở rộng dòng root-1 (dòng 0)
+      cy.get("[data-testid='table-row-expand-button-0']").click();
+
+      // Xuất hiện thêm 2 dòng con (child-1-1 và child-1-2) cùng hiệu ứng sub-row
+      cy.contains("td", "Trung Tâm Phần Mềm").should("be.visible");
+      cy.contains("td", "Trung Tâm Hạ Tầng").should("be.visible");
+      cy.get("tbody tr").should("have.length", 4);
+      cy.get("tbody tr.animate-table-subrow-in").should("have.length.at.least", 2);
+
+      // Mở rộng tiếp dòng con child-1-1 (dòng 1 / index 0.0)
+      cy.get("[data-testid='table-row-expand-button-0.0']").click();
+
+      // Xuất hiện dòng cháu (grandchild-1-1-1)
+      cy.contains("td", "Nhóm Frontend").should("be.visible");
+      cy.get("tbody tr").should("have.length", 5);
+
+      // Dòng lá (grandchild-1-1-1) không có con nên hiển thị ký hiệu rẽ nhánh ↳
+      cy.contains("tbody tr", "Nhóm Frontend").within(() => {
+        cy.contains("span", "↳").should("be.visible");
+      });
+    });
+  });
+
+  it("5. Mở rộng tích hợp vào cột tùy biến qua expandColumnId", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <CustomExpandColumnDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='expanding-custom-col-section']").within(() => {
+      // Header không có nút toggle all
+      cy.get("[data-testid='table-toggle-all-rows-expanded']").should("not.exist");
+
+      // Nút expand nằm ở cột email (ô thứ 3, index 2)
+      cy.get("tbody tr").first().find("td").eq(2).within(() => {
+        cy.get("[data-testid='table-row-expand-button-0']").should("be.visible").click();
       });
 
-      return (
-        <div data-testid="table-query-section" className="p-4 bg-white rounded-lg">
-          <div className="flex justify-between items-center mb-2">
-            <span data-testid="query-page-display">Trang: {queryParams.page}</span>
-            <button data-testid="reset-query-btn" onClick={resetAll}>
-              Reset Query
-            </button>
-          </div>
-          <DataTable
-            columns={columns}
-            filters={[
-              {
-                name: "role",
-                label: "Vai trò",
-                type: "select",
-                options: [
-                  { label: "Admin", value: "Admin" },
-                  { label: "Editor", value: "Editor" },
-                ],
-              },
-            ]}
-            {...tableProps}
-          />
+      cy.get("[data-testid='custom-expand-detail-1']").should("be.visible");
+    });
+  });
+
+  it("6. Mở rộng dạng cột độc lập (expandColumnMode='standalone')", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <StandaloneExpandColumnDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='expanding-standalone-section']").within(() => {
+      // Header không có nút toggle all
+      cy.get("[data-testid='table-toggle-all-rows-expanded']").should("not.exist");
+      cy.get("thead th").first().find("button").should("not.exist");
+
+      // Cột đầu tiên là cột expand độc lập
+      cy.get("tbody tr").first().find("td").first().within(() => {
+        cy.get("[data-testid='table-row-expand-button-0']").should("be.visible").click();
+      });
+
+      cy.get("[data-testid='standalone-detail-1']").should("be.visible");
+    });
+  });
+
+  it("7. Trạng thái mở rộng có điều khiển (Controlled Expanded State)", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <ControlledExpandDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='expanding-controlled-section']").within(() => {
+      // Dòng 0 mở sẵn theo initial state
+      cy.get("[data-testid='controlled-detail-1']").should("be.visible");
+
+      // Bấm "Mở tất cả"
+      cy.get("#btn-expand-all").click();
+      cy.get("[data-testid='controlled-detail-1']").should("be.visible");
+      cy.get("[data-testid='controlled-detail-2']").should("be.visible");
+      cy.get("[data-testid='controlled-detail-3']").should("be.visible");
+
+      // Bấm "Đóng tất cả"
+      cy.get("#btn-collapse-all").click();
+      cy.get("[data-testid^='controlled-detail-']").should("not.exist");
+    });
+  });
+
+  it("8. Low-level UI Primitives (Semantic Table, TableHeader, Variants, Sizes)", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <PrimitivesDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='primitives-section']").within(() => {
+      // 1.1 Basic Table structure
+      cy.get("[data-testid='primitive-table']").should("exist");
+      cy.get("table").should("exist");
+      cy.get("thead").should("exist");
+      cy.get("tbody").should("exist");
+      cy.get("tfoot").should("exist");
+      cy.get("caption").contains("Bảng kê doanh số mẫu").should("be.visible");
+      cy.contains("Mã HĐ").should("be.visible");
+      cy.contains("#INV-001").should("be.visible");
+      cy.contains("Tổng cộng").should("be.visible");
+      cy.contains("2.050.000 đ").should("be.visible");
+
+      // 1.2 Variants
+      cy.get("[data-testid='striped-table']").should("exist");
+      cy.get("[data-testid='bordered-table']").should("exist");
+    });
+  });
+
+  it("9. High-level Interactive DataTable (Sorting, Global Filter, Pagination, Selection)", () => {
+    const onRowClick = cy.stub().as("onRowClick");
+    const onRefresh = cy.stub().as("onRefresh");
+
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <InteractiveTableDemo
+          onRowClickStub={onRowClick}
+          onRefreshStub={onRefresh}
+        />
+      </div>
+    );
+
+    cy.get("[data-testid='interactive-datatable-section']").within(() => {
+      // Khởi tạo và hiển thị cột, dòng ban đầu
+      cy.contains("Họ và tên").should("be.visible");
+      cy.contains("Email").should("be.visible");
+      cy.contains("Vai trò").should("be.visible");
+      cy.contains("Trạng thái").should("be.visible");
+
+      // Trang 1 với pageSize = 5: hiển thị 5 dòng đầu
+      cy.get("tbody tr").should("have.length", 5);
+      cy.contains("Nguyễn Văn A").should("be.visible");
+      cy.contains("Trần Thị B").should("be.visible");
+      cy.contains("Lê Văn C").should("be.visible");
+      cy.contains("Phạm Minh D").should("be.visible");
+      cy.contains("Hoàng Tuấn E").should("be.visible");
+
+      // Kiểm tra Sắp xếp (Sorting)
+      cy.contains("button", "Họ và tên").click();
+      cy.contains("th", "Họ và tên").should("have.attr", "aria-sort", "ascending");
+      cy.get("tbody tr").first().should("contain.text", "Bùi Kiên H");
+
+      cy.contains("button", "Họ và tên").click();
+      cy.contains("th", "Họ và tên").should("have.attr", "aria-sort", "descending");
+      cy.get("tbody tr").first().should("contain.text", "Đỗ Mai F");
+
+      cy.contains("button", "ID").click();
+
+      // Kiểm tra Tìm kiếm toàn bảng (Global Filter)
+      cy.get("input[placeholder='Tìm kiếm trong bảng...']").type("Nguyễn Văn A");
+      cy.get("tbody tr").should("have.length", 1);
+      cy.contains("Nguyễn Văn A").should("be.visible");
+      cy.get("button[aria-label='Xóa tìm kiếm']").click();
+      cy.get("tbody tr").should("have.length", 5);
+
+      // Kiểm tra Phân trang (Pagination)
+      cy.get("button[aria-label='Trang sau']").click();
+      cy.get("button[aria-label='Trang 2']").should("have.attr", "aria-current", "page");
+      cy.get("button[aria-label='Trang trước']").click();
+      cy.get("button[aria-label='Trang 1']").should("have.attr", "aria-current", "page");
+
+      // Kiểm tra Chọn dòng (Row Selection & Bulk Actions)
+      cy.get("input[aria-label='Chọn tất cả các dòng trên trang này']").check({ force: true });
+      cy.get("#bulk-delete-btn").should("be.visible").and("contain.text", "Xóa (5)");
+      cy.get("input[aria-label='Chọn tất cả các dòng trên trang này']").uncheck({ force: true });
+      cy.get("#bulk-delete-btn").should("not.exist");
+
+      // Kiểm tra sự kiện onRowClick
+      cy.get("tbody tr").first().click();
+      cy.get("@onRowClick").should("have.been.calledOnce");
+
+      // Kiểm tra nút làm mới dữ liệu
+      cy.get("[data-testid='table-refresh-button']").should("be.visible").click();
+      cy.get("@onRefresh").should("have.been.calledOnce");
+    });
+  });
+
+  it("10. DataTable ở trạng thái Đang tải (Loading Skeleton)", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <LoadingTableDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='loading-datatable-section']").within(() => {
+      cy.get("tbody tr").should("have.length", 3);
+      cy.get("tbody tr").first().find("td").should("have.length", defaultColumns.length);
+    });
+  });
+
+  it("11. DataTable ở trạng thái Rỗng (Empty State)", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <EmptyTableDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='empty-datatable-section']").within(() => {
+      cy.contains("Không có dữ liệu trong bảng").should("be.visible");
+    });
+  });
+
+  it("12. DataTable Phân trang nhiều trang (65 dòng dữ liệu, 13 trang & Ellipsis)", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <ManyPagesTableDemo />
+      </div>
+    );
+
+    cy.get("[data-testid='many-pages-datatable-section']").within(() => {
+      cy.get("tbody tr").should("have.length", 5);
+      cy.contains("Thành viên 1").should("be.visible");
+      cy.get("button[aria-label='Trang 1']").should("have.attr", "aria-current", "page");
+      cy.contains("span", "...").should("be.visible");
+      cy.get("button[aria-label='Trang 13']").should("be.visible");
+
+      // Click trang cuối -> trang 13
+      cy.get("button[aria-label='Trang cuối']").click();
+      cy.contains("Thành viên 61").should("be.visible");
+      cy.get("button[aria-label='Trang 13']").should("have.attr", "aria-current", "page");
+
+      // Click trang 9 (ở giữa)
+      cy.get("button[aria-label='Trang 9']").click();
+      cy.get("button[aria-label='Trang 9']").should("have.attr", "aria-current", "page");
+
+      // Click trang đầu -> quay lại trang 1
+      cy.get("button[aria-label='Trang đầu']").click();
+      cy.get("button[aria-label='Trang 1']").should("have.attr", "aria-current", "page");
+      cy.contains("Thành viên 1").should("be.visible");
+    });
+  });
+
+  it("13. DataTable Kéo thả và thay đổi thứ tự cột (Column Ordering / Dnd)", () => {
+    const onColumnOrderChange = cy.stub().as("onColumnOrderChange");
+
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <div className="max-w-[1280px] mx-auto p-6 bg-white rounded-xl border border-neutral-200 shadow-xs">
+          <ColumnOrderingDemo onColumnOrderChangeStub={onColumnOrderChange} />
         </div>
-      );
-    }
+      </div>
+    );
 
-    function TableQueryDemo() {
-      const queryClient = useMemo(
-        () =>
-          new QueryClient({
-            defaultOptions: {
-              queries: {
-                retry: false,
-              },
-            },
-          }),
-        []
-      );
+    cy.get("th[data-column-id='id']").should("have.class", "cursor-grab");
+    cy.get("th[data-column-id='name']").should("have.class", "cursor-grab");
+    cy.get("th[data-column-id='email']").should("have.class", "cursor-grab");
 
-      return (
-        <QueryClientProvider client={queryClient}>
-          <TableQueryInner />
-        </QueryClientProvider>
-      );
-    }
+    // Đảo ngược thứ tự cột
+    cy.get("#reorder-columns-btn").click();
+    cy.get("@onColumnOrderChange").should("have.been.calledWith", [
+      "status",
+      "role",
+      "email",
+      "name",
+      "id",
+    ]);
+    cy.get("thead th").eq(0).should("contain.text", "Trạng thái");
+    cy.get("thead th").eq(4).should("contain.text", "ID");
 
-    cy.mount(<TableQueryDemo />);
+    // Đặt lại mặc định
+    cy.get("#reset-columns-btn").click();
+    cy.get("thead th").eq(0).should("contain.text", "ID");
+    cy.get("thead th").eq(4).should("contain.text", "Trạng thái");
+  });
 
-    // Kiểm tra dữ liệu khởi tạo (trang 1 có 3 dòng trên tổng số 8 dòng)
+  it("14. DataTable Bộ lọc Menu nâng cao (Client-side & Server-side filtering)", () => {
+    const onColumnFiltersChange = cy.stub().as("onColumnFiltersChange");
+
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <FilterTableDemo onColumnFiltersChangeStub={onColumnFiltersChange} />
+      </div>
+    );
+
+    // Client-side filtering
+    cy.get("[data-testid='client-filter-datatable-section']").within(() => {
+      cy.get("[data-testid='table-search-input']").should("have.class", "rounded-full");
+      cy.get("[data-testid='table-add-filter-button']").click();
+    });
+
+    cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
+    cy.get("[data-testid='filter-option-role']").click();
+
+    cy.get("[data-testid='filter-popover-role']").should("be.visible");
+    cy.get("[data-testid='filter-popover-role']").contains("label", "Admin").click();
+    cy.get("[data-testid='filter-popover-role']").contains("button", "Xong").click();
+
+    cy.get("[data-testid='client-filter-datatable-section']").within(() => {
+      cy.get("tbody tr").should("have.length", 3);
+      cy.get("tbody tr").each(($row) => {
+        cy.wrap($row).find("td").eq(3).should("contain.text", "Admin");
+      });
+      cy.get("[data-testid='table-filter-reset-button']").click();
+      cy.get("tbody tr").should("have.length", 12);
+    });
+
+    // Server-side filtering
+    cy.get("[data-testid='server-filter-datatable-section']").within(() => {
+      cy.get("[data-testid='table-add-filter-button']").click();
+    });
+
+    cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
+    cy.get("[data-testid='filter-option-status']").click();
+
+    cy.get("[data-testid='filter-popover-status']").should("be.visible");
+    cy.get("[data-testid='filter-popover-status']").contains("label", "Active").click();
+    cy.get("[data-testid='filter-popover-status']").contains("button", "Xong").click();
+
+    cy.get("@onColumnFiltersChange").should("have.been.calledWith", [
+      { id: "status", value: ["Active"] },
+    ]);
+
+    // manualFiltering = true nên không lọc client
+    cy.get("[data-testid='server-filter-datatable-section']").within(() => {
+      cy.get("tbody tr").should("have.length", 12);
+    });
+  });
+
+  it("15. Tích hợp TanStack Query với adapter hook useTableQuery", () => {
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <TableQueryDemo />
+      </div>
+    );
+
     cy.get("[data-testid='table-query-section']").within(() => {
       cy.get("tbody tr").should("have.length", 3);
       cy.contains("span", "Tổng 8 dòng").should("be.visible");
       cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 1");
 
       // Chuyển sang trang 2
-      cy.get("button[aria-label='Trang tiếp theo']").click();
+      cy.get("button[aria-label='Trang sau']").click();
       cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 2");
-      cy.get("tbody tr").should("have.length", 3);
-
-      // Tìm kiếm toàn bảng lọc client-side trên trang hiện tại (Hoàng Tuấn E)
-      cy.get("[data-testid='table-search-input']").type("Hoàng");
-      cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 2");
-      cy.get("tbody tr").should("have.length", 1);
-      cy.contains("td", "Hoàng Tuấn E").should("be.visible");
-
-      // Xóa từ khóa search
-      cy.get("[data-testid='table-clear-search-button']").click();
       cy.get("tbody tr").should("have.length", 3);
 
       // Reset toàn bộ query
       cy.get("[data-testid='reset-query-btn']").click();
       cy.get("[data-testid='query-page-display']").should("contain.text", "Trang: 1");
     });
+  });
+
+  it("16. Debounce ở chế độ server cho tất cả các loại filter (Input, Number, Select, Reset, Remove chip)", () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    const queryFnSpy = cy.stub().as("queryFnSpy");
+
+    cy.mount(
+      <QueryClientProvider client={queryClient}>
+        <div className="p-8 bg-neutral-100 min-h-screen">
+          <ServerDebounceFilterDemo queryFnStub={queryFnSpy} />
+        </div>
+      </QueryClientProvider>
+    );
+
+    // Khởi tạo ban đầu: queryFn được gọi 1 lần với trang 1
+    cy.get("@queryFnSpy").should("have.been.calledOnce");
+
+    // 1. Kiểm tra bộ lọc Text / Input: mở popover và gõ ký tự
+    cy.get("[data-testid='server-debounce-section']").within(() => {
+      cy.get("[data-testid='table-add-filter-button']").click();
+    });
+    cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
+    cy.get("[data-testid='filter-option-name']").click();
+
+    cy.get("[data-testid='filter-popover-name']").should("be.visible");
+    cy.get("[data-testid='filter-popover-name'] input").type("Thao");
+    // Badge chip cập nhật giá trị hiển thị ngay lập tức (zero-latency)
+    cy.get("[data-testid='filter-chip-val-name']").should("contain.text", "Thao");
+    // API queryFn được gọi sau khi debounce 150ms
+    cy.get("@queryFnSpy").should("have.been.calledWith", Cypress.sinon.match({
+      filters: { name: "Thao" },
+    }));
+    cy.get("[data-testid='filter-popover-name']").contains("button", "Xong").click();
+
+    // 2. Kiểm tra bộ lọc Number Input: mở popover và gõ số
+    cy.get("[data-testid='server-debounce-section']").within(() => {
+      cy.get("[data-testid='table-add-filter-button']").click();
+    });
+    cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
+    cy.get("[data-testid='filter-option-age']").click();
+
+    cy.get("[data-testid='filter-popover-age']").should("be.visible");
+    cy.get("[data-testid='filter-popover-age'] input").type("28");
+    cy.get("[data-testid='filter-chip-val-age']").should("contain.text", "28");
+    cy.get("@queryFnSpy").should("have.been.calledWith", Cypress.sinon.match({
+      filters: { name: "Thao", age: 28 },
+    }));
+    cy.get("[data-testid='filter-popover-age']").contains("button", "Xong").click();
+
+    // 3. Kiểm tra bộ lọc Select (CheckboxGroup): chọn tùy chọn
+    cy.get("[data-testid='server-debounce-section']").within(() => {
+      cy.get("[data-testid='table-add-filter-button']").click();
+    });
+    cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
+    cy.get("[data-testid='filter-option-role']").click();
+
+    cy.get("[data-testid='filter-popover-role']").should("be.visible");
+    cy.get("[data-testid='filter-popover-role']").contains("label", "Admin").click();
+    cy.get("[data-testid='filter-chip-val-role']").should("contain.text", "Admin");
+    cy.get("@queryFnSpy").should("have.been.calledWith", Cypress.sinon.match({
+      filters: { name: "Thao", age: 28, role: ["Admin"] },
+    }));
+    cy.get("[data-testid='filter-popover-role']").contains("button", "Xong").click();
+
+    // 4. Kiểm tra xóa chip bộ lọc: phát tín hiệu ngay lập tức
+    cy.get("[data-testid='filter-chip-age'] button[aria-label='Xóa bộ lọc Tuổi']").click();
+    cy.get("@queryFnSpy").should("have.been.calledWith", Cypress.sinon.match({
+      filters: { name: "Thao", role: ["Admin"] },
+    }));
+
+    // 5. Kiểm tra nút Đặt lại (Reset all): phát tín hiệu ngay lập tức
+    cy.get("[data-testid='table-filter-reset-button']").click();
+    cy.get("@queryFnSpy").should("have.been.calledWith", Cypress.sinon.match((params: TableQueryParams) => {
+      return !params.filters || Object.keys(params.filters).length === 0;
+    }));
   });
 });

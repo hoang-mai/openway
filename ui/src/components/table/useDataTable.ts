@@ -8,9 +8,11 @@ import {
   columnVisibilityFeature,
   columnPinningFeature,
   columnOrderingFeature,
+  rowExpandingFeature,
   createSortedRowModel,
   createPaginatedRowModel,
   createFilteredRowModel,
+  createExpandedRowModel,
   createColumnHelper,
   useTable,
   type TableOptions,
@@ -24,7 +26,7 @@ import { fuzzyFilter } from "./fuzzyFilter";
  * Bộ features tiêu chuẩn của @openway/ui dành cho TanStack Table v9.
  * Bao gồm: Sắp xếp (Sorting), Phân trang (Pagination), Chọn dòng (Row Selection),
  * Lọc cột & Lọc toàn bảng (Column & Global Filtering), Ẩn/hiện cột (Visibility),
- * Ghim cột (Pinning), và Sắp xếp thứ tự cột (Column Ordering).
+ * Ghim cột (Pinning), Sắp xếp thứ tự cột (Column Ordering), và Mở rộng dòng (Row Expanding).
  */
 export const defaultTableFeatures = tableFeatures({
   rowSortingFeature,
@@ -35,9 +37,11 @@ export const defaultTableFeatures = tableFeatures({
   columnVisibilityFeature,
   columnPinningFeature,
   columnOrderingFeature,
+  rowExpandingFeature,
   sortedRowModel: createSortedRowModel(),
   paginatedRowModel: createPaginatedRowModel(),
   filteredRowModel: createFilteredRowModel(),
+  expandedRowModel: createExpandedRowModel(),
   filterFns: {
     fuzzy: fuzzyFilter,
   },

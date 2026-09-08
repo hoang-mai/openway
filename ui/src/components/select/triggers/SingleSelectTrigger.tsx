@@ -30,6 +30,7 @@ export interface SingleSelectTriggerProps<TData = unknown> {
   onClear?: (e: React.MouseEvent) => void;
   clearable?: boolean;
   isLoading?: boolean;
+  showSpinner?: boolean;
   startContent?: ReactNode;
   endContent?: ReactNode;
   renderValue?: (selected: SelectOptionItem<TData>) => ReactNode;
@@ -58,6 +59,7 @@ export function SingleSelectTrigger<TData = unknown>({
   onClear,
   clearable = false,
   isLoading = false,
+  showSpinner = false,
   startContent,
   endContent,
   renderValue,
@@ -129,6 +131,7 @@ export function SingleSelectTrigger<TData = unknown>({
       isOpen={isOpen}
       disabled={disabled}
       isLoading={isLoading}
+      showSpinner={showSpinner}
       showClear={showClear}
       onClear={onClear}
       startContent={startContent}

@@ -35,11 +35,11 @@ export interface UseMutationAppToastOptions<TData, TError, TVariables> {
   success?: ReactNode | ((data: TData, variables: TVariables) => ReactNode);
 
   /**
-   * Nội dung thông báo khi mutation thất bại.
-   * - `true`: Tự động trích xuất thông điệp lỗi từ API/Error qua `extractErrorMessage`.
+   * Tiêu đề thông báo khi mutation thất bại.
+   * - `true`: Hiển thị tiêu đề lỗi mặc định ("Đã xảy ra lỗi").
    * - `false`: Không hiển thị toast lỗi.
-   * - `ReactNode`: Thông điệp lỗi cố định.
-   * - `(error, variables) => ReactNode`: Hàm tạo thông điệp lỗi linh hoạt.
+   * - `ReactNode`: Tiêu đề lỗi cố định.
+   * - `(error, variables) => ReactNode`: Hàm tạo tiêu đề lỗi linh hoạt.
    * @default true
    */
   error?: boolean | ReactNode | ((error: TError, variables: TVariables) => ReactNode);
@@ -56,6 +56,7 @@ export interface UseMutationAppToastOptions<TData, TError, TVariables> {
 
   /**
    * Nội dung mô tả chi tiết (description) cho thông báo lỗi.
+   * Nếu không truyền, tự động trích xuất thông điệp từ API/Error qua `extractErrorMessage`.
    */
   errorDescription?: ReactNode | ((error: TError, variables: TVariables) => ReactNode);
 
@@ -443,15 +444,21 @@ export function useMutationApp<
         if (typeof effectiveError === "function") {
           errorTitle = effectiveError(error, variables);
         } else if (effectiveError === true) {
-          errorTitle = extractErrorMessage(error);
+          errorTitle = "Đã xảy ra lỗi";
         } else {
           errorTitle = effectiveError;
         }
 
-        const errorDesc =
+        const customErrorDesc =
           typeof toastDetails.errorDescription === "function"
             ? toastDetails.errorDescription(error, variables)
             : toastDetails.errorDescription;
+
+        // Details (description): ưu tiên cấu hình riêng, nếu không có thì tự động bóc tách từ API
+        const errorDesc =
+          customErrorDesc !== undefined
+            ? (customErrorDesc || undefined)
+            : extractErrorMessage(error);
 
         toast.error(errorTitle, errorDesc, {
           ...customToastOptions,

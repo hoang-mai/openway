@@ -253,7 +253,7 @@ export interface DateRangePickerConfig {
 
   /**
    * Mở rộng chiếm toàn bộ 100% chiều ngang container cha
-   * @default false
+   * @default true
    */
   isFullWidth?: boolean;
 
@@ -403,7 +403,7 @@ export interface DateRangePickerProps {
 
   /**
    * Vị trí hiển thị của nhãn tiêu đề
-   * @default "top"
+   * @default "floating"
    */
   labelPlacement?: LabelPlacement;
 

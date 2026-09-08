@@ -19,14 +19,32 @@ export type FuzzyFeatures = TableFeatures & { filterMeta: FuzzyFilterMeta };
  * - Không phân biệt chữ hoa / chữ thường (Case-insensitive)
  * - Đính kèm thông tin `RankingInfo` vào metadata qua `addMeta` để hỗ trợ sắp xếp theo độ liên quan
  */
+function removeVietnameseTones(str: string): string {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D");
+}
+
 export const fuzzyFilter: FilterFn<FuzzyFeatures, RowData> = (
   row,
   columnId,
   value,
   addMeta
 ) => {
-  // Rank the item
-  const itemRank = rankItem(row.getValue(columnId), String(value ?? ""));
+  const cellValue = String(row.getValue(columnId) ?? "");
+  const query = String(value ?? "");
+
+  // Rank the item with original value
+  let itemRank = rankItem(cellValue, query);
+
+  // If not passed, attempt matching with stripped Vietnamese diacritics
+  if (!itemRank.passed) {
+    const normalizedCell = removeVietnameseTones(cellValue);
+    const normalizedQuery = removeVietnameseTones(query);
+    itemRank = rankItem(normalizedCell, normalizedQuery);
+  }
 
   // Store the itemRank info
   addMeta?.({ itemRank });

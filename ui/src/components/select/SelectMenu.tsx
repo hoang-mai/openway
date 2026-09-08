@@ -17,6 +17,8 @@ import Spinner from "@/components/icons/Spinner";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { menuRadiusConfig } from "./constants";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 export interface SelectMenuProps<TData = unknown, TFilters extends Record<string, unknown> = Record<string, unknown>> {
   isOpen: boolean;
@@ -31,6 +33,7 @@ export interface SelectMenuProps<TData = unknown, TFilters extends Record<string
   radius?: SelectRadius;
   isLoading?: boolean;
   portal?: boolean;
+  portalRoot?: HTMLElement | null | React.RefObject<HTMLElement | null>;
   maxMenuHeight?: number | string;
   emptyText?: ReactNode;
   emptyProps?: Partial<EmptyProps>;
@@ -70,6 +73,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
   radius = "md",
   isLoading = false,
   portal = true,
+  portalRoot,
   maxMenuHeight = 280,
   emptyText,
   emptyProps,
@@ -93,6 +97,9 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
   listElementsRef,
   className = "",
 }: SelectMenuProps<TData, TFilters>) {
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
+
   const shouldRender = isMounted !== undefined ? isMounted : isOpen;
   if (!shouldRender) return null;
 
@@ -196,8 +203,10 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
     </div>
   );
 
+  const effectivePortalRoot = portalRoot ?? modalContext?.dialogRef ?? confirmContext?.dialogRef;
+
   if (portal) {
-    return <FloatingPortal>{menuContent}</FloatingPortal>;
+    return <FloatingPortal root={effectivePortalRoot}>{menuContent}</FloatingPortal>;
   }
 
   return menuContent;

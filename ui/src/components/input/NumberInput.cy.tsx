@@ -220,7 +220,7 @@ describe("NumberInput Component", () => {
         return (
           <NumberInput
             label="Giá tour"
-            isClearable
+            config={{ isClearable: true }}
             rightAddon="VNĐ"
             value={val}
             onChange={(e) => setVal(e.target.value)}
@@ -296,7 +296,7 @@ describe("NumberInput Component", () => {
                   rightAddon="₫"
                   value={vnd}
                   onChange={(e) => setVnd(e.target.value)}
-                  isClearable
+                  config={{ isClearable: true }}
                   onClear={() => setVnd("")}
                   helperText="Tự động thêm dấu chấm mỗi 3 số"
                 />
@@ -350,7 +350,7 @@ describe("NumberInput Component", () => {
                   rightAddon="°C"
                   value={temp}
                   onChange={(e) => setTemp(e.target.value)}
-                  isClearable
+                  config={{ isClearable: true }}
                   maxDecimalDigits={2}
                   onClear={() => setTemp("")}
                   helperText="Có thể gõ dấu trừ (-) ở đầu"
@@ -401,7 +401,7 @@ describe("NumberInput Component", () => {
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   rightAddon="kg"
-                  isClearable
+                  config={{ isClearable: true }}
                   onClear={() => setWeight("")}
                   helperText="Tối đa 2 chữ số thập phân"
                 />
@@ -490,7 +490,7 @@ describe("NumberInput Component", () => {
                   value={usd}
                   onChange={(e) => setUsd(e.target.value)}
                   rightAddon="$"
-                  isClearable
+                  config={{ isClearable: true }}
                   onClear={() => setUsd("")}
                   helperText="Format quốc tế: phân cách nghìn bằng dấu phẩy (,), thập phân bằng dấu chấm (.)"
                 />

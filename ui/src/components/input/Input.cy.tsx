@@ -541,7 +541,7 @@ describe("Input Component", () => {
                 </h3>
                 <Input
                   label="Tìm kiếm"
-                  isClearable
+                  config={{ isClearable: true }}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   onClear={() => setSearch("")}
@@ -593,7 +593,7 @@ describe("Input Component", () => {
                 <Input
                   label="Họ và Tên"
                   labelPlacement="floating"
-                  isRequired
+                  config={{ isRequired: true }}
                   value={floatingVal}
                   onChange={(e) => setFloatingVal(e.target.value)}
                   placeholder="Nguyễn Văn A"
@@ -719,18 +719,17 @@ describe("Input Component", () => {
               <Input
                 label="Label Top (Mặc định)"
                 labelPlacement="top"
-                isRequired
+                config={{ isRequired: true }}
                 placeholder="Nhập họ và tên..."
                 helperText="Điền đầy đủ họ và tên theo CCCD"
               />
               <Input
                 label="Label Left (Nằm ngang)"
                 labelPlacement="left"
-                isRequired
+                config={{ isRequired: true, isFullWidth: true }}
                 placeholder="Nhập email..."
-                isFullWidth
               />
-              <Input label="Floating Label" labelPlacement="floating" isRequired isFullWidth />
+              <Input label="Floating Label" labelPlacement="floating" config={{ isRequired: true, isFullWidth: true }} />
             </div>
           </section>
 
@@ -761,12 +760,12 @@ describe("Input Component", () => {
               />
               <Input
                 label="Tìm kiếm có nút xóa nhanh"
-                isClearable
+                config={{ isClearable: true }}
                 value="Từ khóa tìm kiếm..."
                 readOnly
                 leftIcon={<MailIcon />}
               />
-              <Input label="Trạng thái đang tải (Loading)" isLoading value="Đang đồng bộ dữ liệu..." readOnly />
+              <Input label="Trạng thái đang tải (Loading)" config={{ isLoading: true }} value="Đang đồng bộ dữ liệu..." readOnly />
             </div>
           </section>
 
@@ -793,7 +792,7 @@ describe("Input Component", () => {
               <Input
                 label="Địa chỉ Email (Lỗi tĩnh)"
                 value="email-khong-hop-le"
-                isInvalid
+                config={{ isInvalid: true }}
                 readOnly
                 errorMessage="Định dạng email không đúng (vd: ten@domain.com)"
                 leftIcon={<MailIcon />}

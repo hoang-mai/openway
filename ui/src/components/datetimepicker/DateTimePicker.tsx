@@ -30,6 +30,8 @@ import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 /**
  * Component DateTimePicker - Ô chọn Ngày & Giờ tích hợp theo Design System.
@@ -65,7 +67,7 @@ export default function DateTimePicker({
   color = "primary",
   radius,
   label,
-  labelPlacement = "top",
+  labelPlacement = "floating",
   placeholder,
   helperText,
   errorMessage,
@@ -84,13 +86,15 @@ export default function DateTimePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimePickerProps) {
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
     isLoading = false,
     showSpinner = false,
     isClearable = true,
-    isFullWidth = false,
+    isFullWidth = true,
     closeOnSelect = false,
     showWeekNumbers = false,
     showViewTabs = false,
@@ -228,10 +232,12 @@ export default function DateTimePicker({
     </span>
   );
 
+  const hasFloatingLabel = isFloating && Boolean(label);
+
   const fieldWrapperClasses = [
     "group/field group/datetimepicker relative flex",
     isHorizontal ? "flex-row items-center gap-3" : "flex-col",
-    isFloating ? "pt-2" : "",
+    hasFloatingLabel ? "pt-2" : "",
     isFullWidth ? "w-full" : "inline-flex",
     wrapperClassName,
   ]
@@ -328,7 +334,7 @@ export default function DateTimePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal>
+          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

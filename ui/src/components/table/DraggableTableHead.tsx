@@ -14,8 +14,8 @@ export function DraggableTableHead<TData extends RowData = RowData, TValue = unk
   disabled = false,
   className = "",
 }: DraggableTableHeadProps<TData, TValue>) {
-  const isSelectCol = header.column.id === "_select";
-  const isDisabled = disabled || isSelectCol;
+  const isSystemCol = header.column.id === "_select" || header.column.id === "_expand";
+  const isDisabled = disabled || isSystemCol;
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: header.column.id,

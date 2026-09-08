@@ -155,7 +155,10 @@ export interface TimePickerConfig {
   showSpinner?: boolean;
   /** Hiển thị nút xóa nhanh thời gian đã chọn */
   isClearable?: boolean;
-  /** Mở rộng chiều ngang 100% container cha */
+  /**
+   * Mở rộng chiều ngang 100% container cha
+   * @default true
+   */
   isFullWidth?: boolean;
   /** Tự động đóng popover sau khi người dùng chọn xong */
   closeOnSelect?: boolean;
@@ -209,7 +212,10 @@ export interface TimePickerProps {
   radius?: TimePickerRadius;
   /** Nhãn tiêu đề hiển thị cho ô nhập */
   label?: ReactNode;
-  /** Vị trí đặt nhãn tiêu đề */
+  /**
+   * Vị trí đặt nhãn tiêu đề
+   * @default 'floating'
+   */
   labelPlacement?: LabelPlacement;
   /** Văn bản giữ chỗ khi ô input rỗng */
   placeholder?: string;
@@ -231,8 +237,6 @@ export interface TimePickerProps {
   onClear?: () => void;
   /** Vị trí hiển thị của popover chọn giờ */
   placement?: Placement;
-  /** Render popover qua FloatingPortal vào body (mặc định true) */
-  portal?: boolean;
   /** Class CSS tùy biến cho thẻ input */
   className?: string;
   /** Class CSS tùy biến cho wrapper ngoài cùng */

@@ -162,19 +162,13 @@ export function BasicInputExample() {
 | `label` | `ReactNode` | — | Nhãn tiêu đề hiển thị cho ô nhập liệu. |
 | `labelPlacement` | `'floating' \| 'top' \| 'left'` | `'floating'` | Vị trí hiển thị của nhãn. |
 | `config` | `InputConfig` | — | Cấu hình tập trung các cờ trạng thái / tính năng (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`). |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu sao đỏ `*` và đánh dấu `aria-required="true"`. |
 | `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn/trợ giúp bên dưới ô. |
 | `errorMessage` | `ReactNode` | — | Thông báo lỗi khi nhập sai (tự kích hoạt trạng thái báo lỗi). |
-| `isInvalid` | `boolean` | `false` | Bật trạng thái viền đỏ báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Khóa tương tác, bật `aria-busy="true"` và `aria-disabled="true"`. |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi `isLoading={true}`. |
 | `leftIcon` | `ReactNode` | — | Icon hiển thị ở đầu ô input. |
 | `rightIcon` | `ReactNode` | — | Icon hiển thị ở cuối ô input. |
 | `leftAddon` | `ReactNode` | — | Addon / prefix cố định ở đầu ô input (vd: `'https://'`). |
 | `rightAddon` | `ReactNode` | — | Addon / suffix cố định ở cuối ô input (vd: `'.com'`). |
-| `isClearable` | `boolean` | `false` | Hiển thị nút xóa nhanh nội dung khi có văn bản. |
 | `onClear` | `() => void` | — | Callback được gọi khi bấm nút xóa nhanh. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng chiếm toàn bộ 100% chiều ngang container cha. |
 | `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp đến thẻ `<input>` HTML bên dưới. |
 
 ---

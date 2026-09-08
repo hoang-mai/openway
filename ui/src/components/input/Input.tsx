@@ -45,7 +45,7 @@ export default function Input({
     isLoading = false,
     showSpinner = false,
     isClearable = false,
-    isFullWidth = false,
+    isFullWidth = true,
   } = config ?? {};
 
   const generatedId = useId();
@@ -96,6 +96,7 @@ export default function Input({
   );
 
   const isFloating = labelPlacement === "floating";
+  const hasFloatingLabel = isFloating && Boolean(label);
 
   // Label Element
   const renderLabel = () => (
@@ -137,9 +138,9 @@ export default function Input({
 
   return (
     <div
-      className={`group/field flex ${
+      className={`group/field relative flex ${
         isHorizontal ? "flex-row items-center gap-3" : "flex-col"
-      } ${isFullWidth ? "w-full" : "inline-flex"} ${wrapperClassName}`}
+      } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${wrapperClassName}`}
     >
       {!isFloating && renderLabel()}
 

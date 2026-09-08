@@ -19,8 +19,13 @@ Bộ component **Table** và **DataTable** chuyên nghiệp, tích hợp sâu v�
   - 📄 **Phân trang chuyên nghiệp (Pagination)**: Điều hướng trang đầu, trang trước, trang sau, trang cuối; chọn số dòng mỗi trang (10, 20, 50, 100).
   - ☑️ **Chọn dòng (Row Selection)**: Tự động render checkbox chọn từng dòng hoặc chọn toàn bộ dòng trên trang, kèm thanh hiển thị số lượng dòng đã chọn và khu vực Bulk Actions.
   - 👁️ **Ẩn/hiện cột (Column Visibility)**: Dropdown menu popover cho phép người dùng chủ động chọn cột cần xem.
+  - 🌲 **Mở rộng dòng & Dữ liệu cây (Row Expanding & Tree Data)**:
+    - Hỗ trợ mở rộng xem chi tiết phụ (Detail Panel / Sub-component) gộp toàn bộ cột (`renderExpandedRow`), dễ dàng tích hợp `useQuery` để fetch dữ liệu chi tiết.
+    - Hỗ trợ dữ liệu cây phân cấp đệ quy nhiều tầng (Cha ➔ Con ➔ Cháu...) hiển thị CÙNG HÀNG & CÙNG CỘT với bảng chính (`getSubRows`).
+    - Nút Chevron mở rộng tự động với animation xoay mượt mà, nút mở rộng/thu gọn tất cả trên header.
+    - Tự động thụt đầu dòng theo cấp độ sâu (`row.depth`), tích hợp cơ chế khống chế mức thụt tối đa (`maxIndentDepth`) để bảo vệ layout.
   - ⏳ **Trạng thái tải & Rỗng thông minh**: Tự động render Skeleton rows khi `isLoading={true}` và hiển thị `<Empty>` minh họa khi bảng không có dữ liệu hoặc không tìm thấy kết quả tìm kiếm.
-  - 🌐 **Hỗ trợ cả Client-side & Server-side (Manual Mode)**: Linh hoạt kết nối API phân trang, tìm kiếm từ máy chủ với `manualPagination`, `manualSorting`, `pageCount`, `rowCount`.
+  - 🌐 **Hỗ trợ cả Client-side & Server-side (Manual Mode)**: Linh hoạt kết nối API phân trang, tìm kiếm từ máy chủ với `manualPagination`, `manualSorting`, `manualExpanding`, `pageCount`, `rowCount`.
 - **3 Kích cỡ hiển thị (`size`)**: `sm` (gọn gàng, dense), `md` (chuẩn - *mặc định*), `lg` (thoáng đãng).
 - **3 Biến thể giao diện (`variant`)**: `default` (viền thanh lịch), `striped` (xen kẽ màu dòng), `bordered` (viền ô đầy đủ).
 
@@ -58,6 +63,7 @@ import type {
   ColumnOrderState,
   TablePaginationProps,
   TableToolbarProps,
+  ExpandedState,
 } from "@openway/ui";
 ```
 
@@ -254,6 +260,97 @@ export function ServerSideTableExample() {
 
 ---
 
+### 5. Mở rộng xem chi tiết phụ (Detail Panel với `renderExpandedRow` & `useQuery`)
+
+Khi người dùng bấm nút mở rộng dòng, bạn có thể render một component con tùy biến. Bên trong component con có thể sử dụng trực tiếp hook `useQuery` của TanStack Query để lấy dữ liệu chi tiết:
+
+```tsx
+import { useQuery } from "@tanstack/react-query";
+import { DataTable, Skeleton } from "@openway/ui";
+
+function OrderDetailPanel({ orderId }: { orderId: string }) {
+  // useQuery chỉ chạy khi dòng cha được bấm mở rộng (component mount)
+  const { data: orderDetail, isLoading } = useQuery({
+    queryKey: ["order-detail", orderId],
+    queryFn: () => fetch(`/api/orders/${orderId}`).then((res) => res.json()),
+  });
+
+  if (isLoading) {
+    return (
+      <div className="p-3">
+        <Skeleton className="h-10 w-full rounded" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 bg-neutral-50 rounded">
+      <h4 className="font-semibold text-neutral-800">Chi tiết đơn hàng #{orderId}</h4>
+      <p className="text-sm text-neutral-600">Địa chỉ giao hàng: {orderDetail?.shippingAddress}</p>
+    </div>
+  );
+}
+
+export function ExpandableDetailTableExample() {
+  return (
+    <DataTable
+      columns={columns}
+      data={ordersData}
+      enableExpanding={true}
+      renderExpandedRow={(row) => <OrderDetailPanel orderId={row.original.id} />}
+    />
+  );
+}
+```
+
+---
+
+### 6. Dữ liệu cây phân cấp đệ quy đa tầng (Multi-level Tree Data với `getSubRows`)
+
+Khi các dòng con có **cùng kiểu dữ liệu và hiển thị CÙNG HÀNG & CÙNG CỘT** với bảng cha (hỗ trợ nhiều cấp cha ➔ con ➔ cháu...), chỉ cần cung cấp hàm `getSubRows`. Hệ thống tự động render dòng con với đầy đủ các cột và tự động thụt lề theo `row.depth`:
+
+```tsx
+import { DataTable, createTableColumnHelper } from "@openway/ui";
+
+interface Department {
+  id: string;
+  name: string;
+  leader: string;
+  budget: number;
+  subRows?: Department[]; // Danh sách phòng ban con
+}
+
+const deptColumnHelper = createTableColumnHelper<Department>();
+
+const deptColumns = deptColumnHelper.columns([
+  deptColumnHelper.accessor("name", {
+    header: "Tên đơn vị",
+  }),
+  deptColumnHelper.accessor("leader", {
+    header: "Trưởng đơn vị",
+  }),
+  deptColumnHelper.accessor("budget", {
+    header: "Ngân sách",
+    cell: (info) => `${info.getValue().toLocaleString("vi-VN")} đ`,
+  }),
+]);
+
+export function DepartmentTreeTableExample() {
+  return (
+    <DataTable
+      columns={deptColumns}
+      data={departmentsData}
+      enableExpanding={true}
+      getSubRows={(row) => row.subRows}
+      maxIndentDepth={4}  // Giới hạn thụt dòng tối đa 4 cấp để không làm co hẹp layout
+      indentSize={1.25}   // 1.25rem mỗi cấp
+    />
+  );
+}
+```
+
+---
+
 ## ⚙️ Bảng thuộc tính (Props Table)
 
 ### `<DataTable />`
@@ -278,6 +375,21 @@ export function ServerSideTableExample() {
 | `enableColumnOrdering` | `boolean` | `false` | Bật tính năng kéo thả thay đổi thứ tự các cột (Drag-and-Drop Column Ordering) |
 | `columnOrder` | `string[]` | `undefined` | Trạng thái mảng thứ tự các cột điều khiển ngoài |
 | `onColumnOrderChange` | `(order) => void` | `undefined` | Callback khi thứ tự cột thay đổi do kéo thả |
+| `enableExpanding` | `boolean` | `false` | Bật tính năng mở rộng dòng (tự động bật nếu có `renderExpandedRow` hoặc `getSubRows`) |
+| `expanded` | `ExpandedState` | `undefined` | Trạng thái dòng mở rộng điều khiển ngoài (Controlled state) |
+| `onExpandedChange` | `(expanded) => void` | `undefined` | Callback khi trạng thái mở rộng dòng thay đổi |
+| `getSubRows` | `(row, index) => TData[] \| undefined` | `undefined` | Hàm lấy dữ liệu con cho cấu trúc cây đa tầng |
+| `getRowCanExpand` | `(row) => boolean` | `undefined` | Điều kiện tùy biến xác định dòng nào có thể mở rộng |
+| `renderExpandedRow` | `(row) => ReactNode` | `undefined` | Render component tùy biến (Detail Panel) bên dưới dòng cha khi mở rộng |
+| `showExpandColumn` | `boolean` | `true` | Tự động hiển thị nút mở rộng dòng khi bật expanding |
+| `expandColumnMode` | `'integrated' \| 'standalone' \| 'none'` | `'integrated'` | Chế độ hiển thị nút mở rộng (`integrated` gộp vào cột đầu tiên, `standalone` tách thành cột `_expand` riêng) |
+| `expandColumnId` | `string` | `undefined` | ID của cột được gộp nút mở rộng khi dùng `expandColumnMode='integrated'` (mặc định lấy cột nội dung đầu tiên) |
+| `expandColumnPosition` | `'start' \| 'end'` | `'start'` | Vị trí đặt cột nút mở rộng dòng khi ở chế độ `standalone` |
+| `maxIndentDepth` | `number` | `4` | Cấp độ sâu thụt lề tối đa cho Tree Data (tránh làm vỡ layout khi lồng sâu) |
+| `indentSize` | `number` | `1.25` | Kích thước thụt lề mỗi cấp tính theo đơn vị `rem` |
+| `manualExpanding` | `boolean` | `false` | Bật chế độ mở rộng thủ công từ máy chủ (Server-side) |
+| `autoResetExpanded` | `boolean` | `true` | Tự động thu gọn các dòng khi dữ liệu thay đổi |
+| `paginateExpandedRows` | `boolean` | `true` | Phân trang các dòng con cùng với các dòng chính của bảng |
 | `searchPlaceholder`| `string` | `"Tìm kiếm trong bảng..."` | Placeholder cho ô tìm kiếm |
 | `toolbarActions` | `ReactNode` | `undefined` | Các nút hành động thêm ở góc phải toolbar |
 | `renderBulkActions`| `(selectedRows) => ReactNode` | `undefined` | Render các nút hành động hàng loạt khi chọn dòng |
@@ -286,6 +398,7 @@ export function ServerSideTableExample() {
 | `manualPagination` | `boolean` | `false` | Bật chế độ phân trang từ máy chủ (Server-side) |
 | `manualSorting` | `boolean` | `false` | Bật chế độ sắp xếp từ máy chủ (Server-side) |
 | `manualFiltering` | `boolean` | `false` | Bật chế độ tìm kiếm từ máy chủ (Server-side) |
+| `debounceMs` | `number` | `300` | Thời gian trì hoãn debounce (ms) khi thay đổi bộ lọc hoặc tìm kiếm ở Server-side (`manualFiltering: true`). Đặt 0 để tắt debounce. |
 | `pageCount` | `number` | `undefined` | Tổng số trang (khi dùng `manualPagination`) |
 | `rowCount` | `number` | `undefined` | Tổng số dòng dữ liệu thực tế (khi dùng `manualPagination`) |
 | `onRowClick` | `(row) => void` | `undefined` | Sự kiện click chuột vào một dòng |

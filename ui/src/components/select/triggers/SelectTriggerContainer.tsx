@@ -8,6 +8,7 @@ export interface SelectTriggerContainerProps {
   isOpen: boolean;
   disabled?: boolean;
   isLoading?: boolean;
+  showSpinner?: boolean;
   showClear?: boolean;
   onClear?: (e: React.MouseEvent) => void;
   startContent?: ReactNode;
@@ -27,6 +28,7 @@ export function SelectTriggerContainer({
   isOpen,
   disabled = false,
   isLoading = false,
+  showSpinner = false,
   showClear = false,
   onClear,
   startContent,
@@ -69,7 +71,7 @@ export function SelectTriggerContainer({
       {children}
 
       <div className="shrink-0 flex items-center gap-1.5 ml-1 text-neutral-400">
-        {isLoading && <Spinner className={`${currentSize.icon} animate-spin text-current`} />}
+        {isLoading && showSpinner && <Spinner className={`${currentSize.icon} animate-spin text-current`} />}
 
         {showClear && !isLoading && (
           <button

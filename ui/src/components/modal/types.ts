@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, Ref } from "react";
+import type { ToasterProps } from "../toast/types";
 
 /**
  * Các kích thước chiều rộng tiêu chuẩn của Modal:
@@ -212,6 +213,15 @@ export interface ModalContainerProps extends HTMLAttributes<HTMLDialogElement> {
    * Class tùy biến CSS cho container bao ngoài dialog
    */
   className?: string;
+
+  /**
+   * Tự động nhúng Toaster bên trong Modal (Top Layer) để hiển thị thông báo toast nổi trên modal.
+   * - `true` (mặc định): Tự động hiển thị Toaster ở góc trên bên phải (top-right).
+   * - `false`: Tắt Toaster bên trong modal.
+   * - `ToasterProps`: Truyền cấu hình tùy biến cho Toaster.
+   * @default true
+   */
+  toaster?: boolean | ToasterProps;
 
   /**
    * Nội dung bên trong container (thường là component `<Modal>`)

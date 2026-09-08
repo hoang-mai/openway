@@ -20,7 +20,8 @@
       "types": "./dist/query.d.ts",
       "import": "./dist/query.js",
       "require": "./dist/query.cjs"
-    }
+    },
+    "./styles.css": "./dist/styles.css"
   },
   "files": [
     "dist",

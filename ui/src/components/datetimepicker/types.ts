@@ -76,7 +76,7 @@ export interface DateTimePickerConfig {
 
   /**
    * Chiếm toàn bộ 100% chiều rộng container
-   * @default false
+   * @default true
    */
   isFullWidth?: boolean;
 
@@ -273,7 +273,7 @@ export interface DateTimePickerProps {
 
   /**
    * Vị trí nhãn ('top' | 'left' | 'floating')
-   * @default 'top'
+   * @default 'floating'
    */
   labelPlacement?: LabelPlacement;
 

@@ -53,7 +53,7 @@ export interface TextAreaConfig {
 
   /**
    * Chiếm toàn bộ chiều rộng 100% của container cha
-   * @default false
+   * @default true
    */
   isFullWidth?: boolean;
 }
@@ -105,10 +105,10 @@ export interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaE
 
   /**
    * Vị trí của nhãn:
-   * - 'top': nằm phía trên textarea (mặc định cho textarea)
+   * - 'floating': nằm cố định chính giữa viền trên (mặc định)
+   * - 'top': nằm phía trên textarea
    * - 'left': nằm bên trái textarea
-   * - 'floating': nằm cố định chính giữa viền trên
-   * @default 'top'
+   * @default 'floating'
    */
   labelPlacement?: TextAreaLabelPlacement;
 

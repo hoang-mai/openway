@@ -12,6 +12,7 @@ export const sizeConfig: Record<
     gap: string;
     badgeSize: BadgeSize;
     defaultRadius: SelectRadius;
+    helper: string;
   }
 > = {
   xs: {
@@ -23,6 +24,7 @@ export const sizeConfig: Record<
     gap: "gap-1",
     badgeSize: "xs",
     defaultRadius: "sm",
+    helper: "text-[9px] mt-0.5",
   },
   sm: {
     trigger: "min-h-8 text-xs px-2.5 py-1",
@@ -33,6 +35,7 @@ export const sizeConfig: Record<
     gap: "gap-1",
     badgeSize: "xs",
     defaultRadius: "md",
+    helper: "text-[10px] mt-0.5",
   },
   md: {
     trigger: "min-h-10 text-sm px-3.5 py-1.5",
@@ -43,6 +46,7 @@ export const sizeConfig: Record<
     gap: "gap-1.5",
     badgeSize: "sm",
     defaultRadius: "lg",
+    helper: "text-[11px] mt-1",
   },
   lg: {
     trigger: "min-h-12 text-base px-4 py-2",
@@ -53,6 +57,7 @@ export const sizeConfig: Record<
     gap: "gap-2",
     badgeSize: "md",
     defaultRadius: "xl",
+    helper: "text-xs mt-1",
   },
   xl: {
     trigger: "min-h-14 text-lg px-5 py-2.5",
@@ -63,6 +68,7 @@ export const sizeConfig: Record<
     gap: "gap-2",
     badgeSize: "lg",
     defaultRadius: "xl",
+    helper: "text-sm mt-1",
   },
 };
 

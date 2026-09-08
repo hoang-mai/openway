@@ -1,4 +1,5 @@
 import { defineConfig } from "tsup";
+import fs from "node:fs";
 
 export default defineConfig({
   entry: ["src/index.ts", "src/query.ts"],
@@ -19,5 +20,8 @@ export default defineConfig({
   ],
   banner: {
     js: '"use client";',
+  },
+  onSuccess: async () => {
+    fs.copyFileSync("src/styles.css", "dist/styles.css");
   },
 });

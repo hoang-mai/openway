@@ -29,6 +29,8 @@ import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { dateRangeCalendarRadiusConfig, dateRangePickerRadiusConfig, dateRangePickerVariantStyles } from "@/components/daterangepicker/constants";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 /**
  * Component DateTimeRangePicker - Ô chọn khoảng Ngày & Giờ (Start - End) chuyên nghiệp theo Design System.
@@ -67,7 +69,7 @@ export default function DateTimeRangePicker({
   color = "primary",
   radius,
   label,
-  labelPlacement = "top",
+  labelPlacement = "floating",
   placeholder,
   placeholders,
   helperText,
@@ -87,13 +89,15 @@ export default function DateTimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimeRangePickerProps) {
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
     isLoading = false,
     showSpinner = false,
     isClearable = true,
-    isFullWidth = false,
+    isFullWidth = true,
     closeOnSelect = false,
     showWeekNumbers = false,
     showViewTabs = false,
@@ -275,10 +279,12 @@ export default function DateTimeRangePicker({
     </span>
   );
 
+  const hasFloatingLabel = isFloating && Boolean(label);
+
   const fieldWrapperClasses = [
     "group/field group/datetimerangepicker relative flex",
     isHorizontal ? "flex-row items-center gap-3" : "flex-col",
-    isFloating ? "pt-2" : "",
+    hasFloatingLabel ? "pt-2" : "",
     isFullWidth ? "w-full" : "inline-flex",
     wrapperClassName,
   ]
@@ -377,7 +383,7 @@ export default function DateTimeRangePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal>
+          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

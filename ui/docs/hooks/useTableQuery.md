@@ -99,6 +99,7 @@ export function UserManagementTable() {
 | `initialPage` | `number` | `1` | Trang bắt đầu (1-indexed). |
 | `initialPageSize` | `number` | `10` | Số dòng hiển thị mỗi trang. |
 | `autoResetPageIndex` | `boolean` | `true` | Tự động quay về trang 1 khi đổi bộ lọc hoặc sắp xếp. |
+| `debounceMs` | `number` | `300` | Thời gian trì hoãn debounce (ms) khi thay đổi bộ lọc ở chế độ server trước khi gọi API. Đặt 0 để tắt. |
 | `queryOptions` | `Omit<UseQueryOptions, ...>` | `undefined` | Các cấu hình nâng cao của TanStack Query (`staleTime`, `refetchInterval`...). |
 
 ---
@@ -114,11 +115,15 @@ export function UserManagementTable() {
   - `onSortingChange: OnChangeFn<SortingState>`
   - `columnFilters: ColumnFiltersState`
   - `onColumnFiltersChange: OnChangeFn<ColumnFiltersState>`
+  - `globalFilter: string`
+  - `onGlobalFilterChange: (filter: string) => void`
+  - `debounceMs: number`
   - `isLoading: boolean`
   - `manualPagination: true`
   - `manualSorting: true`
   - `manualFiltering: true`
 - `query`: Query result từ `useQuery`.
+- `queryParams`: Tham số truy vấn chuẩn hóa gửi lên API máy chủ (`page`, `pageSize`, `sortBy`, `sortOrder`, `filters`).
 - `page`, `setPage`: Xem và thay đổi số trang hiện tại.
 - `pageSize`, `setPageSize`: Xem và thay đổi số dòng/trang.
 - `resetFilters`: Đặt lại toàn bộ bộ lọc.

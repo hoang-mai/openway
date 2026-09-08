@@ -2,6 +2,7 @@ import { useEffect, useEffectEvent, useCallback, useMemo, useRef, useState } fro
 import { MODAL_EXIT_ANIMATION_DURATION } from "./constants";
 import { ModalContainerProps } from "./types";
 import { ModalContext } from "./ModalContext";
+import Toaster from "../toast/Toaster";
 
 export default function ModalContainer({
   open = false,
@@ -13,6 +14,7 @@ export default function ModalContainer({
   lockScroll = true,
   overlayClassName = "",
   className = "",
+  toaster = true,
   children,
   onClose,
   ...props
@@ -39,6 +41,7 @@ export default function ModalContainer({
       onClose: handleTriggerClose,
       isLoading,
       size,
+      dialogRef,
     }),
     [handleTriggerClose, isLoading, size]
   );
@@ -137,6 +140,12 @@ export default function ModalContainer({
         className={`fixed inset-0 flex items-center justify-center p-4 bg-neutral-950/40 backdrop-blur-xs border-none m-0 max-w-none max-h-none w-screen h-screen overflow-visible backdrop:bg-transparent ${backdropAnimation} ${overlayClassName}`}
         {...props}
       >
+        {toaster !== false && (
+          <Toaster
+            position="top-right"
+            {...(typeof toaster === "object" ? toaster : {})}
+          />
+        )}
         <div
           aria-hidden="true"
           onClick={handleOverlayClick}

@@ -218,7 +218,7 @@ Kế thừa toàn bộ options chuẩn của `UseMutationOptions` từ TanStack 
 | `toast` | `boolean \| UseMutationAppToastOptions` | `true` | Cấu hình Toast thông báo. Truyền `false` để tắt toàn bộ toast. |
 | `loadingMessage` | `ReactNode \| ((vars) => ReactNode)` | `undefined` | Shortcut đặt thông báo loading khi đang chạy. |
 | `successMessage` | `ReactNode \| ((data, vars) => ReactNode)` | `undefined` | Shortcut đặt thông báo khi thành công. |
-| `errorMessage` | `ReactNode \| ((err, vars) => ReactNode)` | `undefined` | Shortcut đặt thông báo lỗi tùy biến (mặc định tự bóc tách lỗi qua `extractErrorMessage`). |
+| `errorMessage` | `ReactNode \| ((err, vars) => ReactNode)` | `undefined` | Shortcut đặt tiêu đề lỗi tùy biến (chi tiết lỗi bên dưới vẫn tự động bóc tách từ API qua `extractErrorMessage`). |
 | `onSuccess` | `(data, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback chạy sau khi mutation thành công và sau khi đã refresh cache. |
 | `onError` | `(error, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback chạy khi mutation gặp lỗi. |
 | `onSettled` | `(data, error, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback chạy khi mutation kết thúc (dù thành công hay thất bại). |

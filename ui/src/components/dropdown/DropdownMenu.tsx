@@ -6,6 +6,8 @@ import { DropdownMenuProps } from "./types";
 import { sizeConfig, radiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { DEFAULT_Z_INDEX } from "@/constants";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 export default function DropdownMenu({
   ref: propRef,
@@ -38,6 +40,9 @@ export default function DropdownMenu({
     animated,
   });
 
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
+
   if (!isMounted) {
     return null;
   }
@@ -54,8 +59,10 @@ export default function DropdownMenu({
     .filter(Boolean)
     .join(" ");
 
+  const effectivePortalRoot = modalContext?.dialogRef ?? confirmContext?.dialogRef;
+
   return (
-    <FloatingPortal>
+    <FloatingPortal root={effectivePortalRoot}>
       <div
         ref={mergedRef}
         style={{

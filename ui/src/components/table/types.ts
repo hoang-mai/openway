@@ -1,4 +1,22 @@
 import type { HTMLAttributes, ReactNode, Ref, TdHTMLAttributes, ThHTMLAttributes } from "react";
+import type {
+  ColumnDef,
+  Column,
+  Row,
+  RowSelectionState,
+  SortingState,
+  ColumnVisibilityState,
+  PaginationState,
+  ColumnFiltersState,
+  ExpandedState,
+  OnChangeFn,
+  RowData,
+  ReactTable,
+  Header,
+  ColumnHelper,
+  FilterFnOption,
+} from "@tanstack/react-table";
+
 export type {
   ColumnDef,
   Column,
@@ -8,28 +26,14 @@ export type {
   ColumnVisibilityState,
   PaginationState,
   ColumnFiltersState,
+  ExpandedState,
   OnChangeFn,
   RowData,
   ReactTable,
   Header,
   ColumnHelper,
-} from "@tanstack/react-table";
-import type {
-  ColumnDef,
-  ColumnHelper,
-  Row,
-  RowSelectionState,
-  SortingState,
-  ColumnVisibilityState,
-  PaginationState,
-  ColumnFiltersState,
-  OnChangeFn,
-  RowData,
-  ReactTable,
-  Header,
-  Column,
   FilterFnOption,
-} from "@tanstack/react-table";
+};
 import type { DefaultTableFeatures } from "./useDataTable";
 export type { RankingInfo } from "./fuzzyFilter";
 
@@ -397,6 +401,11 @@ export interface TableFilterDef<TValue = unknown> {
   props?: Record<string, unknown>;
 
   /**
+   * Thời gian trì hoãn debounce (ms) riêng cho trường lọc này ở chế độ server (tùy chọn)
+   */
+  debounceMs?: number;
+
+  /**
    * Hàm render component tùy biến khi `type: 'custom'`
    */
   render?: (props: {
@@ -642,6 +651,14 @@ export interface DataTableProps<TData extends RowData = RowData> {
   manualFiltering?: boolean;
 
   /**
+   * Thời gian trì hoãn debounce (ms) khi thay đổi bộ lọc hoặc tìm kiếm ở chế độ server (`manualFiltering: true`).
+   * Áp dụng cho toàn bộ các trường Input, NumberInput, DatePicker, DateRangePicker, CheckboxGroup/Select, custom và tìm kiếm toàn bảng.
+   * Đặt 0 để tắt debounce (gọi ngay lập tức).
+   * @default 300
+   */
+  debounceMs?: number;
+
+  /**
    * Tổng số trang trả về từ máy chủ (bắt buộc khi dùng `manualPagination={true}`)
    */
   pageCount?: number;
@@ -733,6 +750,102 @@ export interface DataTableProps<TData extends RowData = RowData> {
    * Callback khi trạng thái bộ lọc cột thay đổi (trả về mảng ColumnFiltersState của TanStack Table)
    */
   onColumnFiltersChange?: ((filters: ColumnFiltersState) => void) | OnChangeFn<ColumnFiltersState>;
+
+  // --- MỞ RỘNG DÒNG (ROW EXPANDING & TREE DATA) ---
+
+  /**
+   * Bật tính năng mở rộng dòng (tự động bật nếu có `renderExpandedRow`, `getSubRows`, hoặc `expanded`)
+   * @default false
+   */
+  enableExpanding?: boolean;
+
+  /**
+   * Bật hiệu ứng mở rộng mượt mà (smooth slide down, fade in và hiệu ứng chuyển động)
+   * @default true
+   */
+  enableExpandingAnimation?: boolean;
+
+  /**
+   * Trạng thái dòng mở rộng điều khiển ngoài (Controlled state): `Record<rowId, boolean> | true`
+   */
+  expanded?: ExpandedState;
+
+  /**
+   * Callback khi trạng thái mở rộng dòng thay đổi
+   */
+  onExpandedChange?: ((expanded: ExpandedState) => void) | OnChangeFn<ExpandedState>;
+
+  /**
+   * Hàm trích xuất dữ liệu con cho cấu trúc cây phân cấp (Tree Data đa tầng)
+   */
+  getSubRows?: (originalRow: TData, index: number) => undefined | TData[];
+
+  /**
+   * Điều kiện tùy biến xác định dòng nào có thể mở rộng được
+   */
+  getRowCanExpand?: (row: Row<DefaultTableFeatures, TData>) => boolean;
+
+  /**
+   * Bật chế độ mở rộng thủ công từ máy chủ (Server-side expanding)
+   * @default false
+   */
+  manualExpanding?: boolean;
+
+  /**
+   * Tự động thu gọn các dòng đã mở rộng khi dữ liệu thay đổi hoặc phân trang
+   * @default true
+   */
+  autoResetExpanded?: boolean;
+
+  /**
+   * Phân trang các dòng con cùng với các dòng chính của bảng
+   * @default true
+   */
+  paginateExpandedRows?: boolean;
+
+  /**
+   * Hàm render giao diện tùy biến (Detail Panel gộp colSpan) bên dưới dòng cha khi mở rộng
+   */
+  renderExpandedRow?: (row: Row<DefaultTableFeatures, TData>) => ReactNode;
+
+  /**
+   * Tự động hiển thị nút mở rộng dòng
+   * @default true (khi tính năng expanding được kích hoạt)
+   */
+  showExpandColumn?: boolean;
+
+  /**
+   * Chế độ hiển thị nút mở rộng dòng:
+   * - 'integrated': Tích hợp trực tiếp nút mở rộng và thụt lề vào cột dữ liệu đầu tiên (mặc định, không tách riêng cột)
+   * - 'standalone': Tách thành một cột riêng biệt `_expand`
+   * - 'none': Không tự động render UI nút mở rộng
+   * @default 'integrated'
+   */
+  expandColumnMode?: "integrated" | "standalone" | "none";
+
+  /**
+   * ID cột được tích hợp nút mở rộng khi dùng chế độ `expandColumnMode='integrated'`.
+   * Mặc định tự động gắn vào cột nội dung đầu tiên (sau cột `_select`).
+   */
+  expandColumnId?: string;
+
+  /**
+   * Vị trí đặt cột nút mở rộng dòng khi ở chế độ `expandColumnMode='standalone'` ('start' ở đầu bảng, 'end' ở cuối bảng)
+   * @default 'start'
+   */
+  expandColumnPosition?: "start" | "end";
+
+  /**
+   * Mức độ thụt đầu dòng tối đa cho dữ liệu dạng cây (tránh thụt quá sâu làm vỡ layout)
+   * @default 4
+   */
+  maxIndentDepth?: number;
+
+  /**
+   * Khoảng cách thụt lề cho mỗi cấp độ sâu (tính bằng rem)
+   * @default 1.25
+   */
+  indentSize?: number;
 
   // --- SỰ KIỆN TƯƠNG TÁC ---
 

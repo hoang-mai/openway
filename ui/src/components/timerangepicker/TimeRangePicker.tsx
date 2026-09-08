@@ -28,6 +28,8 @@ import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 /**
  * Component TimeRangePicker - Ô chọn khoảng thời gian (Start Time - End Time) chuyên nghiệp theo Design System.
@@ -58,7 +60,7 @@ export default function TimeRangePicker({
   color = "primary",
   radius,
   label,
-  labelPlacement = "top",
+  labelPlacement = "floating",
   placeholder,
   placeholders,
   helperText,
@@ -78,13 +80,15 @@ export default function TimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: TimeRangePickerProps) {
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
     isLoading = false,
     showSpinner = false,
     isClearable = true,
-    isFullWidth = false,
+    isFullWidth = true,
     closeOnSelect = false,
   } = config ?? {};
 
@@ -245,10 +249,12 @@ export default function TimeRangePicker({
     </span>
   );
 
+  const hasFloatingLabel = isFloating && Boolean(label);
+
   const fieldWrapperClasses = [
     "group/field group/timerangepicker relative flex",
     isHorizontal ? "flex-row items-center gap-3" : "flex-col",
-    isFloating ? "pt-2" : "",
+    hasFloatingLabel ? "pt-2" : "",
     isFullWidth ? "w-full" : "inline-flex",
     wrapperClassName,
   ]
@@ -345,7 +351,7 @@ export default function TimeRangePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal>
+          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

@@ -23,6 +23,8 @@ import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 export default function DatePicker({
   ref,
@@ -42,7 +44,7 @@ export default function DatePicker({
   color = "primary",
   radius,
   label,
-  labelPlacement = "top",
+  labelPlacement = "floating",
   placeholder,
   helperText,
   errorMessage,
@@ -65,13 +67,15 @@ export default function DatePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DatePickerProps) {
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
     isLoading = false,
     showSpinner = false,
     isClearable = true,
-    isFullWidth = false,
+    isFullWidth = true,
     showWeekNumbers = false,
     showViewTabs = false,
     closeOnSelect = true,
@@ -200,10 +204,12 @@ export default function DatePicker({
     </span>
   );
 
+  const hasFloatingLabel = isFloating && Boolean(label);
+
   const fieldWrapperClasses = [
     "group/field group/datepicker relative flex",
     isHorizontal ? "flex-row items-center gap-3" : "flex-col",
-    isFloating ? "pt-2" : "",
+    hasFloatingLabel ? "pt-2" : "",
     isFullWidth ? "w-full" : "inline-flex",
     wrapperClassName,
   ]
@@ -325,7 +331,7 @@ export default function DatePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal>
+          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

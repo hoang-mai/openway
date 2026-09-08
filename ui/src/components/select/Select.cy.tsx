@@ -12,6 +12,7 @@ import {
   LabelPlacement,
 } from "./types";
 import { Button } from "@/components/button";
+import { ModalContainer, Modal, ModalBody, ModalHeader } from "@/components/modal";
 
 // ==========================================
 // MOCK DATA
@@ -218,7 +219,7 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
                 label={`Size: ${s}`}
                 options={fruitsOptions}
                 defaultValue="apple"
-                clearable
+                config={{ isClearable: true }}
               />
             ))}
           </div>
@@ -372,14 +373,14 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
             label="Trạng thái Báo lỗi (Invalid)"
             options={fruitsOptions}
             defaultValue="orange"
-            isInvalid
+            config={{ isInvalid: true }}
             errorMessage="Mục đã chọn không khả dụng"
           />
           <Select
             label="Trạng thái Đang tải (Loading)"
             options={fruitsOptions}
             defaultValue="grape"
-            isLoading
+            config={{ isLoading: true, showSpinner: true }}
             helperText="Đang đồng bộ dữ liệu..."
           />
         </div>
@@ -472,7 +473,7 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
               placeholder="Chọn hoa quả..."
               options={fruitsOptions}
               value={singleVal}
-              clearable
+              config={{ isClearable: true }}
               helperText="Nhấn vào icon 'x' để xóa lựa chọn nhanh"
               onChange={(next) => {
                 setSingleVal(next);
@@ -496,7 +497,7 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
               placeholder="Gõ 'nho', 'xoai' để tìm..."
               options={fruitsOptions}
               value={singleSearchVal}
-              clearable
+              config={{ isClearable: true }}
               helperText="Gõ trực tiếp trên ô chọn để lọc đúng 1 kết quả"
               onChange={(next) => setSingleSearchVal(next)}
             />
@@ -663,7 +664,7 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
               id="test-server-search"
               searchable
               searchMode="server"
-              isLoading={serverLoading}
+              config={{ isLoading: serverLoading }}
               options={serverOptions}
               value={serverVal}
               onChange={(next) => setServerVal(next)}
@@ -1024,4 +1025,70 @@ describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {
     cy.get("#infinite-select [role='listbox']").contains("Kết quả: Laptop").should("be.visible");
     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("not.exist");
   });
+
+  it("renders SelectMenu on top of Modal when Select is placed inside ModalContainer", () => {
+    const ModalWithSelect = () => {
+      const [val, setVal] = useState<string | null>(null);
+      return (
+        <ModalContainer open={true} onClose={() => {}}>
+          <Modal>
+            <ModalHeader title="Modal with Select" />
+            <ModalBody>
+              <Select
+                id="modal-select"
+                label="Chọn trái cây"
+                options={fruitsOptions}
+                value={val}
+                onChange={(newVal) => setVal(newVal as string)}
+                placeholder="Chọn một loại quả..."
+              />
+            </ModalBody>
+          </Modal>
+        </ModalContainer>
+      );
+    };
+
+    cy.mount(<ModalWithSelect />);
+
+    // Click trigger bên trong modal
+    cy.get("#modal-select-trigger").click();
+
+    // Menu phải hiển thị visible trong Top Layer của dialog, không bị che khuất
+    cy.get("[role='listbox']").should("be.visible");
+    cy.get("[role='listbox']").contains("Táo (Apple)").click({ force: true });
+    cy.get("#modal-select-trigger").contains("Táo (Apple)").should("be.visible");
+  });
+
+  it("handles isLoading state and conditionally displays spinner only when showSpinner=true for Select and MultiSelect", () => {
+    cy.mount(
+      <div className="space-y-4 p-4">
+        <Select
+          id="select-loading-no-spinner"
+          options={fruitsOptions}
+          config={{ isLoading: true, showSpinner: false }}
+        />
+        <Select
+          id="select-loading-with-spinner"
+          options={fruitsOptions}
+          config={{ isLoading: true, showSpinner: true }}
+        />
+        <MultiSelect
+          id="multiselect-loading-no-spinner"
+          options={fruitsOptions}
+          config={{ isLoading: true, showSpinner: false }}
+        />
+        <MultiSelect
+          id="multiselect-loading-with-spinner"
+          options={fruitsOptions}
+          config={{ isLoading: true, showSpinner: true }}
+        />
+      </div>
+    );
+
+    cy.get("#select-loading-no-spinner svg.animate-spin").should("not.exist");
+    cy.get("#select-loading-with-spinner svg.animate-spin").should("be.visible");
+    cy.get("#multiselect-loading-no-spinner svg.animate-spin").should("not.exist");
+    cy.get("#multiselect-loading-with-spinner svg.animate-spin").should("be.visible");
+  });
 });
+

@@ -1,5 +1,6 @@
 import { HTMLAttributes, ReactNode, Ref } from "react";
 import { ButtonColor, ButtonProps, ButtonVariant } from "../button/types";
+import type { ToasterProps } from "../toast/types";
 
 /**
  * Các kích thước chiều rộng tiêu chuẩn của Confirm:
@@ -320,6 +321,15 @@ export interface ConfirmContainerProps extends HTMLAttributes<HTMLDialogElement>
    * Class tùy biến CSS cho container bao ngoài dialog
    */
   className?: string;
+
+  /**
+   * Tự động nhúng Toaster bên trong Confirm dialog (Top Layer) để hiển thị thông báo toast nổi trên confirm.
+   * - `true` (mặc định): Tự động hiển thị Toaster ở góc trên bên phải (top-right).
+   * - `false`: Tắt Toaster bên trong confirm dialog.
+   * - `ToasterProps`: Truyền cấu hình tùy biến cho Toaster.
+   * @default true
+   */
+  toaster?: boolean | ToasterProps;
 
   /**
    * Nội dung bên trong container (thường là component `<Confirm>`)

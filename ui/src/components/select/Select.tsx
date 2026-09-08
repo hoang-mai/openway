@@ -6,6 +6,8 @@ import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
 import { useSelectFloating } from "./hooks/useSelectFloating";
 import { useSelectSearch } from "./hooks/useSelectSearch";
+import { sizeConfig } from "./constants";
+import { getSafeConfig } from "@/utils/function";
 import { createOptionsMap, getSelectedOption } from "./utils";
 
 const DEFAULT_OPTIONS: never[] = [];
@@ -22,14 +24,12 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   radius = "md",
   id: idProp,
   label,
-  labelPlacement = "top",
+  labelPlacement = "floating",
   placeholder = "Chọn...",
   helperText,
   errorMessage,
-  isInvalid: isInvalidProp,
   isDisabled = false,
   readOnly = false,
-  isRequired = false,
   name,
   searchable = false,
   searchMode = "client",
@@ -51,11 +51,10 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   onSearch,
   debounceMs = 300,
   filterFn,
-  isLoading = false,
   emptyText,
   emptyProps,
-  clearable = false,
   portal = true,
+  portalRoot,
   placement = "bottom-start",
   maxMenuHeight = 280,
   animated = true,
@@ -64,13 +63,26 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   endContent,
   renderValue,
   renderOption,
+  config,
   className = "",
   triggerClassName = "",
   menuClassName = "",
   labelClassName = "",
+  helperClassName = "",
   ...props
 }: SelectProps<TData, TFilters>) {
-  const isInvalid = Boolean(isInvalidProp ?? !!errorMessage);
+  const {
+    isRequired = false,
+    isInvalid: isInvalidConfig = false,
+    isLoading = false,
+    showSpinner = false,
+    isClearable = false,
+    isFullWidth = true,
+  } = config ?? {};
+
+  const isInvalid = Boolean(isInvalidConfig ?? !!errorMessage);
+  const clearable = isClearable;
+  const currentSize = getSafeConfig(size, sizeConfig, "md");
 
   const isControlled = value !== undefined;
   const [uncontrolledValue, setUncontrolledValue] = useState<string | number | null>(defaultValue ?? null);
@@ -199,95 +211,108 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
     />
   );
 
+  const hasFloatingLabel = isFloating && Boolean(label);
+
   return (
     <div
       ref={ref}
       id={idProp}
-      className={`group/field flex ${
+      className={`group/field relative flex ${
         isHorizontal ? "flex-row items-center gap-3" : "flex-col"
-      } ${isFloating ? "pt-2" : ""} ${className}`}
+      } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${className}`}
       data-disabled={isDisabled}
       data-invalid={isInvalid}
       {...props}
     >
       {!isFloating && renderLabel()}
 
-      {/* Trigger & Menu Container */}
-      <div className="relative flex-1 min-w-0">
-        {isFloating && renderLabel()}
-        <SingleSelectTrigger
-          id={triggerId}
-          triggerRef={refs.setReference}
-          getReferenceProps={getReferenceProps}
-          selectedOption={selectedOption}
-          isOpen={isOpen}
-          size={size}
-          variant={variant}
-          color={color}
-          radius={radius}
-          placeholder={searchPlaceholder || placeholder}
-          disabled={isDisabled}
-          readOnly={readOnly}
-          isInvalid={isInvalid}
-          searchable={searchable}
-          searchPlacement={searchPlacement}
-          searchValue={searchInput}
-          onSearchChange={handleSearchChange}
-          onClear={handleClear}
-          clearable={clearable}
-          isLoading={isLoading}
-          startContent={startContent}
-          endContent={endContent}
-          renderValue={renderValue}
-          onKeyDown={handleTriggerKeyDown}
-          className={triggerClassName}
-        />
+      {/* Main column containing Trigger & Helper/Error Text */}
+      <div className={`flex flex-col ${isFullWidth ? "w-full" : "flex-1 min-w-0"}`}>
+        {/* Trigger & Menu Container */}
+        <div className="relative w-full">
+          {isFloating && renderLabel()}
+          <SingleSelectTrigger
+            id={triggerId}
+            triggerRef={refs.setReference}
+            getReferenceProps={getReferenceProps}
+            selectedOption={selectedOption}
+            isOpen={isOpen}
+            size={size}
+            variant={variant}
+            color={color}
+            radius={radius}
+            placeholder={searchPlaceholder || placeholder}
+            disabled={isDisabled}
+            readOnly={readOnly}
+            isInvalid={isInvalid}
+            searchable={searchable}
+            searchPlacement={searchPlacement}
+            searchValue={searchInput}
+            onSearchChange={handleSearchChange}
+            onClear={handleClear}
+            clearable={clearable}
+            isLoading={isLoading}
+            showSpinner={showSpinner}
+            startContent={startContent}
+            endContent={endContent}
+            renderValue={renderValue}
+            onKeyDown={handleTriggerKeyDown}
+            className={triggerClassName}
+          />
 
-        <SelectMenu
-          isOpen={isOpen}
-          isMounted={isMounted}
-          animated={animated}
-          transitionStyles={transitionStyles}
-          options={filteredOptions}
-          selectedValues={currentValue !== null && currentValue !== undefined ? [currentValue] : []}
-          activeIndex={activeIndex}
-          size={size}
-          color={color}
-          radius={radius}
-          isLoading={isLoading}
-          portal={portal}
-          maxMenuHeight={maxMenuHeight}
-          emptyText={emptyText}
-          emptyProps={emptyProps}
-          menuHeader={menuHeader}
-          menuFooter={menuFooter}
-          listFooter={listFooter}
-          menuFilters={menuFilters}
-          menuFilterValues={currentFilters}
-          menuFilterLayout={menuFilterLayout}
-          menuFilterGridCols={menuFilterGridCols}
-          showResetFilters={showResetFilters}
-          resetFiltersText={resetFiltersText}
-          onMenuFilterChange={handleFilterChange}
-          onResetFilters={handleResetFilters}
-          renderOption={renderOption}
-          onSelectOption={handleSelectOption}
-          onOptionMouseEnter={setActiveIndex}
-          floatingRef={refs.setFloating}
-          floatingStyles={floatingStyles}
-          getFloatingProps={getFloatingProps}
-          listElementsRef={elementsRef}
-          className={menuClassName}
+          <SelectMenu
+            isOpen={isOpen}
+            isMounted={isMounted}
+            animated={animated}
+            transitionStyles={transitionStyles}
+            options={filteredOptions}
+            selectedValues={currentValue !== null && currentValue !== undefined ? [currentValue] : []}
+            activeIndex={activeIndex}
+            size={size}
+            color={color}
+            radius={radius}
+            isLoading={isLoading}
+            portal={portal}
+            portalRoot={portalRoot}
+            maxMenuHeight={maxMenuHeight}
+            emptyText={emptyText}
+            emptyProps={emptyProps}
+            menuHeader={menuHeader}
+            menuFooter={menuFooter}
+            listFooter={listFooter}
+            menuFilters={menuFilters}
+            menuFilterValues={currentFilters}
+            menuFilterLayout={menuFilterLayout}
+            menuFilterGridCols={menuFilterGridCols}
+            showResetFilters={showResetFilters}
+            resetFiltersText={resetFiltersText}
+            onMenuFilterChange={handleFilterChange}
+            onResetFilters={handleResetFilters}
+            renderOption={renderOption}
+            onSelectOption={handleSelectOption}
+            onOptionMouseEnter={setActiveIndex}
+            floatingRef={refs.setFloating}
+            floatingStyles={floatingStyles}
+            getFloatingProps={getFloatingProps}
+            listElementsRef={elementsRef}
+            className={menuClassName}
+          />
+        </div>
+
+        {/* Hidden input for form submission */}
+        {name && currentValue !== null && currentValue !== undefined && (
+          <input type="hidden" name={name} value={String(currentValue)} />
+        )}
+
+        {/* Helper text or Error message (Animated & Accessible) */}
+        <HelperErrorText
+          id={`${selectId}-helper`}
+          errorMessage={errorMessage}
+          helperText={helperText}
+          sizeClassName={currentSize.helper}
+          className={helperClassName}
         />
       </div>
-
-      {/* Hidden input for form submission */}
-      {name && currentValue !== null && currentValue !== undefined && (
-        <input type="hidden" name={name} value={String(currentValue)} />
-      )}
-
-      {/* Helper text or Error message (Animated & Accessible) */}
-      <HelperErrorText id={`${selectId}-helper`} errorMessage={errorMessage} helperText={helperText} />
     </div>
   );
 }

@@ -15,6 +15,8 @@ import type {
   Updater,
 } from "@tanstack/react-table";
 import { DEFAULT_PAGE_SIZE } from "../constants";
+import { DEFAULT_DEBOUNCE_DELAY } from "@/constants";
+import { useDebounce } from "@/hooks/useDebounce";
 
 /**
  * Các tham số truy vấn chuẩn hóa gửi lên API máy chủ.
@@ -104,6 +106,13 @@ export interface UseTableQueryOptions<TData extends RowData = RowData, TResponse
   autoResetPageIndex?: boolean;
 
   /**
+   * Thời gian trì hoãn debounce (ms) khi thay đổi bộ lọc hoặc tìm kiếm.
+   * Mặc định là 300ms. Đặt 0 để tắt debounce.
+   * @default 300
+   */
+  debounceMs?: number;
+
+  /**
    * Các tùy chọn nâng cao truyền trực tiếp cho hook `useQuery` của TanStack Query
    * (ví dụ: `staleTime`, `gcTime`, `refetchOnWindowFocus`, `enabled`...).
    */
@@ -126,6 +135,7 @@ export interface UseTableQueryReturn<TData extends RowData = RowData, TResponse 
     manualPagination: true;
     manualSorting: true;
     manualFiltering: true;
+    debounceMs?: number;
     pagination: PaginationState;
     onPaginationChange: OnChangeFn<PaginationState>;
     sorting: SortingState;
@@ -241,6 +251,7 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
     initialColumnFilters,
     initialGlobalFilter,
     autoResetPageIndex = true,
+    debounceMs = DEFAULT_DEBOUNCE_DELAY,
     queryOptions,
   } = options;
 
@@ -253,6 +264,18 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
   const [sorting, setSorting] = useState<SortingState>(initialSorting ?? []);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(initialColumnFilters ?? []);
   const [globalFilter, setGlobalFilter] = useState<string>(initialGlobalFilter ?? "");
+
+  // Debounce bộ lọc cột trước khi gửi lên API máy chủ.
+  // Khi bộ lọc rỗng hoặc vừa xóa chip, gọi API ngay lập tức (delay = 0).
+  const [prevFilterCount, setPrevFilterCount] = useState(columnFilters.length);
+  const isChipRemoved = columnFilters.length < prevFilterCount;
+  if (columnFilters.length !== prevFilterCount) {
+    setPrevFilterCount(columnFilters.length);
+  }
+
+  const effectiveFilterDebounceDelay =
+    columnFilters.length === 0 || isChipRemoved ? 0 : debounceMs;
+  const debouncedColumnFilters = useDebounce(columnFilters, effectiveFilterDebounceDelay);
 
   // 2. Chuẩn hóa tham số query gửi lên server
   const queryParams = useMemo<TableQueryParams>(() => {
@@ -267,16 +290,16 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
       params.sortOrder = firstSort.desc ? "desc" : "asc";
     }
 
-    if (columnFilters.length > 0) {
+    if (debouncedColumnFilters.length > 0) {
       const filtersDict: Record<string, unknown> = {};
-      columnFilters.forEach((cf) => {
+      debouncedColumnFilters.forEach((cf) => {
         filtersDict[cf.id] = cf.value;
       });
       params.filters = filtersDict;
     }
 
     return params;
-  }, [pagination.pageIndex, pagination.pageSize, sorting, columnFilters]);
+  }, [pagination.pageIndex, pagination.pageSize, sorting, debouncedColumnFilters]);
 
   // 3. Ghép queryKey với queryParams
   const fullQueryKey = useMemo(() => [...queryKey, queryParams] as const, [queryKey, queryParams]);
@@ -382,6 +405,7 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
       manualPagination: true as const,
       manualSorting: true as const,
       manualFiltering: true as const,
+      debounceMs,
       pagination,
       onPaginationChange: handlePaginationChange,
       sorting,
@@ -397,6 +421,7 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
       isLoading,
       isRefetching,
       handleRefresh,
+      debounceMs,
       pagination,
       handlePaginationChange,
       sorting,

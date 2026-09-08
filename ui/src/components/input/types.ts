@@ -40,7 +40,7 @@ export interface InputConfig {
 
   /**
    * Mở rộng chiều rộng 100% của container chứa
-   * @default false
+   * @default true
    */
   isFullWidth?: boolean;
 }
@@ -106,12 +106,6 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   labelPlacement?: LabelPlacement;
 
   /**
-   * Đánh dấu trường bắt buộc nhập (hiển thị dấu * đỏ cạnh label)
-   * @default false
-   */
-  isRequired?: boolean;
-
-  /**
    * Đoạn văn bản hướng dẫn/chú thích bên dưới input
    */
   helperText?: ReactNode;
@@ -121,25 +115,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
    */
   errorMessage?: ReactNode;
 
-  /**
-   * Trạng thái báo lỗi (viền đỏ, aria-invalid="true")
-   * @default false
-   */
-  isInvalid?: boolean;
-
   // ==================== SLOTS & ACTIONS ====================
-  /**
-   * Trạng thái đang tải (vô hiệu hóa tương tác)
-   * @default false
-   */
-  isLoading?: boolean;
-
-  /**
-   * Hiển thị biểu tượng xoay spinner khi đang ở trạng thái loading
-   * @default false
-   */
-  showSpinner?: boolean;
-
   /**
    * Icon hoặc phần tử hiển thị ở đầu ô input
    */
@@ -161,23 +137,11 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   rightAddon?: ReactNode;
 
   /**
-   * Hiển thị nút xóa nhanh nội dung khi input có giá trị
-   * @default false
-   */
-  isClearable?: boolean;
-
-  /**
    * Callback khi người dùng nhấn nút xóa nội dung
    */
   onClear?: () => void;
 
   // ==================== LAYOUT & CUSTOMIZATION ====================
-  /**
-   * Mở rộng chiều rộng 100% của container chứa
-   * @default false
-   */
-  isFullWidth?: boolean;
-
   /**
    * Tùy biến className cho container bọc toàn bộ (bao gồm label, input wrapper, helper/error text)
    */
@@ -558,7 +522,7 @@ export interface MultiInputConfig {
 
   /**
    * Chiếm toàn bộ chiều rộng 100% của container cha
-   * @default false
+   * @default true
    */
   isFullWidth?: boolean;
 }

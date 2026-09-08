@@ -91,7 +91,6 @@ export function TablePagination<TData extends RowData = RowData>({
                 }
               }}
               searchable={false}
-              clearable={false}
               aria-label="Số dòng mỗi trang"
             />
           </div>

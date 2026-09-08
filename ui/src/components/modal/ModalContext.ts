@@ -5,6 +5,7 @@ export interface ModalContextValue {
   onClose: () => void;
   isLoading?: boolean;
   size?: ModalSize;
+  dialogRef?: React.RefObject<HTMLDialogElement | null>;
 }
 
 export const ModalContext = createContext<ModalContextValue | null>(null);

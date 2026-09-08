@@ -50,7 +50,7 @@ export default function TextArea({
     showSpinner = false,
     isClearable = false,
     showCount = false,
-    isFullWidth = false,
+    isFullWidth = true,
     autoResize = true,
   } = config ?? {};
 
@@ -101,6 +101,7 @@ export default function TextArea({
   };
 
   const isFloating = labelPlacement === "floating";
+  const hasFloatingLabel = isFloating && Boolean(label);
 
   // Label Element
   const renderLabel = () => (
@@ -163,9 +164,9 @@ export default function TextArea({
 
   return (
     <div
-      className={`group/field flex ${
+      className={`group/field relative flex ${
         isHorizontal ? "flex-row items-start gap-3" : "flex-col"
-      } ${isFloating ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${wrapperClassName}`}
+      } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${wrapperClassName}`}
     >
       {!isFloating && renderLabel()}
 

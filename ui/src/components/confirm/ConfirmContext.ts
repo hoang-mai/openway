@@ -25,6 +25,11 @@ export interface ConfirmContextValue {
    * Chủ đề màu sắc của Confirm
    */
   color?: ConfirmColor;
+
+  /**
+   * Ref trỏ tới phần tử dialog HTML của ConfirmContainer
+   */
+  dialogRef?: React.RefObject<HTMLDialogElement | null>;
 }
 
 /**

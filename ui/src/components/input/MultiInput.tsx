@@ -77,7 +77,7 @@ export default function MultiInput({
     isLoading = false,
     showSpinner = false,
     isClearable = false,
-    isFullWidth = false,
+    isFullWidth = true,
   } = config ?? {};
 
   const generatedId = useId();
@@ -281,6 +281,7 @@ export default function MultiInput({
       : getSafeConfig(activeColor, getSafeConfig(variant, variantColorConfig, "outline"), "primary");
 
   const isFloating = labelPlacement === "floating";
+  const hasFloatingLabel = isFloating && Boolean(label);
 
   const renderIconWrapper = (iconNode: ReactNode) => (
     <span
@@ -333,9 +334,9 @@ export default function MultiInput({
     <div
       role="group"
       aria-labelledby={labelId}
-      className={`group/field flex ${
+      className={`group/field relative flex ${
         isHorizontal ? "flex-row items-center gap-3" : "flex-col"
-      } ${isFullWidth ? "w-full" : "inline-flex"} ${wrapperClassName}`}
+      } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${wrapperClassName}`}
     >
       {/* Screen Reader Live Region */}
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">

@@ -46,9 +46,50 @@ export interface SelectFilterField<TValue = unknown> {
   render?: (fieldState: { value: TValue | undefined; onChange: (val: TValue) => void }) => ReactNode;
 }
 
+export interface SelectConfig {
+  /**
+   * Đánh dấu trường bắt buộc nhập (hiển thị dấu * đỏ cạnh label)
+   * @default false
+   */
+  isRequired?: boolean;
+
+  /**
+   * Trạng thái báo lỗi (viền đỏ)
+   * @default false
+   */
+  isInvalid?: boolean;
+
+  /**
+   * Trạng thái đang tải dữ liệu
+   * @default false
+   */
+  isLoading?: boolean;
+
+  /**
+   * Hiển thị biểu tượng xoay spinner khi đang ở trạng thái loading
+   * @default false
+   */
+  showSpinner?: boolean;
+
+  /**
+   * Hiển thị nút xóa nhanh nội dung khi select có giá trị
+   * @default false
+   */
+  isClearable?: boolean;
+
+  /**
+   * Mở rộng chiều rộng 100% của container chứa
+   * @default true
+   */
+  isFullWidth?: boolean;
+}
+
 export interface BaseSelectProps<TData = unknown, TFilters extends Record<string, unknown> = Record<string, unknown>> {
   /** Ref chuyển tiếp tới root wrapper element */
   ref?: Ref<HTMLDivElement>;
+
+  /** Cấu hình tập trung các cờ trạng thái / tính năng */
+  config?: SelectConfig;
 
   // ==================== THEME & APPEARANCE ====================
   /** Kích thước: xs, sm, md, lg, xl. Mặc định 'md' */
@@ -69,7 +110,7 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   id?: string;
   /** Nhãn tiêu đề của Select */
   label?: ReactNode;
-  /** Vị trí nhãn: top, left, floating. Mặc định 'top' */
+  /** Vị trí nhãn: top, left, floating. Mặc định 'floating' */
   labelPlacement?: LabelPlacement;
   /** ClassName tùy biến cho nhãn */
   labelClassName?: string;
@@ -79,10 +120,6 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   helperText?: ReactNode;
   /** Thông báo lỗi khi không hợp lệ */
   errorMessage?: ReactNode;
-  /** Trạng thái không hợp lệ */
-  isInvalid?: boolean;
-  /** Bắt buộc chọn */
-  isRequired?: boolean;
   /** Vô hiệu hóa Select */
   isDisabled?: boolean;
   /** Chỉ đọc, không cho phép thay đổi */
@@ -142,18 +179,16 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   filterFn?: (option: SelectOptionItem<TData>, query: string, filters: TFilters) => boolean;
 
   // ==================== EMPTY STATE & LOADING ====================
-  /** Trạng thái đang tải dữ liệu */
-  isLoading?: boolean;
   /** Văn bản hiển thị khi không có dữ liệu */
   emptyText?: ReactNode;
   /** Props tùy biến chuyển tiếp đến component Empty */
   emptyProps?: Partial<EmptyProps>;
 
   // ==================== ACTIONS & STATES ====================
-  /** Hiển thị nút xoá nhanh toàn bộ giá trị đã chọn */
-  clearable?: boolean;
   /** Render menu qua Portal để tránh bị che bởi overflow hidden. Mặc định true */
   portal?: boolean;
+  /** Container để gắn portal menu vào (mặc định document.body, tự động nhận diện `<dialog>` nếu Select nằm trong Modal/Confirm) */
+  portalRoot?: HTMLElement | null | React.RefObject<HTMLElement | null>;
   /** Vị trí hiển thị của popup dropdown. Mặc định 'bottom-start' */
   placement?: Placement;
   /** Chiều cao tối đa của vùng cuộn menu. Mặc định 280px */
@@ -180,6 +215,8 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   triggerClassName?: string;
   /** ClassName cho popup dropdown menu */
   menuClassName?: string;
+  /** ClassName cho phần thông báo helper/error text */
+  helperClassName?: string;
 }
 
 /** Props cho component Select (Single Select) */

@@ -1,4 +1,4 @@
-import { useMemo, useState} from "react";
+import { Fragment, useMemo, useState } from "react";
 import {
   flexRender,
   type ColumnDef,
@@ -8,6 +8,7 @@ import {
   type RowSelectionState,
   type ColumnVisibilityState,
   type ColumnFiltersState,
+  type ExpandedState,
   type Updater,
   type RowData,
   type Row,
@@ -23,20 +24,9 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/core";
 import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
-import {
-  arrayMove,
-  SortableContext,
-  horizontalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { arrayMove, SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 import type { DataTableProps } from "./types";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-} from "./Table";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./Table";
 import { TableToolbar } from "./TableToolbar";
 import { TablePagination } from "./TablePagination";
 import { TableColumnHeader } from "./TableColumnHeader";
@@ -45,7 +35,10 @@ import { useDataTable, type DefaultTableFeatures } from "./useDataTable";
 import Checkbox from "../checkbox/Checkbox";
 import Empty from "../empty/Empty";
 import Skeleton from "../skeleton/Skeleton";
+import IconButton from "../button/IconButton";
+import ChevronRightIcon from "../icons/ChevronRightIcon";
 import { DEFAULT_PAGE_SIZE } from "./constants";
+import { DEFAULT_DEBOUNCE_DELAY } from "@/constants";
 
 export function DataTable<TData extends RowData = RowData>({
   columns,
@@ -69,6 +62,24 @@ export function DataTable<TData extends RowData = RowData>({
   enableColumnVisibility = true,
   enableColumnOrdering = false,
 
+  // Mở rộng dòng & Tree Data
+  enableExpanding,
+  enableExpandingAnimation = true,
+  expanded: controlledExpanded,
+  onExpandedChange,
+  getSubRows,
+  getRowCanExpand,
+  manualExpanding = false,
+  autoResetExpanded = false,
+  paginateExpandedRows = true,
+  renderExpandedRow,
+  showExpandColumn,
+  expandColumnMode = "integrated",
+  expandColumnId,
+  expandColumnPosition = "start",
+  maxIndentDepth = 4,
+  indentSize = 1.25,
+
   // Bộ lọc & Search
   filters,
   searchPlaceholder,
@@ -85,6 +96,7 @@ export function DataTable<TData extends RowData = RowData>({
   manualFiltering = false,
   pageCount,
   rowCount,
+  debounceMs = DEFAULT_DEBOUNCE_DELAY,
 
   // Controlled States
   pagination: controlledPagination,
@@ -116,10 +128,12 @@ export function DataTable<TData extends RowData = RowData>({
     pageSize: initialPageSize,
   });
   const [internalRowSelection, setInternalRowSelection] = useState<RowSelectionState>({});
-  const [internalColumnVisibility, setInternalColumnVisibility] =
-    useState<ColumnVisibilityState>({});
+  const [internalColumnVisibility, setInternalColumnVisibility] = useState<ColumnVisibilityState>({});
   const [internalColumnOrder, setInternalColumnOrder] = useState<string[]>([]);
   const [internalGlobalFilter, setInternalGlobalFilter] = useState<string>("");
+  const [internalExpanded, setInternalExpanded] = useState<ExpandedState>({});
+  const isExpandingEnabled = enableExpanding ?? Boolean(renderExpandedRow || getSubRows || controlledExpanded);
+  const shouldShowExpandColumn = (showExpandColumn ?? isExpandingEnabled) && expandColumnMode !== "none";
   const [internalColumnFilters, setInternalColumnFilters] = useState<ColumnFiltersState>(() => {
     if (!filters) return [];
     const initial: ColumnFiltersState = [];
@@ -139,9 +153,7 @@ export function DataTable<TData extends RowData = RowData>({
   const sorting = controlledSorting ?? internalSorting;
   const setSorting = (updater: Updater<SortingState>) => {
     const nextVal =
-      typeof updater === "function"
-        ? (updater as (prev: SortingState) => SortingState)(sorting)
-        : updater;
+      typeof updater === "function" ? (updater as (prev: SortingState) => SortingState)(sorting) : updater;
     if (onSortingChange) {
       (onSortingChange as (val: SortingState) => void)(nextVal);
     } else {
@@ -152,9 +164,7 @@ export function DataTable<TData extends RowData = RowData>({
   const pagination = controlledPagination ?? internalPagination;
   const setPagination = (updater: Updater<PaginationState>) => {
     const nextVal =
-      typeof updater === "function"
-        ? (updater as (prev: PaginationState) => PaginationState)(pagination)
-        : updater;
+      typeof updater === "function" ? (updater as (prev: PaginationState) => PaginationState)(pagination) : updater;
     if (onPaginationChange) {
       (onPaginationChange as (val: PaginationState) => void)(nextVal);
     } else {
@@ -190,10 +200,7 @@ export function DataTable<TData extends RowData = RowData>({
 
   const columnOrder = controlledColumnOrder ?? internalColumnOrder;
   const setColumnOrder = (updater: Updater<string[]>) => {
-    const nextVal =
-      typeof updater === "function"
-        ? (updater as (prev: string[]) => string[])(columnOrder)
-        : updater;
+    const nextVal = typeof updater === "function" ? (updater as (prev: string[]) => string[])(columnOrder) : updater;
     if (onColumnOrderChange) {
       (onColumnOrderChange as (val: string[]) => void)(nextVal);
     } else {
@@ -203,10 +210,7 @@ export function DataTable<TData extends RowData = RowData>({
 
   const globalFilter = controlledGlobalFilter ?? internalGlobalFilter;
   const setGlobalFilter = (updater: unknown) => {
-    const nextVal =
-      typeof updater === "function"
-        ? (updater as (prev: string) => string)(globalFilter)
-        : updater;
+    const nextVal = typeof updater === "function" ? (updater as (prev: string) => string)(globalFilter) : updater;
     if (onGlobalFilterChange) {
       onGlobalFilterChange(String(nextVal ?? ""));
     } else {
@@ -215,6 +219,17 @@ export function DataTable<TData extends RowData = RowData>({
   };
 
   const columnFilters = controlledColumnFilters ?? internalColumnFilters;
+
+  const expanded = controlledExpanded ?? internalExpanded;
+  const setExpanded = (updater: Updater<ExpandedState>) => {
+    const nextVal =
+      typeof updater === "function" ? (updater as (prev: ExpandedState) => ExpandedState)(expanded) : updater;
+    if (onExpandedChange) {
+      (onExpandedChange as (val: ExpandedState) => void)(nextVal);
+    } else {
+      setInternalExpanded(nextVal);
+    }
+  };
 
   // Bản đồ giá trị bộ lọc dạng Record<name, value> truyền cho TableMenuFilter
   const filterValues = useMemo(() => {
@@ -229,10 +244,7 @@ export function DataTable<TData extends RowData = RowData>({
   const handleFilterChange = (name: string, value: unknown) => {
     const nextFilters = columnFilters.filter((cf) => cf.id !== name);
     const hasValue =
-      value !== undefined &&
-      value !== null &&
-      value !== "" &&
-      (!Array.isArray(value) || value.length > 0);
+      value !== undefined && value !== null && value !== "" && (!Array.isArray(value) || value.length > 0);
 
     if (hasValue) {
       nextFilters.push({ id: name, value });
@@ -248,15 +260,14 @@ export function DataTable<TData extends RowData = RowData>({
   // Xử lý khi người dùng ấn "Đặt lại" toàn bộ bộ lọc
   const handleFilterReset = () => {
     if (onColumnFiltersChange) {
-      onColumnFiltersChange([]);
+      (onColumnFiltersChange as (filters: ColumnFiltersState) => void)([]);
     } else {
       setInternalColumnFilters([]);
     }
   };
 
   const tableColumns = useMemo<
-    | ColumnDef<DefaultTableFeatures, TData, unknown>[]
-    | ReturnType<ColumnHelper<DefaultTableFeatures, TData>["columns"]>
+    ColumnDef<DefaultTableFeatures, TData, unknown>[] | ReturnType<ColumnHelper<DefaultTableFeatures, TData>["columns"]>
   >(() => {
     let processedCols = columns as ColumnDef<DefaultTableFeatures, TData, unknown>[];
 
@@ -268,19 +279,14 @@ export function DataTable<TData extends RowData = RowData>({
           return col;
         }
 
-        if (
-          matchedFilter.type === "select" ||
-          matchedFilter.type === "checkbox-group"
-        ) {
+        if (matchedFilter.type === "select" || matchedFilter.type === "checkbox-group") {
           return {
             ...col,
             filterFn: (row: Row<DefaultTableFeatures, TData>, id: string, filterVal: unknown) => {
               if (!filterVal || (Array.isArray(filterVal) && filterVal.length === 0)) return true;
               const cellVal = row.getValue(id);
               if (Array.isArray(filterVal)) {
-                return filterVal.some(
-                  (v) => String(v).toLowerCase() === String(cellVal).toLowerCase()
-                );
+                return filterVal.some((v) => String(v).toLowerCase() === String(cellVal).toLowerCase());
               }
               return String(cellVal).toLowerCase() === String(filterVal).toLowerCase();
             },
@@ -296,8 +302,7 @@ export function DataTable<TData extends RowData = RowData>({
               if (!startDate && !endDate) return true;
               const cellVal = row.getValue(id);
               if (!cellVal) return false;
-              const cellDate =
-                cellVal instanceof Date ? cellVal : new Date(cellVal as string | number);
+              const cellDate = cellVal instanceof Date ? cellVal : new Date(cellVal as string | number);
               if (isNaN(cellDate.getTime())) return false;
               if (startDate) {
                 const start = new Date(startDate);
@@ -336,7 +341,7 @@ export function DataTable<TData extends RowData = RowData>({
             </div>
           ),
           cell: ({ row }) => (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
               <Checkbox
                 size="sm"
                 checked={row.getIsSelected()}
@@ -349,12 +354,93 @@ export function DataTable<TData extends RowData = RowData>({
           enableSorting: false,
           enableHiding: false,
         };
-        return [selectColumn, ...processedCols];
+        processedCols = [selectColumn, ...processedCols];
+      }
+    }
+
+    // 3. Thêm cột nút Chevron mở rộng dòng (_expand) nếu bật tính năng mở rộng ở chế độ standalone
+    if (isExpandingEnabled && shouldShowExpandColumn && expandColumnMode === "standalone") {
+      const hasExpandColumn = (columns as Array<{ id?: string }>).some((col) => col.id === "_expand");
+      if (!hasExpandColumn) {
+        const expandColumn: ColumnDef<DefaultTableFeatures, TData, unknown> = {
+          id: "_expand",
+          header: () => null,
+          cell: ({ row }) => {
+            const canExpand = row.getCanExpand();
+            const isExpanded = row.getIsExpanded();
+            const effectiveDepth = Math.min(row.depth, maxIndentDepth);
+            const indentPadding = effectiveDepth > 0 ? `${effectiveDepth * indentSize}rem` : undefined;
+
+            return (
+              <div className="flex items-center" style={{ paddingLeft: indentPadding }}>
+                {canExpand ? (
+                  <IconButton
+                    icon={
+                      <ChevronRightIcon
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isExpanded ? "rotate-90 text-primary-600" : ""
+                        }`}
+                      />
+                    }
+                    size="xs"
+                    variant="ghost"
+                    color="neutral"
+                    radius="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      row.toggleExpanded();
+                    }}
+                    aria-expanded={isExpanded}
+                    aria-label={isExpanded ? `Thu gọn dòng ${row.id}` : `Mở rộng dòng ${row.id}`}
+                    data-testid={`table-row-expand-button-${row.id}`}
+                  />
+                ) : row.depth > 0 ? (
+                  <span
+                    className="inline-flex items-center justify-center w-6 h-6 text-neutral-300 select-none text-xs"
+                    aria-hidden="true"
+                  >
+                    ↳
+                  </span>
+                ) : (
+                  <span className="w-6 h-6 inline-block" aria-hidden="true" />
+                )}
+              </div>
+            );
+          },
+          enableSorting: false,
+          enableHiding: false,
+        };
+
+        if (expandColumnPosition === "end") {
+          processedCols = [...processedCols, expandColumn];
+        } else {
+          const selectIndex = processedCols.findIndex((col) => col.id === "_select");
+          if (selectIndex !== -1) {
+            processedCols = [
+              ...processedCols.slice(0, selectIndex + 1),
+              expandColumn,
+              ...processedCols.slice(selectIndex + 1),
+            ];
+          } else {
+            processedCols = [expandColumn, ...processedCols];
+          }
+        }
       }
     }
 
     return processedCols;
-  }, [columns, enableRowSelection, manualFiltering, filters]);
+  }, [
+    columns,
+    enableRowSelection,
+    manualFiltering,
+    filters,
+    isExpandingEnabled,
+    shouldShowExpandColumn,
+    expandColumnMode,
+    expandColumnPosition,
+    maxIndentDepth,
+    indentSize,
+  ]);
 
   const table = useDataTable<TData>({
     data,
@@ -367,12 +453,19 @@ export function DataTable<TData extends RowData = RowData>({
       columnOrder,
       globalFilter,
       columnFilters: manualFiltering ? [] : columnFilters,
+      expanded,
     },
     enableSorting,
     enableRowSelection,
+    enableExpanding: isExpandingEnabled,
     manualPagination,
     manualSorting,
     manualFiltering: false,
+    manualExpanding,
+    autoResetExpanded,
+    paginateExpandedRows,
+    getSubRows,
+    getRowCanExpand: getRowCanExpand ?? (renderExpandedRow ? () => true : undefined),
     globalFilterFn: controlledGlobalFilterFn ?? "fuzzy",
     pageCount,
     rowCount,
@@ -382,12 +475,24 @@ export function DataTable<TData extends RowData = RowData>({
     onColumnVisibilityChange: setColumnVisibility,
     onColumnOrderChange: setColumnOrder,
     onGlobalFilterChange: setGlobalFilter,
+    onExpandedChange: setExpanded,
   });
 
   const visibleColumnsCount = table.getVisibleLeafColumns().length;
   const rows = enablePagination
     ? table.getRowModel().rows
-    : table.getPrePaginatedRowModel?.()?.rows ?? table.getRowModel().rows;
+    : (table.getPrePaginatedRowModel?.()?.rows ?? table.getRowModel().rows);
+
+  const targetExpandColumnId = useMemo(() => {
+    if (!isExpandingEnabled || !shouldShowExpandColumn || expandColumnMode !== "integrated") {
+      return undefined;
+    }
+    if (expandColumnId) return expandColumnId;
+    const leafCols = table.getVisibleLeafColumns();
+    return leafCols.find((col) => col.id !== "_select" && col.id !== "_expand")?.id;
+  }, [isExpandingEnabled, shouldShowExpandColumn, expandColumnMode, expandColumnId, table]);
+
+  const canSomeRowsExpand = table.getCanSomeRowsExpand?.() ?? false;
 
   const showToolbar =
     enableFiltering ||
@@ -414,7 +519,7 @@ export function DataTable<TData extends RowData = RowData>({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (active && over && active.id !== over.id) {
-      if (active.id === "_select" || over.id === "_select") {
+      if (active.id === "_select" || over.id === "_select" || active.id === "_expand" || over.id === "_expand") {
         return;
       }
       const currentLeafCols = table.getVisibleLeafColumns().map((c) => c.id);
@@ -428,19 +533,12 @@ export function DataTable<TData extends RowData = RowData>({
   };
 
   const tableElement = (
-    <Table
-      variant={variant}
-      size={size}
-      containerClassName={containerClassName}
-    >
+    <Table variant={variant} size={size} containerClassName={containerClassName}>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id} isHoverable={false}>
             {enableColumnOrdering ? (
-              <SortableContext
-                items={columnOrderList}
-                strategy={horizontalListSortingStrategy}
-              >
+              <SortableContext items={columnOrderList} strategy={horizontalListSortingStrategy}>
                 {headerGroup.headers.map((header) => {
                   if (header.isPlaceholder) {
                     return <TableHead key={header.id} />;
@@ -452,14 +550,11 @@ export function DataTable<TData extends RowData = RowData>({
                     ? isSorted === "asc"
                       ? "ascending"
                       : isSorted === "desc"
-                      ? "descending"
-                      : "none"
+                        ? "descending"
+                        : "none"
                     : undefined;
 
-                  const headerContent = flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  );
+                  const headerContent = flexRender(header.column.columnDef.header, header.getContext());
 
                   return (
                     <DraggableTableHead
@@ -484,29 +579,22 @@ export function DataTable<TData extends RowData = RowData>({
                   ? isSorted === "asc"
                     ? "ascending"
                     : isSorted === "desc"
-                    ? "descending"
-                    : "none"
+                      ? "descending"
+                      : "none"
                   : undefined;
 
-                const headerContent = flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                );
+                const headerContent = flexRender(header.column.columnDef.header, header.getContext());
+
+                const content =
+                  canSort && typeof header.column.columnDef.header === "string" ? (
+                    <TableColumnHeader column={header.column} title={header.column.columnDef.header} />
+                  ) : (
+                    headerContent
+                  );
 
                 return (
-                  <TableHead
-                    key={header.id}
-                    aria-sort={ariaSort}
-                    data-column-id={header.column.id}
-                  >
-                    {canSort && typeof header.column.columnDef.header === "string" ? (
-                      <TableColumnHeader
-                        column={header.column}
-                        title={header.column.columnDef.header}
-                      />
-                    ) : (
-                      headerContent
-                    )}
+                  <TableHead key={header.id} aria-sort={ariaSort} data-column-id={header.column.id}>
+                    {content}
                   </TableHead>
                 );
               })
@@ -530,19 +618,14 @@ export function DataTable<TData extends RowData = RowData>({
         ) : rows.length === 0 ? (
           // Trạng thái không có dữ liệu (Empty state)
           <TableRow isHoverable={false}>
-            <TableCell
-              colSpan={visibleColumnsCount}
-              className="py-12 text-center"
-            >
+            <TableCell colSpan={visibleColumnsCount} className="py-12 text-center">
               {emptyIllustration ?? (
                 <Empty
                   size="sm"
                   image={globalFilter ? "search" : "default"}
                   description={
                     emptyText ||
-                    (globalFilter
-                      ? "Không tìm thấy kết quả phù hợp với từ khóa"
-                      : "Không có dữ liệu hiển thị")
+                    (globalFilter ? "Không tìm thấy kết quả phù hợp với từ khóa" : "Không có dữ liệu hiển thị")
                   }
                 />
               )}
@@ -552,23 +635,101 @@ export function DataTable<TData extends RowData = RowData>({
           // Dòng dữ liệu bình thường
           rows.map((row: Row<DefaultTableFeatures, TData>) => {
             const isSelected = row.getIsSelected();
+            const isExpanded = row.getIsExpanded();
             return (
-              <TableRow
-                key={row.id}
-                isSelected={isSelected}
-                isHoverable={true}
-                onClick={() => onRowClick?.(row)}
-                className={onRowClick ? "cursor-pointer" : undefined}
-              >
-                {row.getVisibleCells().map((cell: Cell<DefaultTableFeatures, TData, unknown>) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
+              <Fragment key={row.id}>
+                <TableRow
+                  isSelected={isSelected}
+                  isHoverable={true}
+                  onClick={() => onRowClick?.(row)}
+                  className={
+                    `
+                    ${onRowClick ? "cursor-pointer" : ""}
+                    ${enableExpandingAnimation && row.depth > 0 ? "animate-table-subrow-in" : ""}
+                  `.trim() || undefined
+                  }
+                  data-expanded={isExpanded ? "true" : undefined}
+                >
+                  {row.getVisibleCells().map((cell: Cell<DefaultTableFeatures, TData, unknown>) => {
+                    const isTargetExpandCell =
+                      isExpandingEnabled &&
+                      shouldShowExpandColumn &&
+                      expandColumnMode === "integrated" &&
+                      cell.column.id === targetExpandColumnId;
+
+                    const renderedCell = flexRender(cell.column.columnDef.cell, cell.getContext());
+
+                    if (!isTargetExpandCell) {
+                      return <TableCell key={cell.id}>{renderedCell}</TableCell>;
+                    }
+
+                    const canExpand = row.getCanExpand();
+                    const isRowExpanded = row.getIsExpanded();
+                    const effectiveDepth = Math.min(row.depth, maxIndentDepth);
+                    const indentPadding = effectiveDepth > 0 ? `${effectiveDepth * indentSize}rem` : undefined;
+
+                    return (
+                      <TableCell key={cell.id}>
+                        <div className="flex items-center gap-1.5" style={{ paddingLeft: indentPadding }}>
+                          {canExpand ? (
+                            <IconButton
+                              icon={
+                                <ChevronRightIcon
+                                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                                    isRowExpanded ? "rotate-90 text-primary-600" : ""
+                                  }`}
+                                />
+                              }
+                              size="xs"
+                              variant="ghost"
+                              color="neutral"
+                              radius="sm"
+                              className="shrink-0"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                row.toggleExpanded();
+                              }}
+                              aria-expanded={isRowExpanded}
+                              aria-label={isRowExpanded ? `Thu gọn dòng ${row.id}` : `Mở rộng dòng ${row.id}`}
+                              data-testid={`table-row-expand-button-${row.id}`}
+                            />
+                          ) : row.depth > 0 ? (
+                            <span
+                              className="inline-flex items-center justify-center w-5 h-5 text-neutral-300 select-none text-xs shrink-0"
+                              aria-hidden="true"
+                            >
+                              ↳
+                            </span>
+                          ) : canSomeRowsExpand ? (
+                            <span className="w-5 h-5 shrink-0 inline-block" aria-hidden="true" />
+                          ) : null}
+                          <div className="min-w-0 flex-1">{renderedCell}</div>
+                        </div>
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+                {isExpanded && renderExpandedRow && (
+                  <TableRow
+                    key={`${row.id}-expanded`}
+                    isHoverable={false}
+                    className="bg-neutral-50/70 border-b border-neutral-200/80 transition-colors"
+                    data-testid={`table-expanded-row-${row.id}`}
+                  >
+                    <TableCell colSpan={visibleColumnsCount} className="p-0 border-none">
+                      <div
+                        className={
+                          enableExpandingAnimation ? "animate-table-expand-wrapper overflow-hidden" : undefined
+                        }
+                      >
+                        <div className={enableExpandingAnimation ? "p-4 animate-table-expand-content" : "p-4"}>
+                          {renderExpandedRow(row)}
+                        </div>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </Fragment>
             );
           })
         )}
@@ -612,10 +773,7 @@ export function DataTable<TData extends RowData = RowData>({
 
       {/* Pagination */}
       {enablePagination && !isLoading && rows.length > 0 && (
-        <TablePagination
-          table={table}
-          pageSizeOptions={pageSizeOptions}
-        />
+        <TablePagination table={table} pageSizeOptions={pageSizeOptions} />
       )}
     </div>
   );
