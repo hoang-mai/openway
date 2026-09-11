@@ -293,7 +293,7 @@ export interface DateRangePickerProps {
   /**
    * Khoảng ngày đang được chọn: mảng 2 phần tử `[startDate, endDate]` (Controlled)
    */
-  value?: DateRangeValue;
+  value?: DateRangeValue | null;
 
   /**
    * Khoảng ngày mặc định ban đầu: `[startDate, endDate]` (Uncontrolled)

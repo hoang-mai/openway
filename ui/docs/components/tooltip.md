@@ -211,3 +211,5 @@ export function IconButtonsWithTooltip() {
 | `zIndex` | `number` | `DEFAULT_Z_INDEX.TOOLTIP` (60) | Thứ tự z-index của tooltip. |
 | `className` | `string` | `""` | Class CSS tùy biến cho khung tooltip. |
 | `arrowClassName` | `string` | `""` | Class CSS tùy biến cho mũi tên định vị. |
+| `portal` | `boolean` | `true` | Bật/tắt chế độ render nội dung tooltip qua `FloatingPortal`. |
+| `portalRoot` | `HTMLElement \| null \| RefObject<HTMLElement \| null>` | — | Phần tử DOM hoặc Ref dùng làm root container cho portal. Tự động liên kết với dialog của Modal hoặc Confirm khi mở bên trong Modal/Confirm. |

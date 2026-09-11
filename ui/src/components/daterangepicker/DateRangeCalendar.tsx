@@ -130,7 +130,7 @@ export default function DateRangeCalendar({
   const handleSelectMonthForYear = (targetYear: number, monthIndex: number) => {
     const selectedDateObj = new Date(targetYear, monthIndex, 1);
     setCurrentMonth(selectedDateObj);
-    if (showViewTabs && view === "months") {
+    if (view === "months") {
       if (!rangeSelectionStart) {
         setRangeSelectionStart(selectedDateObj);
         onChange?.([selectedDateObj, null]);
@@ -152,7 +152,7 @@ export default function DateRangeCalendar({
   const handleSelectYear = (yr: number) => {
     const selectedDateObj = new Date(yr, 0, 1);
     setCurrentMonth(selectedDateObj);
-    if (showViewTabs && view === "years") {
+    if (view === "years") {
       if (!rangeSelectionStart) {
         setRangeSelectionStart(selectedDateObj);
         onChange?.([selectedDateObj, null]);

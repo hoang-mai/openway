@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TooltipSize, TooltipVariant, TooltipColor, TooltipRadius, TooltipPlacement } from "./types";
 import { Tooltip } from "./index";
 import { Button } from "../button";
+import { Modal, ModalContainer, ModalBody } from "../modal";
+import { Confirm, ConfirmContainer, ConfirmBody } from "../confirm";
 
 describe("<Tooltip /> Tailwind Component Tests", () => {
   /* ========================================================================
@@ -517,6 +519,79 @@ describe("<Tooltip /> Tailwind Component Tests", () => {
 
       cy.get("h1").should("be.visible");
       cy.get("button").should("have.length.greaterThan", 10);
+    });
+  });
+
+  /* ========================================================================
+     6. Portal in Modal and Confirm Dialogs
+     ======================================================================== */
+  describe("Portal in Modal and Confirm Dialogs", () => {
+    it("mounts tooltip inside Modal dialog when opened inside Modal", () => {
+      cy.mount(
+        <ModalContainer open={true} onClose={() => {}}>
+          <Modal>
+            <ModalBody>
+              <Tooltip content="Tooltip inside Modal" delay={0}>
+                <button id="modal-tooltip-trigger">Hover Modal Trigger</button>
+              </Tooltip>
+            </ModalBody>
+          </Modal>
+        </ModalContainer>
+      );
+
+      cy.get("#modal-tooltip-trigger").trigger("mouseenter");
+      cy.get('[role="tooltip"]').should("be.visible").and("contain.text", "Tooltip inside Modal");
+
+      // Verify that the tooltip element is inside the <dialog> element (modal portal root)
+      cy.get("dialog").find('[role="tooltip"]').should("exist");
+    });
+
+    it("mounts tooltip inside Confirm dialog when opened inside Confirm", () => {
+      cy.mount(
+        <ConfirmContainer open={true} onClose={() => {}}>
+          <Confirm>
+            <ConfirmBody>
+              <Tooltip content="Tooltip inside Confirm" delay={0}>
+                <button id="confirm-tooltip-trigger">Hover Confirm Trigger</button>
+              </Tooltip>
+            </ConfirmBody>
+          </Confirm>
+        </ConfirmContainer>
+      );
+
+      cy.get("#confirm-tooltip-trigger").trigger("mouseenter");
+      cy.get('[role="tooltip"]').should("be.visible").and("contain.text", "Tooltip inside Confirm");
+
+      // Verify that the tooltip element is inside the <dialog> element (confirm portal root)
+      cy.get("dialog").find('[role="tooltip"]').should("exist");
+    });
+
+    it("supports custom portalRoot and portal={false}", () => {
+      const CustomContainer = () => {
+        const customRootRef = React.useRef<HTMLDivElement>(null);
+        return (
+          <div>
+            <div id="custom-root" ref={customRootRef} />
+            <Tooltip content="Custom Portal Root" portalRoot={customRootRef} delay={0}>
+              <button id="custom-trigger">Trigger Custom</button>
+            </Tooltip>
+            <div id="inline-container">
+              <Tooltip content="Inline Tooltip" portal={false} delay={0}>
+                <button id="inline-trigger">Trigger Inline</button>
+              </Tooltip>
+            </div>
+          </div>
+        );
+      };
+
+      cy.mount(<CustomContainer />);
+
+      cy.get("#custom-trigger").trigger("mouseenter");
+      cy.get("#custom-root").find('[role="tooltip"]').should("be.visible").and("contain.text", "Custom Portal Root");
+      cy.get("#custom-trigger").trigger("mouseleave");
+
+      cy.get("#inline-trigger").trigger("mouseenter");
+      cy.get("#inline-container").find('[role="tooltip"]').should("be.visible").and("contain.text", "Inline Tooltip");
     });
   });
 });

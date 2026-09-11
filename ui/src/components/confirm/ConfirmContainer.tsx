@@ -2,7 +2,6 @@ import { useEffect, useEffectEvent, useCallback, useMemo, useRef, useState } fro
 import { CONFIRM_EXIT_ANIMATION_DURATION } from "./constants";
 import { ConfirmContainerProps } from "./types";
 import { ConfirmContext } from "./ConfirmContext";
-import Toaster from "../toast/Toaster";
 
 export default function ConfirmContainer({
   open = false,
@@ -14,7 +13,6 @@ export default function ConfirmContainer({
   lockScroll = true,
   overlayClassName = "",
   className = "",
-  toaster = true,
   children,
   onClose,
   ...props
@@ -138,12 +136,6 @@ export default function ConfirmContainer({
         className={`fixed inset-0 flex items-center justify-center p-4 bg-neutral-950/40 backdrop-blur-xs border-none m-0 max-w-none max-h-none w-screen h-screen overflow-visible backdrop:bg-transparent ${backdropAnimation} ${overlayClassName}`}
         {...props}
       >
-        {toaster !== false && (
-          <Toaster
-            position="top-right"
-            {...(typeof toaster === "object" ? toaster : {})}
-          />
-        )}
         <div aria-hidden="true" onClick={handleOverlayClick} className="fixed inset-0 -z-10" />
         <div className={`w-full flex items-center justify-center pointer-events-none ${dialogAnimation} ${className}`}>
           {children}

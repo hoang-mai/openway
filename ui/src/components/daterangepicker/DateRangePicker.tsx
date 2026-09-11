@@ -108,10 +108,15 @@ export default function DateRangePicker({
     }
     return [null, null];
   });
-  const selectedRange: DateRange =
-    isControlled && controlledValue && Array.isArray(controlledValue)
-      ? [toDate(controlledValue[0], format), toDate(controlledValue[1], format)]
-      : internalRange;
+  const selectedRange: DateRange = useMemo(() => {
+    if (isControlled) {
+      if (Array.isArray(controlledValue)) {
+        return [toDate(controlledValue[0], format), toDate(controlledValue[1], format)];
+      }
+      return [null, null];
+    }
+    return internalRange;
+  }, [isControlled, controlledValue, format, internalRange]);
 
   const formattedValue =
     selectedRange[0] && selectedRange[1]
@@ -200,9 +205,7 @@ export default function DateRangePicker({
 
   const handleClear = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    if (!isControlled) {
-      setInternalRange([null, null]);
-    }
+    setInternalRange([null, null]);
     onChange?.(null);
     onClear?.();
   };

@@ -20,6 +20,8 @@ import { TooltipProps } from "./types";
 import { sizeConfig, radiusConfig, variantColorConfig, arrowColorConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { DEFAULT_Z_INDEX } from "@/constants";
+import { useModalContext } from "@/components/modal/ModalContext";
+import { useConfirmContext } from "@/components/confirm/ConfirmContext";
 
 interface SlotProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
@@ -78,7 +80,14 @@ export default function Tooltip({
   className = "",
   arrowClassName = "",
   zIndex = DEFAULT_Z_INDEX.TOOLTIP,
+  portal = true,
+  portalRoot,
 }: TooltipProps) {
+  const modalContext = useModalContext();
+  const confirmContext = useConfirmContext();
+
+  const effectivePortalRoot = portalRoot ?? modalContext?.dialogRef ?? confirmContext?.dialogRef;
+
   const [open, setOpen] = useState(defaultOpen);
   const [arrowRef, setArrowRef] = useState<SVGSVGElement | null>(null);
 
@@ -152,6 +161,33 @@ export default function Tooltip({
 
   const triggerProps = getReferenceProps();
 
+  const tooltipContent = isMounted && !disabled && content && (
+    <div
+      ref={setFloating}
+      style={{
+        ...floatingStyles,
+        ...(animated ? transitionStyles : {}),
+        zIndex,
+      }}
+      className={classNames}
+      data-state={isOpen ? "open" : "closed"}
+      data-placement={computedPlacement}
+      {...getFloatingProps()}
+    >
+      {content}
+      {hasArrow && (
+        <FloatingArrow
+          ref={setArrowRef}
+          context={context}
+          width={currentSize.arrowWidth}
+          height={currentSize.arrowHeight}
+          strokeWidth={variant === "outline" || variant === "soft" ? 1 : 0}
+          className={[arrowColorClass, arrowClassName].filter(Boolean).join(" ")}
+        />
+      )}
+    </div>
+  );
+
   return (
     <>
       {isValidElement(children) ? (
@@ -163,34 +199,11 @@ export default function Tooltip({
           {children}
         </span>
       )}
-      <FloatingPortal>
-        {isMounted && !disabled && content && (
-          <div
-            ref={setFloating}
-            style={{
-              ...floatingStyles,
-              ...(animated ? transitionStyles : {}),
-              zIndex,
-            }}
-            className={classNames}
-            data-state={isOpen ? "open" : "closed"}
-            data-placement={computedPlacement}
-            {...getFloatingProps()}
-          >
-            {content}
-            {hasArrow && (
-              <FloatingArrow
-                ref={setArrowRef}
-                context={context}
-                width={currentSize.arrowWidth}
-                height={currentSize.arrowHeight}
-                strokeWidth={variant === "outline" || variant === "soft" ? 1 : 0}
-                className={[arrowColorClass, arrowClassName].filter(Boolean).join(" ")}
-              />
-            )}
-          </div>
-        )}
-      </FloatingPortal>
+      {portal ? (
+        <FloatingPortal root={effectivePortalRoot}>{tooltipContent}</FloatingPortal>
+      ) : (
+        tooltipContent
+      )}
     </>
   );
 }
