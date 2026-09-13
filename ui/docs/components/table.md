@@ -351,6 +351,66 @@ export function DepartmentTreeTableExample() {
 
 ---
 
+### 7. Bộ lọc thanh công cụ nâng cao (`TableMenuFilter` & `TableFilterDef`)
+
+`DataTable` tích hợp sẵn component `TableMenuFilter` thông qua prop `filters`. Bộ lọc sử dụng cấu trúc **Discriminated Union** chuyên biệt hóa từng loại trường:
+
+- `string` / `text`: Lọc chuỗi văn bản bằng `Input`.
+- `number`: Lọc giá trị số với `min`, `max`, `step`.
+- `date`: Chọn ngày đơn qua `DatePicker` với `minDate`, `maxDate`.
+- `date-range`: Chọn khoảng ngày qua `DateRangePicker`. Bắt buộc khai báo `endName` (ví dụ `name: "createdAtStart"`, `endName: "createdAtEnd"`).
+- `checkbox-group` / `select`: Lọc đa lựa chọn hỗ trợ cả Client mode & Server mode (`searchable`, `searchMode="server"`, `onSearch`, `isLoading`, `preserveSelected`, `historicalOptionLabels`).
+- `custom`: Tùy biến component render thông qua `renderEditor`.
+
+#### Ví dụ khai báo:
+
+```tsx
+import { DataTable, type TableFilterDef } from "@openway/ui";
+
+const tableFilters: TableFilterDef[] = [
+  {
+    name: "name",
+    label: "Tên",
+    type: "text",
+    placeholder: "Lọc theo tên...",
+  },
+  {
+    name: "role",
+    label: "Vai trò",
+    type: "checkbox-group",
+    searchable: true,
+    options: [
+      { label: "Admin", value: "admin" },
+      { label: "Editor", value: "editor" },
+      { label: "Viewer", value: "viewer" },
+    ],
+  },
+  {
+    name: "createdAtStart",
+    endName: "createdAtEnd",
+    label: "Ngày tạo",
+    type: "date-range",
+    placeholder: "Chọn khoảng ngày...",
+  },
+];
+
+export function UserTableWithFilters() {
+  return (
+    <DataTable
+      columns={columns}
+      data={users}
+      filters={tableFilters}
+      enableFiltering={true}
+    />
+  );
+}
+```
+
+> **Lưu ý về Debounce & Xóa bộ lọc**:
+> Cả `useTableQuery` và `useSelectInfiniteQuery` đều hỗ trợ **Dynamic Debounce**: khi nhập dữ liệu sẽ debounce theo `debounceMs`, nhưng khi người dùng xóa chip bộ lọc hoặc đặt lại bộ lọc, hệ thống tự động đặt độ trễ về `0ms` để gọi API ngay lập tức mà không phải chờ đợi.
+
+---
+
 ## ⚙️ Bảng thuộc tính (Props Table)
 
 ### `<DataTable />`

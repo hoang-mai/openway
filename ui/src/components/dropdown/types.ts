@@ -202,6 +202,12 @@ export interface DropdownMenuProps extends HTMLAttributes<HTMLDivElement> {
    * React 19 Ref trực tiếp vào menu container
    */
   ref?: Ref<HTMLDivElement>;
+
+  /**
+   * Phần tử DOM hoặc Ref dùng làm root container cho FloatingPortal.
+   * Mặc định tự động gắn vào dialog của Modal hoặc Confirm nếu đang mở bên trong Modal/Confirm.
+   */
+  portalRoot?: HTMLElement | null | React.RefObject<HTMLElement | null>;
 }
 
 /**
@@ -350,6 +356,11 @@ export interface DropdownContextValue {
    * Object chứa các ref reference và floating từ useFloating
    */
   refs: ExtendedRefs<ReferenceType>;
+
+  /**
+   * Elements chứa reference và floating DOM nodes từ useFloating
+   */
+  elements: FloatingContext["elements"];
 
   /**
    * Style inline vị trí floating do Floating UI tính toán

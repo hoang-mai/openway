@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Select, MultiSelect } from "./index";
 import { useSelectInfiniteQuery } from "../../query";
+import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
 import {
   SelectOptionItem,
   SelectFilterField,
@@ -136,7 +137,8 @@ const menuFiltersConfig: SelectFilterField<unknown>[] = [
     placeholder: "Chọn ngày hết hạn...",
   },
   {
-    name: "harvestRange",
+    name: "harvestStart",
+    endName: "harvestEnd",
     type: "date-range",
     label: "Khoảng thu hoạch",
     placeholder: "Chọn khoảng ngày...",
@@ -165,7 +167,7 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
   const [serverLoading, setServerLoading] = useState(false);
   const [serverVal, setServerVal] = useState<(string | number)[]>([1]);
 
-  const handleServerSearch = (query: string) => {
+  const { debounced: debouncedServerSearch } = useDebouncedCallback((query: string) => {
     if (!query) return;
     setServerLoading(true);
     fetch(`https://dummyjson.com/users/search?q=${encodeURIComponent(query)}`)
@@ -181,7 +183,7 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
       .catch(() => {
         setServerLoading(false);
       });
-  };
+  }, 100);
 
   const sizes: SelectSize[] = ["xs", "sm", "md", "lg", "xl"];
   const colors: SelectColor[] = ["primary", "secondary", "success", "warning", "error", "info", "neutral"];
@@ -635,11 +637,12 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
                   }
                 }
 
-                // 4. harvestRange date range filter
-                const harvestRange = activeFilters.harvestRange as [unknown, unknown] | undefined;
-                if (harvestRange && (harvestRange[0] || harvestRange[1]) && dataObj?.harvestDate) {
-                  const startNum = toNum(harvestRange[0]);
-                  const endNum = toNum(harvestRange[1]);
+                // 4. harvestStart / harvestEnd date range filter
+                const harvestStart = activeFilters.harvestStart;
+                const harvestEnd = activeFilters.harvestEnd;
+                if ((harvestStart || harvestEnd) && dataObj?.harvestDate) {
+                  const startNum = toNum(harvestStart);
+                  const endNum = toNum(harvestEnd);
                   const itemHarvestNum = toNum(dataObj.harvestDate);
                   if (startNum > 0 && itemHarvestNum < startNum) return false;
                   if (endNum > 0 && itemHarvestNum > endNum) return false;
@@ -664,12 +667,11 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
               id="test-server-search"
               searchable
               searchMode="server"
-              config={{ isLoading: serverLoading }}
+              isLoading={serverLoading}
               options={serverOptions}
               value={serverVal}
               onChange={(next) => setServerVal(next)}
-              onSearch={handleServerSearch}
-              debounceMs={100}
+              onSearchChange={debouncedServerSearch}
               label="Tìm kiếm người dùng từ Server API"
               placeholder="Gõ tên 'Sophia'..."
             />
@@ -689,7 +691,7 @@ describe("<Select /> Component Tests (Single Mount Harness)", () => {
     const onMultiChange = cy.stub().as("onMultiChange");
 
     // Intercept network call for server search test
-    cy.intercept("GET", "https://dummyjson.com/users/search?q=Sophia", {
+    cy.intercept("GET", "https://dummyjson.com/users/search*", {
       statusCode: 200,
       body: {
         users: [{ id: 3, firstName: "Sophia", lastName: "Brown" }],
@@ -945,10 +947,11 @@ describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {
       number
     >({
       queryKey: ["test-infinite-products"],
-      queryFn: async ({ pageParam, search }) => {
-        if (search) {
+      queryFn: async ({ pageParam, filters }) => {
+        const keyword = (filters as Record<string, unknown> | undefined)?.search as string | undefined;
+        if (keyword) {
           return {
-            items: [{ id: 99, title: `Kết quả: ${search}` }],
+            items: [{ id: 99, title: `Kết quả: ${keyword}` }],
             nextPage: undefined,
           };
         }
@@ -1026,6 +1029,123 @@ describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {
     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("not.exist");
   });
 
+  it("does not refetch API on dropdown close, supports external setSearch and pure filters with backend searchField", () => {
+    const queryFnSpy = cy.stub().as("queryFnSpy");
+
+    const RefactoredServerSelectHarness = () => {
+      const [selectedVal, setSelectedVal] = useState<string | number | null>(null);
+
+      const {
+        selectProps,
+        query,
+        search,
+        setSearch,
+        filters,
+        setFilters,
+      } = useSelectInfiniteQuery<
+        MockProduct,
+        { items: MockProduct[]; nextPage?: number },
+        number,
+        { category: string }
+      >({
+        queryKey: ["test-refactored-server-select"],
+        searchField: "q",
+        initialFilters: { category: "electronics" },
+        debounceMs: 50,
+        queryFn: async ({ pageParam, filters: qFilters }) => {
+          queryFnSpy(qFilters);
+          const keyword = (qFilters as Record<string, unknown> | undefined)?.q as string | undefined;
+          if (keyword) {
+            return {
+              items: [{ id: 999, title: `Tìm thấy: ${keyword} [cat:${qFilters.category}]` }],
+              nextPage: undefined,
+            };
+          }
+          return { items: mockProductsPage1, nextPage: undefined };
+        },
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+        mapOption: (item) => {
+          const prod = item as MockProduct;
+          return { value: prod.id, label: prod.title, data: prod };
+        },
+      });
+
+      return (
+        <div className="p-8 max-w-md">
+          <div data-testid="search-display">Search: {search}</div>
+          <div data-testid="filters-pure">
+            Category: {filters.category} | Has_q: {"q" in filters ? "yes" : "no"}
+          </div>
+          <button
+            data-testid="external-set-search-btn"
+            onClick={() => setSearch("MacBook")}
+          >
+            External Set Search
+          </button>
+          <button
+            data-testid="change-filter-btn"
+            onClick={() => setFilters({ category: "appliances" })}
+          >
+            Change Filter
+          </button>
+          <Select<MockProduct, { category: string }>
+            id="server-refactored-select"
+            label="Sản phẩm Server Mode"
+            searchable
+            portal={false}
+            value={selectedVal}
+            onChange={(val) => setSelectedVal(val)}
+            {...selectProps}
+          />
+        </div>
+      );
+    };
+
+    const testClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+
+    cy.mount(
+      <QueryClientProvider client={testClient}>
+        <RefactoredServerSelectHarness />
+      </QueryClientProvider>
+    );
+
+    // 1. Initial mount: queryFn called once with qFilters containing category and no q
+    cy.get("@queryFnSpy").should("have.been.calledOnce");
+    cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "electronics" });
+    cy.get("[data-testid='filters-pure']").should("contain", "Category: electronics | Has_q: no");
+
+    // 2. Open dropdown and close without typing: NO refetch on close!
+    cy.get("#server-refactored-select").click();
+    cy.get("#server-refactored-select [role='listbox']").should("be.visible");
+    cy.get("body").click(0, 0);
+    cy.get("#server-refactored-select [role='listbox']").should("not.exist");
+    // Verify queryFn was STILL called only once (NO refetch on close!)
+    cy.get("@queryFnSpy").should("have.been.calledOnce");
+
+    // 3. Test external setSearch: immediate input sync and debounced query with searchField "q"
+    cy.get("[data-testid='external-set-search-btn']").click();
+    cy.get("[data-testid='search-display']").should("contain", "Search: MacBook");
+    cy.get("#server-refactored-select input[aria-label='Search']").should("have.value", "MacBook");
+    // Wait for debounce and check queryFn called with q: "MacBook"
+    cy.get("@queryFnSpy").should("have.been.calledTwice");
+    cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "electronics", q: "MacBook" });
+    // Verify filters state remains pure:
+    cy.get("[data-testid='filters-pure']").should("contain", "Category: electronics | Has_q: no");
+
+    // Open dropdown to see search results
+    cy.get("#server-refactored-select").click();
+    cy.get("#server-refactored-select [role='listbox']").contains("Tìm thấy: MacBook [cat:electronics]").should("be.visible");
+
+    // 4. Test changing filter via setFilters: refetches with updated category and current search keyword
+    cy.get("[data-testid='change-filter-btn']").click();
+    cy.get("[data-testid='filters-pure']").should("contain", "Category: appliances | Has_q: no");
+    cy.get("@queryFnSpy").should("have.been.calledThrice");
+    cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "appliances", q: "MacBook" });
+    cy.get("#server-refactored-select [role='listbox']").contains("Tìm thấy: MacBook [cat:appliances]").should("be.visible");
+  });
+
   it("renders SelectMenu on top of Modal when Select is placed inside ModalContainer", () => {
     const ModalWithSelect = () => {
       const [val, setVal] = useState<string | null>(null);
@@ -1089,6 +1209,113 @@ describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {
     cy.get("#select-loading-with-spinner svg.animate-spin").should("be.visible");
     cy.get("#multiselect-loading-no-spinner svg.animate-spin").should("not.exist");
     cy.get("#multiselect-loading-with-spinner svg.animate-spin").should("be.visible");
+  });
+
+  it("renders Skeleton placeholders when options are empty and isLoading=true in Select and MultiSelect", () => {
+    cy.mount(
+      <div className="space-y-4 p-4 max-w-xs">
+        <Select
+          id="select-skeleton-test"
+          label="Select Đang tải"
+          options={[]}
+          isLoading={true}
+          skeletonCount={3}
+          portal={false}
+        />
+        <MultiSelect
+          id="multiselect-skeleton-test"
+          label="MultiSelect Đang tải"
+          options={[]}
+          isLoading={true}
+          skeletonCount={3}
+          portal={false}
+        />
+      </div>
+    );
+
+    // Click trigger Select để mở menu
+    cy.get("#select-skeleton-test-trigger").click();
+    cy.get("#select-skeleton-test [role='listbox']").should("be.visible");
+    cy.get("#select-skeleton-test [role='listbox'] .animate-pulse").should("have.length.at.least", 3);
+
+    // Đóng menu Select để tránh che khuất
+    cy.get("#select-skeleton-test-trigger").click();
+
+    // Click trigger MultiSelect để mở menu
+    cy.get("#multiselect-skeleton-test-trigger").click({ force: true });
+    cy.get("#multiselect-skeleton-test [role='listbox']").should("be.visible");
+    cy.get("#multiselect-skeleton-test [role='listbox'] .animate-pulse").should("have.length.at.least", 3);
+  });
+
+  it("does not flash raw ID during initial loading and preserves label across asynchronous options updates and server search", () => {
+    const AsyncSelectHarness = () => {
+      const [isLoading, setIsLoading] = useState(true);
+      const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
+
+      return (
+        <div className="space-y-6 p-4 max-w-xs">
+          <button
+            data-testid="btn-load-options"
+            onClick={() => {
+              setIsLoading(false);
+              setOptions([
+                { value: "user_99", label: "Nguyễn Văn A" },
+                { value: "user_100", label: "Trần Thị B" },
+              ]);
+            }}
+          >
+            Load Options
+          </button>
+          <button
+            data-testid="btn-search-replace"
+            onClick={() => {
+              setOptions([
+                { value: "user_200", label: "Lê Văn C" },
+              ]);
+            }}
+          >
+            Simulate Server Search
+          </button>
+
+          <Select
+            id="async-select-test"
+            label="Async Select"
+            placeholder="Chọn người dùng..."
+            value="user_99"
+            options={options}
+            isLoading={isLoading}
+            portal={false}
+          />
+
+          <MultiSelect
+            id="async-multiselect-test"
+            label="Async MultiSelect"
+            placeholder="Chọn nhiều người dùng..."
+            value={["user_99"]}
+            options={options}
+            isLoading={isLoading}
+            portal={false}
+          />
+        </div>
+      );
+    };
+
+    cy.mount(<AsyncSelectHarness />);
+
+    // 1. Initial loading: raw ID "user_99" must NOT be rendered in trigger!
+    cy.get("#async-select-test-trigger").should("not.contain", "user_99");
+    cy.get("#async-select-test-trigger").should("contain", "Chọn người dùng...");
+    cy.get("#async-multiselect-test-trigger").should("not.contain", "user_99");
+
+    // 2. Options loaded: labels rendered correctly
+    cy.get("[data-testid='btn-load-options']").click();
+    cy.get("#async-select-test-trigger").should("contain", "Nguyễn Văn A");
+    cy.get("#async-multiselect-test-trigger").should("contain", "Nguyễn Văn A");
+
+    // 3. Search replaces options: "Nguyễn Văn A" is preserved via historicalOptions!
+    cy.get("[data-testid='btn-search-replace']").click();
+    cy.get("#async-select-test-trigger").should("contain", "Nguyễn Văn A");
+    cy.get("#async-multiselect-test-trigger").should("contain", "Nguyễn Văn A");
   });
 });
 

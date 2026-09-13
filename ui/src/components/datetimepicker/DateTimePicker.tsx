@@ -30,8 +30,7 @@ import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 /**
  * Component DateTimePicker - Ô chọn Ngày & Giờ tích hợp theo Design System.
@@ -76,6 +75,8 @@ export default function DateTimePicker({
   autoComplete,
   disabled = false,
   readOnly = false,
+  portal = true,
+  portalRoot,
   config,
   onClear,
   placement = "bottom-start",
@@ -86,8 +87,6 @@ export default function DateTimePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimePickerProps) {
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
@@ -120,6 +119,7 @@ export default function DateTimePicker({
   // Floating UI setup
   const {
     refs: { setReference, setFloating },
+    elements: { reference },
     floatingStyles,
     context,
   } = useFloating({
@@ -139,6 +139,11 @@ export default function DateTimePicker({
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
+
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference,
+  });
 
   const hasError = Boolean(isInvalid || errorMessage);
   const activeColor = hasError ? "error" : color;
@@ -334,7 +339,7 @@ export default function DateTimePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
+          <FloatingPortal root={effectivePortalRoot}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

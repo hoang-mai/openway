@@ -163,7 +163,6 @@ export function ServerSearchExample() {
       label="Chọn sản phẩm yêu thích"
       searchable
       searchMode="server"
-      debounceMs={300}
       onSearch={handleSearchProducts}
       searchPlaceholder="Tìm kiếm sản phẩm từ máy chủ..."
       preserveSelected
@@ -190,9 +189,7 @@ Kế thừa `Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "type">`:
 | `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc |
 | `disabled` | `boolean` | `false` | Vô hiệu hóa tương tác |
 | `readOnly` | `boolean` | `false` | Chế độ chỉ đọc |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải (spinner thay thế dot) |
-| `isRequired` | `boolean` | `false` | Đánh dấu bắt buộc (dấu `*` đỏ) |
-| `isInvalid` | `boolean` | `false` | Trạng thái báo lỗi viền đỏ |
+| `config` | `RadioConfig` | `undefined` | Cấu hình cờ trạng thái (`isLoading` - spinner thay dot, `isRequired`, `isInvalid`) |
 | `labelPlacement` | `'right' \| 'left'` | `'right'` | Vị trí hiển thị nhãn |
 | `label` | `ReactNode` | `undefined` | Nhãn văn bản cạnh ô radio |
 | `helperText` | `ReactNode` | `undefined` | Chú thích bên dưới |
@@ -201,42 +198,47 @@ Kế thừa `Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "type">`:
 
 ---
 
-### `RadioGroupProps<TData = unknown>`
+### `RadioGroupProps<TData = unknown, TValue extends string | number = string>`
 
 Kế thừa `Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "children">`:
 
 | Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
 | :--- | :--- | :--- | :--- |
-| `options` | `RadioOptionItem<TData>[]` | `[]` | Mảng dữ liệu các lựa chọn (Data-driven) |
-| `value` | `string \| null` | `undefined` | Giá trị đang chọn (Controlled) |
-| `defaultValue` | `string \| null` | `null` | Giá trị mặc định (Uncontrolled) |
-| `onChange` | `(value: string \| null) => void` | `undefined` | Callback khi lựa chọn thay đổi |
+| `options` | `RadioOptionItem<TData, TValue>[]` | `[]` | Mảng dữ liệu các lựa chọn (Data-driven) |
+| `value` | `TValue \| null` | `undefined` | Giá trị đang chọn (Controlled) |
+| `defaultValue` | `TValue \| null` | `null` | Giá trị mặc định (Uncontrolled) |
+| `onChange` | `(value: TValue \| null) => void` | `undefined` | Callback khi lựa chọn thay đổi |
 | `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Bố cục sắp xếp các mục |
 | `searchable` | `boolean` | `false` | Bật/tắt thanh tìm kiếm |
 | `searchMode` | `'client' \| 'server'` | `'client'` | Chế độ tìm kiếm phía client hoặc gọi API server |
 | `searchField` | `string \| string[]` | `'label'` | Các trường dữ liệu dùng để tìm kiếm |
-| `filterFn` | `(item: RadioOptionItem<TData>, query: string) => boolean` | `undefined` | Hàm lọc tùy biến phía client |
-| `onSearch` | `(query: string) => Promise<RadioOptionItem<TData>[]>` | `undefined` | Hàm gọi API tìm kiếm phía server |
-| `debounceMs` | `number` | `300` | Thời gian trễ gọi hàm `onSearch` (ms) |
+| `filterFn` | `(item: RadioOptionItem<TData, TValue>, query: string) => boolean` | `undefined` | Hàm lọc tùy biến phía client |
+| `onSearch` | `(query: string, ...args: unknown[]) => void \| Promise<void>` | `undefined` | Callback khi người dùng gõ tìm kiếm (Server mode) |
+| `listFooter` | `ReactNode` | `undefined` | Nội dung ở đáy danh sách (Sentinel / Skeleton loading) |
+| `maxHeight` | `number \| string` | `undefined` | Giới hạn chiều cao và bật thanh cuộn dọc cho danh sách |
 | `preserveSelected` | `boolean` | `true` | Bảo lưu mục đã chọn khi từ khóa tìm kiếm thay đổi |
 | `emptyText` | `ReactNode` | `'Không tìm thấy kết quả'` | Thông báo khi không có kết quả |
+| `emptyProps` | `Partial<EmptyProps>` | `undefined` | Tùy biến props cho component `Empty` khi danh sách trống |
 | `size` | `RadioSize` | `'md'` | Kích cỡ truyền xuống toàn bộ radio con |
 | `color` | `RadioColor` | `'primary'` | Màu sắc truyền xuống toàn bộ radio con |
 | `variant` | `RadioVariant` | `'filled'` | Biến thể truyền xuống toàn bộ radio con |
 | `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ nhóm |
 | `isReadOnly` | `boolean` | `false` | Chế độ chỉ đọc cho toàn bộ nhóm |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải của nhóm |
+| `isLoading` | `boolean` | `false` | Trạng thái đang tải dữ liệu (Data Loading từ API/query) |
+| `skeletonCount` | `number` | `3` | Số lượng dòng Skeleton hiển thị khi đang tải dữ liệu |
+| `renderSkeleton` | `() => ReactNode` | `undefined` | Tùy biến render giao diện Skeleton khi tải dữ liệu |
+| `config` | `RadioGroupConfig` | `undefined` | Cấu hình cờ trạng thái (`isLoading` - trạng thái bận khóa tương tác, `isRequired`, `isInvalid`,...) |
 | `label` | `ReactNode` | `undefined` | Tiêu đề của nhóm |
 | `helperText` | `ReactNode` | `undefined` | Chú thích của nhóm |
 | `errorMessage` | `ReactNode` | `undefined` | Thông báo lỗi của nhóm |
 
 ---
 
-### `RadioOptionItem<TData = unknown>`
+### `RadioOptionItem<TData = unknown, TValue extends string | number = string | number>`
 
 | Trường | Kiểu dữ liệu | Mô tả |
 | :--- | :--- | :--- |
-| `value` | `string` | Giá trị định danh duy nhất của ô chọn |
+| `value` | `TValue` | Giá trị định danh duy nhất của ô chọn (string hoặc number) |
 | `label` | `ReactNode` | Nhãn hiển thị chính |
 | `description` | `ReactNode` | Đoạn chú thích/mô tả phụ bên dưới nhãn |
 | `disabled` | `boolean` | Vô hiệu hóa ô chọn này |

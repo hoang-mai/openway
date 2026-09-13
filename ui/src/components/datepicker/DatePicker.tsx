@@ -23,8 +23,7 @@ import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 export default function DatePicker({
   ref,
@@ -59,6 +58,7 @@ export default function DatePicker({
   disabled = false,
   readOnly = false,
   portal = true,
+  portalRoot,
   config,
   className = "",
   wrapperClassName = "",
@@ -67,8 +67,6 @@ export default function DatePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DatePickerProps) {
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
@@ -103,6 +101,7 @@ export default function DatePicker({
 
   const {
     refs: { setReference, setFloating },
+    elements: { reference },
     floatingStyles,
     context,
   } = useFloating({
@@ -122,6 +121,11 @@ export default function DatePicker({
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
+
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference,
+  });
 
   const hasError = Boolean(isInvalid || errorMessage);
   const activeColor = hasError ? "error" : color;
@@ -331,7 +335,7 @@ export default function DatePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
+          <FloatingPortal root={effectivePortalRoot}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

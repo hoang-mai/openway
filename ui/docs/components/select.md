@@ -11,7 +11,7 @@ Bộ đôi component **Select** (Chọn đơn) và **MultiSelect** (Chọn nhi�
   - `<MultiSelect>`: Chọn nhiều giá trị dưới dạng tags/chips, hỗ trợ xóa nhanh từng tag, nút clear all, giới hạn số lượng tag hiển thị (`maxTags`).
 - **2 Chế độ Tìm kiếm (`searchMode`)**:
   - `client`: Tìm kiếm và sắp xếp kết quả ngay trên client với thuật toán xếp hạng từ khóa thông minh (`searchField`, `filterFn`).
-  - `server`: Tìm kiếm phía máy chủ. Tự động debounce từ khóa gõ theo `debounceMs` trước khi gọi `onSearch(query, filters)`.
+  - `server`: Tìm kiếm phía máy chủ với `searchValue` và `onSearchChange(value)`. Tự động debounce khi kết hợp với `useSelectInfiniteQuery`.
 - **Tích hợp TanStack Query v5 & Infinite Scroll (`@openway/ui/query`)**:
   - Hook chuyên dụng `useSelectInfiniteQuery` kết hợp `useInfiniteQuery` với `useInfiniteScroll`.
   - Tự động gộp options từ tất cả các trang, khử trùng lặp theo `value`.
@@ -205,14 +205,25 @@ export function ServerInfiniteSelectExample() {
 
 ```tsx
 const filterFields: SelectFilterField[] = [
+  // 1. CheckboxGroup với Server Mode & ô tìm kiếm riêng
   {
-    name: "status",
-    label: "Trạng thái",
-    type: "select",
-    options: [
-      { value: "active", label: "Hoạt động" },
-      { value: "inactive", label: "Đã khóa" },
-    ],
+    name: "categories",
+    label: "Danh mục",
+    type: "checkbox-group",
+    options: categoryOptions,
+    searchable: true,
+    searchMode: "server",
+    isLoading: isFetchingCategories,
+    onSearchChange: (keyword) => setCategoryKeyword(keyword),
+    preserveSelected: true,
+  },
+  // 2. DateRangePicker tách thành 2 key độc lập (startDate, endDate)
+  {
+    name: "startDate",
+    endName: "endDate",
+    label: "Thời gian tạo",
+    type: "date-range",
+    placeholder: "Chọn khoảng ngày...",
   },
 ];
 
@@ -221,6 +232,7 @@ const filterFields: SelectFilterField[] = [
   options={customerOptions}
   menuFilters={filterFields}
   onMenuFilterChange={(filters) => {
+    // filters: { categories: string[], startDate: Date | null, endDate: Date | null }
     console.log("Filter áp dụng:", filters);
   }}
 />
@@ -240,7 +252,8 @@ const filterFields: SelectFilterField[] = [
 | `searchable` | `boolean` | `false` | Bật ô nhập tìm kiếm trong menu. |
 | `searchMode` | `"client" \| "server"` | `"client"` | Chế độ tìm kiếm nội bộ hay gọi server. |
 | `debounceMs` | `number` | `300` | Thời gian hoãn tìm kiếm server (ms). |
-| `onSearch` | `(query, filters) => void` | `undefined` | Callback khi người dùng tìm kiếm ở chế độ server. |
+| `searchValue` | `string` | `undefined` | Giá trị từ khóa tìm kiếm (Controlled). |
+| `onSearchChange` | `(value: string) => void` | `undefined` | Callback khi giá trị ô tìm kiếm thay đổi. |
 | `listFooter` | `ReactNode` | `undefined` | Phần tử hiển thị dưới đáy danh sách (dùng cho Sentinel / Skeleton). |
 | `clearable` | `boolean` | `false` | Hiển thị nút xóa nhanh giá trị đã chọn. |
 | `disabled` | `boolean` | `false` | Khóa không cho phép tương tác. |

@@ -16,7 +16,7 @@ import { formatFilterBadgeValue } from "./utils";
 import { Input, NumberInput, parseNumber } from "@/components/input";
 import { DatePicker } from "@/components/datepicker";
 import { DateRangePicker } from "@/components/daterangepicker";
-import { CheckboxGroup } from "@/components/checkbox";
+import { CheckboxGroup, type CheckboxOptionItem } from "@/components/checkbox";
 import { Badge } from "@/components/badge";
 import PlusIcon from "@/components/icons/PlusIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
@@ -29,7 +29,7 @@ import { menuRadiusConfig } from "./constants";
 export interface SelectMenuFilterProps<TFilters extends Record<string, unknown> = Record<string, unknown>> {
   filters: SelectFilterField<unknown>[];
   values: Partial<TFilters>;
-  onChange: (name: string, value: unknown) => void;
+  onChange: (updates: Record<string, unknown>) => void;
   onReset?: () => void;
   layout?: SelectFilterLayout;
   gridCols?: number;
@@ -46,7 +46,7 @@ interface FilterBadgeChipProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onRemove: () => void;
-  onChange: (name: string, value: unknown) => void;
+  onChange: (updates: Record<string, unknown>) => void;
   color: SelectColor;
   radius: SelectRadius;
 }
@@ -99,20 +99,51 @@ function FilterBadgeChip({
     }
   }, [isOpen]);
 
+  const [historicalOptionLabels, setHistoricalOptionLabels] = useState<Map<string | number, ReactNode>>(() => {
+    const initial = new Map<string | number, ReactNode>();
+    if (field.type === "checkbox-group" && field.options && Array.isArray(currentValue)) {
+      const set = new Set(currentValue.map(String));
+      field.options.forEach((opt) => {
+        if (set.has(String(opt.value))) {
+          initial.set(String(opt.value), opt.label);
+        }
+      });
+    }
+    return initial;
+  });
+
+  useEffect(() => {
+    if (field.type === "checkbox-group" && field.options && Array.isArray(currentValue)) {
+      const set = new Set(currentValue.map(String));
+      let hasNew = false;
+      const nextMap = new Map(historicalOptionLabels);
+      for (const opt of field.options) {
+        if (set.has(String(opt.value)) && !nextMap.has(String(opt.value))) {
+          nextMap.set(String(opt.value), opt.label);
+          hasNew = true;
+        }
+      }
+      if (hasNew) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setHistoricalOptionLabels(nextMap);
+      }
+    }
+  }, [field, currentValue, historicalOptionLabels]);
+
   const hasValue =
     currentValue !== undefined &&
     currentValue !== null &&
     currentValue !== "" &&
     (!Array.isArray(currentValue) || currentValue.length > 0);
 
-  const displayVal = formatFilterBadgeValue(field, currentValue);
+  const displayVal = formatFilterBadgeValue(field, currentValue, historicalOptionLabels);
 
   const renderEditor = () => {
     if (field.type === "custom") {
       return (
         field.render?.({
           value: currentValue,
-          onChange: (val) => onChange(field.name, val),
+          onChange: (val) => onChange({ [field.name]: val }),
         }) ?? null
       );
     }
@@ -128,7 +159,7 @@ function FilterBadgeChip({
             radius={radius}
             placeholder={field.placeholder || "Nhập từ khóa..."}
             value={(currentValue as string) || ""}
-            onChange={(e) => onChange(field.name, e.target.value)}
+            onChange={(e) => onChange({ [field.name]: e.target.value })}
             {...(field.props || {})}
           />
         );
@@ -141,17 +172,20 @@ function FilterBadgeChip({
             color={color}
             radius={radius}
             placeholder={field.placeholder || "Nhập số..."}
+            min={field.min}
+            max={field.max}
+            step={field.step}
             value={(currentValue as number | string) ?? ""}
             onChange={(e) => {
               const raw = e.target.value;
               if (raw === "") {
-                onChange(field.name, "");
+                onChange({ [field.name]: "" });
               } else {
                 const parsed = parseNumber(raw);
-                onChange(field.name, parsed !== undefined ? parsed : raw);
+                onChange({ [field.name]: parsed !== undefined ? parsed : raw });
               }
             }}
-            onClear={() => onChange(field.name, "")}
+            onClear={() => onChange({ [field.name]: "" })}
             {...(field.props || {})}
           />
         );
@@ -164,13 +198,16 @@ function FilterBadgeChip({
             color={color}
             radius={radius}
             placeholder={field.placeholder || "Chọn ngày"}
+            minDate={field.minDate}
+            maxDate={field.maxDate}
             value={currentValue as Date | null | undefined}
-            onChange={(d) => onChange(field.name, d)}
+            onChange={(d) => onChange({ [field.name]: d })}
             {...(field.props || {})}
           />
         );
 
-      case "date-range":
+      case "date-range": {
+        const rangeVal = (currentValue as [Date | null, Date | null]) || [null, null];
         return (
           <DateRangePicker
             portal={false}
@@ -178,28 +215,76 @@ function FilterBadgeChip({
             color={color}
             radius={radius}
             placeholder={field.placeholder || "Chọn khoảng ngày"}
-            value={(currentValue as [Date | null, Date | null]) || [null, null]}
-            onChange={(range) => onChange(field.name, range)}
+            value={rangeVal}
+            onChange={(range) => {
+              onChange({
+                [field.name]: range?.[0] ?? null,
+                [field.endName]: range?.[1] ?? null,
+              });
+            }}
             {...(field.props || {})}
           />
         );
+      }
 
-      case "checkbox-group":
+      case "checkbox-group": {
+        const rawOptions = (field.options || (field.props?.options as CheckboxOptionItem[]) || []) as CheckboxOptionItem[];
+        const formattedOptions = rawOptions.map((opt) => ({
+          value: String(opt.value),
+          label: opt.label,
+          description: opt.description,
+          disabled: opt.disabled,
+          data: opt.data,
+        }));
+
+        const isSearchable =
+          field.searchable ??
+          Boolean(field.props?.config?.searchable);
+        const preserveSelected =
+          field.preserveSelected ??
+          Boolean(field.props?.config?.preserveSelected);
+        const searchMode =
+          field.searchMode ?? (field.props?.searchMode as "client" | "server") ?? "client";
+
         return (
-          <CheckboxGroup
-            size="sm"
-            color={color}
-            value={(currentValue as string[]) || []}
-            onChange={(val) => onChange(field.name, val)}
-            options={(field.options || []).map((opt) => ({
-              value: String(opt.value),
-              label: opt.label,
-              disabled: opt.disabled,
-            }))}
-            className="max-h-48 overflow-y-auto py-1 gap-2"
-            {...(field.props || {})}
-          />
+          <div className="w-64 min-w-60 p-1">
+            <CheckboxGroup
+              size="sm"
+              color={color}
+              value={((currentValue as (string | number)[]) || []).map(String)}
+              onChange={(val) => {
+                onChange({ [field.name]: val });
+                if (rawOptions.length > 0) {
+                  const set = new Set(val.map(String));
+                  const newMap = new Map(historicalOptionLabels);
+                  for (const opt of rawOptions) {
+                    if (set.has(String(opt.value))) {
+                      newMap.set(String(opt.value), opt.label);
+                    }
+                  }
+                  setHistoricalOptionLabels(newMap);
+                }
+              }}
+              options={formattedOptions}
+              config={{
+                ...field.props?.config,
+                searchable: isSearchable,
+                preserveSelected,
+              }}
+              searchMode={searchMode}
+              searchPlaceholder={field.searchPlaceholder || "Tìm kiếm lựa chọn..."}
+              onSearch={field.onSearch || field.props?.onSearch}
+              onSearchChange={field.onSearchChange || field.props?.onSearchChange}
+              isLoading={field.isLoading ?? field.props?.isLoading}
+              listFooter={field.listFooter ?? field.props?.listFooter}
+              skeletonCount={field.skeletonCount ?? field.props?.skeletonCount ?? 3}
+              maxHeight={field.maxHeight ?? field.props?.maxHeight ?? 200}
+              className="max-h-52 overflow-y-auto py-1 gap-2"
+              {...(field.props || {})}
+            />
+          </div>
         );
+      }
 
       default:
         return null;
@@ -303,7 +388,16 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
   const [activeFieldNames, setActiveFieldNames] = useState<string[]>(() => {
     const initial: string[] = [];
     filters?.forEach((f) => {
-      const val = values?.[f.name as keyof TFilters] ?? f.defaultValue;
+      let val: unknown;
+      if (f.type === "date-range") {
+        const start = values?.[f.name as keyof TFilters] ?? f.defaultValue?.[0];
+        const end = values?.[f.endName as keyof TFilters] ?? f.defaultValue?.[1];
+        if (start || end) {
+          val = [start, end];
+        }
+      } else {
+        val = values?.[f.name as keyof TFilters] ?? f.defaultValue;
+      }
       if (val !== undefined && val !== null && val !== "" && (!Array.isArray(val) || val.length > 0)) {
         initial.push(f.name);
       }
@@ -360,11 +454,16 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
 
   // Handle removing a filter chip
   const handleRemoveField = (fieldName: string) => {
+    const field = filters.find((f) => f.name === fieldName);
     setActiveFieldNames((prev) => prev.filter((name) => name !== fieldName));
     if (activeEditorFieldName === fieldName) {
       setActiveEditorFieldName(null);
     }
-    onChange(fieldName, undefined);
+    if (field?.type === "date-range") {
+      onChange({ [fieldName]: undefined, [field.endName]: undefined });
+    } else {
+      onChange({ [fieldName]: undefined });
+    }
   };
 
   // Handle reset all
@@ -454,7 +553,14 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
         {activeFieldNames.map((fieldName) => {
           const field = filters.find((f) => f.name === fieldName);
           if (!field) return null;
-          const currentValue = values[fieldName as keyof TFilters] ?? field.defaultValue;
+          let currentValue: unknown;
+          if (field.type === "date-range") {
+            const start = values[field.name as keyof TFilters] ?? field.defaultValue?.[0] ?? null;
+            const end = values[field.endName as keyof TFilters] ?? field.defaultValue?.[1] ?? null;
+            currentValue = start || end ? [start, end] : null;
+          } else {
+            currentValue = values[fieldName as keyof TFilters] ?? field.defaultValue;
+          }
 
           return (
             <FilterBadgeChip

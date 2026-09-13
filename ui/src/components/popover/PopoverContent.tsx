@@ -5,8 +5,7 @@ import { PopoverContentProps } from "./types";
 import { sizeConfig, radiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { DEFAULT_Z_INDEX } from "@/constants";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 export function PopoverContent({
   ref: propRef,
@@ -16,11 +15,13 @@ export function PopoverContent({
   minWidth,
   maxWidth,
   zIndex = DEFAULT_Z_INDEX.POPOVER,
+  portalRoot,
   ...rest
 }: PopoverContentProps) {
   const {
     isOpen,
     refs,
+    elements,
     floatingStyles,
     context,
     getFloatingProps,
@@ -39,8 +40,10 @@ export function PopoverContent({
     animated,
   });
 
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference: elements.reference,
+  });
 
   if (!isMounted) {
     return null;
@@ -75,8 +78,6 @@ export function PopoverContent({
       </div>
     </FloatingFocusManager>
   );
-
-  const effectivePortalRoot = modalContext?.dialogRef ?? confirmContext?.dialogRef;
 
   return <FloatingPortal root={effectivePortalRoot}>{content}</FloatingPortal>;
 }

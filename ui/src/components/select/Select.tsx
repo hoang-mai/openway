@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useId } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useId } from "react";
 import { SelectProps, SelectOptionItem } from "./types";
 import SingleSelectTrigger from "./triggers/SingleSelectTrigger";
 import SelectMenu from "./SelectMenu";
@@ -8,7 +8,7 @@ import { useSelectFloating } from "./hooks/useSelectFloating";
 import { useSelectSearch } from "./hooks/useSelectSearch";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
-import { createOptionsMap, getSelectedOption } from "./utils";
+import { getSelectedOption } from "./utils";
 
 const DEFAULT_OPTIONS: never[] = [];
 
@@ -33,7 +33,6 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   name,
   searchable = false,
   searchMode = "client",
-  searchPlacement = "trigger",
   searchPlaceholder,
   searchField = ["label", "value"],
   searchValue: searchValueProp,
@@ -48,11 +47,12 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   menuHeader,
   menuFooter,
   listFooter,
-  onSearch,
-  debounceMs = 300,
   filterFn,
   emptyText,
   emptyProps,
+  isLoading: isLoadingProp,
+  skeletonCount = 4,
+  renderSkeleton,
   portal = true,
   portalRoot,
   placement = "bottom-start",
@@ -74,27 +74,67 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   const {
     isRequired = false,
     isInvalid: isInvalidConfig = false,
-    isLoading = false,
+    isLoading: isLoadingConfig = false,
     showSpinner = false,
     isClearable = false,
     isFullWidth = true,
   } = config ?? {};
 
   const isInvalid = Boolean(isInvalidConfig ?? !!errorMessage);
-  const clearable = isClearable;
   const currentSize = getSafeConfig(size, sizeConfig, "md");
+
+  // Tách bạch rõ ràng 2 trạng thái:
+  // 1. isFetching (isLoadingProp): trạng thái get/tải dữ liệu options từ server
+  const isFetching = Boolean(isLoadingProp);
+  // 2. isSubmitting (isLoadingConfig): trạng thái khi gửi formData từ form config
+  const isSubmitting = Boolean(isLoadingConfig);
+  // Trạng thái bận hiển thị trên Trigger (khi fetch hoặc submit có spinner)
+  const isTriggerLoading = isFetching || isSubmitting;
 
   const isControlled = value !== undefined;
   const [uncontrolledValue, setUncontrolledValue] = useState<string | number | null>(defaultValue ?? null);
   const currentValue = isControlled ? (value ?? null) : uncontrolledValue;
 
   const [historicalOptions, setHistoricalOptions] = useState<Map<string | number, SelectOptionItem<TData>>>(() => {
-    return createOptionsMap(options);
+    const initialMap = new Map<string | number, SelectOptionItem<TData>>();
+    const initialVal = value !== undefined ? value : defaultValue;
+    if (initialVal !== null && initialVal !== undefined) {
+      const found = options.find((opt) => opt.value === initialVal);
+      if (found) {
+        initialMap.set(initialVal, found);
+      }
+    }
+    return initialMap;
   });
 
+  // Tự động ghi nhớ option đã chọn vào historicalOptions khi options được tải về
+  useEffect(() => {
+    if (currentValue !== null && currentValue !== undefined) {
+      const found = options.find((opt) => opt.value === currentValue);
+      if (found) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setHistoricalOptions((prev) => {
+          const existing = prev.get(currentValue);
+          if (existing && existing.label === found.label && existing.data === found.data) {
+            return prev;
+          }
+          const next = new Map(prev);
+          next.set(currentValue, found);
+          return next;
+        });
+      }
+    }
+  }, [currentValue, options]);
+
   const selectedOption = useMemo<SelectOptionItem<TData> | null>(() => {
-    return getSelectedOption(currentValue, options, historicalOptions);
-  }, [currentValue, options, historicalOptions]);
+    const item = getSelectedOption(currentValue, options, historicalOptions);
+    if (!item) return null;
+    // Khi đang tải dữ liệu options lần đầu từ server (chưa có trong cache), không hiển thị fallback ID thô
+    if (isFetching && options.length === 0 && !historicalOptions.has(item.value)) {
+      return null;
+    }
+    return item;
+  }, [currentValue, options, historicalOptions, isFetching]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -116,27 +156,35 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
     menuFilters,
     controlledFilterValues,
     onMenuFilterChange,
-    onSearch,
-    debounceMs,
     filterFn,
     isOpen,
     setIsOpen,
   });
 
-  const { refs, floatingStyles, transitionStyles, isMounted, getReferenceProps, getFloatingProps, elementsRef } =
-    useSelectFloating({
+  const {
+    refs,
+    elements: { reference },
+    floatingStyles,
+    transitionStyles,
+    isMounted,
+    getReferenceProps,
+    getFloatingProps,
+    elementsRef,
+  } = useSelectFloating({
       placement,
       isOpen,
       onOpenChange: (nextOpen) => {
         setIsOpen(nextOpen);
         if (!nextOpen) {
           setActiveIndex(null);
-          resetSearch();
+          if (searchMode === "client") {
+            resetSearch();
+          }
         }
       },
       disabled: isDisabled,
       readOnly,
-      isLoading,
+      isLoading: isSubmitting,
       animated,
       animationDuration,
       activeIndex,
@@ -148,7 +196,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
       if (option.disabled || isDisabled || readOnly) return;
 
       setHistoricalOptions((prev) => {
-        if (prev.has(option.value)) return prev;
+        if (prev.get(option.value) === option) return prev;
         const next = new Map(prev);
         next.set(option.value, option);
         return next;
@@ -246,12 +294,11 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
             readOnly={readOnly}
             isInvalid={isInvalid}
             searchable={searchable}
-            searchPlacement={searchPlacement}
             searchValue={searchInput}
             onSearchChange={handleSearchChange}
             onClear={handleClear}
-            clearable={clearable}
-            isLoading={isLoading}
+            clearable={isClearable}
+            isLoading={isTriggerLoading}
             showSpinner={showSpinner}
             startContent={startContent}
             endContent={endContent}
@@ -271,9 +318,12 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
             size={size}
             color={color}
             radius={radius}
-            isLoading={isLoading}
+            isLoading={isFetching}
+            skeletonCount={skeletonCount}
+            renderSkeleton={renderSkeleton}
             portal={portal}
             portalRoot={portalRoot}
+            reference={reference}
             maxMenuHeight={maxMenuHeight}
             emptyText={emptyText}
             emptyProps={emptyProps}

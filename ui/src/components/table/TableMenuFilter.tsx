@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect, useMemo, ReactNode } from "react";
 import {
   useFloating,
   autoUpdate,
@@ -11,10 +11,10 @@ import {
   FloatingPortal,
 } from "@floating-ui/react";
 import { useFloatingTransition } from "@/hooks/useFloatingTransition";
-import { Input, NumberInput, parseNumber } from "@/components/input";
+import { Input, type InputProps, NumberInput, parseNumber } from "@/components/input";
 import { DatePicker } from "@/components/datepicker";
 import { DateRangePicker } from "@/components/daterangepicker";
-import { CheckboxGroup } from "@/components/checkbox";
+import { CheckboxGroup, type CheckboxOptionItem } from "@/components/checkbox";
 import { Badge } from "@/components/badge";
 import PlusIcon from "@/components/icons/PlusIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
@@ -28,7 +28,8 @@ import type { TableFilterDef } from "./types";
  */
 export function formatTableFilterBadgeValue(
   field: TableFilterDef,
-  val: unknown
+  val: unknown,
+  historicalOptionLabels?: Map<string | number, ReactNode>
 ): string {
   if (val === undefined || val === null || val === "") {
     return "Chưa nhập";
@@ -59,11 +60,21 @@ export function formatTableFilterBadgeValue(
     }
     // Checkbox group / Options (multi-select / select)
     const getOptionLabel = (item: unknown) => {
-      if (field.options && field.options.length > 0) {
+      if (
+        (field.type === "checkbox-group" || field.type === "select") &&
+        field.options &&
+        field.options.length > 0
+      ) {
         const found = field.options.find(
           (o) => String(o.value) === String(item)
         );
         if (found) return String(found.label);
+      }
+      if (historicalOptionLabels) {
+        const cached =
+          historicalOptionLabels.get(String(item)) ??
+          historicalOptionLabels.get(item as string | number);
+        if (cached !== undefined && cached !== null) return String(cached);
       }
       return String(item);
     };
@@ -76,9 +87,19 @@ export function formatTableFilterBadgeValue(
     return `${firstLabel}, +${val.length - 1}`;
   }
 
-  if (field.options && field.options.length > 0) {
+  if (
+    (field.type === "checkbox-group" || field.type === "select") &&
+    field.options &&
+    field.options.length > 0
+  ) {
     const found = field.options.find((o) => String(o.value) === String(val));
     if (found) return String(found.label);
+  }
+  if (historicalOptionLabels) {
+    const cached =
+      historicalOptionLabels.get(String(val)) ??
+      historicalOptionLabels.get(val as string | number);
+    if (cached !== undefined && cached !== null) return String(cached);
   }
 
   return String(val);
@@ -91,7 +112,7 @@ interface TableFilterBadgeChipProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onRemove: () => void;
-  onChange: (name: string, value: unknown) => void;
+  onChange: (updates: Record<string, unknown>) => void;
 }
 
 function TableFilterBadgeChip({
@@ -147,6 +168,37 @@ function TableFilterBadgeChip({
     }
   }, [isOpen]);
 
+  const [historicalOptionLabels, setHistoricalOptionLabels] = useState<Map<string | number, ReactNode>>(() => {
+    const initial = new Map<string | number, ReactNode>();
+    if ((field.type === "checkbox-group" || field.type === "select") && field.options && Array.isArray(currentValue)) {
+      const set = new Set(currentValue.map(String));
+      field.options.forEach((opt) => {
+        if (set.has(String(opt.value))) {
+          initial.set(String(opt.value), opt.label);
+        }
+      });
+    }
+    return initial;
+  });
+
+  useEffect(() => {
+    if ((field.type === "checkbox-group" || field.type === "select") && field.options && Array.isArray(currentValue)) {
+      const set = new Set(currentValue.map(String));
+      let hasNew = false;
+      const nextMap = new Map(historicalOptionLabels);
+      for (const opt of field.options) {
+        if (set.has(String(opt.value)) && !nextMap.has(String(opt.value))) {
+          nextMap.set(String(opt.value), opt.label);
+          hasNew = true;
+        }
+      }
+      if (hasNew) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setHistoricalOptionLabels(nextMap);
+      }
+    }
+  }, [field, currentValue, historicalOptionLabels]);
+
   const hasValue =
     currentValue !== undefined &&
     currentValue !== null &&
@@ -155,7 +207,7 @@ function TableFilterBadgeChip({
       (currentValue.length > 0 &&
         (currentValue[0] != null || currentValue[1] != null)));
 
-  const displayVal = formatTableFilterBadgeValue(field, currentValue);
+  const displayVal = formatTableFilterBadgeValue(field, currentValue, historicalOptionLabels);
   const isDateOrDateRange =
     field.type === "date" || field.type === "date-range";
 
@@ -164,22 +216,26 @@ function TableFilterBadgeChip({
       return (
         field.render?.({
           value: currentValue,
-          onChange: (val) => onChange(fieldName, val),
+          onChange: (val) => onChange({ [field.name]: val }),
         }) ?? null
       );
     }
 
     if (field.type === "date-range") {
+      const rangeVal = (currentValue as [Date | null, Date | null]) || [null, null];
       return (
         <DateRangePicker
           portal={false}
           size="sm"
           radius="md"
           placeholder={field.placeholder || "Chọn khoảng ngày"}
-          value={
-            (currentValue as [Date | null, Date | null]) || [null, null]
-          }
-          onChange={(range) => onChange(fieldName, range)}
+          value={rangeVal}
+          onChange={(range) => {
+            onChange({
+              [field.name]: range?.[0] ?? null,
+              [field.endName]: range?.[1] ?? null,
+            });
+          }}
           {...(field.props || {})}
         />
       );
@@ -192,8 +248,10 @@ function TableFilterBadgeChip({
           size="sm"
           radius="md"
           placeholder={field.placeholder || "Chọn ngày"}
+          minDate={field.minDate}
+          maxDate={field.maxDate}
           value={currentValue as Date | null | undefined}
-          onChange={(d) => onChange(fieldName, d)}
+          onChange={(d) => onChange({ [field.name]: d })}
           {...(field.props || {})}
         />
       );
@@ -206,17 +264,20 @@ function TableFilterBadgeChip({
           size="sm"
           radius="full"
           placeholder={field.placeholder || "Nhập số..."}
+          min={field.min}
+          max={field.max}
+          step={field.step}
           value={(currentValue as number | string) ?? ""}
           onChange={(e) => {
             const raw = e.target.value;
             if (raw === "") {
-              onChange(fieldName, "");
+              onChange({ [field.name]: "" });
             } else {
               const parsed = parseNumber(raw);
-              onChange(fieldName, parsed !== undefined ? parsed : raw);
+              onChange({ [field.name]: parsed !== undefined ? parsed : raw });
             }
           }}
-          onClear={() => onChange(fieldName, "")}
+          onClear={() => onChange({ [field.name]: "" })}
           {...(field.props || {})}
         />
       );
@@ -226,23 +287,68 @@ function TableFilterBadgeChip({
       field.type === "select" ||
       field.type === "checkbox-group"
     ) {
+      const rawOptions = (field.options || (field.props?.options as CheckboxOptionItem[]) || []) as CheckboxOptionItem[];
+      const formattedOptions = rawOptions.map((opt) => ({
+        value: String(opt.value),
+        label: opt.label,
+        description: opt.description,
+        disabled: opt.disabled,
+        data: opt.data,
+      }));
+
+      const isSearchable =
+        field.searchable ??
+        Boolean(field.props?.config?.searchable);
+      const preserveSelected =
+        field.preserveSelected ??
+        Boolean(field.props?.config?.preserveSelected);
+      const searchMode =
+        field.searchMode ?? (field.props?.searchMode as "client" | "server") ?? "client";
+
       return (
-        <CheckboxGroup
-          size="sm"
-          value={(currentValue as string[]) || []}
-          onChange={(val) => onChange(fieldName, val)}
-          options={(field.options || []).map((opt) => ({
-            value: String(opt.value),
-            label: opt.label,
-            disabled: opt.disabled,
-          }))}
-          className="max-h-48 overflow-y-auto py-1 gap-2"
-          {...(field.props || {})}
-        />
+        <div className="w-64 min-w-60 p-1">
+          <CheckboxGroup
+            size="sm"
+            value={((currentValue as (string | number)[]) || []).map(String)}
+            onChange={(val) => {
+              onChange({ [field.name]: val });
+              if (rawOptions.length > 0) {
+                const set = new Set(val.map(String));
+                const newMap = new Map(historicalOptionLabels);
+                for (const opt of rawOptions) {
+                  if (set.has(String(opt.value))) {
+                    newMap.set(String(opt.value), opt.label);
+                  }
+                }
+                setHistoricalOptionLabels(newMap);
+              }
+            }}
+            options={formattedOptions}
+            config={{
+              ...field.props?.config,
+              searchable: isSearchable,
+              preserveSelected,
+            }}
+            searchMode={searchMode}
+            searchPlaceholder={field.searchPlaceholder || "Tìm kiếm lựa chọn..."}
+            onSearch={field.onSearch || field.props?.onSearch}
+            onSearchChange={field.onSearchChange || field.props?.onSearchChange}
+            isLoading={field.isLoading ?? field.props?.isLoading}
+            listFooter={field.listFooter ?? field.props?.listFooter}
+            skeletonCount={field.skeletonCount ?? field.props?.skeletonCount ?? 3}
+            maxHeight={field.maxHeight ?? field.props?.maxHeight ?? 200}
+            className="max-h-52 overflow-y-auto py-1 gap-2"
+            {...(field.props || {})}
+          />
+        </div>
       );
     }
 
     // Default: text / string
+    const stringProps = (field.type === "string" || field.type === "text" ? field.props : undefined) as
+      | Partial<InputProps>
+      | undefined;
+
     return (
       <Input
         ref={inputRef}
@@ -250,8 +356,8 @@ function TableFilterBadgeChip({
         radius="full"
         placeholder={field.placeholder || "Nhập từ khóa..."}
         value={(currentValue as string) || ""}
-        onChange={(e) => onChange(fieldName, e.target.value)}
-        {...(field.props || {})}
+        onChange={(e) => onChange({ [field.name]: e.target.value })}
+        {...(stringProps || {})}
       />
     );
   };
@@ -351,7 +457,7 @@ function TableFilterBadgeChip({
 export interface TableMenuFilterProps {
   filters: TableFilterDef[];
   values: Record<string, unknown>;
-  onChange: (name: string, value: unknown) => void;
+  onChange: (updates: Record<string, unknown>) => void;
   onReset?: () => void;
   className?: string;
 }
@@ -371,7 +477,16 @@ export function TableMenuFilter({
 
     // 1. Thêm các field đang có giá trị trong values
     filters?.forEach((f) => {
-      const val = values?.[f.name];
+      let val: unknown;
+      if (f.type === "date-range") {
+        const start = values?.[f.name] ?? f.defaultValue?.[0];
+        const end = values?.[f.endName] ?? f.defaultValue?.[1];
+        if (start || end) {
+          val = [start, end];
+        }
+      } else {
+        val = values?.[f.name] ?? f.defaultValue;
+      }
       const hasVal =
         val !== undefined &&
         val !== null &&
@@ -454,11 +569,16 @@ export function TableMenuFilter({
 
   // Xóa bỏ một bộ lọc chip
   const handleRemoveField = (name: string) => {
+    const field = filters.find((f) => f.name === name);
     setManuallyAddedFields((prev) => prev.filter((item) => item !== name));
     if (activeEditorFieldName === name) {
       setActiveEditorFieldName(null);
     }
-    onChange(name, undefined);
+    if (field?.type === "date-range") {
+      onChange({ [name]: undefined, [field.endName]: undefined });
+    } else {
+      onChange({ [name]: undefined });
+    }
   };
 
   // Xóa toàn bộ bộ lọc
@@ -555,7 +675,14 @@ export function TableMenuFilter({
       {/* Danh sách các Badge Chips bộ lọc đang kích hoạt */}
       {filters.map((field) => {
         if (!activeFieldSet.has(field.name)) return null;
-        const currentVal = values?.[field.name];
+        let currentVal: unknown;
+        if (field.type === "date-range") {
+          const start = values?.[field.name] ?? field.defaultValue?.[0] ?? null;
+          const end = values?.[field.endName] ?? field.defaultValue?.[1] ?? null;
+          currentVal = start || end ? [start, end] : null;
+        } else {
+          currentVal = values?.[field.name] ?? field.defaultValue;
+        }
         const isOpen = activeEditorFieldName === field.name;
 
         return (

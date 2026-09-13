@@ -1,4 +1,8 @@
 import type { HTMLAttributes, ReactNode, Ref, TdHTMLAttributes, ThHTMLAttributes } from "react";
+import type { CheckboxGroupProps, CheckboxOptionItem, CheckboxSearchMode } from "../checkbox/types";
+import type { DatePickerProps } from "../datepicker/types";
+import type { DateRangePickerProps } from "../daterangepicker/types";
+import type { InputProps, NumberInputProps } from "../input/types";
 import type {
   ColumnDef,
   Column,
@@ -348,71 +352,128 @@ export type TableFilterType =
   | "custom";
 
 /**
- * Tùy chọn dành cho bộ lọc dạng select / checkbox-group
+ * Thuộc tính cơ sở dùng chung cho tất cả các loại trường lọc trong TableMenuFilter
  */
-export interface TableFilterOption {
-  label: ReactNode;
-  value: string | number | boolean;
-  disabled?: boolean;
+export interface BaseTableFilterDef<TValue = unknown> {
+  /** Tên định danh trường lọc (dùng làm key trong object filters, đồng nhất với SelectFilterField) */
+  name: string;
+  /** Tên hiển thị của bộ lọc trên giao diện (ví dụ: "Trạng thái", "Ngày tạo") */
+  label?: ReactNode;
+  /** Placeholder gợi ý trong editor */
+  placeholder?: string;
+  /** Giá trị mặc định khi khởi tạo */
+  defaultValue?: TValue;
+  /** Giá trị điều khiển */
+  value?: TValue;
 }
 
 /**
- * Định nghĩa cấu hình bộ lọc cho DataTable / TableToolbar (đồng nhất với SelectFilterField)
+ * Trường lọc bảng dạng văn bản / chuỗi (String / Text)
  */
-export interface TableFilterDef<TValue = unknown> {
-  /**
-   * Tên định danh trường lọc (dùng làm key trong object filters, đồng nhất với SelectFilterField)
-   */
-  name: string;
-
-  /**
-   * Tên hiển thị của bộ lọc trên giao diện (ví dụ: "Trạng thái", "Ngày tạo")
-   */
-  label?: ReactNode;
-
-  /**
-   * Kiểu hiển thị bộ lọc: 'string' | 'text' | 'number' | 'date' | 'date-range' | 'checkbox-group' | 'select' | 'custom'
-   */
-  type: TableFilterType;
-
-  /**
-   * Danh sách options dành cho kiểu 'select' hoặc 'checkbox-group'
-   */
-  options?: TableFilterOption[];
-
-  /**
-   * Placeholder gợi ý trong editor
-   */
-  placeholder?: string;
-
-  /**
-   * Giá trị mặc định khi khởi tạo
-   */
-  defaultValue?: TValue;
-
-  /**
-   * Giá trị điều khiển
-   */
-  value?: TValue;
-
-  /**
-   * Thuộc tính tùy biến truyền bổ sung vào component editor (DateRangePicker, DatePicker, CheckboxGroup...)
-   */
-  props?: Record<string, unknown>;
-
-  /**
-   * Thời gian trì hoãn debounce (ms) riêng cho trường lọc này ở chế độ server (tùy chọn)
-   */
-  debounceMs?: number;
-
-  /**
-   * Hàm render component tùy biến khi `type: 'custom'`
-   */
-  render?: (props: {
-    value: TValue;
-    onChange: (val: TValue) => void;
-  }) => ReactNode;
+export interface TableStringFilterDef extends BaseTableFilterDef<string> {
+  type: "string" | "text";
+  /** Props tùy biến truyền thêm vào Input */
+  props?: Partial<InputProps>;
 }
+
+/**
+ * Trường lọc bảng dạng số (Number)
+ */
+export interface TableNumberFilterDef extends BaseTableFilterDef<number | string> {
+  type: "number";
+  /** Giá trị nhỏ nhất */
+  min?: number;
+  /** Giá trị lớn nhất */
+  max?: number;
+  /** Bước nhảy */
+  step?: number;
+  /** Props tùy biến truyền thêm vào NumberInput */
+  props?: Partial<NumberInputProps>;
+}
+
+/**
+ * Trường lọc bảng dạng chọn 1 ngày (DatePicker)
+ */
+export interface TableDateFilterDef extends BaseTableFilterDef<Date | null> {
+  type: "date";
+  /** Giới hạn ngày nhỏ nhất có thể chọn */
+  minDate?: Date;
+  /** Giới hạn ngày lớn nhất có thể chọn */
+  maxDate?: Date;
+  /** Props tùy biến truyền thêm vào DatePicker */
+  props?: Partial<DatePickerProps>;
+}
+
+/**
+ * Trường lọc bảng dạng khoảng ngày (DateRangePicker)
+ */
+export interface TableDateRangeFilterDef extends BaseTableFilterDef<[Date | null, Date | null]> {
+  type: "date-range";
+  /**
+   * Tên trường cho ngày kết thúc (bắt buộc).
+   * Trường name lưu ngày bắt đầu, endName lưu ngày kết thúc (ví dụ: name='createdAtStart', endName='createdAtEnd').
+   */
+  endName: string;
+  /** Props tùy biến truyền thêm vào DateRangePicker */
+  props?: Partial<DateRangePickerProps>;
+}
+
+/**
+ * Trường lọc bảng dạng nhóm Checkbox (CheckboxGroup / Select), hỗ trợ cả Client mode & Server mode
+ */
+export interface TableCheckboxGroupFilterDef<TData = unknown>
+  extends BaseTableFilterDef<(string | number)[]> {
+  type: "checkbox-group" | "select";
+  /** Danh sách các options lựa chọn */
+  options?: CheckboxOptionItem<TData>[];
+  /** Bật ô tìm kiếm bên trong danh sách checkbox */
+  searchable?: boolean;
+  /** Chế độ tìm kiếm: 'client' (mặc định) hoặc 'server' */
+  searchMode?: CheckboxSearchMode;
+  /** Placeholder cho ô tìm kiếm checkbox */
+  searchPlaceholder?: string;
+  /** Callback kích hoạt khi người dùng gõ tìm kiếm (Server mode) */
+  onSearch?: (query: string, ...args: unknown[]) => void | Promise<void>;
+  /** Callback khi từ khóa tìm kiếm thay đổi */
+  onSearchChange?: (value: string) => void;
+  /** Trạng thái đang tải dữ liệu từ server (hiển thị skeleton) */
+  isLoading?: boolean;
+  /** Giữ lại các checkbox đã chọn khi kết quả tìm kiếm server thay đổi */
+  preserveSelected?: boolean;
+  /** Phần tử hiển thị ở đáy danh sách (ví dụ: Sentinel / Skeleton cho Infinite Scroll) */
+  listFooter?: ReactNode;
+  /** Chiều cao tối đa cho danh sách cuộn */
+  maxHeight?: number | string;
+  /** Số lượng dòng Skeleton hiển thị khi đang tải dữ liệu */
+  skeletonCount?: number;
+  /** Props tùy biến truyền thêm vào CheckboxGroup */
+  props?: Partial<CheckboxGroupProps<TData>>;
+}
+
+/**
+ * Trường lọc bảng tùy biến giao diện render (Custom)
+ */
+export interface TableCustomFilterDef<TValue = unknown> extends BaseTableFilterDef<TValue> {
+  type: "custom";
+  /** Props tùy biến */
+  props?: Record<string, unknown>;
+  /** Hàm render tùy biến giao diện trường lọc */
+  render: (props: { value: TValue | undefined; onChange: (val: TValue) => void }) => ReactNode;
+}
+
+/**
+ * Discriminated Union tập hợp tất cả các loại trường lọc khả dụng trong Table / DataTable
+ */
+export type TableFilterDef<TData = unknown, TValue = unknown> =
+  | TableStringFilterDef
+  | TableNumberFilterDef
+  | TableDateFilterDef
+  | TableDateRangeFilterDef
+  | TableCheckboxGroupFilterDef<TData>
+  | TableCustomFilterDef<TValue>;
+
+/** Alias cho TableFilterDef */
+export type TableFilterField<TData = unknown, TValue = unknown> = TableFilterDef<TData, TValue>;
 
 /**
  * Thuộc tính của thanh công cụ bảng `<TableToolbar />`
@@ -473,9 +534,9 @@ export interface TableToolbarProps<TData extends RowData = RowData> {
   filterValues?: Record<string, unknown>;
 
   /**
-   * Callback khi một bộ lọc thay đổi giá trị
+   * Callback khi bộ lọc thay đổi giá trị (cập nhật dạng batch object)
    */
-  onFilterChange?: (name: string, value: unknown) => void;
+  onFilterChange?: (updates: Record<string, unknown>) => void;
 
   /**
    * Callback khi người dùng bấm "Đặt lại bộ lọc" (Reset all)

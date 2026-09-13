@@ -191,6 +191,7 @@ const testFilters: TableFilterDef[] = [
   },
   {
     name: "createdAt",
+    endName: "createdAtEnd",
     label: "Khoảng ngày",
     type: "date-range",
     placeholder: "Chọn khoảng ngày...",
@@ -922,6 +923,7 @@ function ServerDebounceFilterDemo({
     },
     {
       name: "createdAt",
+      endName: "createdAtEnd",
       label: "Khoảng ngày",
       type: "date-range",
       placeholder: "Chọn khoảng ngày...",

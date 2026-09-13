@@ -264,14 +264,19 @@ export type {
   SelectColor,
   SelectRadius,
   SelectSearchMode,
-  SelectSearchPlacement,
   SelectFilterLayout,
   SelectOptionItem,
   SelectFilterType,
   SelectFilterField,
+  BaseSelectFilterField,
+  SelectStringFilterField,
+  SelectNumberFilterField,
+  SelectDateFilterField,
+  SelectDateRangeFilterField,
+  SelectCheckboxGroupFilterField,
+  SelectCustomFilterField,
   BaseSelectProps,
   SelectProps,
-  SingleSelectProps,
   MultiSelectProps,
 } from "./components/select/types";
 
@@ -381,8 +386,11 @@ export {
   TableCaption,
   useTableStyles,
   TableColumnHeader,
+  DraggableTableHead,
   TablePagination,
   TableToolbar,
+  TableMenuFilter,
+  formatTableFilterBadgeValue,
   DataTable,
   useDataTable,
   createTableColumnHelper,
@@ -397,3 +405,13 @@ export type {
   UseDataTableOptions,
   RankingInfo,
 } from "./components/table";
+
+// Portal & Floating Root
+export {
+  PortalRootContext,
+  usePortalRootContext,
+} from "./components/portal";
+export type { PortalRoot } from "./components/portal";
+export { useFloatingPortalRoot } from "./hooks/useFloatingPortalRoot";
+export type { UseFloatingPortalRootOptions } from "./hooks/useFloatingPortalRoot";
+

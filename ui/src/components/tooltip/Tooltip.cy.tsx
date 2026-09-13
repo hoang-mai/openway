@@ -68,7 +68,7 @@ describe("<Tooltip /> Tailwind Component Tests", () => {
         </div>
       );
 
-      cy.get("#disabled-trigger").trigger("mouseenter");
+      cy.get("#disabled-trigger").trigger("mouseenter", { force: true });
       cy.get('[role="tooltip"]').should("not.exist");
     });
   });

@@ -31,6 +31,7 @@ export interface UseSelectFloatingOptions {
 
 export interface UseSelectFloatingReturn {
   refs: ExtendedRefs<HTMLElement>;
+  elements: FloatingContext["elements"];
   floatingStyles: CSSProperties;
   transitionStyles: CSSProperties;
   isMounted: boolean;
@@ -55,7 +56,7 @@ export function useSelectFloating({
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const isInteractive = !disabled && !readOnly;
 
-  const { refs, floatingStyles, context } = useFloating<HTMLElement>({
+  const { refs, elements, floatingStyles, context } = useFloating<HTMLElement>({
     placement,
     open: isOpen && isInteractive,
     onOpenChange: (nextOpen) => {
@@ -99,6 +100,7 @@ export function useSelectFloating({
 
   return {
     refs,
+    elements,
     floatingStyles,
     transitionStyles,
     isMounted,

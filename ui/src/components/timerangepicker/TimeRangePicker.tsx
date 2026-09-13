@@ -28,8 +28,7 @@ import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 /**
  * Component TimeRangePicker - Ô chọn khoảng thời gian (Start Time - End Time) chuyên nghiệp theo Design System.
@@ -70,6 +69,8 @@ export default function TimeRangePicker({
   autoComplete,
   disabled = false,
   readOnly = false,
+  portal = true,
+  portalRoot,
   config,
   onClear,
   placement = "bottom-start",
@@ -80,8 +81,6 @@ export default function TimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: TimeRangePickerProps) {
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
@@ -137,6 +136,7 @@ export default function TimeRangePicker({
   // Floating UI setup
   const {
     refs: { setReference, setFloating },
+    elements: { reference },
     floatingStyles,
     context,
   } = useFloating({
@@ -156,6 +156,11 @@ export default function TimeRangePicker({
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
+
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference,
+  });
 
   const hasError = Boolean(isInvalid || errorMessage);
   const activeColor = hasError ? "error" : color;
@@ -351,7 +356,7 @@ export default function TimeRangePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
+          <FloatingPortal root={effectivePortalRoot}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

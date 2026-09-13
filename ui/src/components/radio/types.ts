@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, HTMLAttributes, ReactNode, Ref } from "react";
+import { EmptyProps } from "../empty/types";
 
 export type RadioSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type RadioVariant = "filled" | "outline" | "soft" | "other";
@@ -120,11 +121,11 @@ export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 
 export type RadioSearchMode = "client" | "server";
 
-export interface RadioOptionItem<TData = unknown> {
+export interface RadioOptionItem<TData = unknown, TValue extends string | number = string | number> {
   /**
    * Gia tri dinh danh duy nhat cua radio option
    */
-  value: string;
+  value: TValue;
 
   /**
    * Nhan van ban hoac node hien thi
@@ -174,7 +175,8 @@ export interface RadioGroupConfig {
   isInvalid?: boolean;
 
   /**
-   * Trang thai dang tai cua nhom
+   * Trang thai ban cua nhom (khoa tuong tac nguoi dung khi nhom dang xu ly/mutate)
+   * Phan biet voi `isLoading` o prop ngoai cua RadioGroup (dung cho tai du lieu query/search).
    * @default false
    */
   isLoading?: boolean;
@@ -204,7 +206,7 @@ export interface RadioGroupConfig {
   preserveSelected?: boolean;
 }
 
-export interface RadioGroupProps<TData = unknown>
+export interface RadioGroupProps<TData = unknown, TValue extends string | number = string>
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "children"> {
   /**
    * Cau hinh tap trung cac co trang thai / tinh nang
@@ -219,22 +221,22 @@ export interface RadioGroupProps<TData = unknown>
   /**
    * Danh sach cac option cua radio group (Data-driven pattern)
    */
-  options?: RadioOptionItem<TData>[];
+  options?: RadioOptionItem<TData, TValue>[];
 
   /**
-   * Gia tri dang duoc chon (Controlled mode) - string don hoac null de bo chon
+   * Gia tri dang duoc chon (Controlled mode) - string/number don hoac null de bo chon
    */
-  value?: string | null;
+  value?: TValue | null;
 
   /**
    * Gia tri mac dinh ban dau (Uncontrolled mode)
    */
-  defaultValue?: string | null;
+  defaultValue?: TValue | null;
 
   /**
    * Callback kich hoat khi radio duoc chon thay doi
    */
-  onChange?: (value: string | null) => void;
+  onChange?: (value: TValue | null) => void;
 
 
 
@@ -271,24 +273,51 @@ export interface RadioGroupProps<TData = unknown>
   /**
    * Custom filter function cho che do client search
    */
-  filterFn?: (item: RadioOptionItem<TData>, query: string) => boolean;
+  filterFn?: (item: RadioOptionItem<TData, TValue>, query: string) => boolean;
 
   /**
-   * Callback tim kiem bat dong bo cho server search mode
+   * Callback khi nguoi dung nhap tu khoa tim kiem (Server mode)
    */
-  onSearch?: (query: string) => Promise<RadioOptionItem<TData>[]>;
- 
+  onSearch?: (query: string, ...args: unknown[]) => void | Promise<void>;
+
   /**
-   * Thoi gian debounce khi nguoi dung nhap tu khoa tim kiem (ms)
-   * @default 300
+   * Trang thai dang tai du lieu (Data Loading, vi du tu query / hook du lieu)
+   * Phan biet voi `config.isLoading` (dung de khoa tuong tac khi nhom dang ban xu ly).
+   * @default false
    */
-  debounceMs?: number;
+  isLoading?: boolean;
+
+  /**
+   * So luong dong Skeleton hien thi khi dang tai du lieu
+   * @default 3
+   */
+  skeletonCount?: number;
+
+  /**
+   * Tuy bien render giao dien Skeleton khi dang tai du lieu
+   */
+  renderSkeleton?: () => ReactNode;
+
+  /**
+   * Noi dung hien thi o day danh sach cac radio (dung cho Sentinel / Skeleton loading khi phan trang vo tan)
+   */
+  listFooter?: ReactNode;
+
+  /**
+   * Chieu cao toi da cho vung cuon danh sach radio (vd: 280, '300px')
+   */
+  maxHeight?: number | string;
 
   /**
    * Thong bao hien thi khi khong tim thay ket qua
    * @default 'Khong tim thay ket qua'
    */
   emptyText?: ReactNode;
+
+  /**
+   * Tuy bien props truyen vao component Empty khi khong co du lieu
+   */
+  emptyProps?: Partial<EmptyProps>;
 
   /**
    * Tuy bien className cho khung chua o tim kiem

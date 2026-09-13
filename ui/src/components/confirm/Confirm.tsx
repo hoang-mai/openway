@@ -34,6 +34,7 @@ export default function Confirm({
     <div
       ref={ref}
       tabIndex={-1}
+      data-testid="confirm-dialog"
       className={containerClasses}
       {...props}
     >

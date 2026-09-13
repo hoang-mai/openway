@@ -571,24 +571,37 @@ describe("<RadioGroup /> UI Showcase", () => {
         { value: "svelte", label: "Svelte", code: "FE-04", description: "Cybernetically enhanced" },
       ];
 
-      const onSearchServer = async (query: string) => {
-        const res = await fetch(
-          `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=4`
-        );
-        if (!res.ok) throw new Error("Network response was not ok");
-        const data = await res.json();
-        return (data.products || []).map((p: any) => ({
-          value: String(p.id),
-          label: p.title,
-          description: `$${p.price} - ${p.category}`,
-        }));
-      };
-
       const SearchShowcase = () => {
         const [clientSelected, setClientSelected] = useState<string | null>(null);
         const [customFieldSelected, setCustomFieldSelected] = useState<string | null>(null);
         const [preserveSelectedVal, setPreserveSelectedVal] = useState<string | null>("react");
         const [serverSelected, setServerSelected] = useState<string | null>(null);
+        const [serverOptions, setServerOptions] = useState([
+          { value: "init-1", label: "iPhone 9 (Goi y ban dau)", description: "$549 - smartphones" },
+          { value: "init-2", label: "iPhone X (Goi y ban dau)", description: "$899 - smartphones" },
+        ]);
+        const [isServerLoading, setIsServerLoading] = useState(false);
+
+        const onSearchServer = async (query: string) => {
+          setIsServerLoading(true);
+          try {
+            const res = await fetch(
+              `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=4`
+            );
+            if (!res.ok) return;
+            const data = await res.json();
+            const items = (data.products || []).map((p: any) => ({
+              value: String(p.id),
+              label: p.title,
+              description: `$${p.price} - ${p.category}`,
+            }));
+            setServerOptions(items);
+          } catch (err) {
+            console.error(err);
+          } finally {
+            setIsServerLoading(false);
+          }
+        };
 
         return (
           <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "24px", background: "#f8fafc" }}>
@@ -660,13 +673,10 @@ describe("<RadioGroup /> UI Showcase", () => {
                 <RadioGroup
                   config={{ searchable: true }}
                   searchMode="server"
-                  debounceMs={200}
+                  isLoading={isServerLoading}
                   onSearch={onSearchServer}
                   searchPlaceholder="Tim san pham that (vi du: phone, laptop)..."
-                  options={[
-                    { value: "init-1", label: "iPhone 9 (Goi y ban dau)", description: "$549 - smartphones" },
-                    { value: "init-2", label: "iPhone X (Goi y ban dau)", description: "$899 - smartphones" },
-                  ]}
+                  options={serverOptions}
                   value={serverSelected}
                   onChange={setServerSelected}
                   color="info"
@@ -704,10 +714,87 @@ describe("<RadioGroup /> UI Showcase", () => {
       cy.get('[data-cy="card-preserve"] input[value="react"]').should("be.checked");
       cy.get('[data-cy="card-preserve"] input[value="angular"]').should("not.be.checked");
 
-      // 4. Kiểm tra Card 4: Server mode debounce gọi API thật DummyJSON qua internet
+      // 4. Kiểm tra Card 4: Server mode gọi API thật DummyJSON qua internet
       cy.get('[data-cy="card-server"] input[type="text"]').type("phone");
       cy.get('[data-cy="card-server"]', { timeout: 10000 }).should("contain.text", "Apple");
       cy.get('[data-cy="card-server"] input[type="radio"]').should("have.length.greaterThan", 0);
+    });
+  });
+
+  /* ========================================================================
+     UI 11: MaxHeight Scrollable & ListFooter Showcase
+     ======================================================================== */
+  describe("UI 11: MaxHeight Scrollable & ListFooter Showcase", () => {
+    it("renders scrollable container and custom listFooter", () => {
+      const manyOptions = Array.from({ length: 20 }, (_, i) => ({
+        value: `opt-${i + 1}`,
+        label: `Tuy chon muc ${i + 1}`,
+        description: `Mo ta chi tiet cho phan tu thu ${i + 1}`,
+      }));
+
+      const ScrollShowcase = () => {
+        const [selected, setSelected] = useState<string | null>("opt-1");
+
+        return (
+          <div style={{ padding: "24px" }} data-cy="card-scrollable">
+            <RadioGroup
+              label="Danh sach dai co thanh cuon"
+              maxHeight={200}
+              options={manyOptions}
+              value={selected}
+              onChange={setSelected}
+              listFooter={
+                <div data-cy="custom-list-footer" style={{ padding: "8px", textAlign: "center", fontSize: "12px", color: "#94a3b8" }}>
+                  Da cuon den day danh sach
+                </div>
+              }
+            />
+          </div>
+        );
+      };
+
+      cy.mount(<ScrollShowcase />);
+      cy.get('[data-cy="card-scrollable"] [role="radiogroup"]').should("be.visible");
+      cy.get('[data-cy="custom-list-footer"]').should("exist").and("contain.text", "Da cuon den day danh sach");
+    });
+  });
+
+  /* ========================================================================
+     UI 12: Data Loading with Skeleton & Empty Showcase
+     ======================================================================== */
+  describe("UI 12: Data Loading with Skeleton & Empty Showcase", () => {
+    it("displays Skeleton during data loading and Empty component when no options", () => {
+      const SkeletonAndEmptyShowcase = () => {
+        const [isLoading, setIsLoading] = useState(true);
+
+        return (
+          <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "24px" }}>
+            <div data-cy="card-skeleton">
+              <RadioGroup
+                label="Dang tai danh sach radio..."
+                isLoading={isLoading}
+                skeletonCount={3}
+                options={[]}
+              />
+            </div>
+            <button
+              type="button"
+              data-cy="btn-toggle-loading"
+              onClick={() => setIsLoading(false)}
+            >
+              Stop Loading
+            </button>
+          </div>
+        );
+      };
+
+      cy.mount(<SkeletonAndEmptyShowcase />);
+      cy.get('[data-cy="card-skeleton"] [role="radiogroup"]').should("have.attr", "aria-busy", "true");
+      cy.get('[data-cy="card-skeleton"] [role="status"][aria-label="Loading..."]').should("have.length.at.least", 3);
+
+      // Stop loading -> Empty state rendered
+      cy.get('[data-cy="btn-toggle-loading"]').click();
+      cy.get('[data-cy="card-skeleton"] [role="radiogroup"]').should("contain.text", "Không tìm thấy kết quả");
     });
   });
 });

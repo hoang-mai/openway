@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useId } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useId } from "react";
 import { MultiSelectProps, SelectOptionItem } from "./types";
 import MultiSelectTrigger from "./triggers/MultiSelectTrigger";
 import SelectMenu from "./SelectMenu";
@@ -8,7 +8,7 @@ import { useSelectFloating } from "./hooks/useSelectFloating";
 import { useSelectSearch } from "./hooks/useSelectSearch";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
-import { createOptionsMap, getSelectedOptions } from "./utils";
+import { getSelectedOptions } from "./utils";
 
 const DEFAULT_OPTIONS: never[] = [];
 const EMPTY_VALUES: (string | number)[] = [];
@@ -35,7 +35,6 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   maxTagCount,
   searchable = false,
   searchMode = "client",
-  searchPlacement = "trigger",
   searchPlaceholder,
   searchField = ["label", "value"],
   preserveSelected = true,
@@ -51,11 +50,12 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   menuHeader,
   menuFooter,
   listFooter,
-  onSearch,
-  debounceMs = 300,
   filterFn,
   emptyText,
   emptyProps,
+  isLoading: isLoadingProp,
+  skeletonCount = 4,
+  renderSkeleton,
   portal = true,
   portalRoot,
   placement = "bottom-start",
@@ -77,15 +77,22 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   const {
     isRequired = false,
     isInvalid: isInvalidConfig = false,
-    isLoading = false,
+    isLoading: isLoadingConfig = false,
     showSpinner = false,
     isClearable = false,
     isFullWidth = true,
   } = config ?? {};
 
   const isInvalid = Boolean(isInvalidConfig ?? !!errorMessage);
-  const clearable = isClearable;
   const currentSize = getSafeConfig(size, sizeConfig, "md");
+
+  // Tách bạch rõ ràng 2 trạng thái:
+  // 1. isFetching (isLoadingProp): trạng thái get/tải dữ liệu options từ server
+  const isFetching = Boolean(isLoadingProp);
+  // 2. isSubmitting (isLoadingConfig): trạng thái khi gửi formData từ form config
+  const isSubmitting = Boolean(isLoadingConfig);
+  // Trạng thái bận hiển thị trên Trigger (khi fetch hoặc submit có spinner)
+  const isTriggerLoading = isFetching || isSubmitting;
 
   // ==================== VALUE STATE ====================
   const isControlled = valueProp !== undefined;
@@ -94,12 +101,61 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
 
   // ==================== HISTORICAL OPTIONS STATE (NO REF IN RENDER) ====================
   const [historicalOptions, setHistoricalOptions] = useState<Map<string | number, SelectOptionItem<TData>>>(() => {
-    return createOptionsMap(options);
+    const initialMap = new Map<string | number, SelectOptionItem<TData>>();
+    const initialVals = valueProp !== undefined ? valueProp : defaultValue;
+    if (initialVals && initialVals.length > 0) {
+      const selectedSet = new Set(initialVals);
+      options.forEach((opt) => {
+        if (selectedSet.has(opt.value)) {
+          initialMap.set(opt.value, opt);
+        }
+      });
+    }
+    return initialMap;
   });
 
+  // Tự động ghi nhớ các option đã chọn vào historicalOptions khi options được tải về
+  useEffect(() => {
+    if (currentValues.length > 0 && options.length > 0) {
+      const selectedSet = new Set(currentValues);
+      const itemsToCache: SelectOptionItem<TData>[] = [];
+      for (const opt of options) {
+        if (selectedSet.has(opt.value)) {
+          itemsToCache.push(opt);
+        }
+      }
+
+      if (itemsToCache.length > 0) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setHistoricalOptions((prev) => {
+          let hasDiff = false;
+          for (const item of itemsToCache) {
+            const existing = prev.get(item.value);
+            if (!existing || existing.label !== item.label || existing.data !== item.data) {
+              hasDiff = true;
+              break;
+            }
+          }
+          if (!hasDiff) return prev;
+
+          const next = new Map(prev);
+          for (const item of itemsToCache) {
+            next.set(item.value, item);
+          }
+          return next;
+        });
+      }
+    }
+  }, [currentValues, options]);
+
   const selectedOptions = useMemo<SelectOptionItem<TData>[]>(() => {
-    return getSelectedOptions(currentValues, options, historicalOptions);
-  }, [currentValues, options, historicalOptions]);
+    const items = getSelectedOptions(currentValues, options, historicalOptions);
+    // Khi đang tải dữ liệu options lần đầu từ server (chưa có trong cache), không hiển thị fallback ID thô
+    if (isFetching && options.length === 0) {
+      return items.filter((item) => historicalOptions.has(item.value));
+    }
+    return items;
+  }, [currentValues, options, historicalOptions, isFetching]);
 
   // ==================== OPEN & ACTIVE INDEX ====================
   const [isOpen, setIsOpen] = useState(false);
@@ -123,8 +179,6 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
     menuFilters,
     controlledFilterValues,
     onMenuFilterChange,
-    onSearch,
-    debounceMs,
     filterFn,
     isOpen,
     setIsOpen,
@@ -136,6 +190,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   // ==================== FLOATING UI HOOK ====================
   const {
     refs,
+    elements: { reference },
     floatingStyles,
     transitionStyles,
     isMounted,
@@ -149,11 +204,14 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
       setIsOpen(nextOpen);
       if (!nextOpen) {
         setActiveIndex(null);
+        if (searchMode === "client") {
+          resetSearch();
+        }
       }
     },
     disabled: isDisabled,
     readOnly,
-    isLoading,
+    isLoading: isSubmitting,
     animated,
     animationDuration,
     activeIndex,
@@ -166,7 +224,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
       if (option.disabled || isDisabled || readOnly) return;
 
       setHistoricalOptions((prev) => {
-        if (prev.has(option.value)) return prev;
+        if (prev.get(option.value) === option) return prev;
         const next = new Map(prev);
         next.set(option.value, option);
         return next;
@@ -181,7 +239,9 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
         setUncontrolledValue(nextValues);
       }
 
-      const nextSelectedItems = getSelectedOptions(nextValues, options, historicalOptions);
+      const nextHistorical = new Map(historicalOptions);
+      nextHistorical.set(option.value, option);
+      const nextSelectedItems = getSelectedOptions(nextValues, options, nextHistorical);
 
       onChange?.(nextValues, nextSelectedItems);
       resetSearch();
@@ -198,15 +258,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
         setUncontrolledValue(nextValues);
       }
 
-      const nextSelectedItems = nextValues.map((val) => {
-        return (
-          options.find((o) => o.value === val) ||
-          historicalOptions.get(val) || {
-            value: val,
-            label: String(val),
-          }
-        );
-      });
+      const nextSelectedItems = getSelectedOptions(nextValues, options, historicalOptions);
 
       onChange?.(nextValues, nextSelectedItems);
     },
@@ -303,13 +355,12 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
             isInvalid={isInvalid}
             maxTagCount={maxTagCount}
             searchable={searchable}
-            searchPlacement={searchPlacement}
             searchValue={searchInput}
             onSearchChange={handleSearchChange}
             onRemoveTag={handleRemoveTag}
             onClear={handleClear}
-            clearable={clearable}
-            isLoading={isLoading}
+            clearable={isClearable}
+            isLoading={isTriggerLoading}
             showSpinner={showSpinner}
             startContent={startContent}
             endContent={endContent}
@@ -329,9 +380,12 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
             size={size}
             color={color}
             radius={radius}
-            isLoading={isLoading}
+            isLoading={isFetching}
+            skeletonCount={skeletonCount}
+            renderSkeleton={renderSkeleton}
             portal={portal}
             portalRoot={portalRoot}
+            reference={reference}
             maxMenuHeight={maxMenuHeight}
             emptyText={emptyText}
             emptyProps={emptyProps}

@@ -14,6 +14,5 @@ export {
   getSelectedOption,
   getSelectedOptions,
   getVisibleTags,
-  isOptionSelected,
   formatFilterBadgeValue,
 } from "./utils";

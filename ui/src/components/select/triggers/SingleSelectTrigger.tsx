@@ -5,7 +5,6 @@ import {
   SelectVariant,
   SelectColor,
   SelectRadius,
-  SelectSearchPlacement,
 } from "../types";
 import { sizeConfig, radiusConfig, variantColorConfig } from "../constants";
 import { getSafeConfig } from "@/utils/function";
@@ -24,7 +23,6 @@ export interface SingleSelectTriggerProps<TData = unknown> {
   readOnly?: boolean;
   isInvalid?: boolean;
   searchable?: boolean;
-  searchPlacement?: SelectSearchPlacement;
   searchValue?: string;
   onSearchChange?: (val: string) => void;
   onClear?: (e: React.MouseEvent) => void;
@@ -53,7 +51,6 @@ export function SingleSelectTrigger<TData = unknown>({
   readOnly = false,
   isInvalid = false,
   searchable = false,
-  searchPlacement = "trigger",
   searchValue = "",
   onSearchChange,
   onClear,
@@ -78,7 +75,7 @@ export function SingleSelectTrigger<TData = unknown>({
   const variantStyle =
     variant === "other" ? "" : variantColorConfig[variant]?.[activeColor] || variantColorConfig.outline.primary;
 
-  const isTriggerSearchable = searchable && (searchPlacement === "trigger" || searchPlacement === "both");
+  const isTriggerSearchable = Boolean(searchable);
   const hasSelection = selectedOption !== null && selectedOption !== undefined;
   const showClear = clearable && (hasSelection || searchValue.length > 0) && !disabled && !readOnly;
 

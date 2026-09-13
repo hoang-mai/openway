@@ -27,8 +27,7 @@ import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 export default function TimePicker({
   ref,
@@ -63,6 +62,8 @@ export default function TimePicker({
   placement = "bottom-start",
   disabled = false,
   readOnly = false,
+  portal = true,
+  portalRoot,
   config,
   className = "",
   wrapperClassName = "",
@@ -71,8 +72,6 @@ export default function TimePicker({
   helperClassName = "",
   popoverClassName = "",
 }: TimePickerProps) {
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
@@ -101,6 +100,7 @@ export default function TimePicker({
 
   const {
     refs: { setReference, setFloating },
+    elements: { reference },
     floatingStyles,
     context,
   } = useFloating({
@@ -120,6 +120,11 @@ export default function TimePicker({
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
+
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference,
+  });
 
   const hasError = Boolean(isInvalid || errorMessage);
   const activeColor = hasError ? "error" : color;
@@ -297,7 +302,7 @@ export default function TimePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
+          <FloatingPortal root={effectivePortalRoot}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

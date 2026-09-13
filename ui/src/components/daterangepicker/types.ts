@@ -495,4 +495,10 @@ export interface DateRangePickerProps {
    * @default true
    */
   portal?: boolean;
+
+  /**
+   * Phần tử DOM hoặc Ref dùng làm root container cho FloatingPortal.
+   * Mặc định tự động gắn vào dialog của Modal hoặc Confirm nếu đang mở bên trong Modal/Confirm.
+   */
+  portalRoot?: HTMLElement | null | React.RefObject<HTMLElement | null>;
 }

@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, HTMLAttributes, ReactNode, Ref } from "react";
+import { EmptyProps } from "../empty/types";
 
 export type CheckboxSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type CheckboxVariant = "filled" | "outline" | "soft" | "other";
@@ -11,9 +12,9 @@ export type CheckboxSearchMode = "client" | "server";
 /**
  * Đại diện cho một phần tử tùy chọn checkbox trong danh sách options của CheckboxGroup
  */
-export interface CheckboxOptionItem<TData = unknown> {
+export interface CheckboxOptionItem<TData = unknown, TValue extends string | number = string | number> {
   /** Giá trị định danh duy nhất của checkbox */
-  value: string;
+  value: TValue;
   /** Nhãn hiển thị chính của checkbox */
   label: ReactNode;
   /** Đoạn mô tả/chú thích phụ hiển thị bên dưới nhãn */
@@ -82,7 +83,8 @@ export interface CheckboxGroupConfig {
   isInvalid?: boolean;
 
   /**
-   * Trạng thái đang tải cho cả nhóm
+   * Trạng thái bận của cả nhóm (khóa tương tác người dùng khi nhóm đang xử lý/mutate, có thể hiển thị spinner)
+   * Phân biệt với `isLoading` ở prop ngoài của CheckboxGroup (dùng cho tải dữ liệu query/search).
    * @default false
    */
   isLoading?: boolean;
@@ -218,7 +220,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   helperClassName?: string;
 }
 
-export interface CheckboxGroupProps<TData = unknown> extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+export interface CheckboxGroupProps<TData = unknown, TValue extends string | number = string> extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
    * Cấu hình tập trung các cờ trạng thái / tính năng
    */
@@ -233,7 +235,7 @@ export interface CheckboxGroupProps<TData = unknown> extends Omit<HTMLAttributes
    * Danh sách các tùy chọn checkbox dạng mảng dữ liệu (Data-driven)
    * @default []
    */
-  options?: CheckboxOptionItem<TData>[];
+  options?: CheckboxOptionItem<TData, TValue>[];
 
 
   /**
@@ -282,17 +284,37 @@ export interface CheckboxGroupProps<TData = unknown> extends Omit<HTMLAttributes
   filterFn?: (option: CheckboxOptionItem<TData>, query: string) => boolean;
 
   /**
-   * Callback được gọi sau khi debounce khi người dùng gõ tìm kiếm (ở Server mode).
-   * Có thể trả về Promise danh sách options mới hoặc cập nhật prop options từ ngoài.
+   * Callback được gọi khi người dùng gõ tìm kiếm (ở Server mode).
    */
-  onSearch?: (query: string) => void | Promise<CheckboxOptionItem<TData>[] | void>;
+  onSearch?: (query: string, ...args: unknown[]) => void | Promise<void>;
+  
+  /**
+   * Nội dung hiển thị ở đáy danh sách các checkbox (dùng cho Sentinel / Skeleton loading khi phân trang vô tận)
+   */
+  listFooter?: ReactNode;
 
   /**
-   * Thời gian trì hoãn debounce tính theo mili-giây (Server mode).
-   * @default 300
+   * Chiều cao tối đa cho vùng cuộn danh sách checkbox (vd: 280, '300px')
    */
-  debounceMs?: number;
+  maxHeight?: number | string;
 
+  /**
+   * Trạng thái đang tải dữ liệu (Data Loading, ví dụ truyền từ query / hook dữ liệu)
+   * Phân biệt với `config.isLoading` (dùng để khóa tương tác khi nhóm đang bận xử lý).
+   * @default false
+   */
+  isLoading?: boolean;
+
+  /**
+   * Số lượng dòng Skeleton hiển thị khi đang tải dữ liệu
+   * @default 3
+   */
+  skeletonCount?: number;
+
+  /**
+   * Tùy biến render giao diện Skeleton khi đang tải dữ liệu
+   */
+  renderSkeleton?: () => ReactNode;
 
   /**
    * Nội dung hiển thị khi không có kết quả tìm kiếm
@@ -301,19 +323,24 @@ export interface CheckboxGroupProps<TData = unknown> extends Omit<HTMLAttributes
   emptyText?: ReactNode;
 
   /**
+   * Tùy biến props truyền vào component Empty khi không có dữ liệu
+   */
+  emptyProps?: Partial<EmptyProps>;
+
+  /**
    * Mảng các giá trị được chọn (Controlled mode)
    */
-  value?: string[];
+  value?: TValue[];
 
   /**
    * Mảng các giá trị mặc định được chọn ban đầu (Uncontrolled mode)
    */
-  defaultValue?: string[];
+  defaultValue?: TValue[];
 
   /**
    * Callback kích hoạt khi danh sách checkbox được chọn thay đổi
    */
-  onChange?: (values: string[]) => void;
+  onChange?: (values: TValue[]) => void;
 
   /**
    * Kích cỡ áp dụng chung cho tất cả các checkbox con

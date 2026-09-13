@@ -1,5 +1,5 @@
 import React, { ReactNode, useRef } from "react";
-import { SelectOptionItem, SelectSize, SelectVariant, SelectColor, SelectRadius, SelectSearchPlacement } from "../types";
+import { SelectOptionItem, SelectSize, SelectVariant, SelectColor, SelectRadius } from "../types";
 import { sizeConfig, radiusConfig, variantColorConfig, badgeRadiusMap } from "../constants";
 import { getVisibleTags } from "../utils";
 import { getSafeConfig } from "@/utils/function";
@@ -20,7 +20,6 @@ export interface MultiSelectTriggerProps<TData = unknown> {
   isInvalid?: boolean;
   maxTagCount?: number;
   searchable?: boolean;
-  searchPlacement?: SelectSearchPlacement;
   searchValue?: string;
   onSearchChange?: (val: string) => void;
   onRemoveTag?: (option: SelectOptionItem<TData>) => void;
@@ -51,7 +50,6 @@ export function MultiSelectTrigger<TData = unknown>({
   isInvalid = false,
   maxTagCount,
   searchable = false,
-  searchPlacement = "trigger",
   searchValue = "",
   onSearchChange,
   onRemoveTag,
@@ -78,7 +76,7 @@ export function MultiSelectTrigger<TData = unknown>({
   const variantStyle =
     variant === "other" ? "" : variantColorConfig[variant]?.[activeColor] || variantColorConfig.outline.primary;
 
-  const isTriggerSearchable = searchable && (searchPlacement === "trigger" || searchPlacement === "both");
+  const isTriggerSearchable = Boolean(searchable);
   const hasSelection = selectedOptions.length > 0;
   const showClear = clearable && (hasSelection || searchValue.length > 0) && !disabled && !readOnly;
 

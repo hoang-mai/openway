@@ -1,5 +1,5 @@
 import React, { CSSProperties, ReactNode } from "react";
-import { FloatingPortal } from "@floating-ui/react";
+import { FloatingPortal, ReferenceType } from "@floating-ui/react";
 import {
   SelectOptionItem,
   SelectSize,
@@ -13,12 +13,11 @@ import SelectOption from "./SelectOption";
 import SelectMenuFilter from "./SelectMenuFilter";
 import Empty from "@/components/empty/Empty";
 import { EmptyProps } from "@/components/empty/types";
-import Spinner from "@/components/icons/Spinner";
+import Skeleton from "@/components/skeleton/Skeleton";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
-import { menuRadiusConfig } from "./constants";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { menuRadiusConfig, sizeConfig, radiusConfig } from "./constants";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 export interface SelectMenuProps<TData = unknown, TFilters extends Record<string, unknown> = Record<string, unknown>> {
   isOpen: boolean;
@@ -32,6 +31,8 @@ export interface SelectMenuProps<TData = unknown, TFilters extends Record<string
   color?: SelectColor;
   radius?: SelectRadius;
   isLoading?: boolean;
+  skeletonCount?: number;
+  renderSkeleton?: () => ReactNode;
   portal?: boolean;
   portalRoot?: HTMLElement | null | React.RefObject<HTMLElement | null>;
   maxMenuHeight?: number | string;
@@ -46,7 +47,7 @@ export interface SelectMenuProps<TData = unknown, TFilters extends Record<string
   menuFilterGridCols?: number;
   showResetFilters?: boolean;
   resetFiltersText?: ReactNode;
-  onMenuFilterChange?: (name: string, value: unknown) => void;
+  onMenuFilterChange?: (updates: Record<string, unknown>) => void;
   onResetFilters?: () => void;
   renderOption?: (option: SelectOptionItem<TData>, state: { selected: boolean; active: boolean }) => ReactNode;
   onSelectOption: (option: SelectOptionItem<TData>) => void;
@@ -56,6 +57,7 @@ export interface SelectMenuProps<TData = unknown, TFilters extends Record<string
   getFloatingProps: (userProps?: Record<string, unknown>) => Record<string, unknown>;
   listElementsRef: React.RefObject<(HTMLElement | null)[]>;
   className?: string;
+  reference?: ReferenceType | null;
 }
 
 const DEFAULT_MENU_FILTER_VALUES: Record<string, unknown> = {};
@@ -72,8 +74,11 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
   color = "primary",
   radius = "md",
   isLoading = false,
+  skeletonCount = 4,
+  renderSkeleton,
   portal = true,
   portalRoot,
+  reference,
   maxMenuHeight = 280,
   emptyText,
   emptyProps,
@@ -97,13 +102,17 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
   listElementsRef,
   className = "",
 }: SelectMenuProps<TData, TFilters>) {
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference,
+  });
 
   const shouldRender = isMounted !== undefined ? isMounted : isOpen;
   if (!shouldRender) return null;
 
   const menuRadiusClass = getSafeConfig(radius, menuRadiusConfig, "md");
+  const currentSize = getSafeConfig(size, sizeConfig, "md");
+  const roundedClass = getSafeConfig(radius, radiusConfig, "md");
 
   const menuContent = (
     <div
@@ -150,10 +159,24 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
       >
         {options.length === 0 ? (
           isLoading ? (
-            <div className="flex items-center justify-center py-6 gap-2 text-zinc-500 text-sm">
-              <Spinner className="size-4 animate-spin text-current" />
-              <span>Loading...</span>
-            </div>
+            renderSkeleton ? (
+              renderSkeleton()
+            ) : (
+              <div className="space-y-1 p-1">
+                {Array.from({ length: skeletonCount }).map((_, idx) => {
+                  const widths = ["75%", "60%", "85%", "50%"];
+                  const width = widths[idx % widths.length];
+                  return (
+                    <div
+                      key={idx}
+                      className={`flex items-center gap-2 ${roundedClass} ${currentSize.option}`}
+                    >
+                      <Skeleton width={width} height={14} shape="rectangle" className="rounded" />
+                    </div>
+                  );
+                })}
+              </div>
+            )
           ) : (
             <div className="py-4 px-2">
               <Empty
@@ -202,8 +225,6 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
       {menuFooter}
     </div>
   );
-
-  const effectivePortalRoot = portalRoot ?? modalContext?.dialogRef ?? confirmContext?.dialogRef;
 
   if (portal) {
     return <FloatingPortal root={effectivePortalRoot}>{menuContent}</FloatingPortal>;

@@ -1,6 +1,10 @@
 import { ReactNode, Ref } from "react";
 import { Placement } from "@floating-ui/react";
 import { EmptyProps } from "@/components/empty/types";
+import type { CheckboxGroupProps, CheckboxOptionItem, CheckboxSearchMode } from "../checkbox/types";
+import type { DatePickerProps } from "../datepicker/types";
+import type { DateRangePickerProps } from "../daterangepicker/types";
+import type { InputProps, NumberInputProps } from "../input/types";
 
 export type SelectSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type SelectVariant = "outline" | "filled" | "ghost" | "other";
@@ -8,7 +12,6 @@ export type SelectColor = "primary" | "secondary" | "error" | "success" | "warni
 export type SelectRadius = "none" | "sm" | "md" | "lg" | "xl" | "full";
 export type SelectSearchMode = "client" | "server";
 
-export type SelectSearchPlacement = "trigger" | "menu" | "both";
 export type SelectFilterLayout = "vertical" | "grid";
 export type LabelPlacement = "top" | "left" | "floating";
 
@@ -23,28 +26,125 @@ export interface SelectOptionItem<TData = unknown> {
 
 export type SelectFilterType = "string" | "text" | "number" | "date" | "date-range" | "checkbox-group" | "custom";
 
-export interface SelectFilterField<TValue = unknown> {
+/**
+ * Thuộc tính cơ sở dùng chung cho tất cả các loại trường lọc trong Select Menu
+ */
+export interface BaseSelectFilterField<TValue = unknown> {
   /** Tên định danh trường lọc (dùng làm key trong object filters) */
   name: string;
-  /** Loại component lọc */
-  type: SelectFilterType;
   /** Nhãn hiển thị của bộ lọc */
   label?: ReactNode;
-  /** Placeholder cho input */
+  /** Placeholder cho input hoặc ô tìm kiếm */
   placeholder?: string;
-  /** Giá trị mặc định */
+  /** Giá trị mặc định ban đầu */
   defaultValue?: TValue;
-  /** Giá trị điều khiển */
+  /** Giá trị điều khiển (khi controlled) */
   value?: TValue;
-  /** Số cột chiếm trong grid layout (1, 2, 3...) */
-  colSpan?: number;
-  /** Danh sách options (dùng cho checkbox-group hoặc select con) */
-  options?: { label: ReactNode; value: string | number; disabled?: boolean }[];
-  /** Props truyền thêm vào component tương ứng (InputProps, DatePickerProps, ...) */
-  props?: Record<string, unknown>;
-  /** Custom render khi type="custom" */
-  render?: (fieldState: { value: TValue | undefined; onChange: (val: TValue) => void }) => ReactNode;
 }
+
+/**
+ * Trường lọc dạng văn bản / chuỗi (String / Text)
+ */
+export interface SelectStringFilterField extends BaseSelectFilterField<string> {
+  type: "string" | "text";
+  /** Props tùy biến truyền thêm vào Input */
+  props?: Partial<InputProps>;
+}
+
+/**
+ * Trường lọc dạng số (Number)
+ */
+export interface SelectNumberFilterField extends BaseSelectFilterField<number | string> {
+  type: "number";
+  /** Giá trị nhỏ nhất */
+  min?: number;
+  /** Giá trị lớn nhất */
+  max?: number;
+  /** Bước nhảy */
+  step?: number;
+  /** Props tùy biến truyền thêm vào NumberInput */
+  props?: Partial<NumberInputProps>;
+}
+
+/**
+ * Trường lọc dạng chọn 1 ngày (DatePicker)
+ */
+export interface SelectDateFilterField extends BaseSelectFilterField<Date | null> {
+  type: "date";
+  /** Giới hạn ngày nhỏ nhất có thể chọn */
+  minDate?: Date;
+  /** Giới hạn ngày lớn nhất có thể chọn */
+  maxDate?: Date;
+  /** Props tùy biến truyền thêm vào DatePicker */
+  props?: Partial<DatePickerProps>;
+}
+
+/**
+ * Trường lọc dạng khoảng ngày (DateRangePicker)
+ */
+export interface SelectDateRangeFilterField extends BaseSelectFilterField<[Date | null, Date | null]> {
+  type: "date-range";
+  /**
+   * Tên trường cho ngày kết thúc (bắt buộc).
+   * Trường name lưu ngày bắt đầu, endName lưu ngày kết thúc (ví dụ: name='startDate', endName='endDate').
+   */
+  endName: string;
+  /** Props tùy biến truyền thêm vào DateRangePicker */
+  props?: Partial<DateRangePickerProps>;
+}
+
+/**
+ * Trường lọc dạng nhóm Checkbox (CheckboxGroup), hỗ trợ cả Client mode & Server mode
+ */
+export interface SelectCheckboxGroupFilterField<TData = unknown> extends BaseSelectFilterField<(string | number)[]> {
+  type: "checkbox-group";
+  /** Danh sách các options lựa chọn */
+  options?: CheckboxOptionItem<TData>[];
+  /** Bật ô tìm kiếm bên trong danh sách checkbox */
+  searchable?: boolean;
+  /** Chế độ tìm kiếm: 'client' (mặc định) hoặc 'server' */
+  searchMode?: CheckboxSearchMode;
+  /** Placeholder cho ô tìm kiếm checkbox */
+  searchPlaceholder?: string;
+  /** Callback kích hoạt khi người dùng gõ tìm kiếm (Server mode) */
+  onSearch?: (query: string, ...args: unknown[]) => void | Promise<void>;
+  /** Callback khi từ khóa tìm kiếm thay đổi */
+  onSearchChange?: (value: string) => void;
+  /** Trạng thái đang tải dữ liệu từ server (hiển thị skeleton) */
+  isLoading?: boolean;
+  /** Giữ lại các checkbox đã chọn khi kết quả tìm kiếm server thay đổi */
+  preserveSelected?: boolean;
+  /** Phần tử hiển thị ở đáy danh sách (ví dụ: Sentinel / Skeleton cho Infinite Scroll) */
+  listFooter?: ReactNode;
+  /** Chiều cao tối đa cho danh sách cuộn */
+  maxHeight?: number | string;
+  /** Số lượng dòng Skeleton hiển thị khi đang tải dữ liệu */
+  skeletonCount?: number;
+  /** Props tùy biến truyền thêm vào CheckboxGroup */
+  props?: Partial<CheckboxGroupProps<TData>>;
+}
+
+/**
+ * Trường lọc tùy biến giao diện render (Custom)
+ */
+export interface SelectCustomFilterField<TValue = unknown> extends BaseSelectFilterField<TValue> {
+  type: "custom";
+  /** Props tùy biến */
+  props?: Record<string, unknown>;
+  /** Hàm render tùy biến giao diện trường lọc */
+  render: (fieldState: { value: TValue | undefined; onChange: (val: TValue) => void }) => ReactNode;
+}
+
+/**
+ * Discriminated Union tập hợp tất cả các loại trường lọc khả dụng trong Select Menu
+ */
+export type SelectFilterField<TData = unknown, TValue = unknown> =
+  | SelectStringFilterField
+  | SelectNumberFilterField
+  | SelectDateFilterField
+  | SelectDateRangeFilterField
+  | SelectCheckboxGroupFilterField<TData>
+  | SelectCustomFilterField<TValue>;
 
 export interface SelectConfig {
   /**
@@ -133,11 +233,12 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   searchable?: boolean;
   /** Chế độ tìm kiếm: 'client' (fuzzy search) hoặc 'server' (debounce + API). Mặc định 'client' */
   searchMode?: SelectSearchMode;
-  /** Vị trí ô tìm kiếm: 'trigger' (trên trigger), 'menu' (trong dropdown), 'both'. Mặc định 'trigger' */
-  searchPlacement?: SelectSearchPlacement;
   /** Placeholder cho ô tìm kiếm */
   searchPlaceholder?: string;
-  /** Trường dùng để tìm kiếm (mặc định ['label', 'value']), hỗ trợ string, mảng hoặc hàm accessor tương tự CheckboxGroup */
+  /**
+   * Trường của option dùng để tìm kiếm ở Client mode (mặc định ['label', 'value']).
+   * Hỗ trợ string, mảng hoặc hàm accessor.
+   */
   searchField?:
     | (keyof SelectOptionItem<TData> | string | ((item: SelectOptionItem<TData>) => string | undefined | null))[]
     | (keyof SelectOptionItem<TData> | string);
@@ -168,9 +269,7 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   /** Nội dung tùy biến ở đáy danh sách tùy chọn bên trong vùng cuộn (ví dụ: Sentinel/Skeleton/Spinner khi phân trang Infinite Scroll) */
   listFooter?: ReactNode;
 
-  // ==================== SERVER SEARCH CALLBACK & DEBOUNCE ====================
-  /** Callback được gọi sau khi debounce khi search query hoặc menu filters thay đổi (ở Server mode) */
-  onSearch?: (query: string, filters: TFilters) => void | Promise<void>;
+  // ==================== DEBOUNCE & CLIENT FILTER ====================
   /** Thời gian trì hoãn debounce tính theo ms. Mặc định 300 */
   debounceMs?: number;
 
@@ -179,6 +278,12 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   filterFn?: (option: SelectOptionItem<TData>, query: string, filters: TFilters) => boolean;
 
   // ==================== EMPTY STATE & LOADING ====================
+  /** Trạng thái đang tải dữ liệu danh sách options từ API/query */
+  isLoading?: boolean;
+  /** Số lượng Skeleton placeholder hiển thị khi options đang tải lần đầu. Mặc định 4 */
+  skeletonCount?: number;
+  /** Hàm tùy biến render Skeleton placeholder */
+  renderSkeleton?: () => ReactNode;
   /** Văn bản hiển thị khi không có dữ liệu */
   emptyText?: ReactNode;
   /** Props tùy biến chuyển tiếp đến component Empty */
@@ -233,12 +338,6 @@ export interface SelectProps<
   /** Tùy biến render giá trị hiển thị trên trigger */
   renderValue?: (selected: SelectOptionItem<TData>) => ReactNode;
 }
-
-/** Alias cho SelectProps */
-export type SingleSelectProps<
-  TData = unknown,
-  TFilters extends Record<string, unknown> = Record<string, unknown>,
-> = SelectProps<TData, TFilters>;
 
 /** Props cho component MultiSelect */
 export interface MultiSelectProps<

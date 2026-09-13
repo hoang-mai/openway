@@ -29,8 +29,7 @@ import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { dateRangeCalendarRadiusConfig, dateRangePickerRadiusConfig, dateRangePickerVariantStyles } from "@/components/daterangepicker/constants";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 /**
  * Component DateTimeRangePicker - Ô chọn khoảng Ngày & Giờ (Start - End) chuyên nghiệp theo Design System.
@@ -79,6 +78,8 @@ export default function DateTimeRangePicker({
   autoComplete,
   disabled = false,
   readOnly = false,
+  portal = true,
+  portalRoot,
   config,
   onClear,
   placement = "bottom-start",
@@ -89,8 +90,6 @@ export default function DateTimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimeRangePickerProps) {
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
   const {
     isRequired = false,
     isInvalid = false,
@@ -148,6 +147,7 @@ export default function DateTimeRangePicker({
   // Floating UI setup
   const {
     refs: { setReference, setFloating },
+    elements: { reference },
     floatingStyles,
     context,
   } = useFloating({
@@ -167,6 +167,11 @@ export default function DateTimeRangePicker({
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
+
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference,
+  });
 
   const hasError = Boolean(isInvalid || errorMessage);
   const activeColor = hasError ? "error" : color;
@@ -383,7 +388,7 @@ export default function DateTimeRangePicker({
 
         {/* Floating UI Portal */}
         {isMounted && (
-          <FloatingPortal root={modalContext?.dialogRef ?? confirmContext?.dialogRef}>
+          <FloatingPortal root={effectivePortalRoot}>
             <FloatingFocusManager context={context} modal={false} returnFocus={true}>
               <div
                 ref={setFloating}

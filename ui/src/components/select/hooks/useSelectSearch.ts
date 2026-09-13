@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { SelectOptionItem, SelectSearchMode, SelectFilterField } from "../types";
-import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
 import { rankAndFilterItems } from "@/utils/function";
 
 export interface UseSelectSearchOptions<
@@ -17,8 +16,6 @@ export interface UseSelectSearchOptions<
   menuFilters?: SelectFilterField<unknown>[];
   controlledFilterValues?: Partial<TFilters>;
   onMenuFilterChange?: (filters: TFilters) => void;
-  onSearch?: (query: string, filters: TFilters) => void | Promise<void>;
-  debounceMs?: number;
   filterFn?: (option: SelectOptionItem<TData>, query: string, filters: TFilters) => boolean;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
@@ -35,7 +32,7 @@ export interface UseSelectSearchReturn<
   handleSearchChange: (val: string) => void;
   resetSearch: () => void;
   currentFilters: TFilters;
-  handleFilterChange: (name: string, val: unknown) => void;
+  handleFilterChange: (updates: Record<string, unknown>) => void;
   handleResetFilters: () => void;
   filteredOptions: SelectOptionItem<TData>[];
 }
@@ -51,8 +48,6 @@ export function useSelectSearch<TData = unknown, TFilters extends Record<string,
   menuFilters,
   controlledFilterValues,
   onMenuFilterChange,
-  onSearch,
-  debounceMs = 300,
   filterFn,
   isOpen,
   setIsOpen,
@@ -69,20 +64,18 @@ export function useSelectSearch<TData = unknown, TFilters extends Record<string,
     const initial: Record<string, unknown> = {};
     menuFilters?.forEach((f) => {
       if (f.defaultValue !== undefined) {
-        initial[f.name] = f.defaultValue;
+        if (f.type === "date-range" && Array.isArray(f.defaultValue)) {
+          initial[f.name] = f.defaultValue[0];
+          initial[f.endName] = f.defaultValue[1];
+        } else {
+          initial[f.name] = f.defaultValue;
+        }
       }
     });
     return initial as Partial<TFilters>;
   });
 
   const currentFilters = (controlledFilterValues ?? internalFilters) as TFilters;
-
-  // Server search debounce
-  const { debounced, cancel } = useDebouncedCallback((query: string, filters: TFilters) => {
-    if (searchMode === "server") {
-      onSearch?.(query, filters);
-    }
-  }, debounceMs);
 
   const handleSearchChange = (val: string) => {
     if (!isSearchControlled) {
@@ -92,51 +85,62 @@ export function useSelectSearch<TData = unknown, TFilters extends Record<string,
     if (!isOpen) {
       setIsOpen(true);
     }
-    debounced(val, currentFilters);
   };
 
   const resetSearch = () => {
-    cancel();
     if (!isSearchControlled) {
       setUncontrolledSearch("");
     }
     onSearchChange?.("");
-    if (searchMode === "server") {
-      onSearch?.("", currentFilters);
-    }
   };
 
-  const handleFilterChange = (name: string, val: unknown) => {
+  const handleFilterChange = (updates: Record<string, unknown>) => {
     const nextFilters = {
       ...currentFilters,
-      [name]: val,
+      ...updates,
     } as TFilters;
 
     if (!controlledFilterValues) {
       setInternalFilters(nextFilters);
     }
     onMenuFilterChange?.(nextFilters);
-    debounced(searchInput, nextFilters);
   };
 
   const handleResetFilters = () => {
     const resetValues: Record<string, unknown> = {};
     menuFilters?.forEach((f) => {
       if (f.defaultValue !== undefined) {
-        resetValues[f.name] = f.defaultValue;
+        if (f.type === "date-range" && Array.isArray(f.defaultValue)) {
+          resetValues[f.name] = f.defaultValue[0];
+          resetValues[f.endName] = f.defaultValue[1];
+        } else {
+          resetValues[f.name] = f.defaultValue;
+        }
       }
     });
     if (!controlledFilterValues) {
       setInternalFilters(resetValues as Partial<TFilters>);
     }
     onMenuFilterChange?.(resetValues as TFilters);
-    debounced(searchInput, resetValues as TFilters);
   };
 
-  // Filtered options (client mode)
+  // Filtered options (client & server modes)
   const filteredOptions = useMemo(() => {
     if (searchMode === "server") {
-      return options;
+      if (!preserveSelected || selectedValues.length === 0 || !historicalOptions) {
+        return options;
+      }
+      const matchedSet = new Set(options.map((item) => item.value));
+      const preserved: SelectOptionItem<TData>[] = [];
+      for (const val of selectedValues) {
+        if (!matchedSet.has(val)) {
+          const cached = historicalOptions.get(val);
+          if (cached) {
+            preserved.push(cached);
+          }
+        }
+      }
+      return preserved.length > 0 ? [...preserved, ...options] : options;
     }
 
     let list = options;

@@ -267,15 +267,23 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
 
   // Debounce bộ lọc cột trước khi gửi lên API máy chủ.
   // Khi bộ lọc rỗng hoặc vừa xóa chip, gọi API ngay lập tức (delay = 0).
-  const [prevFilterCount, setPrevFilterCount] = useState(columnFilters.length);
-  const isChipRemoved = columnFilters.length < prevFilterCount;
-  if (columnFilters.length !== prevFilterCount) {
-    setPrevFilterCount(columnFilters.length);
+  const [filterTrack, setFilterTrack] = useState({
+    prevCount: columnFilters.length,
+    prevFilters: columnFilters,
+    isChipRemoved: false,
+  });
+
+  if (columnFilters !== filterTrack.prevFilters) {
+    setFilterTrack({
+      prevCount: columnFilters.length,
+      prevFilters: columnFilters,
+      isChipRemoved: columnFilters.length < filterTrack.prevCount,
+    });
   }
 
-  const effectiveFilterDebounceDelay =
-    columnFilters.length === 0 || isChipRemoved ? 0 : debounceMs;
-  const debouncedColumnFilters = useDebounce(columnFilters, effectiveFilterDebounceDelay);
+  const effectiveFilterDebounceDelay = columnFilters.length === 0 || filterTrack.isChipRemoved ? 0 : debounceMs;
+  const debouncedFiltersVal = useDebounce(columnFilters, effectiveFilterDebounceDelay);
+  const debouncedColumnFilters = effectiveFilterDebounceDelay === 0 ? columnFilters : debouncedFiltersVal;
 
   // 2. Chuẩn hóa tham số query gửi lên server
   const queryParams = useMemo<TableQueryParams>(() => {

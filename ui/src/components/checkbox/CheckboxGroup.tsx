@@ -7,19 +7,28 @@ import {
 import { CheckboxGroupProps, CheckboxOptionItem } from "./types";
 import { sizeConfig, orientationConfig, searchInputSizeConfig } from "./constants";
 import { getSafeConfig, rankAndFilterItems } from "@/utils/function";
-import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import Checkbox from "./Checkbox";
 import Input from "@/components/input/Input";
 import SearchIcon from "@/components/icons/SearchIcon";
 import Spinner from "@/components/icons/Spinner";
+import Skeleton from "@/components/skeleton/Skeleton";
+import Empty from "@/components/empty/Empty";
 
 const DEFAULT_OPTIONS: never[] = [];
 const DEFAULT_VALUE: never[] = [];
 
-export default function CheckboxGroup<TData = unknown>({
+const SKELETON_BOX_SIZES: Record<string, string> = {
+  xs: "0.875rem",
+  sm: "1rem",
+  md: "1.25rem",
+  lg: "1.5rem",
+  xl: "1.75rem",
+};
+
+export default function CheckboxGroup<TData = unknown, TValue extends string | number = string>({
   value: valueProp,
-  defaultValue = DEFAULT_VALUE,
+  defaultValue = DEFAULT_VALUE as TValue[],
   onChange,
   size = "md",
   color = "primary",
@@ -35,7 +44,7 @@ export default function CheckboxGroup<TData = unknown>({
   wrapperClassName = "",
   labelClassName = "",
   helperClassName = "",
-  options = DEFAULT_OPTIONS as CheckboxOptionItem<TData>[],
+  options = DEFAULT_OPTIONS as CheckboxOptionItem<TData, TValue>[],
   config,
   searchMode = "client",
   searchPlaceholder = "Tìm kiếm...",
@@ -46,22 +55,28 @@ export default function CheckboxGroup<TData = unknown>({
   searchField = "label",
   filterFn,
   onSearch,
-  debounceMs = 300,
   emptyText = "Không tìm thấy kết quả",
+  emptyProps,
+  listFooter,
+  maxHeight,
+  isLoading: isLoadingProp,
+  skeletonCount = 3,
+  renderSkeleton,
   children,
   ref,
   ...props
-}: CheckboxGroupProps<TData>) {
+}: CheckboxGroupProps<TData, TValue>) {
   const {
     isRequired = false,
     isInvalid: isInvalidProp,
-    isLoading = false,
+    isLoading: isLoadingConfig = false,
     showSpinner = false,
     isReadOnly = false,
     searchable = false,
     preserveSelected = true,
     isSearching: isSearchingProp,
   } = config ?? {};
+
   const generatedId = useId();
   const labelId = `${generatedId}-label`;
   const helperId = `${generatedId}-helper`;
@@ -69,8 +84,8 @@ export default function CheckboxGroup<TData = unknown>({
 
   // Controlled vs Uncontrolled selection state
   const isControlled = valueProp !== undefined;
-  const [internalValue, setInternalValue] = useState<string[]>(defaultValue);
-  const currentValue = isControlled ? (valueProp as string[]) : internalValue;
+  const [internalValue, setInternalValue] = useState<TValue[]>(defaultValue);
+  const currentValue = isControlled ? (valueProp as TValue[]) : internalValue;
   const isInvalid = Boolean(isInvalidProp ?? !!errorMessage);
 
   // Controlled vs Uncontrolled search query
@@ -78,38 +93,20 @@ export default function CheckboxGroup<TData = unknown>({
   const [internalSearchValue, setInternalSearchValue] = useState(defaultSearchValue);
   const currentSearch = isSearchControlled ? (searchValueProp as string) : internalSearchValue;
 
-  // Server mode state
-  const [serverOptions, setServerOptions] = useState<CheckboxOptionItem<TData>[] | null>(null);
-  const [internalIsSearching, setInternalIsSearching] = useState(false);
-  const effectiveIsSearching = Boolean(isSearchingProp ?? internalIsSearching);
+  const effectiveIsSearching = Boolean(isSearchingProp ?? (Boolean(isLoadingProp) && searchMode === "server"));
 
-  // Bộ lưu trữ các options từ Server hoặc các mục đã chọn trong lịch sử để bảo lưu
-  const [historicalOptions, setHistoricalOptions] = useState<Map<string, CheckboxOptionItem<TData>>>(() => {
-    const initialMap = new Map<string, CheckboxOptionItem<TData>>();
+  // Bộ lưu trữ các options đã chọn trong lịch sử để bảo lưu (chỉ lưu các option ĐÃ ĐƯỢC CHỌN)
+  const [historicalOptions, setHistoricalOptions] = useState<Map<string | number, CheckboxOptionItem<TData>>>(() => {
+    const initialMap = new Map<string | number, CheckboxOptionItem<TData>>();
+    const initialSelected = new Set((valueProp ?? defaultValue ?? []).map(String));
     options.forEach((opt) => {
-      initialMap.set(String(opt.value), opt);
+      if (initialSelected.has(String(opt.value))) {
+        initialMap.set(opt.value, opt);
+      }
     });
     return initialMap;
   });
 
-  // Debounced callback cho Server Search Mode
-  const { debounced: debouncedServerSearch } = useDebouncedCallback(
-    async (query: string) => {
-      if (searchMode !== "server" || !onSearch) return;
-      try {
-        setInternalIsSearching(true);
-        const result = await onSearch(query);
-        if (Array.isArray(result)) {
-          setServerOptions(result);
-        }
-      } catch (err) {
-        console.error("Error fetching search options:", err);
-      } finally {
-        setInternalIsSearching(false);
-      }
-    },
-    debounceMs
-  );
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -119,7 +116,7 @@ export default function CheckboxGroup<TData = unknown>({
     onSearchChange?.(val);
 
     if (searchMode === "server") {
-      debouncedServerSearch(val);
+      onSearch?.(val);
     }
   };
 
@@ -130,31 +127,48 @@ export default function CheckboxGroup<TData = unknown>({
     onSearchChange?.("");
 
     if (searchMode === "server") {
-      debouncedServerSearch("");
+      onSearch?.("");
     }
   };
 
   // Pipeline tính toán danh sách hiển thị
   const displayOptions = useMemo(() => {
     const keyword = currentSearch.trim();
-    const currentPool = searchMode === "server" && serverOptions ? serverOptions : options;
 
-    // 1. Khi không tìm kiếm, hiển thị toàn bộ pool
-    if (!searchable || !keyword) {
-      return currentPool;
-    }
-
-    // 2. Lọc danh sách khớp với từ khóa
-    let matchedList: CheckboxOptionItem<TData>[];
+    // 1. Server mode: dữ liệu options được cung cấp trực tiếp từ bên ngoài (hook / query)
     if (searchMode === "server") {
-      matchedList = currentPool;
-    } else if (filterFn) {
-      matchedList = currentPool.filter((opt) => filterFn(opt, keyword));
-    } else {
-      matchedList = rankAndFilterItems(currentPool, keyword, searchField);
+      if (!preserveSelected || currentValue.length === 0) {
+        return options;
+      }
+      const poolValuesSet = new Set(options.map((item) => String(item.value)));
+      const preservedList: CheckboxOptionItem<TData>[] = [];
+      for (const val of currentValue) {
+        if (!poolValuesSet.has(String(val))) {
+          const cached = historicalOptions.get(val);
+          if (cached) {
+            preservedList.push(cached);
+          } else {
+            preservedList.push({ value: val, label: String(val) } as CheckboxOptionItem<TData>);
+          }
+        }
+      }
+      return [...preservedList, ...options];
     }
 
-    // 3. Bảo lưu các mục đã chọn (preserveSelected)
+    // 2. Client mode: khi không tìm kiếm, hiển thị toàn bộ options
+    if (!searchable || !keyword) {
+      return options;
+    }
+
+    // Lọc danh sách khớp với từ khóa
+    let matchedList: CheckboxOptionItem<TData>[];
+    if (filterFn) {
+      matchedList = options.filter((opt) => filterFn(opt, keyword));
+    } else {
+      matchedList = rankAndFilterItems(options, keyword, searchField);
+    }
+
+    // Bảo lưu các mục đã chọn (preserveSelected)
     if (!preserveSelected) {
       return matchedList;
     }
@@ -163,13 +177,12 @@ export default function CheckboxGroup<TData = unknown>({
     const preservedList: CheckboxOptionItem<TData>[] = [];
 
     for (const val of currentValue) {
-      if (!matchedValuesSet.has(val)) {
+      if (!matchedValuesSet.has(String(val))) {
         const cached = historicalOptions.get(val);
-
         if (cached) {
           preservedList.push(cached);
         } else {
-          preservedList.push({ value: val, label: val } as CheckboxOptionItem<TData>);
+          preservedList.push({ value: val, label: String(val) } as CheckboxOptionItem<TData>);
         }
       }
     }
@@ -179,7 +192,6 @@ export default function CheckboxGroup<TData = unknown>({
     searchable,
     currentSearch,
     searchMode,
-    serverOptions,
     options,
     filterFn,
     searchField,
@@ -189,12 +201,11 @@ export default function CheckboxGroup<TData = unknown>({
   ]);
 
   const handleCheckboxChange = useCallback(
-    (val: string, isChecked: boolean) => {
-      if (disabled || isReadOnly || isLoading) return;
+    (val: string | number, isChecked: boolean) => {
+      if (disabled || isReadOnly || isLoadingConfig) return;
 
       if (isChecked) {
-        const pool = searchMode === "server" && serverOptions ? serverOptions : options;
-        const found = pool.find((o) => String(o.value) === val);
+        const found = options.find((o) => String(o.value) === String(val));
         if (found) {
           setHistoricalOptions((prev) => {
             if (prev.has(val)) return prev;
@@ -205,11 +216,11 @@ export default function CheckboxGroup<TData = unknown>({
         }
       }
 
-      let nextValue: string[];
+      let nextValue: TValue[];
       if (isChecked) {
-        nextValue = [...currentValue, val];
+        nextValue = [...currentValue, val as TValue];
       } else {
-        nextValue = currentValue.filter((item) => item !== val);
+        nextValue = currentValue.filter((item) => String(item) !== String(val));
       }
 
       if (!isControlled) {
@@ -217,10 +228,8 @@ export default function CheckboxGroup<TData = unknown>({
       }
       onChange?.(nextValue);
     },
-    [disabled, isReadOnly, isLoading, currentValue, isControlled, onChange, options, searchMode, serverOptions]
+    [disabled, isReadOnly, isLoadingConfig, currentValue, isControlled, onChange, options]
   );
-
-
 
   const orientationClasses = getSafeConfig(orientation, orientationConfig, "vertical");
 
@@ -241,14 +250,22 @@ export default function CheckboxGroup<TData = unknown>({
     [currentValue]
   );
 
+  const scrollableStyles: React.CSSProperties = maxHeight
+    ? {
+        maxHeight: typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight,
+      }
+    : {};
+
+  const scrollableClasses = maxHeight ? "overflow-y-auto ui-scrollbar" : "";
+
   return (
     <div
       ref={ref}
       role="group"
       aria-labelledby={label ? labelId : undefined}
       aria-describedby={errorMessage || helperText ? helperId : undefined}
-      aria-disabled={disabled || isLoading ? "true" : undefined}
-      aria-busy={isLoading || effectiveIsSearching ? "true" : undefined}
+      aria-disabled={disabled || isLoadingConfig ? "true" : undefined}
+      aria-busy={isLoadingConfig || Boolean(isLoadingProp) || effectiveIsSearching ? "true" : undefined}
       className={`inline-flex flex-col ${wrapperClassName}`}
       {...props}
     >
@@ -291,45 +308,122 @@ export default function CheckboxGroup<TData = unknown>({
         </div>
       )}
 
-      {/* Danh sách Checkbox */}
-      <div className={`${orientationClasses} ${className}`}>
+      {/* Danh sách Checkbox & Vùng cuộn & ListFooter */}
+      <div
+        style={scrollableStyles}
+        className={`${orientationClasses} ${scrollableClasses} ${className}`}
+      >
         {children ? (
           children
+        ) : Boolean(isLoadingProp) && displayOptions.length === 0 ? (
+          <>
+            {renderSkeleton ? (
+              renderSkeleton()
+            ) : (
+              Array.from({ length: skeletonCount }).map((_, i) => (
+                <div
+                  key={`skeleton-${i}`}
+                  className={`inline-flex items-center ${currentSize.gap} ${
+                    labelPlacement === "left" ? "flex-row-reverse justify-between" : "flex-row"
+                  }`}
+                  aria-hidden="true"
+                >
+                  <Skeleton
+                    shape="rectangle"
+                    radius={radius || "md"}
+                    width={SKELETON_BOX_SIZES[size] || "1.25rem"}
+                    height={SKELETON_BOX_SIZES[size] || "1.25rem"}
+                    className="shrink-0"
+                  />
+                  <Skeleton
+                    height={size === "xs" ? "0.75rem" : size === "xl" ? "1.25rem" : "1rem"}
+                    width={i === 0 ? "65%" : i === 1 ? "45%" : "55%"}
+                    radius="sm"
+                  />
+                </div>
+              ))
+            )}
+            {listFooter}
+          </>
         ) : displayOptions.length > 0 ? (
-          displayOptions.map((opt) => {
-            const optValStr = String(opt.value);
-            const isOptChecked = selectedValuesSet.has(optValStr);
-            return (
-              <Checkbox
-                key={opt.value}
-                value={opt.value}
-                label={opt.label}
-                helperText={opt.description}
-                disabled={disabled || Boolean(opt.disabled)}
-                readOnly={isReadOnly || Boolean(opt.isReadOnly)}
-                size={size}
-                color={color}
-                variant={variant}
-                radius={radius}
-                labelPlacement={labelPlacement}
-                checked={isOptChecked}
-                onChange={(e) => handleCheckboxChange(optValStr, e.target.checked)}
-                config={{
-                  indeterminate: opt.indeterminate,
-                  isLoading,
-                  showSpinner,
-                  isInvalid,
-                  isRequired,
-                }}
-              />
-            );
-          })
+          <>
+            {displayOptions.map((opt) => {
+              const optValStr = String(opt.value);
+              const isOptChecked = selectedValuesSet.has(optValStr);
+              return (
+                <Checkbox
+                  key={String(opt.value)}
+                  value={opt.value}
+                  label={opt.label}
+                  helperText={opt.description}
+                  disabled={disabled || Boolean(opt.disabled)}
+                  readOnly={isReadOnly || Boolean(opt.isReadOnly)}
+                  size={size}
+                  color={color}
+                  variant={variant}
+                  radius={radius}
+                  labelPlacement={labelPlacement}
+                  checked={isOptChecked}
+                  onChange={(e) => handleCheckboxChange(opt.value, e.target.checked)}
+                  config={{
+                    indeterminate: opt.indeterminate,
+                    isLoading: isLoadingConfig,
+                    showSpinner,
+                    isInvalid,
+                    isRequired,
+                  }}
+                />
+              );
+            })}
+            {Boolean(isLoadingProp) && searchMode === "server" && options.length === 0 && (
+              <>
+                {renderSkeleton ? (
+                  renderSkeleton()
+                ) : (
+                  Array.from({ length: skeletonCount }).map((_, i) => (
+                    <div
+                      key={`skeleton-loading-${i}`}
+                      className={`inline-flex items-center ${currentSize.gap} ${
+                        labelPlacement === "left" ? "flex-row-reverse justify-between" : "flex-row"
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <Skeleton
+                        shape="rectangle"
+                        radius={radius || "md"}
+                        width={SKELETON_BOX_SIZES[size] || "1.25rem"}
+                        height={SKELETON_BOX_SIZES[size] || "1.25rem"}
+                        className="shrink-0"
+                      />
+                      <Skeleton
+                        height={size === "xs" ? "0.75rem" : size === "xl" ? "1.25rem" : "1rem"}
+                        width={i === 0 ? "65%" : i === 1 ? "45%" : "55%"}
+                        radius="sm"
+                      />
+                    </div>
+                  ))
+                )}
+              </>
+            )}
+            {listFooter}
+          </>
         ) : (
-          <div className="py-2 text-xs text-neutral-500 italic">
-            {!currentSearch.trim() && searchMode === "server"
-              ? "Nhập từ khóa để tìm kiếm..."
-              : emptyText}
-          </div>
+          <>
+            <div className="py-3 px-2 w-full flex justify-center">
+              <Empty
+                size="sm"
+                image={searchable || searchMode === "server" ? "search" : "default"}
+                description={
+                  !currentSearch.trim() && searchMode === "server"
+                    ? "Nhập từ khóa để tìm kiếm..."
+                    : (emptyText ?? "Không tìm thấy kết quả")
+                }
+                className="py-1"
+                {...emptyProps}
+              />
+            </div>
+            {listFooter}
+          </>
         )}
       </div>
 

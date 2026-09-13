@@ -140,42 +140,54 @@ export function ClientSearchExample() {
 
 ---
 
-### 4. Tìm kiếm Server Mode (Gọi API với Debounce & Bảo lưu mục đã chọn)
+### 4. Tìm kiếm Server Mode & Phân trang vô tận (`useSelectInfiniteQuery`)
+
+`CheckboxGroup` hoạt động hoàn hảo với hook `useSelectInfiniteQuery`:
+- Hook tự động merge từ khóa tìm kiếm vào `filters` theo `searchField` (ví dụ: `name: "phone"`).
+- Hook quản lý debounce tập trung, khi người dùng gõ tìm kiếm, `CheckboxGroup` gọi trực tiếp `onSearch` và hook sẽ debounce trước khi truy vấn API.
+- Hỗ trợ cuộn vô tận mượt mà khi kết hợp `maxHeight` và `listFooter`.
 
 ```tsx
-import { useState } from "react";
 import { CheckboxGroup } from "@owa/ui";
+import { useSelectInfiniteQuery } from "@owa/ui/query";
 
-export function ServerSearchExample() {
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-
-  const handleSearchProducts = async (query: string) => {
-    const res = await fetch(
-      `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=5`
-    );
-    if (!res.ok) throw new Error("API request failed");
-    const data = await res.json();
-    
-    return data.products.map((p: any) => ({
-      value: String(p.id),
-      label: p.title,
-      description: `$${p.price} - ${p.category}`,
-    }));
-  };
+export function InfiniteProductCheckboxGroup() {
+  const { selectProps } = useSelectInfiniteQuery({
+    queryKey: ["products-infinite"],
+    searchField: "q", // Merge từ khóa search vào filters: { q: "phone", ... }
+    queryFn: async ({ pageParam, filters }) => {
+      const queryParams = new URLSearchParams({
+        limit: "10",
+        skip: String((pageParam - 1) * 10),
+        ...filters,
+      });
+      const res = await fetch(`https://dummyjson.com/products/search?${queryParams}`);
+      return res.json();
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const currentLoaded = allPages.reduce((acc, p) => acc + (p.products?.length || 0), 0);
+      return currentLoaded < lastPage.total ? allPages.length + 1 : undefined;
+    },
+    mapOption: (item: any) => ({
+      value: String(item.id),
+      label: item.title,
+      description: `$${item.price} - ${item.category}`,
+    }),
+    debounceMs: 300,
+  });
 
   return (
-    <CheckboxGroup
-      label="Chọn sản phẩm"
-      searchable
-      searchMode="server"
-      debounceMs={300}
-      onSearch={handleSearchProducts}
-      searchPlaceholder="Tìm kiếm sản phẩm từ máy chủ..."
-      preserveSelected
-      value={selectedProducts}
-      onChange={setSelectedProducts}
-      color="info"
-    />
+    <div className="max-w-md">
+      <CheckboxGroup
+        {...selectProps}
+        label="Danh sách sản phẩm (Infinite Scroll)"
+        searchable
+        searchPlaceholder="Tìm sản phẩm..."
+        maxHeight={300}
+        color="info"
+      />
+    </div>
   );
 }
 ```
@@ -206,43 +218,47 @@ Kế thừa `Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "type">`:
 
 ---
 
-### `CheckboxGroupProps<TData = unknown>`
+### `CheckboxGroupProps<TData = unknown, TValue extends string | number = string>`
 
-Kế thừa `Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "children">`:
+Kế thừa `Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue">`:
 
 | Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
 | :--- | :--- | :--- | :--- |
-| `options` | `CheckboxOptionItem<TData>[]` | `[]` | Mảng dữ liệu các lựa chọn (Data-driven) |
-| `value` | `string[]` | `undefined` | Danh sách giá trị đã chọn (Controlled) |
-| `defaultValue` | `string[]` | `[]` | Danh sách giá trị mặc định (Uncontrolled) |
-| `onChange` | `(values: string[]) => void` | `undefined` | Callback khi danh sách chọn thay đổi |
+| `options` | `CheckboxOptionItem<TData, TValue>[]` | `[]` | Mảng dữ liệu các lựa chọn (Data-driven) |
+| `value` | `TValue[]` | `undefined` | Danh sách giá trị đã chọn (Controlled) |
+| `defaultValue` | `TValue[]` | `[]` | Danh sách giá trị mặc định (Uncontrolled) |
+| `onChange` | `(values: TValue[]) => void` | `undefined` | Callback khi danh sách chọn thay đổi |
 | `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Bố cục sắp xếp các mục |
 | `searchable` | `boolean` | `false` | Bật/tắt thanh tìm kiếm |
 | `searchMode` | `'client' \| 'server'` | `'client'` | Chế độ tìm kiếm phía client hoặc gọi API server |
-| `searchField` | `string \| string[]` | `'label'` | Các trường dữ liệu dùng để tìm kiếm |
-| `filterFn` | `(item: CheckboxOptionItem<TData>, query: string) => boolean` | `undefined` | Hàm lọc tùy biến phía client |
-| `onSearch` | `(query: string) => Promise<CheckboxOptionItem<TData>[]>` | `undefined` | Hàm gọi API tìm kiếm phía server |
-| `debounceMs` | `number` | `300` | Thời gian trễ gọi hàm `onSearch` (ms) |
+| `searchField` | `string \| string[]` | `'label'` | Các trường dữ liệu dùng để tìm kiếm (Client mode) |
+| `filterFn` | `(item, query) => boolean` | `undefined` | Hàm lọc tùy biến phía client |
+| `onSearch` | `(query) => void` | `undefined` | Callback khi người dùng gõ tìm kiếm (Server mode) |
+| `listFooter` | `ReactNode` | `undefined` | Nội dung ở đáy danh sách (Sentinel / Skeleton loading) |
+| `maxHeight` | `number \| string` | `undefined` | Giới hạn chiều cao và bật thanh cuộn dọc cho danh sách |
 | `preserveSelected` | `boolean` | `true` | Bảo lưu các mục đã chọn khi từ khóa tìm kiếm thay đổi |
 | `emptyText` | `ReactNode` | `'Không tìm thấy kết quả'` | Thông báo khi không có kết quả |
+| `emptyProps` | `Partial<EmptyProps>` | `undefined` | Tùy biến props cho component `Empty` khi danh sách trống |
 | `size` | `CheckboxSize` | `'md'` | Kích cỡ truyền xuống toàn bộ checkbox con |
 | `color` | `CheckboxColor` | `'primary'` | Màu sắc truyền xuống toàn bộ checkbox con |
 | `variant` | `CheckboxVariant` | `'filled'` | Biến thể truyền xuống toàn bộ checkbox con |
 | `radius` | `CheckboxRadius` | `undefined` | Bo góc truyền xuống toàn bộ checkbox con |
 | `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ nhóm |
-| `isReadOnly` | `boolean` | `false` | Chế độ chỉ đọc cho toàn bộ nhóm |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải của nhóm |
+| `isLoading` | `boolean` | `false` | Trạng thái đang tải dữ liệu (Data Loading từ API/query) |
+| `skeletonCount` | `number` | `3` | Số lượng dòng Skeleton hiển thị khi đang tải dữ liệu |
+| `renderSkeleton` | `() => ReactNode` | `undefined` | Tùy biến render giao diện Skeleton khi tải dữ liệu |
+| `config` | `CheckboxGroupConfig` | `undefined` | Cấu hình cờ trạng thái (`isLoading` - trạng thái bận khóa tương tác, `showSpinner`, `isRequired`, `isInvalid`,...) |
 | `label` | `ReactNode` | `undefined` | Tiêu đề của nhóm |
 | `helperText` | `ReactNode` | `undefined` | Chú thích của nhóm |
 | `errorMessage` | `ReactNode` | `undefined` | Thông báo lỗi của nhóm |
 
 ---
 
-### `CheckboxOptionItem<TData = unknown>`
+### `CheckboxOptionItem<TData = unknown, TValue extends string | number = string | number>`
 
 | Trường | Kiểu dữ liệu | Mô tả |
 | :--- | :--- | :--- |
-| `value` | `string` | Giá trị định danh duy nhất của ô chọn |
+| `value` | `TValue` | Giá trị định danh duy nhất của ô chọn (string hoặc number) |
 | `label` | `ReactNode` | Nhãn hiển thị chính |
 | `description` | `ReactNode` | Đoạn chú thích/mô tả phụ bên dưới nhãn |
 | `disabled` | `boolean` | Vô hiệu hóa ô chọn này |

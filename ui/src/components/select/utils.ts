@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { SelectOptionItem, SelectFilterField } from "./types";
 
 /**
@@ -86,32 +87,20 @@ export function getVisibleTags<TData = unknown>(
   return { visibleTags, hiddenTagCount };
 }
 
-/**
- * Kiểm tra xem một option có đang được chọn hay không (hỗ trợ cả Single Select và Multi Select).
- *
- * @param optionValue - Giá trị của option cần kiểm tra
- * @param selectedValue - Giá trị đang chọn (string, number, array hoặc null/undefined)
- * @returns true nếu option đang được chọn
- */
-export function isOptionSelected(
-  optionValue: string | number,
-  selectedValue: string | number | (string | number)[] | null | undefined
-): boolean {
-  if (selectedValue === null || selectedValue === undefined) return false;
-  if (Array.isArray(selectedValue)) {
-    return selectedValue.includes(optionValue);
-  }
-  return selectedValue === optionValue;
-}
 
 /**
  * Định dạng giá trị của bộ lọc để hiển thị tóm tắt trên Badge Chip của menu bộ lọc.
  *
  * @param field - Cấu hình trường bộ lọc
  * @param val - Giá trị hiện tại của bộ lọc
+ * @param historicalOptionLabels - Map lưu trữ lịch sử nhãn của các option đã chọn (dùng cho server mode)
  * @returns Chuỗi văn bản hiển thị tóm tắt
  */
-export function formatFilterBadgeValue(field: SelectFilterField<unknown>, val: unknown): string {
+export function formatFilterBadgeValue(
+  field: SelectFilterField<unknown>,
+  val: unknown,
+  historicalOptionLabels?: Map<string | number, ReactNode>
+): string {
   if (val === undefined || val === null || val === "") {
     return "Chưa nhập";
   }
@@ -135,9 +124,15 @@ export function formatFilterBadgeValue(field: SelectFilterField<unknown>, val: u
     }
     // Checkbox group / Options (multi-select / select)
     const getOptionLabel = (item: unknown) => {
-      if (field.options && field.options.length > 0) {
+      if (field.type === "checkbox-group" && field.options && field.options.length > 0) {
         const found = field.options.find((o) => String(o.value) === String(item));
         if (found) return String(found.label);
+      }
+      if (historicalOptionLabels) {
+        const cached =
+          historicalOptionLabels.get(String(item)) ??
+          historicalOptionLabels.get(item as string | number);
+        if (cached !== undefined && cached !== null) return String(cached);
       }
       return String(item);
     };
@@ -152,4 +147,3 @@ export function formatFilterBadgeValue(field: SelectFilterField<unknown>, val: u
 
   return String(val);
 }
-

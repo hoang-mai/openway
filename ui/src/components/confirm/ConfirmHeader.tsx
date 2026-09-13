@@ -76,6 +76,7 @@ export default function ConfirmHeader({
           onClick={handleClose}
           disabled={isLoading}
           aria-label="Đóng hộp thoại"
+          data-testid="confirm-close-button"
           className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-md transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${currentSize.closeButton} ${closeButtonClassName}`}
         >
           <CloseIcon className={currentSize.closeIcon} />

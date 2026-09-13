@@ -357,4 +357,59 @@ describe("<ModalContainer /> Normal Mount & Top Layer (overflow-auto breakout)",
     cy.get('[data-testid="btn-compound-close"]').click();
     cy.get('dialog[open]').should("not.exist");
   });
+
+  it("plays exit animation gracefully when closed externally via state (e.g. async API call)", () => {
+    const AsyncSaveModalShowcase = () => {
+      const [isOpen, setIsOpen] = useState(false);
+      const [isSaving, setIsSaving] = useState(false);
+
+      const handleSave = async () => {
+        setIsSaving(true);
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        setIsSaving(false);
+        setIsOpen(false);
+      };
+
+      return (
+        <div className="p-4">
+          <Button data-testid="btn-open-async" onClick={() => setIsOpen(true)}>
+            Mở Modal Lưu
+          </Button>
+
+          <ModalContainer open={isOpen} onClose={() => setIsOpen(false)}>
+            <Modal>
+              <ModalHeader title="Lưu Dữ Liệu" />
+              <ModalBody>
+                <p>Nội dung đang chuẩn bị lưu...</p>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  data-testid="btn-async-save"
+                  color="primary"
+                  isLoading={isSaving}
+                  onClick={handleSave}
+                >
+                  Lưu
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </ModalContainer>
+        </div>
+      );
+    };
+
+    cy.mount(<AsyncSaveModalShowcase />);
+
+    cy.get('[data-testid="btn-open-async"]').click();
+    cy.get('dialog[open]').should("exist").and("be.visible");
+
+    // Click Lưu -> gọi API và setIsOpen(false) từ bên ngoài
+    cy.get('[data-testid="btn-async-save"]').click();
+
+    // Trong khi exit animation đang diễn ra, dialog có animation exit
+    cy.get('dialog[open]').should("have.class", "animate-modal-backdrop-out");
+
+    // Sau khi kết thúc exit animation, dialog unmount hoàn toàn
+    cy.get('dialog[open]').should("not.exist");
+  });
 });

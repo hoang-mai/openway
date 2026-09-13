@@ -20,8 +20,7 @@ import { TooltipProps } from "./types";
 import { sizeConfig, radiusConfig, variantColorConfig, arrowColorConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { DEFAULT_Z_INDEX } from "@/constants";
-import { useModalContext } from "@/components/modal/ModalContext";
-import { useConfirmContext } from "@/components/confirm/ConfirmContext";
+import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 
 interface SlotProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
@@ -83,11 +82,6 @@ export default function Tooltip({
   portal = true,
   portalRoot,
 }: TooltipProps) {
-  const modalContext = useModalContext();
-  const confirmContext = useConfirmContext();
-
-  const effectivePortalRoot = portalRoot ?? modalContext?.dialogRef ?? confirmContext?.dialogRef;
-
   const [open, setOpen] = useState(defaultOpen);
   const [arrowRef, setArrowRef] = useState<SVGSVGElement | null>(null);
 
@@ -110,6 +104,7 @@ export default function Tooltip({
 
   const {
     refs: { setReference, setFloating },
+    elements: { reference },
     floatingStyles,
     context,
     placement: computedPlacement,
@@ -120,6 +115,11 @@ export default function Tooltip({
     whileElementsMounted: autoUpdate,
     transform: false,
     middleware,
+  });
+
+  const effectivePortalRoot = useFloatingPortalRoot({
+    portalRoot,
+    reference,
   });
 
   const hover = useHover(context, {
@@ -150,7 +150,7 @@ export default function Tooltip({
     variant === "other" ? "" : getSafeConfig(color, getSafeConfig(variant, arrowColorConfig, "filled"), "neutral");
 
   const classNames = [
-    "select-none pointer-events-none max-w-xs break-words",
+    "select-none max-w-xs break-words",
     currentSize.box,
     roundedClass,
     variantStyles,
@@ -200,7 +200,7 @@ export default function Tooltip({
         </span>
       )}
       {portal ? (
-        <FloatingPortal root={effectivePortalRoot}>{tooltipContent}</FloatingPortal>
+        tooltipContent && <FloatingPortal root={effectivePortalRoot}>{tooltipContent}</FloatingPortal>
       ) : (
         tooltipContent
       )}

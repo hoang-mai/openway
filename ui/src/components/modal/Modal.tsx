@@ -29,6 +29,7 @@ export default function Modal({
     <div
       ref={ref}
       tabIndex={-1}
+      data-testid="modal-dialog"
       className={containerClasses}
       {...props}
     >

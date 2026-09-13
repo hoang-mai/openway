@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import React, { useCallback, useMemo, useState, type ReactNode } from "react";
 import {
   useInfiniteQuery,
   type InfiniteData,
@@ -13,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import type { SelectOptionItem } from "../types";
 import { useInfiniteScroll, type UseInfiniteScrollOptions } from "@/hooks/useInfiniteScroll";
+import { useDebounce } from "@/hooks/useDebounce";
 import Skeleton from "@/components/skeleton/Skeleton";
 
 /**
@@ -28,12 +24,7 @@ export interface SelectQueryParams<
   pageParam: TPageParam;
 
   /**
-   * Từ khóa tìm kiếm từ ô Select.
-   */
-  search: string;
-
-  /**
-   * Bộ lọc bổ sung từ menu filter của Select.
+   * Bộ lọc gửi lên backend (đã bao gồm từ khóa tìm kiếm được merge theo searchField).
    */
   filters: TFilters;
 }
@@ -127,6 +118,21 @@ export interface UseSelectInfiniteQueryOptions<
   debounceMs?: number;
 
   /**
+   * Thời gian debounce cho bộ lọc menu `filters` (tính theo ms).
+   * Nếu không truyền, mặc định sẽ dùng cùng giá trị với `debounceMs`.
+   * @default 300
+   */
+  filterDebounceMs?: number;
+
+  /**
+   * Tên trường dùng để merge từ khóa tìm kiếm vào `filters` trước khi gửi lên backend trong `queryFn`.
+   * Dự án tự quyết định tên trường này phù hợp với API backend (ví dụ: `searchField: "q"`, `"name"`, `"keyword"`...).
+   * Mặc định là `"search"`.
+   * @default "search"
+   */
+  searchField?: string;
+
+  /**
    * Từ khóa tìm kiếm ban đầu.
    */
   initialSearch?: string;
@@ -194,7 +200,10 @@ export interface UseSelectInfiniteQueryReturn<
     isLoading: boolean;
     searchMode: "server";
     debounceMs: number;
-    onSearch: (query: string, filters: TFilters) => void;
+    searchValue: string;
+    onSearchChange: (val: string) => void;
+    menuFilterValues: TFilters;
+    onMenuFilterChange: (filters: TFilters) => void;
     listFooter: ReactNode;
   };
 
@@ -209,7 +218,7 @@ export interface UseSelectInfiniteQueryReturn<
   options: SelectOptionItem<TData>[];
 
   /**
-   * Từ khóa tìm kiếm hiện tại (đã được Select debounce qua onSearch)
+   * Từ khóa tìm kiếm tức thì hiện tại trên ô input
    */
   search: string;
 
@@ -260,6 +269,8 @@ export function useSelectInfiniteQuery<
   selectOptions,
   mapOption,
   debounceMs = 300,
+  filterDebounceMs,
+  searchField = "search",
   initialSearch = "",
   initialFilters = EMPTY_FILTERS as TFilters,
   initialOptions,
@@ -269,16 +280,70 @@ export function useSelectInfiniteQuery<
   endMessage,
   scrollOptions,
   queryOptions,
-}: UseSelectInfiniteQueryOptions<TData, TResponse, TPageParam, TFilters, TError>): UseSelectInfiniteQueryReturn<TData, TResponse, TFilters, TError> {
-  // 1. Quản lý từ khóa tìm kiếm & bộ lọc menu
+}: UseSelectInfiniteQueryOptions<TData, TResponse, TPageParam, TFilters, TError>): UseSelectInfiniteQueryReturn<
+  TData,
+  TResponse,
+  TFilters,
+  TError
+> {
+  // 1. Quản lý từ khóa tìm kiếm & bộ lọc menu (với useDebounce)
   const [search, setSearch] = useState(initialSearch);
+  const debouncedSearch = useDebounce(search, debounceMs);
+
   const [filters, setFilters] = useState<TFilters>(initialFilters);
 
-  // 2. Xây dựng full queryKey kết hợp search & filters
-  const fullQueryKey = useMemo(
-    () => [...queryKey, { search, filters }] as const,
-    [queryKey, search, filters]
-  );
+  // Đếm số lượng bộ lọc active hiện tại
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    for (const key of Object.keys(filters)) {
+      const val = (filters as Record<string, unknown>)[key];
+      if (val !== undefined && val !== null && val !== "") {
+        if (Array.isArray(val)) {
+          if (val.length > 0) count++;
+        } else {
+          count++;
+        }
+      }
+    }
+    return count;
+  }, [filters]);
+
+  // Nhận diện khi chip/bộ lọc bị xóa để bypass debounce gọi API ngay lập tức
+  const [filterTrack, setFilterTrack] = useState({
+    prevCount: activeFilterCount,
+    prevFilters: filters,
+    isFilterRemoved: false,
+  });
+
+  if (filters !== filterTrack.prevFilters) {
+    setFilterTrack({
+      prevCount: activeFilterCount,
+      prevFilters: filters,
+      isFilterRemoved: activeFilterCount < filterTrack.prevCount,
+    });
+  }
+
+  const effectiveFilterDelay =
+    activeFilterCount === 0 || filterTrack.isFilterRemoved ? 0 : (filterDebounceMs ?? debounceMs);
+  const debouncedFiltersVal = useDebounce(filters, effectiveFilterDelay);
+  const debouncedFilters = effectiveFilterDelay === 0 ? filters : debouncedFiltersVal;
+
+  // 2. Merge search vào filters theo searchField để gửi lên backend (dự án tự quyết định tên trường)
+  const effectiveSearchField = searchField ?? "search";
+
+  const queryFilters = useMemo(() => {
+    const next = { ...debouncedFilters } as Record<string, unknown>;
+    const keyword = debouncedSearch.trim();
+    if (keyword) {
+      next[effectiveSearchField] = keyword;
+    } else {
+      delete next[effectiveSearchField];
+    }
+    return next as TFilters;
+  }, [debouncedFilters, effectiveSearchField, debouncedSearch]);
+
+  // 3. Xây dựng full queryKey kết hợp filters (đã chứa search theo searchField)
+  const fullQueryKey = useMemo(() => [...queryKey, { filters: queryFilters }] as const, [queryKey, queryFilters]);
 
   // 4. Default getNextPageParam thông minh
   const resolvedGetNextPageParam = useCallback(
@@ -320,10 +385,10 @@ export function useSelectInfiniteQuery<
           typeof record.total === "number"
             ? record.total
             : typeof record.totalCount === "number"
-            ? record.totalCount
-            : typeof record.count === "number"
-            ? record.count
-            : undefined;
+              ? record.totalCount
+              : typeof record.count === "number"
+                ? record.count
+                : undefined;
 
         if (total !== undefined) {
           const currentCount = allPages.reduce((acc, p) => acc + extractRawOptions(p).length, 0);
@@ -345,8 +410,7 @@ export function useSelectInfiniteQuery<
       return queryFn(
         {
           pageParam: context.pageParam as TPageParam,
-          search,
-          filters,
+          filters: queryFilters,
         },
         context
       );
@@ -413,13 +477,7 @@ export function useSelectInfiniteQuery<
     root: scrollOptions?.root,
   });
 
-  // 8. Handler nhận search từ Select component
-  const handleSearch = useCallback((newSearch: string, newFilters: TFilters) => {
-    setSearch(newSearch);
-    setFilters(newFilters);
-  }, []);
-
-  // 9. Reset state
+  // 8. Reset state
   const reset = useCallback(() => {
     setSearch(initialSearch);
     setFilters(initialFilters);
@@ -436,13 +494,7 @@ export function useSelectInfiniteQuery<
           {renderLoadingMore ? (
             renderLoadingMore()
           ) : (
-            <Skeleton
-              lines={skeletonLines}
-              height={skeletonHeight}
-              gap="0.25rem"
-              radius="sm"
-              className="p-0.5"
-            />
+            <Skeleton lines={skeletonLines} height={skeletonHeight} gap="0.25rem" radius="sm" className="p-0.5" />
           )}
         </div>
       );
@@ -453,11 +505,7 @@ export function useSelectInfiniteQuery<
     }
 
     if (endMessage) {
-      return (
-        <div className="py-2 px-1 text-center text-xs text-neutral-400">
-          {endMessage}
-        </div>
-      );
+      return <div className="py-2 px-1 text-center text-xs text-neutral-400">{endMessage}</div>;
     }
 
     return null;
@@ -472,17 +520,20 @@ export function useSelectInfiniteQuery<
     endMessage,
   ]);
 
-  // 11. Đóng gói selectProps trọn gói
+  // 10. Đóng gói selectProps trọn gói (Single Source of Truth)
   const selectProps = useMemo(
     () => ({
       options,
       isLoading: query.isLoading,
       searchMode: "server" as const,
       debounceMs,
-      onSearch: handleSearch,
+      searchValue: search,
+      onSearchChange: setSearch,
+      menuFilterValues: filters,
+      onMenuFilterChange: (newFilters: TFilters) => setFilters(newFilters),
       listFooter,
     }),
-    [options, query.isLoading, debounceMs, handleSearch, listFooter]
+    [options, query.isLoading, debounceMs, search, setSearch, filters, setFilters, listFooter]
   );
 
   return {

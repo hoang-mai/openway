@@ -311,6 +311,7 @@ describe("🎨 CheckboxGroup UI Showcase & Design System", () => {
                 defaultValue={["push"]}
                 label="Đồng bộ dữ liệu (IsLoading)"
                 helperText="Đang tải dữ liệu cấu hình..."
+                config={{ isLoading: true, showSpinner: true }}
                 options={[
                   { value: "email", label: "Email" },
                   { value: "push", label: "Push Notification" },
@@ -531,24 +532,37 @@ describe("🎨 CheckboxGroup UI Showcase & Design System", () => {
       { value: "svelte", label: "Svelte", code: "FE-04", description: "Cybernetically enhanced" },
     ];
 
-    const onSearchServer = async (query: string) => {
-      const res = await fetch(
-        `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=4`
-      );
-      if (!res.ok) throw new Error("Network response was not ok");
-      const data = await res.json();
-      return (data.products || []).map((p: { id: number; title: string; price: number; category: string; }) => ({
-        value: String(p.id),
-        label: p.title,
-        description: `$${p.price} - ${p.category}`,
-      }));
-    };
-
     const SearchShowcase = () => {
       const [clientSelected, setClientSelected] = useState<string[]>([]);
       const [customFieldSelected, setCustomFieldSelected] = useState<string[]>([]);
       const [preserveSelectedList, setPreserveSelectedList] = useState<string[]>(["react"]);
       const [serverSelected, setServerSelected] = useState<string[]>([]);
+      const [serverOptions, setServerOptions] = useState([
+        { value: "init-1", label: "iPhone 9 (Gợi ý ban đầu)", description: "$549 - smartphones" },
+        { value: "init-2", label: "iPhone X (Gợi ý ban đầu)", description: "$899 - smartphones" },
+      ]);
+      const [isServerLoading, setIsServerLoading] = useState(false);
+
+      const handleServerSearch = async (query: string) => {
+        setIsServerLoading(true);
+        try {
+          const res = await fetch(
+            `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=4`
+          );
+          if (!res.ok) return;
+          const data = await res.json();
+          const items = (data.products || []).map((p: { id: number; title: string; price: number; category: string; }) => ({
+            value: String(p.id),
+            label: p.title,
+            description: `$${p.price} - ${p.category}`,
+          }));
+          setServerOptions(items);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setIsServerLoading(false);
+        }
+      };
 
       return (
         <div className="p-8 bg-neutral-50 min-h-screen flex flex-col gap-8 font-sans">
@@ -557,7 +571,7 @@ describe("🎨 CheckboxGroup UI Showcase & Design System", () => {
               12. CheckboxGroup Search Showcase (Client & Server Modes)
             </h1>
             <p className="text-sm text-neutral-500">
-              Tìm kiếm linh hoạt qua Component Input variant outline, hỗ trợ lọc đa trường, gọi API debounce và bảo lưu mục đã chọn
+              Tìm kiếm linh hoạt qua Component Input variant outline, hỗ trợ lọc đa trường, gọi API server và bảo lưu mục đã chọn
             </p>
           </header>
 
@@ -612,13 +626,10 @@ describe("🎨 CheckboxGroup UI Showcase & Design System", () => {
               <CheckboxGroup
                 config={{ searchable: true }}
                 searchMode="server"
-                debounceMs={200}
-                onSearch={onSearchServer}
+                isLoading={isServerLoading}
+                onSearch={handleServerSearch}
                 searchPlaceholder="Tìm sản phẩm thật (ví dụ: phone, laptop)..."
-                options={[
-                  { value: "init-1", label: "iPhone 9 (Gợi ý ban đầu)", description: "$549 - smartphones" },
-                  { value: "init-2", label: "iPhone X (Gợi ý ban đầu)", description: "$899 - smartphones" },
-                ]}
+                options={serverOptions}
                 value={serverSelected}
                 onChange={setServerSelected}
                 color="info"
@@ -660,9 +671,81 @@ describe("🎨 CheckboxGroup UI Showcase & Design System", () => {
     cy.get('[data-cy="card-preserve"] input[type="checkbox"]').should("have.length", 1);
     cy.get('[data-cy="card-preserve"]').should("contain.text", "Angular");
 
-    // 4. Kiểm tra Card 4: Server mode debounce gọi API thật DummyJSON qua internet
+    // 4. Kiểm tra Card 4: Server mode gọi API thật DummyJSON qua internet
     cy.get('[data-cy="card-server"] input[type="text"]').type("phone");
     cy.get('[data-cy="card-server"]', { timeout: 10000 }).should("contain.text", "Apple");
     cy.get('[data-cy="card-server"] input[type="checkbox"]').should("have.length.greaterThan", 0);
   });
+
+  // 13. MaxHeight Scrollable & ListFooter Showcase
+  it("UI 13: MaxHeight Scrollable & ListFooter Showcase", () => {
+    const manyOptions = Array.from({ length: 20 }, (_, i) => ({
+      value: `opt-${i + 1}`,
+      label: `Tùy chọn mục ${i + 1}`,
+      description: `Mô tả chi tiết cho phần tử thứ ${i + 1}`,
+    }));
+
+    const ScrollShowcase = () => {
+      const [selected, setSelected] = useState<string[]>(["opt-1"]);
+
+      return (
+        <div className="p-8 bg-neutral-50 min-h-screen flex flex-col gap-6 font-sans">
+          <header>
+            <h1 className="text-xl font-bold text-neutral-900">
+              13. Vùng cuộn MaxHeight & ListFooter
+            </h1>
+          </header>
+
+          <div className="p-6 bg-white rounded-xl shadow-sm max-w-md" data-cy="card-scrollable">
+            <CheckboxGroup
+              label="Danh sách dài có thanh cuộn"
+              maxHeight={200}
+              options={manyOptions}
+              value={selected}
+              onChange={setSelected}
+              listFooter={
+                <div data-cy="custom-list-footer" className="p-2 text-center text-xs text-neutral-400 border-t border-neutral-100">
+                  Đã cuộn đến đáy danh sách
+                </div>
+              }
+            />
+          </div>
+        </div>
+      );
+    };
+
+    cy.mount(<ScrollShowcase />);
+    cy.get('[data-cy="card-scrollable"] [role="group"]').should("be.visible");
+    cy.get('[data-cy="custom-list-footer"]').should("exist").and("contain.text", "Đã cuộn đến đáy danh sách");
+  });
+
+  // 14. Data Loading with Skeleton Placeholder Showcase
+  it("UI 14: Data Loading with Skeleton Placeholder Showcase", () => {
+    const SkeletonShowcase = () => {
+      return (
+        <div className="p-8 bg-neutral-50 min-h-screen flex flex-col gap-6 font-sans">
+          <header>
+            <h1 className="text-xl font-bold text-neutral-900">
+              14. Trạng thái tải dữ liệu bằng Skeleton (Data Loading)
+            </h1>
+          </header>
+
+          <div className="p-6 bg-white rounded-xl shadow-sm max-w-md" data-cy="card-skeleton">
+            <CheckboxGroup
+              label="Đang tải danh sách vai trò..."
+              isLoading={true}
+              skeletonCount={4}
+              options={[]}
+            />
+          </div>
+        </div>
+      );
+    };
+
+    cy.mount(<SkeletonShowcase />);
+    cy.get('[data-cy="card-skeleton"] [role="group"]').should("be.visible");
+    cy.get('[data-cy="card-skeleton"] [role="group"]').should("have.attr", "aria-busy", "true");
+    cy.get('[data-cy="card-skeleton"] [role="status"][aria-label="Loading..."]').should("have.length.at.least", 4);
+  });
 });
+

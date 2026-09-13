@@ -38,7 +38,6 @@ import Skeleton from "../skeleton/Skeleton";
 import IconButton from "../button/IconButton";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import { DEFAULT_PAGE_SIZE } from "./constants";
-import { DEFAULT_DEBOUNCE_DELAY } from "@/constants";
 
 export function DataTable<TData extends RowData = RowData>({
   columns,
@@ -96,7 +95,6 @@ export function DataTable<TData extends RowData = RowData>({
   manualFiltering = false,
   pageCount,
   rowCount,
-  debounceMs = DEFAULT_DEBOUNCE_DELAY,
 
   // Controlled States
   pagination: controlledPagination,
@@ -240,14 +238,31 @@ export function DataTable<TData extends RowData = RowData>({
     return map;
   }, [columnFilters]);
 
-  // Xử lý khi giá trị trên TableMenuFilter thay đổi
-  const handleFilterChange = (name: string, value: unknown) => {
-    const nextFilters = columnFilters.filter((cf) => cf.id !== name);
-    const hasValue =
-      value !== undefined && value !== null && value !== "" && (!Array.isArray(value) || value.length > 0);
+  // Xử lý khi giá trị trên TableMenuFilter thay đổi (cập nhật dạng batch object)
+  const handleFilterChange = (updates: Record<string, unknown>) => {
+    const updateKeys = new Set(Object.keys(updates));
+    const nextFilters = columnFilters.filter((cf) => !updateKeys.has(cf.id));
 
-    if (hasValue) {
-      nextFilters.push({ id: name, value });
+    for (const [key, value] of Object.entries(updates)) {
+      const hasValue =
+        value !== undefined && value !== null && value !== "" && (!Array.isArray(value) || value.length > 0);
+
+      if (hasValue) {
+        nextFilters.push({ id: key, value });
+      }
+    }
+
+    // Đảm bảo trường date-range vẫn kích hoạt lọc cột trên client nếu người dùng chỉ chọn ngày kết thúc
+    if (filters) {
+      for (const f of filters) {
+        if (f.type === "date-range") {
+          const hasEnd = nextFilters.some((cf) => cf.id === f.endName);
+          const hasStart = nextFilters.some((cf) => cf.id === f.name);
+          if (hasEnd && !hasStart) {
+            nextFilters.push({ id: f.name, value: null });
+          }
+        }
+      }
     }
 
     if (onColumnFiltersChange) {
@@ -297,20 +312,20 @@ export function DataTable<TData extends RowData = RowData>({
           return {
             ...col,
             filterFn: (row: Row<DefaultTableFeatures, TData>, id: string, filterVal: unknown) => {
-              if (!filterVal || !Array.isArray(filterVal)) return true;
-              const [startDate, endDate] = filterVal as [Date | null, Date | null];
+              const startDate = filterVal;
+              const endDate = filterValues[matchedFilter.endName];
               if (!startDate && !endDate) return true;
               const cellVal = row.getValue(id);
               if (!cellVal) return false;
               const cellDate = cellVal instanceof Date ? cellVal : new Date(cellVal as string | number);
               if (isNaN(cellDate.getTime())) return false;
               if (startDate) {
-                const start = new Date(startDate);
+                const start = new Date(startDate as Date | string | number);
                 start.setHours(0, 0, 0, 0);
                 if (cellDate < start) return false;
               }
               if (endDate) {
-                const end = new Date(endDate);
+                const end = new Date(endDate as Date | string | number);
                 end.setHours(23, 59, 59, 999);
                 if (cellDate > end) return false;
               }
@@ -440,6 +455,7 @@ export function DataTable<TData extends RowData = RowData>({
     expandColumnPosition,
     maxIndentDepth,
     indentSize,
+    filterValues,
   ]);
 
   const table = useDataTable<TData>({

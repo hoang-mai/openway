@@ -62,6 +62,7 @@ export default function Popover({
 
   const {
     refs,
+    elements,
     floatingStyles,
     context,
     placement: computedPlacement,
@@ -98,6 +99,7 @@ export default function Popover({
       isOpen,
       setIsOpen: handleOpenChange,
       refs,
+      elements,
       floatingStyles,
       context,
       getReferenceProps,
@@ -115,6 +117,7 @@ export default function Popover({
       isOpen,
       handleOpenChange,
       refs,
+      elements,
       floatingStyles,
       context,
       getReferenceProps,

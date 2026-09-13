@@ -69,6 +69,7 @@ export default function Dropdown({
 
   const {
     refs,
+    elements,
     floatingStyles,
     context,
     placement: computedPlacement,
@@ -121,6 +122,7 @@ export default function Dropdown({
       isOpen,
       setIsOpen: handleOpenChange,
       refs,
+      elements,
       floatingStyles,
       context,
       getReferenceProps,
@@ -143,6 +145,7 @@ export default function Dropdown({
       isOpen,
       handleOpenChange,
       refs,
+      elements,
       floatingStyles,
       context,
       getReferenceProps,
