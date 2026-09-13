@@ -146,7 +146,7 @@ export function TablePagination<TData extends RowData = RowData>({
                 aria-current={isCurrent ? "page" : undefined}
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 ${
                   isCurrent
-                    ? "border-2 border-primary-600 text-primary-600 font-semibold bg-primary-50/50"
+                    ? "border border-primary-600 text-primary-600 font-semibold bg-primary-50/70 shadow-xs"
                     : "text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 font-medium"
                 }`}
               >

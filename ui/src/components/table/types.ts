@@ -712,14 +712,6 @@ export interface DataTableProps<TData extends RowData = RowData> {
   manualFiltering?: boolean;
 
   /**
-   * Thời gian trì hoãn debounce (ms) khi thay đổi bộ lọc hoặc tìm kiếm ở chế độ server (`manualFiltering: true`).
-   * Áp dụng cho toàn bộ các trường Input, NumberInput, DatePicker, DateRangePicker, CheckboxGroup/Select, custom và tìm kiếm toàn bảng.
-   * Đặt 0 để tắt debounce (gọi ngay lập tức).
-   * @default 300
-   */
-  debounceMs?: number;
-
-  /**
    * Tổng số trang trả về từ máy chủ (bắt buộc khi dùng `manualPagination={true}`)
    */
   pageCount?: number;

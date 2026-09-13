@@ -86,13 +86,13 @@ export interface FieldLabelProps {
 }
 
 export const defaultLabelColorConfig: Record<string, string> = {
-  primary: "text-primary-500 group-focus-within/field:text-primary-600",
-  secondary: "text-secondary-500 group-focus-within/field:text-secondary-600",
-  error: "text-error-500 group-focus-within/field:text-error-600",
-  success: "text-success-500 group-focus-within/field:text-success-600",
-  warning: "text-warning-500 group-focus-within/field:text-warning-600",
-  info: "text-info-500 group-focus-within/field:text-info-600",
-  neutral: "text-neutral-500 group-focus-within/field:text-neutral-600",
+  primary: "text-neutral-700 group-focus-within/field:text-primary-600",
+  secondary: "text-neutral-700 group-focus-within/field:text-secondary-600",
+  error: "text-error-600 group-focus-within/field:text-error-600",
+  success: "text-neutral-700 group-focus-within/field:text-success-600",
+  warning: "text-neutral-700 group-focus-within/field:text-warning-600",
+  info: "text-neutral-700 group-focus-within/field:text-info-600",
+  neutral: "text-neutral-700 group-focus-within/field:text-neutral-900",
 };
 
 export const defaultLabelSizeConfig: Record<
@@ -151,7 +151,7 @@ export default function FieldLabel({
 
   const activeColor = isErrorState ? "error" : color;
   const labelColorStyle = isErrorState
-    ? "text-error-600 font-bold"
+    ? "text-error-600 font-medium"
     : colorConfig[activeColor] || defaultLabelColorConfig[activeColor] || defaultLabelColorConfig.primary;
 
   const sizeStyles = defaultLabelSizeConfig[size] || defaultLabelSizeConfig.md;
@@ -168,7 +168,7 @@ export default function FieldLabel({
       <label
         htmlFor={htmlFor}
         id={id}
-        className={`absolute top-0 -translate-y-1/2 left-3 px-1.5 rounded-sm select-none z-10 font-bold bg-neutral-white transition-colors duration-150 ${cursorClass} ${currentSizeClass} ${labelColorStyle} ${className}`}
+        className={`absolute top-0 -translate-y-1/2 left-3 px-1.5 rounded-sm select-none z-10 font-medium bg-neutral-white transition-colors duration-150 ${cursorClass} ${currentSizeClass} ${labelColorStyle} ${className}`}
       >
         {content}
         {isRequired && (
@@ -184,7 +184,7 @@ export default function FieldLabel({
     <label
       htmlFor={htmlFor}
       id={id}
-      className={`inline-flex items-center font-bold transition-colors duration-150 ${cursorClass} ${currentSizeClass} ${labelColorStyle} ${className}`}
+      className={`inline-flex items-center font-medium transition-colors duration-150 ${cursorClass} ${currentSizeClass} ${labelColorStyle} ${className}`}
     >
       {content}
       {isRequired && (

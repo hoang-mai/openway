@@ -458,7 +458,6 @@ export function UserTableWithFilters() {
 | `manualPagination` | `boolean` | `false` | Bật chế độ phân trang từ máy chủ (Server-side) |
 | `manualSorting` | `boolean` | `false` | Bật chế độ sắp xếp từ máy chủ (Server-side) |
 | `manualFiltering` | `boolean` | `false` | Bật chế độ tìm kiếm từ máy chủ (Server-side) |
-| `debounceMs` | `number` | `300` | Thời gian trì hoãn debounce (ms) khi thay đổi bộ lọc hoặc tìm kiếm ở Server-side (`manualFiltering: true`). Đặt 0 để tắt debounce. |
 | `pageCount` | `number` | `undefined` | Tổng số trang (khi dùng `manualPagination`) |
 | `rowCount` | `number` | `undefined` | Tổng số dòng dữ liệu thực tế (khi dùng `manualPagination`) |
 | `onRowClick` | `(row) => void` | `undefined` | Sự kiện click chuột vào một dòng |

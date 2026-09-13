@@ -534,7 +534,6 @@ function InteractiveTableDemo({
       <DataTable
         columns={defaultColumns}
         data={mockUsers}
-        isRefresh={true}
         onRefresh={onRefreshStub}
         enableSorting={true}
         enableFiltering={true}
@@ -894,6 +893,56 @@ function ControlledExpandDemo() {
   );
 }
 
+function ExpandAndSelectRowDemo({
+  onSelectionChangeStub,
+  onRowClickStub,
+}: {
+  onSelectionChangeStub?: (selectedRows: User[]) => void;
+  onRowClickStub?: (row: Row<DefaultTableFeatures, User>) => void;
+}) {
+  return (
+    <section
+      data-testid="expand-and-select-section"
+      className="space-y-4 bg-white p-6 rounded-xl border border-neutral-200 shadow-xs"
+    >
+      <div>
+        <h2 className="text-lg font-semibold text-neutral-900">
+          14. DataTable Kết Hợp Mở Rộng Dòng &amp; Chọn Dòng (Row Expanding + Row Selection)
+        </h2>
+        <p className="text-xs text-neutral-500">
+          Hỗ trợ mở rộng dòng chi tiết (renderExpandedRow) đồng thời với chọn dòng (enableRowSelection) và thanh thao tác hàng loạt (Bulk Actions).
+        </p>
+      </div>
+      <DataTable
+        columns={defaultColumns}
+        data={mockUsers.slice(0, 4)}
+        enableRowSelection={true}
+        enableExpanding={true}
+        renderBulkActions={(selectedRows) => {
+          onSelectionChangeStub?.(selectedRows.map((r) => r.original));
+          return (
+            <Button
+              id="bulk-delete-expand-btn"
+              size="xs"
+              color="error"
+              variant="filled"
+            >
+              Xóa ({selectedRows.length})
+            </Button>
+          );
+        }}
+        renderExpandedRow={(row) => (
+          <div data-testid={`expand-select-detail-${row.original.id}`} className="p-3 bg-neutral-50 rounded">
+            <p>Chi tiết người dùng: {row.original.name}</p>
+            <p>Email: {row.original.email}</p>
+          </div>
+        )}
+        onRowClick={onRowClickStub}
+      />
+    </section>
+  );
+}
+
 function ServerDebounceFilterDemo({
   queryFnStub,
 }: {
@@ -1042,6 +1091,7 @@ function TableSingleMountHarness({
           <CustomExpandColumnDemo />
           <StandaloneExpandColumnDemo />
           <ControlledExpandDemo />
+          <ExpandAndSelectRowDemo />
         </div>
       </div>
     </div>
@@ -2091,5 +2141,73 @@ describe("Table & DataTable Component Tests", () => {
     cy.get("@queryFnSpy").should("have.been.calledWith", Cypress.sinon.match((params: TableQueryParams) => {
       return !params.filters || Object.keys(params.filters).length === 0;
     }));
+  });
+
+  it("17. Kết hợp Mở rộng dòng và Chọn dòng (Row Expanding + Row Selection)", () => {
+    const onSelectionChange = cy.stub().as("onSelectionChange");
+    const onRowClick = cy.stub().as("onRowClick");
+
+    cy.mount(
+      <div className="p-8 bg-neutral-100 min-h-screen">
+        <ExpandAndSelectRowDemo
+          onSelectionChangeStub={onSelectionChange}
+          onRowClickStub={onRowClick}
+        />
+      </div>
+    );
+
+    cy.get("[data-testid='expand-and-select-section']").within(() => {
+      // 1. Cấu trúc ban đầu: 4 dòng dữ liệu, cột đầu là checkbox chọn dòng, cột thứ 2 có nút chevron mở rộng
+      cy.get("tbody tr").should("have.length", 4);
+      cy.get("thead th").first().find("input[type='checkbox']").should("exist");
+      cy.get("[data-testid='table-toggle-all-rows-expanded']").should("not.exist");
+      cy.get("#bulk-delete-expand-btn").should("not.exist");
+      cy.get("[data-testid^='expand-select-detail-']").should("not.exist");
+
+      // 2. Mở rộng dòng 0 (Nguyễn Văn A) - kiểm tra tính độc lập tương tác: click expand KHÔNG làm chọn dòng
+      cy.get("[data-testid='table-row-expand-button-0']").click();
+      cy.get("[data-testid='expand-select-detail-1']").should("be.visible");
+      cy.contains("Chi tiết người dùng: Nguyễn Văn A").should("be.visible");
+      // Dòng detail mở rộng (table-expanded-row-0) tuyệt đối không có checkbox chọn dòng
+      cy.get("[data-testid='table-expanded-row-0'] input[type='checkbox']").should("not.exist");
+      // Dòng 0 vẫn chưa được chọn
+      cy.contains("tr", "Nguyễn Văn A").find("input[type='checkbox']").should("not.be.checked");
+      cy.get("#bulk-delete-expand-btn").should("not.exist");
+
+      // 3. Chọn dòng 0 khi đang mở rộng chi tiết
+      cy.contains("tr", "Nguyễn Văn A").find("input[type='checkbox']").click({ force: true });
+      cy.contains("tr", "Nguyễn Văn A").find("input[type='checkbox']").should("be.checked");
+      cy.contains("tr", "Nguyễn Văn A").should("have.attr", "aria-selected", "true");
+      cy.get("#bulk-delete-expand-btn").should("be.visible").and("contain.text", "Xóa (1)");
+      // Detail panel của dòng 0 vẫn hiển thị bình thường
+      cy.get("[data-testid='expand-select-detail-1']").should("be.visible");
+
+      // 4. Mở rộng thêm dòng 1 (Trần Thị B) và chọn dòng 1
+      cy.get("[data-testid='table-row-expand-button-1']").click();
+      cy.get("[data-testid='expand-select-detail-2']").should("be.visible");
+      cy.contains("Chi tiết người dùng: Trần Thị B").should("be.visible");
+
+      cy.contains("tr", "Trần Thị B").find("input[type='checkbox']").click({ force: true });
+      cy.contains("tr", "Trần Thị B").find("input[type='checkbox']").should("be.checked");
+      cy.get("#bulk-delete-expand-btn").should("contain.text", "Xóa (2)");
+
+      // 5. Thu gọn dòng 0 khi dòng 0 vẫn đang được chọn
+      cy.get("[data-testid='table-row-expand-button-0']").click();
+      cy.get("[data-testid='expand-select-detail-1']").should("not.exist");
+      // Trạng thái chọn của dòng 0 vẫn được giữ nguyên
+      cy.contains("tr", "Nguyễn Văn A").find("input[type='checkbox']").should("be.checked");
+      cy.get("#bulk-delete-expand-btn").should("contain.text", "Xóa (2)");
+
+      // 6. Chọn tất cả các dòng qua checkbox header
+      cy.get("thead th").first().find("input[type='checkbox']").click({ force: true });
+      cy.get("#bulk-delete-expand-btn").should("contain.text", "Xóa (4)");
+
+      // 7. Bỏ chọn tất cả qua checkbox header
+      cy.get("thead th").first().find("input[type='checkbox']").click({ force: true });
+      cy.get("#bulk-delete-expand-btn").should("not.exist");
+
+      // Dòng 1 vẫn giữ trạng thái mở rộng bình thường
+      cy.get("[data-testid='expand-select-detail-2']").should("be.visible");
+    });
   });
 });

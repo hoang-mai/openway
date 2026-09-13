@@ -330,12 +330,12 @@ describe("UploadImage Component Showcase & Verification", () => {
       // Primary color label
       cy.contains("label", "Primary Label")
         .should("be.visible")
-        .and("have.class", "text-primary-500");
+        .and("have.class", "text-neutral-700");
 
       // Secondary color label
       cy.contains("label", "Secondary Label")
         .should("be.visible")
-        .and("have.class", "text-secondary-500");
+        .and("have.class", "text-neutral-700");
 
       // Success color label
       cy.contains("label", "Success Label")

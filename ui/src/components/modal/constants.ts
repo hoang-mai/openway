@@ -19,7 +19,7 @@ export const sizeConfig: Record<
   xs: {
     dialog: "max-w-[320px] p-3 gap-1.5",
     header: "gap-1.5",
-    body: "text-xs",
+    body: "text-xs py-1.5 -mx-1.5 px-1.5",
     footer: "gap-1.5 pt-1.5",
     title: "text-sm font-semibold leading-tight text-neutral-900",
     description: "text-xs leading-normal text-neutral-600",
@@ -30,7 +30,7 @@ export const sizeConfig: Record<
   sm: {
     dialog: "max-w-[400px] p-3.5 gap-2",
     header: "gap-2",
-    body: "text-sm",
+    body: "text-sm py-2 -mx-2 px-2",
     footer: "gap-2 pt-2",
     title: "text-base font-semibold leading-tight text-neutral-900",
     description: "text-sm leading-normal text-neutral-600",
@@ -41,7 +41,7 @@ export const sizeConfig: Record<
   md: {
     dialog: "max-w-[540px] p-4 gap-2.5",
     header: "gap-2.5",
-    body: "text-sm",
+    body: "text-sm py-2.5 -mx-2 px-2",
     footer: "gap-2 pt-2",
     title: "text-lg font-semibold leading-tight text-neutral-900",
     description: "text-sm leading-relaxed text-neutral-600",
@@ -52,7 +52,7 @@ export const sizeConfig: Record<
   lg: {
     dialog: "max-w-[720px] p-4.5 gap-3",
     header: "gap-3",
-    body: "text-base",
+    body: "text-base py-3 -mx-2.5 px-2.5",
     footer: "gap-2.5 pt-2.5",
     title: "text-xl font-bold leading-snug text-neutral-900",
     description: "text-base leading-relaxed text-neutral-600",
@@ -63,7 +63,7 @@ export const sizeConfig: Record<
   xl: {
     dialog: "max-w-[960px] p-5 gap-3.5",
     header: "gap-3.5",
-    body: "text-base",
+    body: "text-base py-3.5 -mx-2.5 px-2.5",
     footer: "gap-3 pt-3",
     title: "text-2xl font-bold leading-snug text-neutral-900",
     description: "text-base leading-relaxed text-neutral-600",
@@ -74,7 +74,7 @@ export const sizeConfig: Record<
   full: {
     dialog: "max-w-[calc(100vw-2rem)] w-full h-[calc(100vh-2rem)] p-4 gap-2.5",
     header: "gap-2.5",
-    body: "text-base",
+    body: "text-base py-3 -mx-2 px-2",
     footer: "gap-2 pt-2",
     title: "text-2xl font-bold leading-snug text-neutral-900",
     description: "text-base leading-relaxed text-neutral-600",

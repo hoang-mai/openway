@@ -82,9 +82,9 @@ export default function UploadFileDropzone({
     return (
       <div {...rootProps}>
         <div className="flex items-center gap-2.5 min-w-0 flex-1">
-          <div className={`transition-colors shrink-0 ${colorStyles?.iconColor || "text-primary-500"}`}>
+          <div className={`transition-colors shrink-0 ${colorStyles?.iconColor || "text-neutral-400 group-hover:text-neutral-600"}`}>
             {isLoading && showSpinner ? (
-              <Spinner width={18} height={18} className="animate-spin text-primary-600" />
+              <Spinner width={18} height={18} className="animate-spin text-neutral-600" />
             ) : (
               icon || <UploadIcon width={18} height={18} />
             )}
@@ -140,14 +140,14 @@ export default function UploadFileDropzone({
       ) : (
         <div className="flex flex-col items-center justify-center gap-2">
           {/* Central Icon */}
-          <div className={`transition-colors ${colorStyles?.iconColor || "text-primary-500"}`}>
+          <div className={`transition-colors ${colorStyles?.iconColor || "text-neutral-400 group-hover:text-neutral-600"}`}>
             {icon || <UploadIcon width={currentSize.iconSize} height={currentSize.iconSize} />}
           </div>
 
           {/* Title */}
           <div
             className={`${currentSize.titleSize} font-medium text-neutral-800 ${
-              colorStyles?.titleHover || "group-hover:text-primary-600"
+              colorStyles?.titleHover || "group-hover:text-neutral-900"
             } transition-colors`}
           >
             {isLoading ? "Đang xử lý tệp tin..." : (dropzoneTitle ?? defaultTitle)}

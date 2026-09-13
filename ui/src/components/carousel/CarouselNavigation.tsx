@@ -33,7 +33,7 @@ export function CarouselPrevious({
     <button
       ref={ref}
       type="button"
-      aria-label="Slide trước"
+      aria-label={props["aria-label"] || "Previous slide"}
       disabled={isDisabled}
       onClick={(e) => {
         scrollPrev();
@@ -75,7 +75,7 @@ export function CarouselNext({
     <button
       ref={ref}
       type="button"
-      aria-label="Slide tiếp theo"
+      aria-label={props["aria-label"] || "Next slide"}
       disabled={isDisabled}
       onClick={(e) => {
         scrollNext();

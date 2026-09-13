@@ -297,7 +297,7 @@ export default function DateTimeRangePicker({
     .join(" ");
 
   const containerClasses = [
-    "group/input relative flex items-center transition-all duration-150 ease-in-out border-2 select-none cursor-pointer",
+    "group/input relative flex items-center transition-all duration-150 ease-in-out border select-none cursor-pointer",
     sizeStyles.inputHeight,
     radiusClass,
     variantClass,
@@ -399,14 +399,14 @@ export default function DateTimeRangePicker({
                   zIndex: DEFAULT_Z_INDEX.PICKER,
                 }}
                 {...getFloatingProps()}
-                className={`flex flex-col bg-neutral-white border-2 border-neutral-200 shadow-xl overflow-hidden select-none ${menuRadiusClass} ${popoverClassName}`}
+                className={`flex flex-col bg-neutral-white border border-neutral-200/80 shadow-xl overflow-hidden select-none ${menuRadiusClass} ${popoverClassName}`}
               >
                 {/* Central Picker Panel (Calendar + TimeView for Active Step) */}
                 <div
                   className={`flex ${
                     layout === "stacked"
-                      ? "flex-col divide-y-2 divide-neutral-200"
-                      : "flex-row divide-x-2 divide-neutral-200"
+                      ? "flex-col divide-y divide-neutral-200"
+                      : "flex-row divide-x divide-neutral-200"
                   }`}
                 >
                   {/* Calendar Panel */}

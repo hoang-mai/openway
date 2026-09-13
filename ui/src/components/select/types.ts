@@ -269,9 +269,6 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   /** Nội dung tùy biến ở đáy danh sách tùy chọn bên trong vùng cuộn (ví dụ: Sentinel/Skeleton/Spinner khi phân trang Infinite Scroll) */
   listFooter?: ReactNode;
 
-  // ==================== DEBOUNCE & CLIENT FILTER ====================
-  /** Thời gian trì hoãn debounce tính theo ms. Mặc định 300 */
-  debounceMs?: number;
 
   // ==================== CLIENT FILTER FUNCTION ====================
   /** Hàm custom predicate lọc options ở chế độ client */

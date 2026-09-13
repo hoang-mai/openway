@@ -56,7 +56,7 @@ export default function Checkbox({
   const isControlled = checkedProp !== undefined;
   const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
 
-  const isChecked = isControlled ? checkedProp : internalChecked;
+  const isChecked = isControlled ? Boolean(checkedProp) : internalChecked;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled || readOnly || isLoading) return;

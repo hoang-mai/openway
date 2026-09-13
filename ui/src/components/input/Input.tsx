@@ -56,8 +56,8 @@ export default function Input({
   const mergedRef = useMergeRefs([internalRef, ref]);
 
   const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = useState(defaultValue);
-  const currentValue = isControlled ? value : internalValue;
+  const [internalValue, setInternalValue] = useState(defaultValue ?? "");
+  const currentValue = isControlled ? (value ?? "") : internalValue;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isControlled) {
@@ -113,7 +113,7 @@ export default function Input({
   );
 
   const containerClasses = [
-    "group/input relative flex items-center transition-all duration-150 ease-in-out border-2",
+    "group/input relative flex items-center transition-all duration-150 ease-in-out border",
     currentSize.wrapper,
     roundedClass,
     variantStyles,

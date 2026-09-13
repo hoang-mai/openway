@@ -128,7 +128,7 @@ export default function UploadImageList({
             onClick={onTriggerUpload}
             aria-label="Add image"
             title="Thêm hình ảnh"
-            className={`${currentSize.thumbnailSize} ${activeRadius} border-2 border-dashed border-neutral-300 hover:border-primary-500 hover:bg-primary-50/40 text-neutral-400 hover:text-primary-600 flex flex-col items-center justify-center transition-colors duration-150 ease-in-out cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden`}
+            className={`${currentSize.thumbnailSize} ${activeRadius} border-2 border-dashed border-neutral-300 hover:border-neutral-400 hover:bg-neutral-100 text-neutral-400 hover:text-neutral-600 flex flex-col items-center justify-center transition-colors duration-150 ease-in-out cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden`}
           >
             <PlusIcon width={currentSize.iconSize * 0.5} height={currentSize.iconSize * 0.5} />
           </button>

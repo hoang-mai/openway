@@ -135,7 +135,6 @@ export interface UseTableQueryReturn<TData extends RowData = RowData, TResponse 
     manualPagination: true;
     manualSorting: true;
     manualFiltering: true;
-    debounceMs?: number;
     pagination: PaginationState;
     onPaginationChange: OnChangeFn<PaginationState>;
     sorting: SortingState;
@@ -413,7 +412,6 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
       manualPagination: true as const,
       manualSorting: true as const,
       manualFiltering: true as const,
-      debounceMs,
       pagination,
       onPaginationChange: handlePaginationChange,
       sorting,
@@ -429,7 +427,6 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
       isLoading,
       isRefetching,
       handleRefresh,
-      debounceMs,
       pagination,
       handlePaginationChange,
       sorting,

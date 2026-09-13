@@ -314,7 +314,7 @@ export default function MultiInput({
   const disabledStyles = disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : "cursor-text";
 
   const containerClasses = [
-    "group/input relative flex items-center transition-all duration-150 ease-in-out border-2",
+    "group/input relative flex items-center transition-all duration-150 ease-in-out border",
     currentSize.wrapper,
     roundedClass,
     variantStyles,

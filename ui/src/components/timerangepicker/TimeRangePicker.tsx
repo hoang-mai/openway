@@ -267,7 +267,7 @@ export default function TimeRangePicker({
     .join(" ");
 
   const containerClasses = [
-    "group/input relative flex items-center transition-all duration-150 ease-in-out border-2 select-none cursor-pointer",
+    "group/input relative flex items-center transition-all duration-150 ease-in-out border select-none cursor-pointer",
     sizeStyles.inputHeight,
     radiusClass,
     variantClass,
@@ -367,7 +367,7 @@ export default function TimeRangePicker({
                   zIndex: DEFAULT_Z_INDEX.PICKER,
                 }}
                 {...getFloatingProps()}
-                className={`flex flex-row bg-neutral-white border-2 border-neutral-200 shadow-xl divide-x divide-neutral-200 overflow-hidden select-none ${menuRadiusClass} ${popoverClassName}`}
+                className={`flex flex-row bg-neutral-white border border-neutral-200/80 shadow-xl divide-x divide-neutral-200 overflow-hidden select-none ${menuRadiusClass} ${popoverClassName}`}
               >
                 {/* Start Time panel */}
                 <div className="flex flex-col">

@@ -10,9 +10,9 @@ export const uploadImageRadiusConfig: Record<UploadImageRadius, string> = {
 };
 
 export const uploadImageLabelColorConfig: Record<UploadImageColor, string> = {
-  primary: "text-primary-500 group-focus-within/field:text-primary-600",
-  secondary: "text-secondary-500 group-focus-within/field:text-secondary-600",
-  neutral: "text-neutral-600 group-focus-within/field:text-neutral-800",
+  primary: "text-neutral-700 group-focus-within/field:text-primary-600",
+  secondary: "text-neutral-700 group-focus-within/field:text-secondary-600",
+  neutral: "text-neutral-700 group-focus-within/field:text-neutral-900",
   error: "text-error-500 group-focus-within/field:text-error-600",
   success: "text-success-500 group-focus-within/field:text-success-600",
   warning: "text-warning-500 group-focus-within/field:text-warning-600",
@@ -118,13 +118,13 @@ export const uploadImageVariantColorConfig: Record<
   // 1. OUTLINE
   outline: {
     primary: {
-      idle: "bg-neutral-white border-primary-400 hover:border-primary-500 text-neutral-700",
+      idle: "bg-neutral-white border-neutral-300 hover:border-neutral-400 text-neutral-700",
       active: "bg-primary-50/50 border-primary-500 ring-2 ring-primary-500/20 text-primary-900",
-      iconColor: "text-primary-500",
-      titleHover: "group-hover:text-primary-600",
+      iconColor: "text-neutral-400 group-hover:text-neutral-600",
+      titleHover: "group-hover:text-neutral-900",
     },
     secondary: {
-      idle: "bg-neutral-white border-secondary-400 hover:border-secondary-500 text-neutral-700",
+      idle: "bg-neutral-white border-neutral-300 hover:border-neutral-400 text-neutral-700",
       active: "bg-secondary-50/50 border-secondary-500 ring-2 ring-secondary-500/20 text-secondary-900",
       iconColor: "text-secondary-500",
       titleHover: "group-hover:text-secondary-600",
@@ -210,10 +210,10 @@ export const uploadImageVariantColorConfig: Record<
   // 3. GHOST
   ghost: {
     primary: {
-      idle: "bg-transparent border-transparent hover:bg-primary-50/60 hover:border-primary-300 text-neutral-700",
+      idle: "bg-transparent border-transparent hover:bg-neutral-100 hover:border-neutral-300 text-neutral-700",
       active: "bg-primary-50 border-primary-500 ring-2 ring-primary-500/20 text-primary-900",
-      iconColor: "text-primary-500",
-      titleHover: "group-hover:text-primary-600",
+      iconColor: "text-neutral-400 group-hover:text-neutral-600",
+      titleHover: "group-hover:text-neutral-900",
     },
     secondary: {
       idle: "bg-transparent border-transparent hover:bg-secondary-50/60 hover:border-secondary-300 text-neutral-700",

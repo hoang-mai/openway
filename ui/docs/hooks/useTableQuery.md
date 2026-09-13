@@ -117,7 +117,6 @@ export function UserManagementTable() {
   - `onColumnFiltersChange: OnChangeFn<ColumnFiltersState>`
   - `globalFilter: string`
   - `onGlobalFilterChange: (filter: string) => void`
-  - `debounceMs: number`
   - `isLoading: boolean`
   - `manualPagination: true`
   - `manualSorting: true`

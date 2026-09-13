@@ -124,7 +124,7 @@ export function MultiSelectTrigger<TData = unknown>({
             ref={inputRef}
             type="text"
             aria-label="Search"
-            value={searchValue}
+            value={searchValue ?? ""}
             placeholder={hasSelection ? "" : placeholder}
             onChange={(e) => onSearchChange?.(e.target.value)}
             onKeyDown={onKeyDown}

@@ -24,7 +24,7 @@ export function CarouselPagination({
         ref={ref}
         role="status"
         aria-live="polite"
-        className={`absolute z-10 bottom-2.5 left-1/2 -translate-x-1/2 inline-flex items-center justify-center font-medium ${glassPaginationWrapper} text-white ${
+        className={`absolute z-10 bottom-2.5 left-1/2 -translate-x-1/2 inline-flex items-center justify-center font-medium ${glassPaginationWrapper} ${
           currentSize.fraction
         } ${className}`}
         {...props}
@@ -68,7 +68,7 @@ export function CarouselPagination({
           );
         }
 
-        // Default: dots (giữ nguyên kích thước tròn, chỉ đổi màu sang primary khi active)
+        // Default: dots (smooth morphing pill for active dot)
         return (
           <button
             key={index}
@@ -78,10 +78,10 @@ export function CarouselPagination({
             aria-label={`Chuyển đến slide ${index + 1}`}
             disabled={!clickable}
             onClick={() => clickable && scrollTo(index)}
-            className={`transition-colors duration-200 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 ${
-              currentSize.dot
-            } ${
-              isActive ? dotStyleConfig.active : dotStyleConfig.inactive
+            className={`transition-all duration-300 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 ${
+              isActive
+                ? `${currentSize.activeDot} ${dotStyleConfig.active}`
+                : `${currentSize.dot} ${dotStyleConfig.inactive}`
             } ${clickable ? "cursor-pointer" : "cursor-default"}`}
           />
         );

@@ -221,7 +221,7 @@ export default function DatePicker({
     .join(" ");
 
   const containerClasses = [
-    "group/input relative flex items-center transition-all duration-150 ease-in-out border-2 select-none cursor-pointer",
+    "group/input relative flex items-center transition-all duration-150 ease-in-out border select-none cursor-pointer",
     sizeStyles.inputHeight,
     radiusClass,
     variantClass,

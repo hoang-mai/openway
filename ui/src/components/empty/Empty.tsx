@@ -34,7 +34,11 @@ export default function Empty({
     if (!image) return null;
 
     if (isPresetImage(image)) {
-      return <EmptyIllustration preset={image} />;
+      return (
+        <div className="w-full h-full flex items-center justify-center p-2.5 rounded-2xl bg-neutral-100/50 ring-1 ring-neutral-200/50 shadow-xs">
+          <EmptyIllustration preset={image} />
+        </div>
+      );
     }
 
     if (isUrlString(image)) {
@@ -56,7 +60,11 @@ export default function Empty({
       return image;
     }
 
-    return <EmptyIllustration preset="default" />;
+    return (
+      <div className="w-full h-full flex items-center justify-center p-2.5 rounded-2xl bg-neutral-100/50 ring-1 ring-neutral-200/50 shadow-xs">
+        <EmptyIllustration preset="default" />
+      </div>
+    );
   };
 
   const imageWrapperClasses = [

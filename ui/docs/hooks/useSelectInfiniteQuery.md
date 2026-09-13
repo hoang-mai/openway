@@ -113,7 +113,6 @@ export function InfiniteProductSelect() {
   - `options`: Mảng options gom tụ từ tất cả các trang đã tải.
   - `isLoading`: Trạng thái đang tải trang đầu tiên.
   - `searchMode: "server"`
-  - `debounceMs`: Thời gian debounce.
   - `onSearch`: Handler nhận từ khóa và filters từ Select.
   - `listFooter`: Sentinel kèm Skeleton loading khi đang cuộn tải trang tiếp.
 - `query`: Đối tượng `UseInfiniteQueryResult` từ TanStack Query.

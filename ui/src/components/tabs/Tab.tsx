@@ -79,7 +79,7 @@ export default function Tab({
   const tabButtonClasses = [
     "inline-flex items-center cursor-pointer select-none bg-transparent",
     isVertical ? "justify-start text-left w-full" : "justify-center text-center",
-    "transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2",
+    "transition-colors duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40 focus-visible:ring-offset-1",
     variant !== "line" ? currentRadius : "",
     currentSize.tab,
     currentSize.gap,

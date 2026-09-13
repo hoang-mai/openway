@@ -68,9 +68,9 @@ export const uploadAvatarVariantColorConfig: Record<
 > = {
   outline: {
     primary:
-      "bg-neutral-white border-primary-300 hover:border-primary-400 focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20",
+      "bg-neutral-white border-neutral-300 hover:border-neutral-400 focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20",
     secondary:
-      "bg-neutral-white border-secondary-300 hover:border-secondary-400 focus-within:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20",
+      "bg-neutral-white border-neutral-300 hover:border-neutral-400 focus-within:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20",
     error:
       "bg-neutral-white border-error-300 hover:border-error-400 focus-within:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20",
     success:
@@ -114,7 +114,7 @@ export const uploadAvatarVariantColorConfig: Record<
 };
 
 export const uploadAvatarIconColorConfig: Record<UploadAvatarColor, string> = {
-  primary: "text-primary-500 group-hover/avatar:text-primary-600",
+  primary: "text-neutral-400 group-hover/avatar:text-neutral-600",
   secondary: "text-secondary-500 group-hover/avatar:text-secondary-600",
   neutral: "text-neutral-400 group-hover/avatar:text-neutral-600",
   error: "text-error-500 group-hover/avatar:text-error-600",
@@ -124,13 +124,13 @@ export const uploadAvatarIconColorConfig: Record<UploadAvatarColor, string> = {
 };
 
 export const uploadAvatarLabelColorConfig: Record<UploadAvatarColor, string> = {
-  primary: "text-primary-500 group-focus-within/field:text-primary-600",
-  secondary: "text-secondary-500 group-focus-within/field:text-secondary-600",
+  primary: "text-neutral-700 group-focus-within/field:text-primary-600",
+  secondary: "text-neutral-700 group-focus-within/field:text-secondary-600",
   error: "text-error-500 group-focus-within/field:text-error-600",
   success: "text-success-500 group-focus-within/field:text-success-600",
   warning: "text-warning-500 group-focus-within/field:text-warning-600",
   info: "text-info-500 group-focus-within/field:text-info-600",
-  neutral: "text-neutral-500 group-focus-within/field:text-neutral-600",
+  neutral: "text-neutral-700 group-focus-within/field:text-neutral-900",
 };
 
 export const uploadAvatarDragColorConfig: Record<UploadAvatarColor, string> = {

@@ -113,7 +113,7 @@ export default function SliderThumb({
       onPointerLeave={() => setIsHovered(false)}
       onPointerDown={() => setIsDragging(true)}
       onPointerUp={() => setIsDragging(false)}
-      className={`block relative z-10 select-none outline-none transition-transform duration-100 ease-out ${
+      className={`block relative z-10 select-none outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/25 transition-transform duration-100 ease-out ${
         disabled || readOnly
           ? "cursor-not-allowed opacity-60 shadow-none"
           : "cursor-grab active:cursor-grabbing hover:scale-105"

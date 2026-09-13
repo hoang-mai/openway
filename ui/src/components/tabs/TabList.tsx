@@ -94,7 +94,7 @@ export default function TabList({ children, className = "", extra, centered = fa
         {...props}
       >
         {/* Animated Sliding Indicator / Pill */}
-        <div aria-hidden="true" className={indicatorClasses} style={indicatorStyle} />
+        <div aria-hidden="true" data-testid="tab-indicator" className={indicatorClasses} style={indicatorStyle} />
         {children}
       </div>
 

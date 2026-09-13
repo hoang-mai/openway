@@ -230,7 +230,7 @@ export default function TimeView({
   return (
     <div
       aria-label={ariaLabel}
-      className={`inline-flex flex-col bg-neutral-white border-2 border-neutral-200 shadow-xl overflow-hidden select-none ${radiusClass} ${className}`}
+      className={`inline-flex flex-col bg-neutral-white border border-neutral-200/80 shadow-xl overflow-hidden select-none ${radiusClass} ${className}`}
     >
       {/* Header with currently selected time */}
       <div className="flex items-center justify-center px-4 py-2 border-b border-neutral-200 bg-neutral-50/50">

@@ -251,7 +251,6 @@ const filterFields: SelectFilterField[] = [
 | `placeholder` | `string` | `"Select..."` | Văn bản gợi ý khi chưa chọn giá trị. |
 | `searchable` | `boolean` | `false` | Bật ô nhập tìm kiếm trong menu. |
 | `searchMode` | `"client" \| "server"` | `"client"` | Chế độ tìm kiếm nội bộ hay gọi server. |
-| `debounceMs` | `number` | `300` | Thời gian hoãn tìm kiếm server (ms). |
 | `searchValue` | `string` | `undefined` | Giá trị từ khóa tìm kiếm (Controlled). |
 | `onSearchChange` | `(value: string) => void` | `undefined` | Callback khi giá trị ô tìm kiếm thay đổi. |
 | `listFooter` | `ReactNode` | `undefined` | Phần tử hiển thị dưới đáy danh sách (dùng cho Sentinel / Skeleton). |

@@ -10,7 +10,7 @@ export default function ModalBody({ size, className = "", children, ...props }: 
 
   return (
     <div
-      className={`w-full max-h-[calc(100vh-8rem)] overflow-y-auto ui-scrollbar ${currentSize.body} ${className}`}
+      className={`w-auto max-h-[calc(100vh-8rem)] overflow-y-auto ui-scrollbar ${currentSize.body} ${className}`}
       {...props}
     >
       {children}

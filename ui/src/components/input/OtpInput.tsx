@@ -298,7 +298,7 @@ export default function OtpInput({
                   data-1p-ignore="true"
                   data-lpignore="true"
                   data-form-type="other"
-                  className={`border-2 text-center p-0 outline-none transition-all duration-150 ease-in-out text-neutral-900 ${
+                  className={`border text-center p-0 outline-none transition-all duration-150 ease-in-out text-neutral-900 ${
                     currentSize.slot
                   } ${currentSize.text} ${roundedClass} ${variantStyles} ${disabledStyles} ${slotClassName}`}
                 />

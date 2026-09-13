@@ -199,7 +199,6 @@ export interface UseSelectInfiniteQueryReturn<
     options: SelectOptionItem<TData>[];
     isLoading: boolean;
     searchMode: "server";
-    debounceMs: number;
     searchValue: string;
     onSearchChange: (val: string) => void;
     menuFilterValues: TFilters;
@@ -526,14 +525,13 @@ export function useSelectInfiniteQuery<
       options,
       isLoading: query.isLoading,
       searchMode: "server" as const,
-      debounceMs,
       searchValue: search,
       onSearchChange: setSearch,
       menuFilterValues: filters,
       onMenuFilterChange: (newFilters: TFilters) => setFilters(newFilters),
       listFooter,
     }),
-    [options, query.isLoading, debounceMs, search, setSearch, filters, setFilters, listFooter]
+    [options, query.isLoading, search, setSearch, filters, setFilters, listFooter]
   );
 
   return {

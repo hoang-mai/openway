@@ -46,7 +46,7 @@ export function Table({
   return (
     <TableContext.Provider value={contextValue}>
       <div
-        className={`w-full overflow-x-auto rounded-lg ${variantStyles.container} ${containerClassName}`.trim()}
+        className={`w-full overflow-x-auto ui-scrollbar rounded-lg ${variantStyles.container} ${containerClassName}`.trim()}
         {...wrapperProps}
       >
         <table

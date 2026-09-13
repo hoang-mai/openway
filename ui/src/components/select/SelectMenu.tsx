@@ -124,7 +124,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
         zIndex: DEFAULT_Z_INDEX.SELECT,
       }}
       {...getFloatingProps({
-        className: `flex flex-col bg-neutral-white border-2 border-neutral-200 shadow-xl overflow-hidden focus:outline-none min-w-[200px] ${menuRadiusClass} ${className}`,
+        className: `flex flex-col bg-neutral-white border border-neutral-200/80 shadow-xl overflow-hidden focus:outline-none min-w-[200px] ${menuRadiusClass} ${className}`,
       })}
     >
       {/* Custom Header */}

@@ -184,14 +184,14 @@ export default function UploadImageDropzone({
       ) : (
         <div className="flex flex-col items-center justify-center gap-2">
           {/* Icon */}
-          <div className={`transition-colors ${colorStyles?.iconColor || "text-primary-500"}`}>
+          <div className={`transition-colors ${colorStyles?.iconColor || "text-neutral-400 group-hover:text-neutral-600"}`}>
             {icon || <UploadIcon width={currentSize.iconSize} height={currentSize.iconSize} />}
           </div>
 
           {/* Title */}
           <div
             className={`${currentSize.titleSize} font-medium text-neutral-800 ${
-              colorStyles?.titleHover || "group-hover:text-primary-600"
+              colorStyles?.titleHover || "group-hover:text-neutral-900"
             } transition-colors`}
           >
             {dropzoneTitle ?? defaultTitle}

@@ -59,11 +59,13 @@ export default function TextArea({
   const errorHelperId = `${textareaId}-error-helper`;
 
   const internalRef = useRef<HTMLTextAreaElement | null>(null);
-  const [internalValue, setInternalValue] = useState<string | number | readonly string[] | undefined>(defaultValue);
+  const [internalValue, setInternalValue] = useState<string | number | readonly string[] | undefined>(
+    defaultValue ?? ""
+  );
   const mergedRef = useMergeRefs([internalRef, ref]);
 
   const isControlled = value !== undefined;
-  const currentValue = isControlled ? value : internalValue;
+  const currentValue = isControlled ? (value ?? "") : internalValue;
 
   // Visual error state updates immediately
   const isInvalidState = Boolean(isInvalid || errorMessage);
@@ -118,7 +120,7 @@ export default function TextArea({
   );
 
   const containerClasses = [
-    "group/textarea relative flex flex-col transition-all duration-150 ease-in-out border-2",
+    "group/textarea relative flex flex-col transition-all duration-150 ease-in-out border",
     roundedClass,
     variantStyles,
     disabled ? "opacity-50" : "",

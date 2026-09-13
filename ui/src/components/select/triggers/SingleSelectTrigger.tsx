@@ -97,7 +97,7 @@ export function SingleSelectTrigger<TData = unknown>({
             ref={inputRef}
             type="text"
             aria-label="Search"
-            value={searchValue}
+            value={searchValue ?? ""}
             placeholder={selectedOption ? selectedOption.label : placeholder}
             onChange={(e) => onSearchChange?.(e.target.value)}
             onKeyDown={onKeyDown}

@@ -43,8 +43,8 @@ export default function Radio({
   const helperId = `${id}-helper`;
 
   const isControlled = checkedProp !== undefined;
-  const [internalChecked, setInternalChecked] = useState(defaultChecked);
-  const isChecked = isControlled ? checkedProp : internalChecked;
+  const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
+  const isChecked = isControlled ? (checkedProp ?? false) : internalChecked;
 
   const isInvalid = Boolean(isInvalidProp || errorMessage);
 

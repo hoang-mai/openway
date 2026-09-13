@@ -59,7 +59,7 @@ export function SelectTriggerContainer({
       aria-disabled={disabled || isLoading}
       {...getReferenceProps({
         id,
-        className: `group relative flex items-center justify-between transition-all duration-150 ease-in-out border-2 select-none ${roundedClass} ${
+        className: `group relative flex items-center justify-between transition-all duration-150 ease-in-out border select-none ${roundedClass} ${
           currentSize.trigger
         } ${currentSize.gap} ${variantStyle} ${statusStyles} ${className}`,
         "aria-expanded": isOpen,

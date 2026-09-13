@@ -110,13 +110,13 @@ export const dateTimeRangePickerSizeConfig: Record<
  * Cấu hình màu chữ của nhãn label theo màu chủ đề với prefix group-focus-within/datetimerangepicker
  */
 export const labelColorConfig: Record<DateTimeRangePickerColor, string> = {
-  primary: "text-primary-500 group-focus-within/datetimerangepicker:text-primary-600",
-  secondary: "text-secondary-500 group-focus-within/datetimerangepicker:text-secondary-600",
+  primary: "text-neutral-700 group-focus-within/datetimerangepicker:text-primary-600",
+  secondary: "text-neutral-700 group-focus-within/datetimerangepicker:text-secondary-600",
   error: "text-error-500 group-focus-within/datetimerangepicker:text-error-600",
   success: "text-success-500 group-focus-within/datetimerangepicker:text-success-600",
   warning: "text-warning-500 group-focus-within/datetimerangepicker:text-warning-600",
   info: "text-info-500 group-focus-within/datetimerangepicker:text-info-600",
-  neutral: "text-neutral-500 group-focus-within/datetimerangepicker:text-neutral-600",
+  neutral: "text-neutral-700 group-focus-within/datetimerangepicker:text-neutral-900",
 };
 
 /**

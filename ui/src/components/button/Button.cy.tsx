@@ -98,13 +98,13 @@ describe("<Button /> Tailwind Component Tests", () => {
       });
     });
 
-    it("renders variant='outline' with border-2", () => {
+    it("renders variant='outline' with border", () => {
       cy.mount(
         <Button variant="outline" color="primary">
-          Outline 2px
+          Outline
         </Button>
       );
-      cy.get("button").should("have.class", "border-2").and("have.class", "border-primary-400");
+      cy.get("button").should("have.class", "border").and("have.class", "border-primary-300");
     });
 
     it("renders variant='other' allowing 100% custom styling from outside", () => {

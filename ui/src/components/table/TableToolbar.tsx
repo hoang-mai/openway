@@ -99,9 +99,11 @@ export function TableToolbar<TData extends RowData = RowData>({
 
       {/* Khối Tùy chọn hiển thị cột & Actions người dùng */}
       <div className="flex items-center gap-2 self-end sm:self-auto">
+        {actions}
+
         {(isRefresh || Boolean(onRefresh)) && (
           <IconButton
-            icon={<RotateCwIcon className="w-3.5 h-3.5" />}
+            icon={<RotateCwIcon className={`w-3.5 h-3.5 ${isRefresh ? "animate-spin" : ""}`} />}
             aria-label="Làm mới dữ liệu"
             title="Làm mới dữ liệu"
             size="sm"
@@ -128,7 +130,7 @@ export function TableToolbar<TData extends RowData = RowData>({
               <PopoverHeader className="px-3 py-2 text-xs font-semibold text-neutral-700 border-b border-neutral-100">
                 Hiển thị cột
               </PopoverHeader>
-              <PopoverBody className="max-h-60 overflow-y-auto p-1.5 flex flex-col gap-0.5">
+              <PopoverBody className="max-h-60 overflow-y-auto ui-scrollbar p-1.5 flex flex-col gap-0.5">
                 {hideableColumns.map((column) => {
                   const colHeader =
                     typeof column.columnDef.header === "string"
@@ -152,8 +154,6 @@ export function TableToolbar<TData extends RowData = RowData>({
             </PopoverContent>
           </Popover>
         )}
-
-        {actions}
       </div>
     </div>
   );

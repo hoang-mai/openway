@@ -122,11 +122,7 @@ export default function TimeColumn({
       role="listbox"
       aria-label={ariaLabel}
       tabIndex={-1}
-      className={`relative flex flex-col overflow-y-auto select-none ${sizeStyles.columnWidth} ${sizeStyles.columnHeight} scrollbar-thin scrollbar-thumb-neutral-300 hover:scrollbar-thumb-neutral-400 py-1 focus:outline-none ${className}`}
-      style={{
-        scrollbarWidth: "none",
-        msOverflowStyle: "none",
-      }}
+      className={`relative flex flex-col overflow-y-auto ui-scrollbar select-none ${sizeStyles.columnWidth} ${sizeStyles.columnHeight} py-1 focus:outline-none ${className}`}
     >
       {items.map((item, index) => {
         const isSelected = selectedValue === item.value;

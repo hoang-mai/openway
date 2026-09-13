@@ -337,7 +337,7 @@ function TableFilterBadgeChip({
             listFooter={field.listFooter ?? field.props?.listFooter}
             skeletonCount={field.skeletonCount ?? field.props?.skeletonCount ?? 3}
             maxHeight={field.maxHeight ?? field.props?.maxHeight ?? 200}
-            className="max-h-52 overflow-y-auto py-1 gap-2"
+            className="max-h-52 overflow-y-auto ui-scrollbar py-1 gap-2"
             {...(field.props || {})}
           />
         </div>
