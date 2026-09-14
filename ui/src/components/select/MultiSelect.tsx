@@ -91,8 +91,8 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   const isFetching = Boolean(isLoadingProp);
   // 2. isSubmitting (isLoadingConfig): trạng thái khi gửi formData từ form config
   const isSubmitting = Boolean(isLoadingConfig);
-  // Trạng thái bận hiển thị trên Trigger (khi fetch hoặc submit có spinner)
-  const isTriggerLoading = isFetching || isSubmitting;
+  // Trạng thái bận hiển thị trên Trigger (khi submit có spinner)
+  const isTriggerLoading = isSubmitting;
 
   // ==================== VALUE STATE ====================
   const isControlled = valueProp !== undefined;

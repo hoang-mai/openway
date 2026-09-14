@@ -88,8 +88,8 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   const isFetching = Boolean(isLoadingProp);
   // 2. isSubmitting (isLoadingConfig): trạng thái khi gửi formData từ form config
   const isSubmitting = Boolean(isLoadingConfig);
-  // Trạng thái bận hiển thị trên Trigger (khi fetch hoặc submit có spinner)
-  const isTriggerLoading = isFetching || isSubmitting;
+  // Trạng thái bận hiển thị trên Trigger (khi submit có spinner)
+  const isTriggerLoading = isSubmitting;
 
   const isControlled = value !== undefined;
   const [uncontrolledValue, setUncontrolledValue] = useState<string | number | null>(defaultValue ?? null);
