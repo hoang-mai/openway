@@ -281,6 +281,9 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
 
   // ==================== KEYBOARD HANDLING ====================
   const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === " ") {
+      e.stopPropagation();
+    }
     const inputVal = (e.currentTarget as HTMLInputElement)?.value ?? searchInput;
     if (e.key === "Backspace" && (!inputVal || inputVal.length === 0) && selectedOptions.length > 0) {
       e.preventDefault();

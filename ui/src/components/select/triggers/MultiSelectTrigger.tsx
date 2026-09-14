@@ -127,7 +127,12 @@ export function MultiSelectTrigger<TData = unknown>({
             value={searchValue ?? ""}
             placeholder={hasSelection ? "" : placeholder}
             onChange={(e) => onSearchChange?.(e.target.value)}
-            onKeyDown={onKeyDown}
+            onKeyDown={(e) => {
+              if (e.key === " ") {
+                e.stopPropagation();
+              }
+              onKeyDown?.(e);
+            }}
             className={`bg-transparent outline-none border-none p-0 flex-1 min-w-15 text-neutral-900 placeholder:text-neutral-400 ${currentSize.input}`}
           />
         ) : !hasSelection ? (

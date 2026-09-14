@@ -100,7 +100,12 @@ export function SingleSelectTrigger<TData = unknown>({
             value={searchValue ?? ""}
             placeholder={selectedOption ? selectedOption.label : placeholder}
             onChange={(e) => onSearchChange?.(e.target.value)}
-            onKeyDown={onKeyDown}
+            onKeyDown={(e) => {
+              if (e.key === " ") {
+                e.stopPropagation();
+              }
+              onKeyDown?.(e);
+            }}
             className={`w-full bg-transparent outline-none border-none p-0 text-neutral-900 ${
               !searchValue && selectedOption
                 ? "placeholder:text-neutral-900 placeholder:font-normal"

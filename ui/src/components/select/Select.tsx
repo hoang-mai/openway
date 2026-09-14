@@ -227,7 +227,9 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   );
 
   const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && isOpen && activeIndex !== null) {
+    if (e.key === " ") {
+      e.stopPropagation();
+    } else if (e.key === "Enter" && isOpen && activeIndex !== null) {
       e.preventDefault();
       const targetOption = filteredOptions[activeIndex];
       if (targetOption) {
