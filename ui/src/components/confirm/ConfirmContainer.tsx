@@ -19,35 +19,30 @@ export default function ConfirmContainer({
   ...props
 }: ConfirmContainerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [prevOpen, setPrevOpen] = useState(open);
   const [isExiting, setIsExiting] = useState(false);
-  const prevOpenRef = useRef(open);
-  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Phản ứng khi prop `open` thay đổi
-  useEffect(() => {
-    const wasOpen = prevOpenRef.current;
-    prevOpenRef.current = open;
-
-    if (wasOpen && !open) {
-      // Khi chuyển từ true sang false: kích hoạt exit animation trong 250ms
+  if (open !== prevOpen) {
+    setPrevOpen(open);
+    if (prevOpen && !open) {
       setIsExiting(true);
-      if (exitTimerRef.current) {
-        clearTimeout(exitTimerRef.current);
-      }
-      exitTimerRef.current = setTimeout(() => {
-        setIsExiting(false);
-      }, CONFIRM_EXIT_ANIMATION_DURATION);
-    } else if (!wasOpen && open) {
-      // Nếu mở lại trong khi đang exit animation: hủy timer và khôi phục
-      if (exitTimerRef.current) {
-        clearTimeout(exitTimerRef.current);
-      }
+    } else if (!prevOpen && open) {
       setIsExiting(false);
     }
-  }, [open]);
+  }
+
+  // Đếm ngược thời gian kết thúc exit animation để unmount hoàn toàn
+  useEffect(() => {
+    if (isExiting) {
+      const timer = setTimeout(() => {
+        setIsExiting(false);
+      }, CONFIRM_EXIT_ANIMATION_DURATION);
+      return () => clearTimeout(timer);
+    }
+  }, [isExiting]);
 
   const handleTriggerClose = useCallback(() => {
     if (isExiting || isLoading) return;
+    setIsExiting(true);
     onClose?.();
   }, [isExiting, isLoading, onClose]);
 
@@ -63,15 +58,6 @@ export default function ConfirmContainer({
 
   const portalRoot = useMemo(() => dialogRef, []);
 
-  // Clear timeout exit khi unmount
-  useEffect(() => {
-    return () => {
-      if (exitTimerRef.current) {
-        clearTimeout(exitTimerRef.current);
-      }
-    };
-  }, []);
-
   // Mở / đóng dialog
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -85,10 +71,28 @@ export default function ConfirmContainer({
       }
     } else {
       if (dialog.open) {
-        dialog.close();
+        try {
+          dialog.close();
+        } catch {
+          /* empty */
+        }
       }
     }
   }, [open, isExiting]);
+
+  // Đảm bảo đóng dialog khi unmount hoàn toàn khỏi DOM
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    return () => {
+      if (dialog && dialog.open) {
+        try {
+          dialog.close();
+        } catch {
+          /* empty */
+        }
+      }
+    };
+  }, []);
 
   // Lock body scroll khi mở dialog
   useEffect(() => {

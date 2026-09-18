@@ -22,7 +22,7 @@ export default function Confirm({
   const roundedClass = getSafeConfig(radius, radiusConfig, "lg");
 
   const containerClasses = [
-    "relative flex flex-col w-full bg-neutral-white shadow-notion-modal border border-neutral-200/80 outline-none text-neutral-900 pointer-events-auto",
+    "relative flex flex-col w-full bg-neutral-white border border-neutral-200/80 outline-none text-neutral-900 pointer-events-auto",
     currentSize.dialog,
     roundedClass,
     className,
