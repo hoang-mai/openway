@@ -1,4 +1,4 @@
-# 🗂️ Collapse Component (`@owa/ui`)
+# 🗂️ Collapse Component (`@openway/ui`)
 
 Component **Collapse** (Accordion / Collapsible panel) hiện đại, hiệu năng cao, thiết kế chuẩn **Declarative Compound Components Pattern** (`<Collapse>`, `<CollapsePanel>`, `<CollapseHeader>`, `<CollapseContent>`, `<Collapsible>`), tích hợp **CSS Grid Height Transition**, **Accordion Mode**, **Custom Slots & Subcomponents**, **Safe Config Fallback** (`getSafeConfig`) và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -51,7 +51,7 @@ import {
   collapseVariantPanelConfig,
   collapseVariantHeaderConfig,
   collapseColorConfig,
-} from "@owa/ui";
+} from "@openway/ui";
 
 import type {
   CollapseProps,
@@ -65,7 +65,7 @@ import type {
   CollapseRadius,
   CollapseExpandIconPosition,
   CollapseActiveKey,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -77,7 +77,7 @@ import type {
 Phù hợp cho hầu hết các trường hợp thông dụng:
 
 ```tsx
-import { Collapse, CollapsePanel } from "@owa/ui";
+import { Collapse, CollapsePanel } from "@openway/ui";
 
 export function BasicCollapse() {
   return (
@@ -94,7 +94,7 @@ export function BasicCollapse() {
 
       <CollapsePanel value="2" label="2. Hướng dẫn cài đặt nhanh">
         <p className="text-neutral-600">
-          Chạy lệnh <code>pnpm add @owa/ui</code> để bắt đầu sử dụng.
+          Chạy lệnh <code>pnpm add @openway/ui</code> để bắt đầu sử dụng.
         </p>
       </CollapsePanel>
 
@@ -115,8 +115,8 @@ export function BasicCollapse() {
 Cho phép bạn tự do composition cấu trúc giao diện phức tạp:
 
 ```tsx
-import { Collapse, CollapsePanel, CollapseHeader, CollapseContent } from "@owa/ui";
-import { Badge, Button } from "@owa/ui";
+import { Collapse, CollapsePanel, CollapseHeader, CollapseContent } from "@openway/ui";
+import { Badge, Button } from "@openway/ui";
 
 export function CustomSlotCollapse() {
   return (
@@ -185,7 +185,7 @@ export function CustomSlotCollapse() {
 
 ```tsx
 import { useState } from "react";
-import { Collapse, CollapsePanel } from "@owa/ui";
+import { Collapse, CollapsePanel } from "@openway/ui";
 
 export function ControlledCollapse() {
   const [activeKeys, setActiveKeys] = useState<string | number | (string | number)[]>(["1"]);
@@ -219,7 +219,7 @@ export function ControlledCollapse() {
 
 ```tsx
 import { useState } from "react";
-import { Collapsible, Button } from "@owa/ui";
+import { Collapsible, Button } from "@openway/ui";
 
 export function CollapsibleDemo() {
   const [open, setOpen] = useState(false);
@@ -314,5 +314,5 @@ export function CollapsibleDemo() {
 Component được kiểm thử 100% bằng **Cypress Component Testing** tại [`Collapse.cy.tsx`](Collapse.cy.tsx):
 
 ```bash
-pnpm --filter @owa/ui cypress:run --spec "src/components/collapse/Collapse.cy.tsx"
+pnpm --filter @openway/ui cypress:run --spec "src/components/collapse/Collapse.cy.tsx"
 ```

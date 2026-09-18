@@ -280,7 +280,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   );
 
   // ==================== KEYBOARD HANDLING ====================
-  const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === " ") {
       e.stopPropagation();
     }
@@ -291,11 +291,16 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
       if (lastTag) {
         handleRemoveTag(lastTag);
       }
-    } else if (e.key === "Enter" && isOpen && activeIndex !== null) {
-      e.preventDefault();
-      const targetOption = filteredOptions[activeIndex];
-      if (targetOption) {
-        handleSelectOption(targetOption);
+    } else if (e.key === "Enter") {
+      if (isOpen && activeIndex !== null) {
+        e.preventDefault();
+        const targetOption = filteredOptions[activeIndex];
+        if (targetOption && !targetOption.disabled) {
+          handleSelectOption(targetOption);
+        }
+      } else if (!isOpen) {
+        e.preventDefault();
+        setIsOpen(true);
       }
     } else if (e.key === "ArrowDown" && !isOpen) {
       setIsOpen(true);
@@ -321,6 +326,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
       hasError={isInvalid}
       cursor="pointer"
       className={labelClassName}
+      isOpen={isOpen}
     />
   );
 
@@ -331,6 +337,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
       className={`group/field relative flex ${
         isHorizontal ? "flex-row items-center gap-3" : "flex-col"
       } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${className}`}
+      data-state={isOpen ? "open" : "closed"}
       data-disabled={isDisabled}
       data-invalid={isInvalid}
       {...props}

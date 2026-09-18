@@ -1,4 +1,4 @@
-# 📑 Tabs Component (`@owa/ui`)
+# 📑 Tabs Component (`@openway/ui`)
 
 Bộ component **Tabs** tương tác cao, thiết kế chuẩn **Compound Components Pattern** (`<Tabs>`, `<TabList>`, `<Tab>`, `<TabPanels>`, `<TabPanel>`), tích hợp **Sliding Animated Indicator**, **Overflow Scroll**, **Custom Hook `useTabIndicator`**, **Safe Config Fallback** và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -40,7 +40,7 @@ import {
   TabPanel,
   useTabsContext,
   useTabIndicator,
-} from "@owa/ui";
+} from "@openway/ui";
 
 import type {
   TabsProps,
@@ -55,7 +55,7 @@ import type {
   TabOrientation,
   TabPlacement,
   UseTabIndicatorOptions,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -65,7 +65,7 @@ import type {
 ### 1. Cách sử dụng cơ bản (Compound Components)
 
 ```tsx
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@owa/ui";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@openway/ui";
 
 export function BasicTabsExample() {
   return (
@@ -99,7 +99,7 @@ export function BasicTabsExample() {
 #### a) Controlled Mode (Quản lý state từ bên ngoài)
 ```tsx
 import { useState } from "react";
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@owa/ui";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@openway/ui";
 
 export function ControlledTabs() {
   const [activeKey, setActiveKey] = useState<string | number>("tab-1");
@@ -240,7 +240,7 @@ Cung cấp 7 màu sắc theo chuẩn Design System:
 ### 7. Icon, Badge & Tab có thể đóng (`closable` & `onClose`)
 
 ```tsx
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@owa/ui";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@openway/ui";
 import { HomeIcon, UserIcon, SettingsIcon } from "@/components/icons";
 
 export function RichTabsExample() {
@@ -409,7 +409,7 @@ Kế thừa `ButtonHTMLAttributes<HTMLButtonElement>` ngoại trừ `value`:
 ### 5. Hook `useTabIndicator`
 
 ```tsx
-import { useTabIndicator } from "@owa/ui";
+import { useTabIndicator } from "@openway/ui";
 
 const {
   listRef,

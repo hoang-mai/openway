@@ -30,6 +30,9 @@ export {
   tableSizeConfig,
   tableVariantConfig,
   tableAlignConfig,
+  tableToolbarConfig,
+  tableFilterConfig,
+  tablePaginationConfig,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SIZE_OPTIONS,
 } from "./constants";

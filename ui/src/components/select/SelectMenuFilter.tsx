@@ -11,7 +11,7 @@ import {
   FloatingPortal,
 } from "@floating-ui/react";
 import { useFloatingTransition } from "@/hooks/useFloatingTransition";
-import { SelectFilterField, SelectFilterLayout, SelectColor, SelectRadius } from "./types";
+import { SelectFilterField, SelectFilterLayout, SelectColor, SelectRadius, SelectSize } from "./types";
 import { formatFilterBadgeValue } from "./utils";
 import { Input, NumberInput, parseNumber } from "@/components/input";
 import { DatePicker } from "@/components/datepicker";
@@ -24,7 +24,9 @@ import ResetIcon from "@/components/icons/ResetIcon";
 import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
-import { menuRadiusConfig } from "./constants";
+import { filterSizeConfig } from "./constants";
+
+export { filterSizeConfig };
 
 export interface SelectMenuFilterProps<TFilters extends Record<string, unknown> = Record<string, unknown>> {
   filters: SelectFilterField<unknown>[];
@@ -35,6 +37,7 @@ export interface SelectMenuFilterProps<TFilters extends Record<string, unknown> 
   gridCols?: number;
   showReset?: boolean;
   resetText?: ReactNode;
+  size?: SelectSize;
   color?: SelectColor;
   radius?: SelectRadius;
 }
@@ -49,6 +52,7 @@ interface FilterBadgeChipProps {
   onChange: (updates: Record<string, unknown>) => void;
   color: SelectColor;
   radius: SelectRadius;
+  size: SelectSize;
 }
 
 function FilterBadgeChip({
@@ -60,6 +64,7 @@ function FilterBadgeChip({
   onChange,
   color,
   radius,
+  size,
 }: FilterBadgeChipProps) {
   const {
     refs: { setFloating, setReference },
@@ -76,7 +81,7 @@ function FilterBadgeChip({
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
 
-  const popoverRadius = getSafeConfig(radius, menuRadiusConfig, "md");
+  const sizeStyles = getSafeConfig(size, filterSizeConfig, "md");
 
   const click = useClick(context);
   const dismiss = useDismiss(context, {
@@ -247,7 +252,7 @@ function FilterBadgeChip({
           field.searchMode ?? (field.props?.searchMode as "client" | "server") ?? "client";
 
         return (
-          <div className="w-64 min-w-60 p-1">
+          <div className="w-full p-0.5">
             <CheckboxGroup
               size="sm"
               color={color}
@@ -278,8 +283,8 @@ function FilterBadgeChip({
               isLoading={field.isLoading ?? field.props?.isLoading}
               listFooter={field.listFooter ?? field.props?.listFooter}
               skeletonCount={field.skeletonCount ?? field.props?.skeletonCount ?? 3}
-              maxHeight={field.maxHeight ?? field.props?.maxHeight ?? 200}
-              className="max-h-52 overflow-y-auto ui-scrollbar py-1 gap-2"
+              maxHeight={field.maxHeight ?? field.props?.maxHeight ?? 180}
+              className="max-h-44 overflow-y-auto ui-scrollbar py-0.5 gap-1.5"
               {...(field.props || {})}
             />
           </div>
@@ -300,18 +305,37 @@ function FilterBadgeChip({
         })}
       >
         <Badge
-          size="sm"
-          variant="soft"
-          color={hasValue || isOpen ? color : "neutral"}
-          radius="full"
-          className={`cursor-pointer select-none transition-all duration-150 gap-1 px-3 py-1 rounded-full ${
-            isOpen ? "ring-2 ring-primary-500/30" : "hover:opacity-90"
-          }`}
-          onDelete={onRemove}
+          role="button"
+          tabIndex={0}
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenChange(!isOpen);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onOpenChange(!isOpen);
+            }
+          }}
+          onDelete={() => onRemove()}
           deleteAriaLabel={`Xóa bộ lọc ${field.label}`}
+          variant="soft"
+          color={isOpen ? color : "neutral"}
+          radius={radius}
+          size={size}
+          className={`select-none cursor-pointer transition-all duration-150 border font-normal ${sizeStyles.chip} ${
+            isOpen
+              ? "bg-primary-50 text-primary-900 border-primary-300/80 shadow-xs ring-1 ring-primary-500/25"
+              : hasValue
+              ? "bg-neutral-100/80 hover:bg-neutral-200/60 border-neutral-200/60 text-neutral-800"
+              : "bg-neutral-50 hover:bg-neutral-100/80 border-neutral-200/40 text-neutral-500"
+          }`}
+          title={`${field.label}: ${displayVal}`}
         >
-          <span className="font-semibold">{field.label}:</span>
-          <span className={hasValue ? "font-medium" : "opacity-70 italic"}>{displayVal}</span>
+          <span className="text-neutral-400 font-normal">{field.label}:</span>
+          <span className={hasValue ? "font-medium text-neutral-800 ml-1" : "opacity-70 italic text-neutral-400 ml-1"}>
+            {displayVal}
+          </span>
         </Badge>
       </div>
 
@@ -326,23 +350,25 @@ function FilterBadgeChip({
               zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
             }}
             {...getFloatingProps({
-              className: `bg-white border border-neutral-200 ${popoverRadius} p-3 shadow-2xl ${
+              className: `bg-neutral-white border border-neutral-200/90 rounded-lg p-2.5 shadow-notion-dropdown ${
                 field.type === "date" || field.type === "date-range"
-                  ? "w-auto min-w-[280px]"
-                  : "min-w-64 max-w-xs"
+                  ? "w-[272px]"
+                  : field.type === "checkbox-group"
+                  ? "w-[240px]"
+                  : "w-[220px]"
               }`,
             })}
           >
             {/* Popover Header */}
-            <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-100">
-              <span className="text-xs font-bold text-neutral-800">{field.label}</span>
+            <div className="flex items-center justify-between pb-1.5 mb-2 border-b border-neutral-100">
+              <span className={`font-medium text-neutral-600 ${sizeStyles.popoverHeader}`}>{field.label}</span>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded transition-colors"
+                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-xs hover:bg-neutral-100 transition-colors cursor-pointer"
                 title="Đóng"
               >
-                <CloseIcon className="size-3.5" />
+                <CloseIcon className="size-3" />
               </button>
             </div>
 
@@ -350,18 +376,18 @@ function FilterBadgeChip({
             <div className="mt-1">{renderEditor()}</div>
 
             {/* Popover Footer */}
-            <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-100">
+            <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-neutral-100">
               <button
                 type="button"
                 onClick={onRemove}
-                className="text-[11px] text-red-500 hover:text-red-700 transition-colors"
+                className={`text-neutral-500 hover:text-error-600 hover:bg-error-50 px-1.5 py-0.5 rounded-sm transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
               >
                 Xóa bộ lọc
               </button>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-[11px] font-medium text-neutral-700 hover:bg-neutral-100 px-3 py-1 rounded-full border border-neutral-200 transition-colors cursor-pointer"
+                className={`font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 px-2 py-0.5 rounded-sm border border-neutral-200 transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
               >
                 Xong
               </button>
@@ -381,8 +407,9 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
   onReset,
   showReset = true,
   resetText = "Đặt lại bộ lọc",
+  size = "md",
   color = "primary",
-  radius = "full",
+  radius = "md",
 }: SelectMenuFilterProps<TFilters>) {
   // Active fields list (fields that user selected to filter)
   const [activeFieldNames, setActiveFieldNames] = useState<string[]>(() => {
@@ -476,7 +503,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
 
   const activeFieldNameSet = useMemo(() => new Set(activeFieldNames), [activeFieldNames]);
   const hasAnyFilter = activeFieldNames.length > 0;
-  const dropdownRadius = getSafeConfig(radius, menuRadiusConfig, "md");
+  const sizeStyles = getSafeConfig(size, filterSizeConfig, "md");
 
   if (!filters || filters.length === 0) return null;
 
@@ -484,21 +511,25 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
     <div
       onClick={(e) => e.stopPropagation()}
       onMouseDown={(e) => e.stopPropagation()}
-      className="p-2.5 border-b border-neutral-200 bg-neutral-50/90 rounded-t-lg select-text"
+      className={`border-b border-neutral-100/70 bg-neutral-50/40 select-text ${sizeStyles.container}`}
     >
-      <div className="flex flex-wrap items-center gap-1.5 min-h-7">
+      <div className="flex flex-wrap items-center gap-1">
         {/* "+ Bộ lọc" Button & Dropdown */}
         <div className="inline-flex">
           <button
             ref={setReference}
             type="button"
             {...getAddRefProps({
-              className: `inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-neutral-900 bg-white border border-neutral-300 hover:border-neutral-400 rounded-full transition-all shadow-xs hover:shadow-sm cursor-pointer active:scale-95`,
+              className: `inline-flex items-center text-neutral-500 hover:text-neutral-800 bg-white hover:bg-neutral-100/70 border border-neutral-200/70 hover:border-neutral-300 transition-colors shadow-none cursor-pointer select-none ${sizeStyles.button}`,
             })}
           >
-            <PlusIcon className="size-3.5 text-neutral-500" />
-            <span>Bộ lọc</span>
-            <ChevronDownIcon className={`size-3 text-neutral-400 transition-transform ${isAddMenuOpen ? "rotate-180" : ""}`} />
+            <PlusIcon className={`${sizeStyles.buttonIcon} text-neutral-400`} />
+            <span className="font-normal">Bộ lọc</span>
+            <ChevronDownIcon
+              className={`${sizeStyles.chevronIcon} text-neutral-400 transition-transform duration-150 ${
+                isAddMenuOpen ? "rotate-180" : ""
+              }`}
+            />
           </button>
 
           {/* "+ Bộ lọc" Dropdown list floating on top */}
@@ -513,10 +544,11 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                   zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
                 }}
                 {...getAddFloatingProps({
-                  className: `bg-white border border-neutral-200 ${dropdownRadius} p-1 shadow-2xl min-w-44`,
+                  className:
+                    "bg-neutral-white border border-neutral-200/80 rounded-md p-1 shadow-notion-dropdown min-w-[160px]",
                 })}
               >
-                <div className="px-2 py-1 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
+                <div className="px-2 py-1 text-[11px] font-medium text-neutral-400 uppercase tracking-wider select-none">
                   Chọn trường cần lọc
                 </div>
                 <div className="space-y-0.5 mt-0.5">
@@ -532,10 +564,10 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                           e.stopPropagation();
                           handleSelectFieldToAdd(field);
                         }}
-                        className={`w-full flex items-center justify-between px-2 py-1.5 text-xs rounded text-left transition-colors ${
+                        className={`w-full flex items-center justify-between px-2 py-1.5 text-xs rounded-sm text-left transition-colors cursor-pointer ${
                           isAlreadyActive
-                            ? "text-primary font-medium bg-primary/5 hover:bg-primary/10"
-                            : "text-neutral-700 hover:bg-neutral-100"
+                            ? "text-primary-700 font-medium bg-primary-50/60 hover:bg-primary-50"
+                            : "text-neutral-700 hover:bg-[#f1f1ef]"
                         }`}
                       >
                         <span>{field.label}</span>
@@ -573,6 +605,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
               onChange={onChange}
               color={color}
               radius={radius}
+              size={size}
             />
           );
         })}
@@ -582,7 +615,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
           <button
             type="button"
             onClick={handleResetAll}
-            className="inline-flex items-center gap-1 text-[11px] text-neutral-500 hover:text-neutral-800 px-2.5 py-1 rounded-full border border-neutral-200 hover:bg-neutral-100 transition-colors ml-auto cursor-pointer"
+            className={`inline-flex items-center gap-1 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors ml-auto cursor-pointer select-none ${sizeStyles.resetButton}`}
             title="Đặt lại toàn bộ bộ lọc"
           >
             <ResetIcon className="size-3" />

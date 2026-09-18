@@ -194,7 +194,7 @@ export default function Input({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Xóa nội dung"
+                aria-label="Clear input"
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center mr-2 shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${currentSize.icon} ${

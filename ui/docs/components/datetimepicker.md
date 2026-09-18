@@ -1,4 +1,4 @@
-# 📅⏰ DateTimePicker Component Suite (`@owa/ui`)
+# 📅⏰ DateTimePicker Component Suite (`@openway/ui`)
 
 Component **DateTimePicker** toàn diện, linh hoạt và trực quan, được thiết kế theo chuẩn **Design System**, hỗ trợ **Chọn đồng thời Ngày và Giờ trên một giao diện thống nhất**, **2 Bố cục hiển thị linh hoạt (`side-by-side` và `stacked`)**, **Tách bạch Định dạng Dữ liệu (`format`) & Hiển thị (`displayFormat`)**, **Chế độ 12h (AM/PM) & 24h**, **Tùy chọn hiển thị giây (`showSeconds`)**, **Bước nhảy tùy biến (`hourStep`, `minuteStep`, `secondStep`)**, **Giới hạn ngày giờ (`minDate`, `maxDate`, `minTime`, `maxTime`)**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility** với hỗ trợ bàn phím thông minh.
 
@@ -31,7 +31,7 @@ Component **DateTimePicker** toàn diện, linh hoạt và trực quan, được
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { DateTimePicker } from "@owa/ui";
+import { DateTimePicker } from "@openway/ui";
 import type {
   DateTimePickerProps,
   DateTimePickerConfig,
@@ -42,7 +42,7 @@ import type {
   DateTimePickerRadius,
   DateTimePickerLayout,
   LabelPlacement,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -53,7 +53,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { DateTimePicker } from "@owa/ui";
+import { DateTimePicker } from "@openway/ui";
 
 export function BasicDateTimePickerExample() {
   const [datetime, setDatetime] = useState<string | null>("25/12/2026 14:30:00");

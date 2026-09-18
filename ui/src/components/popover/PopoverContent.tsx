@@ -53,7 +53,7 @@ export function PopoverContent({
   const roundedClass = getSafeConfig(radius, radiusConfig, "md");
 
   const baseClasses =
-    "bg-neutral-white shadow-xl outline-none focus:outline-none flex flex-col border border-neutral-200/80";
+    "bg-neutral-white shadow-notion-dropdown outline-none focus:outline-none flex flex-col border border-neutral-200/80";
 
   const contentClassNames = [baseClasses, currentSize.container, roundedClass, className].filter(Boolean).join(" ");
 

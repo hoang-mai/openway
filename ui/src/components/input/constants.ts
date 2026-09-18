@@ -152,49 +152,49 @@ export const multiInputSizeConfig: Record<
 export const variantColorConfig: Record<Exclude<InputVariant, "other">, Record<InputColor, string>> = {
   outline: {
     primary:
-      "bg-neutral-white border-neutral-300 hover:border-neutral-400 focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20",
+      "bg-neutral-white border-neutral-200 hover:border-neutral-300 focus-within:border-primary-500 focus-within:hover:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/25",
     secondary:
-      "bg-neutral-white border-neutral-300 hover:border-neutral-400 focus-within:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20",
+      "bg-neutral-white border-neutral-200 hover:border-neutral-300 focus-within:border-secondary-500 focus-within:hover:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/25",
     error:
-      "bg-neutral-white border-error-400 hover:border-error-500 focus-within:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20",
+      "bg-neutral-white border-error-400 hover:border-error-500 focus-within:border-error-500 focus-within:hover:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20",
     success:
-      "bg-neutral-white border-success-400 hover:border-success-500 focus-within:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20",
+      "bg-neutral-white border-success-400 hover:border-success-500 focus-within:border-success-500 focus-within:hover:border-success-500 focus-within:ring-2 focus-within:ring-success-500/25",
     warning:
-      "bg-neutral-white border-warning-400 hover:border-warning-500 focus-within:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20",
-    info: "bg-neutral-white border-info-400 hover:border-info-500 focus-within:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20",
+      "bg-neutral-white border-warning-400 hover:border-warning-500 focus-within:border-warning-500 focus-within:hover:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/25",
+    info: "bg-neutral-white border-info-400 hover:border-info-500 focus-within:border-info-500 focus-within:hover:border-info-500 focus-within:ring-2 focus-within:ring-info-500/25",
     neutral:
-      "bg-neutral-white border-neutral-300 hover:border-neutral-400 focus-within:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/20",
+      "bg-neutral-white border-neutral-200 hover:border-neutral-300 focus-within:border-neutral-600 focus-within:hover:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/25",
   },
 
   filled: {
     primary:
-      "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20",
+      "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-primary-500 focus-within:hover:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20",
     secondary:
-      "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20",
+      "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-secondary-500 focus-within:hover:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20",
     neutral:
-      "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/20",
+      "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-neutral-600 focus-within:hover:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/20",
     error:
-      "bg-error-50/70 border-error-300 hover:border-error-400 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20",
+      "bg-error-50/70 border-error-300 hover:border-error-400 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:hover:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20",
     success:
-      "bg-success-50/70 border-success-300 hover:border-success-400 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20",
+      "bg-success-50/70 border-success-300 hover:border-success-400 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:hover:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20",
     warning:
-      "bg-warning-50/70 border-warning-300 hover:border-warning-400 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20",
-    info: "bg-info-50/70 border-info-300 hover:border-info-400 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20",
+      "bg-warning-50/70 border-warning-300 hover:border-warning-400 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:hover:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20",
+    info: "bg-info-50/70 border-info-300 hover:border-info-400 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:hover:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20",
   },
   ghost: {
     primary:
-      "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20",
+      "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-primary-500 focus-within:hover:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20",
     secondary:
-      "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20",
+      "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-secondary-500 focus-within:hover:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20",
     neutral:
-      "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/20",
+      "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-neutral-600 focus-within:hover:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/20",
     error:
-      "bg-transparent border-transparent hover:bg-error-50 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20",
+      "bg-transparent border-transparent hover:bg-error-50 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:hover:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20",
     success:
-      "bg-transparent border-transparent hover:bg-success-50 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20",
+      "bg-transparent border-transparent hover:bg-success-50 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:hover:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20",
     warning:
-      "bg-transparent border-transparent hover:bg-warning-50 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20",
-    info: "bg-transparent border-transparent hover:bg-info-50 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20",
+      "bg-transparent border-transparent hover:bg-warning-50 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:hover:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20",
+    info: "bg-transparent border-transparent hover:bg-info-50 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:hover:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20",
   },
 };
 

@@ -22,6 +22,7 @@ import {
   dateRangePickerRadiusConfig,
   dateRangePickerSizeConfig,
   dateRangePickerVariantStyles,
+  labelColorConfig,
 } from "./constants";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
@@ -231,6 +232,8 @@ export default function DateRangePicker({
       hasError={hasError}
       cursor="pointer"
       className={labelClassName}
+      colorConfig={labelColorConfig}
+      isOpen={isOpen && !isLoading}
     />
   );
 
@@ -302,7 +305,10 @@ export default function DateRangePicker({
   }
 
   return (
-    <div className={fieldWrapperClasses}>
+    <div
+      className={fieldWrapperClasses}
+      data-state={isOpen && !isLoading ? "open" : "closed"}
+    >
       {/* Label */}
       {!isFloating && renderLabel()}
 
@@ -311,6 +317,8 @@ export default function DateRangePicker({
         <div
           ref={setReference}
           {...getReferenceProps()}
+          data-state={isOpen && !isLoading ? "open" : "closed"}
+          aria-expanded={isOpen && !isLoading}
           className={containerClasses}
         >
           {isFloating && renderLabel()}

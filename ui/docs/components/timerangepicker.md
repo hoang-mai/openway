@@ -1,4 +1,4 @@
-# ⏳ TimeRangePicker Component Suite (`@owa/ui`)
+# ⏳ TimeRangePicker Component Suite (`@openway/ui`)
 
 Component **TimeRangePicker** toàn diện, trực quan và linh hoạt, được thiết kế theo chuẩn **Design System**, hỗ trợ **Chọn khoảng thời gian (Start Time - End Time) trên 2 bảng chọn song song**, **Tách bạch Định dạng Dữ liệu (`format`) & Hiển thị (`displayFormat`)**, **Tùy biến ký tự phân cách (`separator`)**, **Chế độ 12h (AM/PM) & 24h**, **Tùy chọn hiển thị giây (`showSeconds`)**, **Bước nhảy tùy biến (`hourStep`, `minuteStep`, `secondStep`)**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility** với hỗ trợ bàn phím thông minh.
 
@@ -27,7 +27,7 @@ Component **TimeRangePicker** toàn diện, trực quan và linh hoạt, đượ
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { TimeRangePicker } from "@owa/ui";
+import { TimeRangePicker } from "@openway/ui";
 import type {
   TimeRangePickerProps,
   TimeRangePickerConfig,
@@ -38,7 +38,7 @@ import type {
   TimeRangePickerColor,
   TimeRangePickerRadius,
   LabelPlacement,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -49,7 +49,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { TimeRangePicker } from "@owa/ui";
+import { TimeRangePicker } from "@openway/ui";
 
 export function BasicTimeRangePickerExample() {
   const [range, setRange] = useState<[string, string] | null>(["08:00:00", "17:00:00"]);

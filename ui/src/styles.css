@@ -1,97 +1,199 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #2563eb;
-  --color-primary-600: #1d4ed8;
-  --color-primary-700: #1e40af;
-  --color-primary-800: #1e3a8a;
-  --color-primary-900: #172554;
-  --color-primary-950: #0f172a;
+  /* ================= NOTION TYPOGRAPHY STACK ================= */
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
 
-  --color-secondary-50: #f5f3ff;
-  --color-secondary-100: #ede9fe;
-  --color-secondary-200: #ddd6fe;
-  --color-secondary-300: #c4b5fd;
-  --color-secondary-400: #a78bfa;
-  --color-secondary-500: #8b5cf6;
-  --color-secondary-600: #7c3aed;
-  --color-secondary-700: #6d28d9;
-  --color-secondary-800: #5b21b6;
-  --color-secondary-900: #4c1d95;
-  --color-secondary-950: #2e1065;
-
+  /* ================= NOTION WARM NEUTRALS ================= */
   --color-neutral-white: #ffffff;
-  --color-neutral-50: #fafafa;
-  --color-neutral-100: #f4f4f5;
-  --color-neutral-200: #e4e4e7;
-  --color-neutral-300: #d4d4d8;
-  --color-neutral-400: #a1a1aa;
-  --color-neutral-500: #71717a;
-  --color-neutral-600: #52525b;
-  --color-neutral-700: #3f3f46;
-  --color-neutral-800: #27272a;
-  --color-neutral-900: #18181b;
-  --color-neutral-950: #09090b;
+  --color-neutral-50: #f7f6f3;   /* Notion Sidebar / Table Header / Dropzone */
+  --color-neutral-100: #ebeae8;  /* Notion Hairline Border / Light Divider */
+  --color-neutral-200: #e3e2e0;  /* Notion Main Border / Input Outline */
+  --color-neutral-300: #d3d1cb;  /* Notion Strong Border / Scrollbar Thumb */
+  --color-neutral-400: #9b9a97;  /* Notion Placeholder / Muted Icon */
+  --color-neutral-500: #787774;  /* Notion Secondary Text / Subtitle / Helper */
+  --color-neutral-600: #5f5e5b;  /* Notion Darker Helper Text */
+  --color-neutral-700: #45443f;  /* Notion Form Label / Section Heading */
+  --color-neutral-800: #3c3a35;  /* Notion Dark Neutral */
+  --color-neutral-900: #37352f;  /* Notion Primary Text Body & Headings */
+  --color-neutral-950: #20201d;  /* Notion Deep Charcoal */
   --color-neutral-black: #000000;
 
-  --color-error-50: #fef2f2;
-  --color-error-100: #fee2e2;
-  --color-error-200: #fecaca;
-  --color-error-300: #fca5a5;
-  --color-error-400: #f87171;
-  --color-error-500: #ef4444;
-  --color-error-600: #dc2626;
-  --color-error-700: #b91c1c;
-  --color-error-800: #991b1b;
-  --color-error-900: #7f1d1d;
-  --color-error-950: #450a0a;
+  /* ================= NOTION INTERACTIVE BLUE ================= */
+  --color-primary-50: #edf5fc;   /* Light Blue Tint Selection */
+  --color-primary-100: #d3e5f8;
+  --color-primary-200: #a8ccf0;
+  --color-primary-300: #73aee7;
+  --color-primary-400: #4392de;
+  --color-primary-500: #2383e2;   /* Notion Interactive Blue */
+  --color-primary-600: #1b6ec2;   /* Blue Hover */
+  --color-primary-700: #17579b;   /* Blue Active / Pressed */
+  --color-primary-800: #14467d;
+  --color-primary-900: #103761;
+  --color-primary-950: #0a213b;
 
-  --color-success-50: #ecfdf5;
-  --color-success-100: #d1fae5;
-  --color-success-200: #a7f3d0;
-  --color-success-300: #6ee7b7;
-  --color-success-400: #34d399;
-  --color-success-500: #10b981;
-  --color-success-600: #059669;
-  --color-success-700: #047857;
-  --color-success-800: #065f46;
-  --color-success-900: #064e3b;
-  --color-success-950: #022c22;
+  /* ================= NOTION PURPLE / SECONDARY ================= */
+  --color-secondary-50: #e8deee;
+  --color-secondary-100: #d8c9e0;
+  --color-secondary-200: #c1a8ce;
+  --color-secondary-300: #a582b8;
+  --color-secondary-400: #885ca2;
+  --color-secondary-500: #652484;
+  --color-secondary-600: #561e71;
+  --color-secondary-700: #48195e;
+  --color-secondary-800: #3a134b;
+  --color-secondary-900: #2b0e38;
+  --color-secondary-950: #1c0825;
 
-  --color-warning-50: #fffbeb;
-  --color-warning-100: #fef3c7;
-  --color-warning-200: #fde68a;
-  --color-warning-300: #fcd34d;
-  --color-warning-400: #fbbf24;
-  --color-warning-500: #f59e0b;
-  --color-warning-600: #d97706;
-  --color-warning-700: #b45309;
-  --color-warning-800: #92400e;
-  --color-warning-900: #78350f;
-  --color-warning-950: #451a03;
+  /* ================= NOTION STATUS RED (ERROR) ================= */
+  --color-error-50: #ffe2dd;    /* Pastel Error Background */
+  --color-error-100: #fcd0c7;
+  --color-error-200: #f7a394;
+  --color-error-300: #f07762;
+  --color-error-400: #eb5757;   /* Form Error Border / Icon */
+  --color-error-500: #d63f3f;
+  --color-error-600: #be3131;
+  --color-error-700: #962525;
+  --color-error-800: #7a1e1e;
+  --color-error-900: #5d1715;   /* Error Text Dark */
+  --color-error-950: #3a0d0c;
 
-  --color-info-50: #f0f9ff;
-  --color-info-100: #e0f2fe;
-  --color-info-200: #bae6fd;
-  --color-info-300: #7dd3fc;
-  --color-info-400: #38bdf8;
-  --color-info-500: #0ea5e9;
-  --color-info-600: #0284c7;
-  --color-info-700: #0369a1;
-  --color-info-800: #075985;
-  --color-info-900: #0c4a6e;
-  --color-info-950: #082f49;
+  /* ================= NOTION STATUS GREEN (SUCCESS) ================= */
+  --color-success-50: #dbeddb;  /* Pastel Success Background */
+  --color-success-100: #c2e2c2;
+  --color-success-200: #93cfa3;
+  --color-success-300: #65bc83;
+  --color-success-400: #3da868;
+  --color-success-500: #2a8a50;
+  --color-success-600: #206d3f;
+  --color-success-700: #1c5833;
+  --color-success-800: #18482b;
+  --color-success-900: #1c3829;  /* Success Text Dark */
+  --color-success-950: #0e1e16;
+
+  /* ================= NOTION STATUS ORANGE/YELLOW (WARNING) ================= */
+  --color-warning-50: #fdecc8;  /* Pastel Warning Background */
+  --color-warning-100: #fce2a6;
+  --color-warning-200: #f8cb66;
+  --color-warning-300: #f3b22b;
+  --color-warning-400: #d99616;
+  --color-warning-500: #b5760d;
+  --color-warning-600: #925c08;
+  --color-warning-700: #724707;
+  --color-warning-800: #583609;
+  --color-warning-900: #402c1b;  /* Warning Text Dark */
+  --color-warning-950: #261a0f;
+
+  /* ================= NOTION INFO (BRIGHT OCEAN BLUE) ================= */
+  --color-info-50: #e8f4fc;     /* Fresh bright pastel background */
+  --color-info-100: #d1eaf8;
+  --color-info-200: #a9d7f3;
+  --color-info-300: #6ebfeb;
+  --color-info-400: #38a5df;
+  --color-info-500: #2eaadc;    /* Notion bright blue (--select-color-0) */
+  --color-info-600: #168ec2;
+  --color-info-700: #0b6e99;    /* Notion authentic blue text (--notion-blue) */
+  --color-info-800: #0c5b7f;
+  --color-info-900: #0f4b67;    /* Deep clear info text */
+  --color-info-950: #092f42;
+
+  /* ================= NOTION CRISP GEOMETRY (BORDER RADII) ================= */
+  --radius-2xs: 2px;
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 5px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 10px;
 }
 
+/* ================= NOTION GLOBAL STYLES ================= */
+::selection {
+  background-color: rgba(45, 170, 219, 0.3);
+}
+
+input, textarea {
+  caret-color: rgb(55, 53, 47);
+}
+
+button:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible),
+[tabindex]:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+.tabular-nums {
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ================= OPENWAY LAYERED AMBIENT SHADOWS ================= */
+.shadow-notion-dropdown,
+.shadow-openway-dropdown {
+  box-shadow: 
+    rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
+    rgba(15, 15, 15, 0.10) 0px 3px 6px, 
+    rgba(15, 15, 15, 0.06) 0px 9px 24px;
+}
+
+.shadow-notion-modal,
+.shadow-openway-modal {
+  box-shadow: 
+    rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
+    rgba(15, 15, 15, 0.10) 0px 4px 12px, 
+    rgba(15, 15, 15, 0.20) 0px 24px 48px -8px;
+}
+
+.shadow-notion-card,
+.shadow-openway-card {
+  box-shadow: 
+    rgba(15, 15, 15, 0.08) 0px 0px 0px 1px, 
+    rgba(15, 15, 15, 0.04) 0px 2px 4px;
+}
+
+/* ================= NOTION CROSS-BROWSER SCROLLBAR ================= */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(55, 53, 47, 0.2) transparent;
+}
+
+/* Chrome, Edge, Safari */
+.ui-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(55, 53, 47, 0.25) transparent;
+}
+
+.ui-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.ui-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ui-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(55, 53, 47, 0.2);
+  border-radius: 9999px;
+}
+
+.ui-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(55, 53, 47, 0.35);
+}
+
+/* Reset native HTML dialog backdrop to prevent browser grey flash */
+dialog::backdrop {
+  background: transparent;
+}
+
+/* ================= NOTION ANIMATION KEYFRAMES ================= */
 @keyframes errorSlideIn {
   0% {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-3px);
   }
   100% {
     opacity: 1;
@@ -106,22 +208,22 @@
   }
   100% {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-3px);
   }
 }
 
 .animate-error-in {
-  animation: errorSlideIn 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: errorSlideIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-error-out {
-  animation: errorSlideOut 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  animation: errorSlideOut 0.12s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
 @keyframes alertSlideInDown {
   0% {
     opacity: 0;
-    transform: translateY(-16px) scale(0.96);
+    transform: translateY(-8px) scale(0.98);
   }
   100% {
     opacity: 1;
@@ -132,22 +234,11 @@
 @keyframes alertSlideInUp {
   0% {
     opacity: 0;
-    transform: translateY(16px) scale(0.96);
+    transform: translateY(8px) scale(0.98);
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes alertSlideOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.95);
   }
 }
 
@@ -160,7 +251,7 @@
   }
   100% {
     opacity: 0;
-    transform: translateY(-16px) scale(0.96);
+    transform: translateY(-8px) scale(0.98);
     max-height: 0;
     margin-bottom: 0;
     padding-top: 0;
@@ -177,7 +268,7 @@
   }
   100% {
     opacity: 0;
-    transform: translateY(16px) scale(0.96);
+    transform: translateY(8px) scale(0.98);
     max-height: 0;
     margin-bottom: 0;
     padding-top: 0;
@@ -186,26 +277,23 @@
 }
 
 .animate-alert-in-top {
-  animation: alertSlideInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: alertSlideInDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-alert-in-bottom {
-  animation: alertSlideInUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: alertSlideInUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-alert-out-top {
-  animation: alertSlideOutTop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-alert-out-top,
+.animate-alert-out {
+  animation: alertSlideOutTop 0.15s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
 .animate-alert-out-bottom {
-  animation: alertSlideOutBottom 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: alertSlideOutBottom 0.15s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
-.animate-alert-out {
-  animation: alertSlideOutTop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Confirm Dialog Animations */
+/* ================= Confirm Dialog Animations ================= */
 @keyframes confirmBackdropFadeIn {
   0% {
     opacity: 0;
@@ -227,7 +315,7 @@
 @keyframes confirmZoomIn {
   0% {
     opacity: 0;
-    transform: scale(0.94) translateY(6px);
+    transform: scale(0.97) translateY(4px);
   }
   100% {
     opacity: 1;
@@ -242,27 +330,27 @@
   }
   100% {
     opacity: 0;
-    transform: scale(0.94) translateY(6px);
+    transform: scale(0.97) translateY(4px);
   }
 }
 
 .animate-confirm-backdrop-in {
-  animation: confirmBackdropFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: confirmBackdropFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-confirm-backdrop-out {
-  animation: confirmBackdropFadeOut 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: confirmBackdropFadeOut 0.15s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
 .animate-confirm-in {
-  animation: confirmZoomIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: confirmZoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-confirm-out {
-  animation: confirmZoomOut 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: confirmZoomOut 0.15s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
-/* Modal Dialog Animations */
+/* ================= Modal Dialog Animations ================= */
 @keyframes modalBackdropFadeIn {
   0% {
     opacity: 0;
@@ -284,7 +372,7 @@
 @keyframes modalZoomIn {
   0% {
     opacity: 0;
-    transform: scale(0.95) translateY(6px);
+    transform: scale(0.97) translateY(4px);
   }
   100% {
     opacity: 1;
@@ -299,56 +387,54 @@
   }
   100% {
     opacity: 0;
-    transform: scale(0.95) translateY(6px);
+    transform: scale(0.97) translateY(4px);
   }
 }
 
 .animate-modal-backdrop-in {
-  animation: modalBackdropFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modalBackdropFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-modal-backdrop-out {
-  animation: modalBackdropFadeOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modalBackdropFadeOut 0.15s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
 .animate-modal-in {
-  animation: modalZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modalZoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-modal-out {
-  animation: modalZoomOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modalZoomOut 0.15s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
-/* Reset native HTML dialog backdrop to prevent browser grey flash */
-dialog::backdrop {
-  background: transparent;
+/* ================= Dropdown / Popover Animations ================= */
+@keyframes notionDropdownIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-/* Custom Thin Modern Scrollbars for UI components */
-.ui-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+.animate-dropdown-in {
+  animation: notionDropdownIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.ui-scrollbar::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+/* ================= Notion Spinner Animation ================= */
+@keyframes notionSpinner {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.ui-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+.animate-notion-spinner {
+  animation: notionSpinner 0.6s linear infinite;
 }
 
-.ui-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.4);
-  border-radius: 9999px;
-}
-
-.ui-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(107, 114, 128, 0.7);
-}
-
-/* ==================== Skeleton Wave Animation ==================== */
+/* ================= Skeleton Shimmer Animation ================= */
 @keyframes skeleton-shimmer {
   0% {
     background-position: -200% -200%;
@@ -361,15 +447,15 @@ dialog::backdrop {
 .skeleton-wave {
   background: linear-gradient(
     135deg,
-    var(--color-neutral-200) 25%,
-    var(--color-neutral-100) 50%,
-    var(--color-neutral-200) 75%
+    var(--color-neutral-100) 25%,
+    var(--color-neutral-50) 50%,
+    var(--color-neutral-100) 75%
   );
   background-size: 200% 200%;
-  animation: skeleton-shimmer 2.2s ease-in-out infinite;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
-/* ==================== Table Expanding Animations ==================== */
+/* ================= Table Expanding Animations ================= */
 @keyframes tableRowExpand {
   0% {
     grid-template-rows: 0fr;
@@ -384,7 +470,7 @@ dialog::backdrop {
 @keyframes tableRowContentSlideDown {
   0% {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-4px);
   }
   100% {
     opacity: 1;
@@ -395,18 +481,18 @@ dialog::backdrop {
 .animate-table-expand-wrapper {
   display: grid;
   grid-template-rows: 1fr;
-  animation: tableRowExpand 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: tableRowExpand 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-table-expand-content {
   overflow: hidden;
-  animation: tableRowContentSlideDown 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: tableRowContentSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes tableSubrowFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     background-color: var(--color-primary-50);
   }
   50% {
@@ -420,5 +506,5 @@ dialog::backdrop {
 }
 
 .animate-table-subrow-in {
-  animation: tableSubrowFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+  animation: tableSubrowFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

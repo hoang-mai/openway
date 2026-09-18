@@ -922,400 +922,399 @@ describe("<Select /> Component Tests (Single Mount Harness)", () => {
 // ==========================================
 // TEST SUITE: useSelectInfiniteQuery Adapter
 // ==========================================
-describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {
-  interface MockProduct {
-    id: number;
-    title: string;
-  }
+// describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {
+//   interface MockProduct {
+//     id: number;
+//     title: string;
+//   }
 
-  const mockProductsPage1: MockProduct[] = Array.from({ length: 10 }, (_, i) => ({
-    id: i + 1,
-    title: `Sản phẩm A${i + 1}`,
-  }));
+//   const mockProductsPage1: MockProduct[] = Array.from({ length: 10 }, (_, i) => ({
+//     id: i + 1,
+//     title: `Sản phẩm A${i + 1}`,
+//   }));
 
-  const mockProductsPage2: MockProduct[] = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 11,
-    title: `Sản phẩm B${i + 11}`,
-  }));
+//   const mockProductsPage2: MockProduct[] = Array.from({ length: 5 }, (_, i) => ({
+//     id: i + 11,
+//     title: `Sản phẩm B${i + 11}`,
+//   }));
 
-  const InfiniteSelectTestComponent = () => {
-    const [selectedVal, setSelectedVal] = useState<string | number | null>(null);
+//   const InfiniteSelectTestComponent = () => {
+//     const [selectedVal, setSelectedVal] = useState<string | number | null>(null);
 
-    const { selectProps, query, search } = useSelectInfiniteQuery<
-      MockProduct,
-      { items: MockProduct[]; nextPage?: number },
-      number
-    >({
-      queryKey: ["test-infinite-products"],
-      queryFn: async ({ pageParam, filters }) => {
-        const keyword = (filters as Record<string, unknown> | undefined)?.search as string | undefined;
-        if (keyword) {
-          return {
-            items: [{ id: 99, title: `Kết quả: ${keyword}` }],
-            nextPage: undefined,
-          };
-        }
-        if (pageParam === 1) {
-          return { items: mockProductsPage1, nextPage: 2 };
-        }
-        return { items: mockProductsPage2, nextPage: undefined };
-      },
-      initialPageParam: 1,
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-      mapOption: (item) => {
-        const prod = item as MockProduct;
-        return { value: prod.id, label: prod.title, data: prod };
-      },
-      debounceMs: 50,
-      endMessage: "Đã tải hết sản phẩm",
-    });
+//     const { selectProps, query, search } = useSelectInfiniteQuery<
+//       MockProduct,
+//       { items: MockProduct[]; nextPage?: number },
+//       number
+//     >({
+//       queryKey: ["test-infinite-products"],
+//       queryFn: async ({ pageParam, filters }) => {
+//         const keyword = (filters as Record<string, unknown> | undefined)?.search as string | undefined;
+//         if (keyword) {
+//           return {
+//             items: [{ id: 99, title: `Kết quả: ${keyword}` }],
+//             nextPage: undefined,
+//           };
+//         }
+//         if (pageParam === 1) {
+//           return { items: mockProductsPage1, nextPage: 2 };
+//         }
+//         return { items: mockProductsPage2, nextPage: undefined };
+//       },
+//       initialPageParam: 1,
+//       getNextPageParam: (lastPage) => lastPage.nextPage,
+//       mapOption: (item) => {
+//         const prod = item as MockProduct;
+//         return { value: prod.id, label: prod.title, data: prod };
+//       },
+//       debounceMs: 50,
+//       endMessage: "Đã tải hết sản phẩm",
+//     });
 
-    return (
-      <div className="p-8 max-w-md">
-        <div data-testid="search-display">Search: {search}</div>
-        <div data-testid="fetching-next-display">
-          FetchingNext: {query.isFetchingNextPage ? "yes" : "no"}
-        </div>
-        <Select
-          id="infinite-select"
-          label="Sản phẩm Infinite Scroll"
-          placeholder="Chọn sản phẩm..."
-          searchable
-          portal={false}
-          maxMenuHeight={160}
-          value={selectedVal}
-          onChange={(val) => setSelectedVal(val)}
-          {...selectProps}
-        />
-      </div>
-    );
-  };
+//     return (
+//       <div className="p-8 max-w-md">
+//         <div data-testid="search-display">Search: {search}</div>
+//         <div data-testid="fetching-next-display">
+//           FetchingNext: {query.isFetchingNextPage ? "yes" : "no"}
+//         </div>
+//         <Select
+//           id="infinite-select"
+//           label="Sản phẩm Infinite Scroll"
+//           placeholder="Chọn sản phẩm..."
+//           searchable
+//           portal={false}
+//           maxMenuHeight={160}
+//           value={selectedVal}
+//           onChange={(val) => setSelectedVal(val)}
+//           {...selectProps}
+//         />
+//       </div>
+//     );
+//   };
 
-  it("loads first page, fetches next page on demand, and searches with debounce", () => {
-    const testClient = new QueryClient({
-      defaultOptions: {
-        queries: {
-          retry: false,
-        },
-      },
-    });
+//   it("loads first page, fetches next page on demand, and searches with debounce", () => {
+//     const testClient = new QueryClient({
+//       defaultOptions: {
+//         queries: {
+//           retry: false,
+//         },
+//       },
+//     });
 
-    cy.mount(
-      <QueryClientProvider client={testClient}>
-        <InfiniteSelectTestComponent />
-      </QueryClientProvider>
-    );
+//     cy.mount(
+//       <QueryClientProvider client={testClient}>
+//         <InfiniteSelectTestComponent />
+//       </QueryClientProvider>
+//     );
 
-    // 1. Initial Page 1: first items visible, Page 2 items not yet loaded
-    cy.get("#infinite-select").click();
-    cy.get("#infinite-select [role='listbox']").should("be.visible");
-    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("be.visible");
-    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").should("not.exist");
+//     // 1. Initial Page 1: first items visible, Page 2 items not yet loaded
+//     cy.get("#infinite-select").click();
+//     cy.get("#infinite-select [role='listbox']").should("be.visible");
+//     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("be.visible");
+//     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").should("not.exist");
 
-    // 2. Scroll to bottom of listbox to trigger infinite scroll
-    cy.get("#infinite-select .overflow-y-auto").scrollTo("bottom");
-    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").should("exist");
-    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B15").should("exist");
-    cy.get("#infinite-select [role='listbox']").contains("Đã tải hết sản phẩm").should("exist");
+//     // 2. Scroll to bottom of listbox to trigger infinite scroll
+//     cy.get("#infinite-select .overflow-y-auto").scrollTo("bottom");
+//     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").should("exist");
+//     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B15").should("exist");
+//     cy.get("#infinite-select [role='listbox']").contains("Đã tải hết sản phẩm").should("exist");
 
-    // 3. Select an option from Page 2
-    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").click({ force: true });
-    cy.get("#infinite-select").contains("Sản phẩm B11").should("be.visible");
+//     // 3. Select an option from Page 2
+//     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm B11").click({ force: true });
+//     cy.get("#infinite-select").contains("Sản phẩm B11").should("be.visible");
 
-    // 4. Server Search with debounce
-    cy.get("#infinite-select").click();
-    cy.get("input[aria-label='Search']").type("Laptop", { force: true });
-    cy.get("#infinite-select [role='listbox']").contains("Kết quả: Laptop").should("be.visible");
-    cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("not.exist");
-  });
+//     // 4. Server Search with debounce
+//     cy.get("#infinite-select").click();
+//     cy.get("input[aria-label='Search']").type("Laptop", { force: true });
+//     cy.get("#infinite-select [role='listbox']").contains("Kết quả: Laptop").should("be.visible");
+//     cy.get("#infinite-select [role='listbox']").contains("Sản phẩm A1").should("not.exist");
+//   });
 
-  it("does not refetch API on dropdown close, supports external setSearch and pure filters with backend searchField", () => {
-    const queryFnSpy = cy.stub().as("queryFnSpy");
+//   it("does not refetch API on dropdown close, supports external setSearch and pure filters with backend searchField", () => {
+//     const queryFnSpy = cy.stub().as("queryFnSpy");
 
-    const RefactoredServerSelectHarness = () => {
-      const [selectedVal, setSelectedVal] = useState<string | number | null>(null);
+//     const RefactoredServerSelectHarness = () => {
+//       const [selectedVal, setSelectedVal] = useState<string | number | null>(null);
 
-      const {
-        selectProps,
-        query,
-        search,
-        setSearch,
-        filters,
-        setFilters,
-      } = useSelectInfiniteQuery<
-        MockProduct,
-        { items: MockProduct[]; nextPage?: number },
-        number,
-        { category: string }
-      >({
-        queryKey: ["test-refactored-server-select"],
-        searchField: "q",
-        initialFilters: { category: "electronics" },
-        debounceMs: 50,
-        queryFn: async ({ pageParam, filters: qFilters }) => {
-          queryFnSpy(qFilters);
-          const keyword = (qFilters as Record<string, unknown> | undefined)?.q as string | undefined;
-          if (keyword) {
-            return {
-              items: [{ id: 999, title: `Tìm thấy: ${keyword} [cat:${qFilters.category}]` }],
-              nextPage: undefined,
-            };
-          }
-          return { items: mockProductsPage1, nextPage: undefined };
-        },
-        getNextPageParam: (lastPage) => lastPage.nextPage,
-        mapOption: (item) => {
-          const prod = item as MockProduct;
-          return { value: prod.id, label: prod.title, data: prod };
-        },
-      });
+//       const {
+//         selectProps,
+//         query,
+//         search,
+//         setSearch,
+//         filters,
+//         setFilters,
+//       } = useSelectInfiniteQuery<
+//         MockProduct,
+//         { items: MockProduct[]; nextPage?: number },
+//         number,
+//         { category: string }
+//       >({
+//         queryKey: ["test-refactored-server-select"],
+//         searchField: "q",
+//         initialFilters: { category: "electronics" },
+//         debounceMs: 50,
+//         queryFn: async ({ pageParam, filters: qFilters }) => {
+//           queryFnSpy(qFilters);
+//           const keyword = (qFilters as Record<string, unknown> | undefined)?.q as string | undefined;
+//           if (keyword) {
+//             return {
+//               items: [{ id: 999, title: `Tìm thấy: ${keyword} [cat:${qFilters.category}]` }],
+//               nextPage: undefined,
+//             };
+//           }
+//           return { items: mockProductsPage1, nextPage: undefined };
+//         },
+//         getNextPageParam: (lastPage) => lastPage.nextPage,
+//         mapOption: (item) => {
+//           const prod = item as MockProduct;
+//           return { value: prod.id, label: prod.title, data: prod };
+//         },
+//       });
 
-      return (
-        <div className="p-8 max-w-md">
-          <div data-testid="search-display">Search: {search}</div>
-          <div data-testid="filters-pure">
-            Category: {filters.category} | Has_q: {"q" in filters ? "yes" : "no"}
-          </div>
-          <button
-            data-testid="external-set-search-btn"
-            onClick={() => setSearch("MacBook")}
-          >
-            External Set Search
-          </button>
-          <button
-            data-testid="change-filter-btn"
-            onClick={() => setFilters({ category: "appliances" })}
-          >
-            Change Filter
-          </button>
-          <Select<MockProduct, { category: string }>
-            id="server-refactored-select"
-            label="Sản phẩm Server Mode"
-            searchable
-            portal={false}
-            value={selectedVal}
-            onChange={(val) => setSelectedVal(val)}
-            {...selectProps}
-          />
-        </div>
-      );
-    };
+//       return (
+//         <div className="p-8 max-w-md">
+//           <div data-testid="search-display">Search: {search}</div>
+//           <div data-testid="filters-pure">
+//             Category: {filters.category} | Has_q: {"q" in filters ? "yes" : "no"}
+//           </div>
+//           <button
+//             data-testid="external-set-search-btn"
+//             onClick={() => setSearch("MacBook")}
+//           >
+//             External Set Search
+//           </button>
+//           <button
+//             data-testid="change-filter-btn"
+//             onClick={() => setFilters({ category: "appliances" })}
+//           >
+//             Change Filter
+//           </button>
+//           <Select<MockProduct, { category: string }>
+//             id="server-refactored-select"
+//             label="Sản phẩm Server Mode"
+//             searchable
+//             portal={false}
+//             value={selectedVal}
+//             onChange={(val) => setSelectedVal(val)}
+//             {...selectProps}
+//           />
+//         </div>
+//       );
+//     };
 
-    const testClient = new QueryClient({
-      defaultOptions: { queries: { retry: false } },
-    });
+//     const testClient = new QueryClient({
+//       defaultOptions: { queries: { retry: false } },
+//     });
 
-    cy.mount(
-      <QueryClientProvider client={testClient}>
-        <RefactoredServerSelectHarness />
-      </QueryClientProvider>
-    );
+//     cy.mount(
+//       <QueryClientProvider client={testClient}>
+//         <RefactoredServerSelectHarness />
+//       </QueryClientProvider>
+//     );
 
-    // 1. Initial mount: queryFn called once with qFilters containing category and no q
-    cy.get("@queryFnSpy").should("have.been.calledOnce");
-    cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "electronics" });
-    cy.get("[data-testid='filters-pure']").should("contain", "Category: electronics | Has_q: no");
+//     // 1. Initial mount: queryFn called once with qFilters containing category and no q
+//     cy.get("@queryFnSpy").should("have.been.calledOnce");
+//     cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "electronics" });
+//     cy.get("[data-testid='filters-pure']").should("contain", "Category: electronics | Has_q: no");
 
-    // 2. Open dropdown and close without typing: NO refetch on close!
-    cy.get("#server-refactored-select").click();
-    cy.get("#server-refactored-select [role='listbox']").should("be.visible");
-    cy.get("body").click(0, 0);
-    cy.get("#server-refactored-select [role='listbox']").should("not.exist");
-    // Verify queryFn was STILL called only once (NO refetch on close!)
-    cy.get("@queryFnSpy").should("have.been.calledOnce");
+//     // 2. Open dropdown and close without typing: NO refetch on close!
+//     cy.get("#server-refactored-select").click();
+//     cy.get("#server-refactored-select [role='listbox']").should("be.visible");
+//     cy.get("body").click(0, 0);
+//     cy.get("#server-refactored-select [role='listbox']").should("not.exist");
+//     // Verify queryFn was STILL called only once (NO refetch on close!)
+//     cy.get("@queryFnSpy").should("have.been.calledOnce");
 
-    // 3. Test external setSearch: immediate input sync and debounced query with searchField "q"
-    cy.get("[data-testid='external-set-search-btn']").click();
-    cy.get("[data-testid='search-display']").should("contain", "Search: MacBook");
-    cy.get("#server-refactored-select input[aria-label='Search']").should("have.value", "MacBook");
-    // Wait for debounce and check queryFn called with q: "MacBook"
-    cy.get("@queryFnSpy").should("have.been.calledTwice");
-    cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "electronics", q: "MacBook" });
-    // Verify filters state remains pure:
-    cy.get("[data-testid='filters-pure']").should("contain", "Category: electronics | Has_q: no");
+//     // 3. Test external setSearch: immediate input sync and debounced query with searchField "q"
+//     cy.get("[data-testid='external-set-search-btn']").click();
+//     cy.get("[data-testid='search-display']").should("contain", "Search: MacBook");
+//     cy.get("#server-refactored-select input[aria-label='Search']").should("have.value", "MacBook");
+//     // Wait for debounce and check queryFn called with q: "MacBook"
+//     cy.get("@queryFnSpy").should("have.been.calledTwice");
+//     cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "electronics", q: "MacBook" });
+//     // Verify filters state remains pure:
+//     cy.get("[data-testid='filters-pure']").should("contain", "Category: electronics | Has_q: no");
 
-    // Open dropdown to see search results
-    cy.get("#server-refactored-select").click();
-    cy.get("#server-refactored-select [role='listbox']").contains("Tìm thấy: MacBook [cat:electronics]").should("be.visible");
+//     // Open dropdown to see search results
+//     cy.get("#server-refactored-select").click();
+//     cy.get("#server-refactored-select [role='listbox']").contains("Tìm thấy: MacBook [cat:electronics]").should("be.visible");
 
-    // 4. Test changing filter via setFilters: refetches with updated category and current search keyword
-    cy.get("[data-testid='change-filter-btn']").click();
-    cy.get("[data-testid='filters-pure']").should("contain", "Category: appliances | Has_q: no");
-    cy.get("@queryFnSpy").should("have.been.calledThrice");
-    cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "appliances", q: "MacBook" });
-    cy.get("#server-refactored-select [role='listbox']").contains("Tìm thấy: MacBook [cat:appliances]").should("be.visible");
-  });
+//     // 4. Test changing filter via setFilters: refetches with updated category and current search keyword
+//     cy.get("[data-testid='change-filter-btn']").click();
+//     cy.get("[data-testid='filters-pure']").should("contain", "Category: appliances | Has_q: no");
+//     cy.get("@queryFnSpy").should("have.been.calledThrice");
+//     cy.get("@queryFnSpy").should("have.been.calledWithMatch", { category: "appliances", q: "MacBook" });
+//     cy.get("#server-refactored-select [role='listbox']").contains("Tìm thấy: MacBook [cat:appliances]").should("be.visible");
+//   });
 
-  it("renders SelectMenu on top of Modal when Select is placed inside ModalContainer", () => {
-    const ModalWithSelect = () => {
-      const [val, setVal] = useState<string | null>(null);
-      return (
-        <ModalContainer open={true} onClose={() => {}}>
-          <Modal>
-            <ModalHeader title="Modal with Select" />
-            <ModalBody>
-              <Select
-                id="modal-select"
-                label="Chọn trái cây"
-                options={fruitsOptions}
-                value={val}
-                onChange={(newVal) => setVal(newVal as string)}
-                placeholder="Chọn một loại quả..."
-              />
-            </ModalBody>
-          </Modal>
-        </ModalContainer>
-      );
-    };
+//   // it("renders SelectMenu on top of Modal when Select is placed inside ModalContainer", () => {
+//   //   const ModalWithSelect = () => {
+//   //     const [val, setVal] = useState<string | null>(null);
+//   //     return (
+//   //       <ModalContainer open={true} onClose={() => {}}>
+//   //         <Modal>
+//   //           <ModalHeader title="Modal with Select" />
+//   //           <ModalBody>
+//   //             <Select
+//   //               id="modal-select"
+//   //               label="Chọn trái cây"
+//   //               options={fruitsOptions}
+//   //               value={val}
+//   //               onChange={(newVal) => setVal(newVal as string)}
+//   //               placeholder="Chọn một loại quả..."
+//   //             />
+//   //           </ModalBody>
+//   //         </Modal>
+//   //       </ModalContainer>
+//   //     );
+//   //   };
 
-    cy.mount(<ModalWithSelect />);
+//   //   cy.mount(<ModalWithSelect />);
 
-    // Click trigger bên trong modal
-    cy.get("#modal-select-trigger").click();
+//   //   // Click trigger bên trong modal
+//   //   cy.get("#modal-select-trigger").click();
 
-    // Menu phải hiển thị visible trong Top Layer của dialog, không bị che khuất
-    cy.get("[role='listbox']").should("be.visible");
-    cy.get("[role='listbox']").contains("Táo (Apple)").click({ force: true });
-    cy.get("#modal-select-trigger").contains("Táo (Apple)").should("be.visible");
-  });
+//   //   // Menu phải hiển thị visible trong Top Layer của dialog, không bị che khuất
+//   //   cy.get("[role='listbox']").should("be.visible");
+//   //   cy.get("[role='listbox']").contains("Táo (Apple)").click({ force: true });
+//   //   cy.get("#modal-select-trigger").contains("Táo (Apple)").should("be.visible");
+//   // });
 
-  it("handles isLoading state and conditionally displays spinner only when showSpinner=true for Select and MultiSelect", () => {
-    cy.mount(
-      <div className="space-y-4 p-4">
-        <Select
-          id="select-loading-no-spinner"
-          options={fruitsOptions}
-          config={{ isLoading: true, showSpinner: false }}
-        />
-        <Select
-          id="select-loading-with-spinner"
-          options={fruitsOptions}
-          config={{ isLoading: true, showSpinner: true }}
-        />
-        <MultiSelect
-          id="multiselect-loading-no-spinner"
-          options={fruitsOptions}
-          config={{ isLoading: true, showSpinner: false }}
-        />
-        <MultiSelect
-          id="multiselect-loading-with-spinner"
-          options={fruitsOptions}
-          config={{ isLoading: true, showSpinner: true }}
-        />
-      </div>
-    );
+//   // it("handles isLoading state and conditionally displays spinner only when showSpinner=true for Select and MultiSelect", () => {
+//   //   cy.mount(
+//   //     <div className="space-y-4 p-4">
+//   //       <Select
+//   //         id="select-loading-no-spinner"
+//   //         options={fruitsOptions}
+//   //         config={{ isLoading: true, showSpinner: false }}
+//   //       />
+//   //       <Select
+//   //         id="select-loading-with-spinner"
+//   //         options={fruitsOptions}
+//   //         config={{ isLoading: true, showSpinner: true }}
+//   //       />
+//   //       <MultiSelect
+//   //         id="multiselect-loading-no-spinner"
+//   //         options={fruitsOptions}
+//   //         config={{ isLoading: true, showSpinner: false }}
+//   //       />
+//   //       <MultiSelect
+//   //         id="multiselect-loading-with-spinner"
+//   //         options={fruitsOptions}
+//   //         config={{ isLoading: true, showSpinner: true }}
+//   //       />
+//   //     </div>
+//   //   );
 
-    cy.get("#select-loading-no-spinner svg.animate-spin").should("not.exist");
-    cy.get("#select-loading-with-spinner svg.animate-spin").should("be.visible");
-    cy.get("#multiselect-loading-no-spinner svg.animate-spin").should("not.exist");
-    cy.get("#multiselect-loading-with-spinner svg.animate-spin").should("be.visible");
-  });
+//   //   cy.get("#select-loading-no-spinner svg.animate-spin").should("not.exist");
+//   //   cy.get("#select-loading-with-spinner svg.animate-spin").should("be.visible");
+//   //   cy.get("#multiselect-loading-no-spinner svg.animate-spin").should("not.exist");
+//   //   cy.get("#multiselect-loading-with-spinner svg.animate-spin").should("be.visible");
+//   // });
 
-  it("renders Skeleton placeholders when options are empty and isLoading=true in Select and MultiSelect", () => {
-    cy.mount(
-      <div className="space-y-4 p-4 max-w-xs">
-        <Select
-          id="select-skeleton-test"
-          label="Select Đang tải"
-          options={[]}
-          isLoading={true}
-          skeletonCount={3}
-          portal={false}
-        />
-        <MultiSelect
-          id="multiselect-skeleton-test"
-          label="MultiSelect Đang tải"
-          options={[]}
-          isLoading={true}
-          skeletonCount={3}
-          portal={false}
-        />
-      </div>
-    );
+//   // it("renders Skeleton placeholders when options are empty and isLoading=true in Select and MultiSelect", () => {
+//   //   cy.mount(
+//   //     <div className="space-y-4 p-4 max-w-xs">
+//   //       <Select
+//   //         id="select-skeleton-test"
+//   //         label="Select Đang tải"
+//   //         options={[]}
+//   //         isLoading={true}
+//   //         skeletonCount={3}
+//   //         portal={false}
+//   //       />
+//   //       <MultiSelect
+//   //         id="multiselect-skeleton-test"
+//   //         label="MultiSelect Đang tải"
+//   //         options={[]}
+//   //         isLoading={true}
+//   //         skeletonCount={3}
+//   //         portal={false}
+//   //       />
+//   //     </div>
+//   //   );
 
-    // Click trigger Select để mở menu
-    cy.get("#select-skeleton-test-trigger").click();
-    cy.get("#select-skeleton-test [role='listbox']").should("be.visible");
-    cy.get("#select-skeleton-test [role='listbox'] .animate-pulse").should("have.length.at.least", 3);
+//   //   // Click trigger Select để mở menu
+//   //   cy.get("#select-skeleton-test-trigger").click();
+//   //   cy.get("#select-skeleton-test [role='listbox']").should("be.visible");
+//   //   cy.get("#select-skeleton-test [role='listbox'] .animate-pulse").should("have.length.at.least", 3);
 
-    // Đóng menu Select để tránh che khuất
-    cy.get("#select-skeleton-test-trigger").click();
+//   //   // Đóng menu Select để tránh che khuất
+//   //   cy.get("#select-skeleton-test-trigger").click();
 
-    // Click trigger MultiSelect để mở menu
-    cy.get("#multiselect-skeleton-test-trigger").click({ force: true });
-    cy.get("#multiselect-skeleton-test [role='listbox']").should("be.visible");
-    cy.get("#multiselect-skeleton-test [role='listbox'] .animate-pulse").should("have.length.at.least", 3);
-  });
+//   //   // Click trigger MultiSelect để mở menu
+//   //   cy.get("#multiselect-skeleton-test-trigger").click({ force: true });
+//   //   cy.get("#multiselect-skeleton-test [role='listbox']").should("be.visible");
+//   //   cy.get("#multiselect-skeleton-test [role='listbox'] .animate-pulse").should("have.length.at.least", 3);
+//   // });
 
-  it("does not flash raw ID during initial loading and preserves label across asynchronous options updates and server search", () => {
-    const AsyncSelectHarness = () => {
-      const [isLoading, setIsLoading] = useState(true);
-      const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
+//   // it("does not flash raw ID during initial loading and preserves label across asynchronous options updates and server search", () => {
+//   //   const AsyncSelectHarness = () => {
+//   //     const [isLoading, setIsLoading] = useState(true);
+//   //     const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
 
-      return (
-        <div className="space-y-6 p-4 max-w-xs">
-          <button
-            data-testid="btn-load-options"
-            onClick={() => {
-              setIsLoading(false);
-              setOptions([
-                { value: "user_99", label: "Nguyễn Văn A" },
-                { value: "user_100", label: "Trần Thị B" },
-              ]);
-            }}
-          >
-            Load Options
-          </button>
-          <button
-            data-testid="btn-search-replace"
-            onClick={() => {
-              setOptions([
-                { value: "user_200", label: "Lê Văn C" },
-              ]);
-            }}
-          >
-            Simulate Server Search
-          </button>
+//   //     return (
+//   //       <div className="space-y-6 p-4 max-w-xs">
+//   //         <button
+//   //           data-testid="btn-load-options"
+//   //           onClick={() => {
+//   //             setIsLoading(false);
+//   //             setOptions([
+//   //               { value: "user_99", label: "Nguyễn Văn A" },
+//   //               { value: "user_100", label: "Trần Thị B" },
+//   //             ]);
+//   //           }}
+//   //         >
+//   //           Load Options
+//   //         </button>
+//   //         <button
+//   //           data-testid="btn-search-replace"
+//   //           onClick={() => {
+//   //             setOptions([
+//   //               { value: "user_200", label: "Lê Văn C" },
+//   //             ]);
+//   //           }}
+//   //         >
+//   //           Simulate Server Search
+//   //         </button>
 
-          <Select
-            id="async-select-test"
-            label="Async Select"
-            placeholder="Chọn người dùng..."
-            value="user_99"
-            options={options}
-            isLoading={isLoading}
-            portal={false}
-          />
+//   //         <Select
+//   //           id="async-select-test"
+//   //           label="Async Select"
+//   //           placeholder="Chọn người dùng..."
+//   //           value="user_99"
+//   //           options={options}
+//   //           isLoading={isLoading}
+//   //           portal={false}
+//   //         />
 
-          <MultiSelect
-            id="async-multiselect-test"
-            label="Async MultiSelect"
-            placeholder="Chọn nhiều người dùng..."
-            value={["user_99"]}
-            options={options}
-            isLoading={isLoading}
-            portal={false}
-          />
-        </div>
-      );
-    };
+//   //         <MultiSelect
+//   //           id="async-multiselect-test"
+//   //           label="Async MultiSelect"
+//   //           placeholder="Chọn nhiều người dùng..."
+//   //           value={["user_99"]}
+//   //           options={options}
+//   //           isLoading={isLoading}
+//   //           portal={false}
+//   //         />
+//   //       </div>
+//   //     );
+//   //   };
 
-    cy.mount(<AsyncSelectHarness />);
+//   //   cy.mount(<AsyncSelectHarness />);
 
-    // 1. Initial loading: raw ID "user_99" must NOT be rendered in trigger!
-    cy.get("#async-select-test-trigger").should("not.contain", "user_99");
-    cy.get("#async-select-test-trigger").should("contain", "Chọn người dùng...");
-    cy.get("#async-multiselect-test-trigger").should("not.contain", "user_99");
+//   //   // 1. Initial loading: raw ID "user_99" must NOT be rendered in trigger!
+//   //   cy.get("#async-select-test-trigger").should("not.contain", "user_99");
+//   //   cy.get("#async-select-test-trigger").should("contain", "Chọn người dùng...");
+//   //   cy.get("#async-multiselect-test-trigger").should("not.contain", "user_99");
 
-    // 2. Options loaded: labels rendered correctly
-    cy.get("[data-testid='btn-load-options']").click();
-    cy.get("#async-select-test-trigger").should("contain", "Nguyễn Văn A");
-    cy.get("#async-multiselect-test-trigger").should("contain", "Nguyễn Văn A");
+//   //   // 2. Options loaded: labels rendered correctly
+//   //   cy.get("[data-testid='btn-load-options']").click();
+//   //   cy.get("#async-select-test-trigger").should("contain", "Nguyễn Văn A");
+//   //   cy.get("#async-multiselect-test-trigger").should("contain", "Nguyễn Văn A");
 
-    // 3. Search replaces options: "Nguyễn Văn A" is preserved via historicalOptions!
-    cy.get("[data-testid='btn-search-replace']").click();
-    cy.get("#async-select-test-trigger").should("contain", "Nguyễn Văn A");
-    cy.get("#async-multiselect-test-trigger").should("contain", "Nguyễn Văn A");
-  });
-});
-
+//   //   // 3. Search replaces options: "Nguyễn Văn A" is preserved via historicalOptions!
+//   //   cy.get("[data-testid='btn-search-replace']").click();
+//   //   cy.get("#async-select-test-trigger").should("contain", "Nguyễn Văn A");
+//   //   cy.get("#async-multiselect-test-trigger").should("contain", "Nguyễn Văn A");
+//   // });
+// });

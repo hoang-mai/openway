@@ -54,7 +54,7 @@ export default function DropdownMenu({
   const roundedClass = getSafeConfig(radius, radiusConfig, "md");
 
   const menuClassNames = [
-    "bg-neutral-white border border-neutral-200/80 shadow-lg outline-none focus:outline-none flex flex-col max-h-80 overflow-y-auto ui-scrollbar",
+    "bg-neutral-white border border-neutral-200/80 shadow-notion-dropdown outline-none focus:outline-none flex flex-col max-h-80 overflow-y-auto ui-scrollbar",
     currentSize.menu,
     roundedClass,
     className,

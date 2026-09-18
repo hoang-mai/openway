@@ -1,4 +1,4 @@
-# 📅⏳ DateTimeRangePicker Component Suite (`@owa/ui`)
+# 📅⏳ DateTimeRangePicker Component Suite (`@openway/ui`)
 
 Component **DateTimeRangePicker** toàn diện, linh hoạt và tiện dụng, được thiết kế theo chuẩn **Design System**, hỗ trợ **Chọn khoảng Ngày & Giờ (Start - End) với cơ chế Chuyển bước (Stepped Selection)** giúp giao diện popover luôn nhỏ gọn, vừa vặn trên mọi màn hình, **Tách bạch Định dạng Dữ liệu (`format`) & Hiển thị (`displayFormat`)**, **Chế độ 12h (AM/PM) & 24h**, **Tùy chọn hiển thị giây (`showSeconds`)**, **Bước nhảy tùy biến (`hourStep`, `minuteStep`, `secondStep`)**, **Tự động ràng buộc `minDate` / `minTime` giữa 2 mốc**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -29,7 +29,7 @@ Component **DateTimeRangePicker** toàn diện, linh hoạt và tiện dụng, �
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { DateTimeRangePicker } from "@owa/ui";
+import { DateTimeRangePicker } from "@openway/ui";
 import type {
   DateTimeRangePickerProps,
   DateTimeRangePickerConfig,
@@ -41,7 +41,7 @@ import type {
   DateTimeRangePickerRadius,
   DateTimeRangePickerLayout,
   LabelPlacement,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -52,7 +52,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { DateTimeRangePicker } from "@owa/ui";
+import { DateTimeRangePicker } from "@openway/ui";
 
 export function BasicDateTimeRangePickerExample() {
   const [range, setRange] = useState<[string, string] | null>([

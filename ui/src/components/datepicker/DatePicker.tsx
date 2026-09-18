@@ -18,7 +18,7 @@ import ChevronDownIcon from "../icons/ChevronDownIcon";
 import CloseIcon from "../icons/CloseIcon";
 import Spinner from "../icons/Spinner";
 import { formatDate, toDate, getAdaptiveViewFormat } from "./utils";
-import { datePickerRadiusConfig, datePickerSizeConfig, datePickerVariantStyles } from "./constants";
+import { datePickerRadiusConfig, datePickerSizeConfig, datePickerVariantStyles, labelColorConfig } from "./constants";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
@@ -196,6 +196,8 @@ export default function DatePicker({
       hasError={hasError}
       cursor="pointer"
       className={labelClassName}
+      colorConfig={labelColorConfig}
+      isOpen={isOpen && !isLoading}
     />
   );
 
@@ -267,13 +269,22 @@ export default function DatePicker({
   }
 
   return (
-    <div className={fieldWrapperClasses}>
+    <div
+      className={fieldWrapperClasses}
+      data-state={isOpen && !isLoading ? "open" : "closed"}
+    >
       {/* Label (Top / Left) */}
       {!isFloating && renderLabel()}
 
       <div className={`flex flex-col ${isFullWidth ? "w-full" : ""}`}>
         {/* Input container */}
-        <div ref={setReference} {...getReferenceProps()} className={containerClasses}>
+        <div
+          ref={setReference}
+          {...getReferenceProps()}
+          data-state={isOpen && !isLoading ? "open" : "closed"}
+          aria-expanded={isOpen && !isLoading}
+          className={containerClasses}
+        >
           {isFloating && renderLabel()}
 
           <input
@@ -311,7 +322,7 @@ export default function DatePicker({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Xóa ngày"
+                aria-label="Clear date"
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${

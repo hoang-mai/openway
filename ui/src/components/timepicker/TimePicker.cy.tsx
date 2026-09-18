@@ -343,31 +343,33 @@ describe("<TimePicker /> Component Showcase", () => {
     // 7. Interactive Testing: Open Popover and select time
     cy.get("#interactive-timepicker input").click();
     cy.get('[role="dialog"]').should("be.visible");
-    cy.contains("li", /^16$/).click();
-    cy.contains("li", /^45$/).click();
+    cy.get('[role="dialog"]').contains("li", /^16$/).click({ force: true });
+    cy.get('[role="dialog"]').contains("li", /^45$/).click({ force: true });
     cy.get("#interactive-timepicker input").should("have.value", "16:45:45");
     cy.get("@onTimeChange").should("have.been.called");
 
     // Clear time using clear button
     cy.get("#interactive-timepicker button[aria-label='Clear time']").click();
     cy.get("#interactive-timepicker input").should("have.value", "");
+    cy.get("body").type("{esc}");
 
     // 8. 12h AM/PM Selection
     cy.get("#interactive-12h-timepicker input").click();
     cy.get('[role="dialog"]').should("be.visible");
-    cy.contains("li", /^PM$/).click();
+    cy.get('[role="dialog"]').contains("li", /^PM$/).click({ force: true });
     cy.get("#interactive-12h-timepicker input").should("contain.value", "PM");
+    cy.get("body").type("{esc}");
 
     // 9. Format + DisplayFormat + No Seconds Selection
     cy.get("#tp-format-display-no-seconds input").click();
     cy.get('[role="dialog"]').should("be.visible");
     // Verify only 2 columns exist (Hours, Minutes) and NO seconds column
-    cy.get('[role="dialog"] ul[aria-label="Hours"]').should("exist");
-    cy.get('[role="dialog"] ul[aria-label="Minutes"]').should("exist");
-    cy.get('[role="dialog"] ul[aria-label="Seconds"]').should("not.exist");
+    cy.get('[role="dialog"] ul[aria-label="Giờ"]').should("exist");
+    cy.get('[role="dialog"] ul[aria-label="Phút"]').should("exist");
+    cy.get('[role="dialog"] ul[aria-label="Giây"]').should("not.exist");
     // Select 16:45
-    cy.get('[role="dialog"] ul[aria-label="Hours"]').contains("li", /^16$/).click();
-    cy.get('[role="dialog"] ul[aria-label="Minutes"]').contains("li", /^45$/).click();
+    cy.get('[role="dialog"] ul[aria-label="Giờ"]').contains("li", /^16$/).click({ force: true });
+    cy.get('[role="dialog"] ul[aria-label="Phút"]').contains("li", /^45$/).click({ force: true });
     // Display format shows 04:45 PM
     cy.get("#tp-format-display-no-seconds input").should("have.value", "04:45 PM");
     cy.get("@onNoSecondsIOChange").should("have.been.calledWith", "16:45");

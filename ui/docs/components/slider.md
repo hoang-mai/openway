@@ -1,6 +1,6 @@
-# 🎚️ Slider Component (`@owa/ui`)
+# 🎚️ Slider Component (`@openway/ui`)
 
-Component **Slider** hiện đại, mượt mà và toàn diện, được xây dựng trên nền tảng logic headless của **`@radix-ui/react-slider`**, tuân thủ cấu trúc thiết kế chuẩn **Design System (`styleCode`)** của `@owa/ui`, tích hợp **Safe Config Fallback**, **Floating UI Tooltip**, hỗ trợ cả thanh trượt đơn (**Single**) lẫn thanh trượt dải (**Range**) và đáp ứng đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+Component **Slider** hiện đại, mượt mà và toàn diện, được xây dựng trên nền tảng logic headless của **`@radix-ui/react-slider`**, tuân thủ cấu trúc thiết kế chuẩn **Design System (`styleCode`)** của `@openway/ui`, tích hợp **Safe Config Fallback**, **Floating UI Tooltip**, hỗ trợ cả thanh trượt đơn (**Single**) lẫn thanh trượt dải (**Range**) và đáp ứng đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
 ---
 
@@ -39,7 +39,7 @@ import {
   SliderStepDots,
   clamp,
   getPercentage,
-} from "@owa/ui";
+} from "@openway/ui";
 import type {
   SliderProps,
   SliderConfig,
@@ -52,7 +52,7 @@ import type {
   SliderTooltipMode,
   SliderTooltipPlacement,
   SliderValue,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -63,7 +63,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { Slider } from "@owa/ui";
+import { Slider } from "@openway/ui";
 
 export function BasicSingleSlider() {
   const [volume, setVolume] = useState<number>(50);
@@ -98,7 +98,7 @@ Chỉ cần truyền một mảng 2 phần tử `[minVal, maxVal]` vào `value` 
 
 ```tsx
 import { useState } from "react";
-import { Slider } from "@owa/ui";
+import { Slider } from "@openway/ui";
 
 export function PriceRangeSlider() {
   const [priceRange, setPriceRange] = useState<[number, number]>([200, 800]);

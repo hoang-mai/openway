@@ -226,14 +226,19 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
     [isDisabled, readOnly, isControlled, onChange, resetSearch]
   );
 
-  const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === " ") {
       e.stopPropagation();
-    } else if (e.key === "Enter" && isOpen && activeIndex !== null) {
-      e.preventDefault();
-      const targetOption = filteredOptions[activeIndex];
-      if (targetOption) {
-        handleSelectOption(targetOption);
+    } else if (e.key === "Enter") {
+      if (isOpen && activeIndex !== null) {
+        e.preventDefault();
+        const targetOption = filteredOptions[activeIndex];
+        if (targetOption && !targetOption.disabled) {
+          handleSelectOption(targetOption);
+        }
+      } else if (!isOpen) {
+        e.preventDefault();
+        setIsOpen(true);
       }
     } else if (e.key === "ArrowDown" && !isOpen) {
       setIsOpen(true);
@@ -258,6 +263,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
       hasError={isInvalid}
       cursor="pointer"
       className={labelClassName}
+      isOpen={isOpen}
     />
   );
 
@@ -270,6 +276,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
       className={`group/field relative flex ${
         isHorizontal ? "flex-row items-center gap-3" : "flex-col"
       } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${className}`}
+      data-state={isOpen ? "open" : "closed"}
       data-disabled={isDisabled}
       data-invalid={isInvalid}
       {...props}

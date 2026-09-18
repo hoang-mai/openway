@@ -16,7 +16,7 @@ export function TableColumnHeader<
 }: TableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
     return (
-      <div className={`font-semibold ${className}`.trim()} {...props}>
+      <div className={`font-medium ${className}`.trim()} {...props}>
         {title}
       </div>
     );
@@ -37,7 +37,7 @@ export function TableColumnHeader<
       <button
         type="button"
         onClick={handleSort}
-        className="group inline-flex items-center gap-1.5 font-semibold text-inherit hover:text-neutral-900 transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded px-1 py-0.5 -mx-1"
+        className="group inline-flex items-center gap-1.5 font-medium text-inherit hover:text-neutral-900 transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/25 rounded-xs px-1 py-0.5 -mx-1"
       >
         <span>{title}</span>
         <span className="shrink-0 inline-flex items-center justify-center" aria-hidden="true">

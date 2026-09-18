@@ -1,4 +1,4 @@
-# 🎚️ Toggle Component (`@owa/ui`)
+# 🎚️ Toggle Component (`@openway/ui`)
 
 Component **Toggle** (Switch công tắc) hiện đại, linh hoạt, tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **Safe Config Fallback**, **Start/End Content & Thumb Icons**, **Loading & Spinners**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility** (`role="switch"`).
 
@@ -37,7 +37,7 @@ Component **Toggle** (Switch công tắc) hiện đại, linh hoạt, tương t�
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { Toggle } from "@owa/ui";
+import { Toggle } from "@openway/ui";
 import type {
   ToggleProps,
   ToggleConfig,
@@ -46,7 +46,7 @@ import type {
   ToggleColor,
   ToggleRadius,
   ToggleLabelPlacement,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -57,7 +57,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { Toggle } from "@owa/ui";
+import { Toggle } from "@openway/ui";
 
 export function BasicToggleExample() {
   const [enabled, setEnabled] = useState(false);

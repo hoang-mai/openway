@@ -1,4 +1,4 @@
-# 🔘 Radio & RadioGroup Component (`@owa/ui`)
+# 🔘 Radio & RadioGroup Component (`@openway/ui`)
 
 Bộ đôi component **Radio** và **RadioGroup** chuyên nghiệp, thiết kế theo kiến trúc **Data-driven thuần túy (Pure Data-driven)**, không sử dụng React Context, loại bỏ hoàn toàn `useEffect` gây cascading render, tích hợp **Live Search (Client & Server modes)** thông qua component `Input` variant `outline`, hỗ trợ **bảo lưu mục đã chọn (Preserve Selected)** và tuân thủ chặt chẽ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -34,7 +34,7 @@ Bộ đôi component **Radio** và **RadioGroup** chuyên nghiệp, thiết kế
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { Radio, RadioGroup } from "@owa/ui";
+import { Radio, RadioGroup } from "@openway/ui";
 import type {
   RadioProps,
   RadioGroupProps,
@@ -44,7 +44,7 @@ import type {
   RadioColor,
   RadioLabelPlacement,
   RadioSearchMode,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -55,7 +55,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { Radio } from "@owa/ui";
+import { Radio } from "@openway/ui";
 
 export function SingleRadioExample() {
   const [selected, setSelected] = useState(false);
@@ -77,7 +77,7 @@ export function SingleRadioExample() {
 
 ```tsx
 import { useState } from "react";
-import { RadioGroup } from "@owa/ui";
+import { RadioGroup } from "@openway/ui";
 
 export function BasicGroupExample() {
   const [delivery, setDelivery] = useState<string | null>("standard");
@@ -106,7 +106,7 @@ export function BasicGroupExample() {
 
 ```tsx
 import { useState } from "react";
-import { RadioGroup } from "@owa/ui";
+import { RadioGroup } from "@openway/ui";
 
 const frameworks = [
   { value: "react", label: "React JS", code: "FE-01", description: "Facebook library" },
@@ -139,7 +139,7 @@ export function ClientSearchExample() {
 
 ```tsx
 import { useState } from "react";
-import { RadioGroup } from "@owa/ui";
+import { RadioGroup } from "@openway/ui";
 
 export function ServerSearchExample() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);

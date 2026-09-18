@@ -1,4 +1,4 @@
-# 📁 File Preview Components (`@owa/ui`)
+# 📁 File Preview Components (`@openway/ui`)
 
 Bộ component xem trước tệp tin hiệu năng cao, xây dựng trên nền tảng **HTML5 Native `<dialog>`** và kiến trúc **React Context + Compound Component**:
 
@@ -39,7 +39,7 @@ import {
   getFileExtension,
   normalizePreviewFile,
   downloadFile,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -50,7 +50,7 @@ import {
 
 ```tsx
 import { useState } from "react";
-import { Button, FileContainer, FilePreview } from "@owa/ui";
+import { Button, FileContainer, FilePreview } from "@openway/ui";
 
 export function Example() {
   const [open, setOpen] = useState(false);

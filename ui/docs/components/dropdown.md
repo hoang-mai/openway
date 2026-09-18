@@ -1,4 +1,4 @@
-# 🔽 Dropdown Component (`@owa/ui`)
+# 🔽 Dropdown Component (`@openway/ui`)
 
 Bộ component **Dropdown Menu** xây dựng theo mô hình **Compound Component** trên nền tảng **`@floating-ui/react`**, hỗ trợ **điều hướng bàn phím WAI-ARIA Menu hoàn chỉnh**, **tự động căn chỉnh vị trí thông minh (flip/shift/offset)**, **hiệu ứng chuyển động mượt mà**, và tương thích hoàn toàn với **React 19 / React Compiler**.
 
@@ -36,7 +36,7 @@ import {
   DropdownHeader,
   DropdownGroup,
   DropdownSeparator,
-} from "@owa/ui";
+} from "@openway/ui";
 import type {
   DropdownProps,
   DropdownTriggerProps,
@@ -49,7 +49,7 @@ import type {
   DropdownSize,
   DropdownRadius,
   DropdownColor,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -65,7 +65,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-} from "@owa/ui";
+} from "@openway/ui";
 
 export function BasicDropdown() {
   return (
@@ -97,7 +97,7 @@ import {
   DropdownItem,
   DropdownSeparator,
   Button,
-} from "@owa/ui";
+} from "@openway/ui";
 import { UserIcon, SettingsIcon, LockIcon, TrashIcon } from "@/components/icons";
 
 export function AdvancedDropdown() {
@@ -149,7 +149,7 @@ export function AdvancedDropdown() {
 Khi bật `asChild` (hoặc truyền trực tiếp một phần tử con hợp lệ), `DropdownTrigger` sẽ truyền toàn bộ accessibility attributes và sự kiện vào phần tử con mà không bọc thêm thẻ `<button>` thừa:
 
 ```tsx
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, IconButton } from "@owa/ui";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, IconButton } from "@openway/ui";
 import { MoreVerticalIcon } from "@/components/icons";
 
 export function CustomTriggerDropdown() {

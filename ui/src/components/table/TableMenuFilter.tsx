@@ -16,6 +16,7 @@ import { DatePicker } from "@/components/datepicker";
 import { DateRangePicker } from "@/components/daterangepicker";
 import { CheckboxGroup, type CheckboxOptionItem } from "@/components/checkbox";
 import { Badge } from "@/components/badge";
+import { tableFilterConfig } from "./constants";
 import PlusIcon from "@/components/icons/PlusIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
 import ResetIcon from "@/components/icons/ResetIcon";
@@ -262,7 +263,7 @@ function TableFilterBadgeChip({
         <NumberInput
           ref={inputRef}
           size="sm"
-          radius="full"
+          radius="md"
           placeholder={field.placeholder || "Nhập số..."}
           min={field.min}
           max={field.max}
@@ -353,7 +354,7 @@ function TableFilterBadgeChip({
       <Input
         ref={inputRef}
         size="sm"
-        radius="full"
+        radius="md"
         placeholder={field.placeholder || "Nhập từ khóa..."}
         value={(currentValue as string) || ""}
         onChange={(e) => onChange({ [field.name]: e.target.value })}
@@ -371,21 +372,38 @@ function TableFilterBadgeChip({
         })}
       >
         <Badge
-          size="sm"
-          variant="soft"
-          color={hasValue || isOpen ? "primary" : "neutral"}
-          radius="full"
-          data-testid={`filter-chip-${fieldName}`}
-          className={`cursor-pointer select-none transition-all duration-150 gap-1 px-3 py-1 rounded-full ${
-            isOpen ? "ring-2 ring-primary-500/30" : "hover:opacity-90"
-          }`}
-          onDelete={onRemove}
+          role="button"
+          tabIndex={0}
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenChange(!isOpen);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onOpenChange(!isOpen);
+            }
+          }}
+          onDelete={() => onRemove()}
           deleteAriaLabel={`Xóa bộ lọc ${field.label}`}
+          variant="soft"
+          color={isOpen ? "primary" : "neutral"}
+          radius="md"
+          size="md"
+          data-testid={`filter-chip-${fieldName}`}
+          className={`${tableFilterConfig.chip} ${
+            isOpen
+              ? tableFilterConfig.chipOpen
+              : hasValue
+              ? tableFilterConfig.chipActive
+              : tableFilterConfig.chipInactive
+          }`}
+          title={`${field.label}: ${displayVal}`}
         >
-          <span className="font-semibold">{field.label}:</span>
+          <span className={tableFilterConfig.chipLabel}>{field.label}:</span>
           <span
             data-testid={`filter-chip-val-${fieldName}`}
-            className={hasValue ? "font-medium" : "opacity-70 italic"}
+            className={tableFilterConfig.chipValue}
           >
             {displayVal}
           </span>
@@ -404,25 +422,27 @@ function TableFilterBadgeChip({
               zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
             }}
             {...getFloatingProps({
-              className: `bg-white border border-neutral-200 rounded-lg p-3 shadow-2xl ${
+              className: `${tableFilterConfig.popoverContent} ${
                 isDateOrDateRange
-                  ? "w-auto min-w-[280px]"
-                  : "min-w-64 max-w-xs"
+                  ? tableFilterConfig.popoverDate
+                  : field.type === "checkbox-group"
+                  ? tableFilterConfig.popoverCheckbox
+                  : tableFilterConfig.popoverDefault
               }`,
             })}
           >
             {/* Popover Header */}
-            <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-100">
-              <span className="text-xs font-bold text-neutral-800">
+            <div className={tableFilterConfig.popoverHeader}>
+              <span className={tableFilterConfig.popoverTitle}>
                 {field.label}
               </span>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded transition-colors cursor-pointer"
+                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-xs transition-colors cursor-pointer"
                 title="Đóng"
               >
-                <CloseIcon className="w-3.5 h-3.5" />
+                <CloseIcon className="size-3.5" />
               </button>
             </div>
 
@@ -430,18 +450,18 @@ function TableFilterBadgeChip({
             <div className="mt-1">{renderEditor()}</div>
 
             {/* Popover Footer */}
-            <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-100">
+            <div className={tableFilterConfig.popoverFooter}>
               <button
                 type="button"
                 onClick={onRemove}
-                className="text-[11px] text-red-500 hover:text-red-700 transition-colors cursor-pointer font-medium"
+                className={tableFilterConfig.popoverRemoveButton}
               >
                 Xóa bộ lọc
               </button>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-[11px] font-medium text-neutral-700 hover:bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200 transition-colors cursor-pointer"
+                className={tableFilterConfig.popoverDoneButton}
               >
                 Xong
               </button>
@@ -597,7 +617,7 @@ export function TableMenuFilter({
     <div
       onClick={(e) => e.stopPropagation()}
       onMouseDown={(e) => e.stopPropagation()}
-      className={`inline-flex flex-wrap items-center gap-2 ${className}`.trim()}
+      className={`${tableFilterConfig.container} ${className}`.trim()}
     >
       {/* Nút "+ Bộ lọc" và Dropdown menu */}
       <div className="inline-flex">
@@ -606,14 +626,13 @@ export function TableMenuFilter({
           type="button"
           data-testid="table-add-filter-button"
           {...getAddRefProps({
-            className:
-              "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:text-neutral-900 bg-white border border-neutral-300 hover:border-neutral-400 rounded-full transition-all shadow-xs hover:shadow-sm cursor-pointer active:scale-95",
+            className: tableFilterConfig.addButton,
           })}
         >
-          <PlusIcon className="w-3.5 h-3.5 text-neutral-500" />
+          <PlusIcon className="size-3.5 text-neutral-400" />
           <span>Bộ lọc</span>
           <ChevronDownIcon
-            className={`w-3 h-3 text-neutral-400 transition-transform ${
+            className={`size-3 text-neutral-400 transition-transform ${
               isAddMenuOpen ? "rotate-180" : ""
             }`}
           />
@@ -631,11 +650,10 @@ export function TableMenuFilter({
                 zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
               }}
               {...getAddFloatingProps({
-                className:
-                  "bg-white border border-neutral-200 rounded-lg p-1.5 shadow-xl min-w-48",
+                className: tableFilterConfig.addMenuDropdown,
               })}
             >
-              <div className="px-2 py-1 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
+              <div className="px-2 py-1 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider select-none">
                 Chọn trường cần lọc
               </div>
               <div className="space-y-0.5 mt-0.5">
@@ -651,10 +669,8 @@ export function TableMenuFilter({
                         e.stopPropagation();
                         handleSelectFieldToAdd(field);
                       }}
-                      className={`w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md text-left transition-colors cursor-pointer ${
-                        isAlreadyActive
-                          ? "text-primary-600 font-medium bg-primary-50"
-                          : "text-neutral-700 hover:bg-neutral-100"
+                      className={`${tableFilterConfig.addMenuItem} ${
+                        isAlreadyActive ? tableFilterConfig.addMenuItemActive : ""
                       }`}
                     >
                       <span>{field.label}</span>
@@ -706,10 +722,10 @@ export function TableMenuFilter({
           type="button"
           data-testid="table-filter-reset-button"
           onClick={handleResetAll}
-          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-neutral-500 hover:text-red-600 transition-colors cursor-pointer"
+          className={tableFilterConfig.resetButton}
           title="Đặt lại toàn bộ bộ lọc"
         >
-          <ResetIcon className="w-3.5 h-3.5" />
+          <ResetIcon className="size-3.5" />
           <span>Đặt lại</span>
         </button>
       )}

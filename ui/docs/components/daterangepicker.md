@@ -1,4 +1,4 @@
-# 📆 DateRangePicker Component Suite (`@owa/ui`)
+# 📆 DateRangePicker Component Suite (`@openway/ui`)
 
 Bộ component **DateRangePicker** & **DateRangeCalendar** toàn diện, linh hoạt và tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **Chọn khoảng ngày trên 2 tháng liên tiếp song song**, **3 Chế độ View (Khoảng Ngày / Tháng / Năm)**, **Định dạng dữ liệu chuẩn hóa (`format`)**, **Hiển thị trực quan thích ứng (`displayFormat`)**, **Số thứ tự tuần (`showWeekNumbers`)**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -31,7 +31,7 @@ Bộ component **DateRangePicker** & **DateRangeCalendar** toàn diện, linh ho
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { DateRangePicker, DateRangeCalendar } from "@owa/ui";
+import { DateRangePicker, DateRangeCalendar } from "@openway/ui";
 import type {
   DateRangePickerProps,
   DateRangePickerConfig,
@@ -44,7 +44,7 @@ import type {
   DateRangePickerRadius,
   LabelPlacement,
   LocaleConfig,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -55,7 +55,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { DateRangePicker } from "@owa/ui";
+import { DateRangePicker } from "@openway/ui";
 
 export function BasicDateRangePickerExample() {
   const [range, setRange] = useState<[string, string] | null>(["01/08/2026", "15/08/2026"]);
@@ -123,7 +123,7 @@ Bật `config={{ showViewTabs: true }}` để cho phép người dùng chọn kh
 
 ```tsx
 import { useState } from "react";
-import { DateRangeCalendar } from "@owa/ui";
+import { DateRangeCalendar } from "@openway/ui";
 
 export function StandaloneDateRangeCalendarExample() {
   const [range, setRange] = useState<[Date | null, Date | null]>([

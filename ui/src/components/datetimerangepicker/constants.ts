@@ -110,13 +110,20 @@ export const dateTimeRangePickerSizeConfig: Record<
  * Cấu hình màu chữ của nhãn label theo màu chủ đề với prefix group-focus-within/datetimerangepicker
  */
 export const labelColorConfig: Record<DateTimeRangePickerColor, string> = {
-  primary: "text-neutral-700 group-focus-within/datetimerangepicker:text-primary-600",
-  secondary: "text-neutral-700 group-focus-within/datetimerangepicker:text-secondary-600",
-  error: "text-error-500 group-focus-within/datetimerangepicker:text-error-600",
-  success: "text-success-500 group-focus-within/datetimerangepicker:text-success-600",
-  warning: "text-warning-500 group-focus-within/datetimerangepicker:text-warning-600",
-  info: "text-info-500 group-focus-within/datetimerangepicker:text-info-600",
-  neutral: "text-neutral-700 group-focus-within/datetimerangepicker:text-neutral-900",
+  primary:
+    "text-neutral-700 group-focus-within/datetimerangepicker:text-primary-600 group-data-[state=open]/datetimerangepicker:text-primary-600 group-data-[state=open]/field:text-primary-600 group-data-[state=open]:text-primary-600 group-aria-expanded/datetimerangepicker:text-primary-600",
+  secondary:
+    "text-neutral-700 group-focus-within/datetimerangepicker:text-secondary-600 group-data-[state=open]/datetimerangepicker:text-secondary-600 group-data-[state=open]/field:text-secondary-600 group-data-[state=open]:text-secondary-600 group-aria-expanded/datetimerangepicker:text-secondary-600",
+  error:
+    "text-error-500 group-focus-within/datetimerangepicker:text-error-600 group-data-[state=open]/datetimerangepicker:text-error-600 group-data-[state=open]/field:text-error-600 group-data-[state=open]:text-error-600 group-aria-expanded/datetimerangepicker:text-error-600",
+  success:
+    "text-success-500 group-focus-within/datetimerangepicker:text-success-600 group-data-[state=open]/datetimerangepicker:text-success-600 group-data-[state=open]/field:text-success-600 group-data-[state=open]:text-success-600 group-aria-expanded/datetimerangepicker:text-success-600",
+  warning:
+    "text-warning-500 group-focus-within/datetimerangepicker:text-warning-600 group-data-[state=open]/datetimerangepicker:text-warning-600 group-data-[state=open]/field:text-warning-600 group-data-[state=open]:text-warning-600 group-aria-expanded/datetimerangepicker:text-warning-600",
+  info:
+    "text-info-500 group-focus-within/datetimerangepicker:text-info-600 group-data-[state=open]/datetimerangepicker:text-info-600 group-data-[state=open]/field:text-info-600 group-data-[state=open]:text-info-600 group-aria-expanded/datetimerangepicker:text-info-600",
+  neutral:
+    "text-neutral-700 group-focus-within/datetimerangepicker:text-neutral-900 group-data-[state=open]/datetimerangepicker:text-neutral-900 group-data-[state=open]/field:text-neutral-900 group-data-[state=open]:text-neutral-900 group-aria-expanded/datetimerangepicker:text-neutral-900",
 };
 
 /**

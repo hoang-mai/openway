@@ -89,6 +89,7 @@ export function useSelectFloating({
     activeIndex,
     onNavigate,
     loop: true,
+    virtual: true,
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role, listNavigation]);

@@ -1,4 +1,4 @@
-# 🍞 Toast Component & API (`@owa/ui`)
+# 🍞 Toast Component & API (`@openway/ui`)
 
 Hệ thống thông báo dạng pop-up nổi (**Toast Notifications**) với hiệu ứng **xếp chồng thẻ 3D (Card Stacking)** mượt mà từ động cơ **Sonner**, tích hợp trực quan hoàn hảo với thiết kế của component **`<Alert />`** chuẩn **Design System**, **100% Type-safe (Zero `any`)** và hỗ trợ **WAI-ARIA Accessibility**.
 
@@ -22,7 +22,7 @@ Hệ thống thông báo dạng pop-up nổi (**Toast Notifications**) với hi�
 Mount component `<Toaster />` một lần duy nhất tại file layout cao nhất của ứng dụng (ví dụ: `App.tsx`, `main.tsx` hoặc `app/layout.tsx`):
 
 ```tsx
-import { Toaster } from "@owa/ui";
+import { Toaster } from "@openway/ui";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ### Bước 2: Gọi thông báo ở bất kỳ đâu
 ```tsx
-import { toast } from "@owa/ui";
+import { toast } from "@openway/ui";
 
 export function SaveButton() {
   const handleSave = () => {
@@ -59,7 +59,7 @@ export function SaveButton() {
 ### 1. Các phương thức thông báo cơ bản
 
 ```tsx
-import { toast } from "@owa/ui";
+import { toast } from "@openway/ui";
 
 // 1. Thành công (Success)
 toast.success("Thành công!", "Tạo tài khoản mới thành công.");
@@ -86,7 +86,7 @@ const loadingId = toast.loading("Đang đồng bộ dữ liệu...", "Vui lòng 
 Bạn có thể truyền tham số thứ 3 (`options`) để thay đổi biến thể hiển thị, thời gian, kích cỡ hoặc thêm nút thao tác:
 
 ```tsx
-import { toast, Button } from "@owa/ui";
+import { toast, Button } from "@openway/ui";
 
 // Biến thể nền đậm (filled) và hiển thị trong 8 giây:
 toast.error("Xóa thất bại!", "Bạn không có quyền xóa tài nguyên này.", {
@@ -126,7 +126,7 @@ toast.success("Đã sao chép liên kết!", undefined, {
 
 #### Cách 1: Chuỗi thông báo đơn giản
 ```tsx
-import { toast } from "@owa/ui";
+import { toast } from "@openway/ui";
 
 async function handleUpdateProfile() {
   await toast.promise(updateUserApi(data), {
@@ -139,7 +139,7 @@ async function handleUpdateProfile() {
 
 #### Cách 2: Sử dụng dữ liệu trả về từ API và tùy biến giao diện
 ```tsx
-import { toast } from "@owa/ui";
+import { toast } from "@openway/ui";
 
 interface Invoice {
   code: string;
@@ -173,7 +173,7 @@ async function handleCreateInvoice() {
 ### 4. Đóng thông báo chủ động (`toast.dismiss`)
 
 ```tsx
-import { toast } from "@owa/ui";
+import { toast } from "@openway/ui";
 
 // 1. Đóng một thông báo cụ thể bằng ID nhận được:
 const id = toast.loading("Đang nén tệp...");
@@ -191,7 +191,7 @@ toast.dismiss();
 Nếu bạn muốn hiển thị một component JSX bất kỳ theo phong cách riêng:
 
 ```tsx
-import { toast } from "@owa/ui";
+import { toast } from "@openway/ui";
 
 // Cách 1: Dùng hàm render (nhận vào id để đóng)
 toast.custom((id) => (

@@ -14,6 +14,7 @@ import SlidersHorizontalIcon from "../icons/SlidersHorizontalIcon";
 import CloseIcon from "../icons/CloseIcon";
 import RotateCwIcon from "../icons/RotateCwIcon";
 import { TableMenuFilter } from "./TableMenuFilter";
+import { tableToolbarConfig } from "./constants";
 
 const DEFAULT_FILTER_VALUES: Record<string, unknown> = {};
 
@@ -48,14 +49,14 @@ export function TableToolbar<TData extends RowData = RowData>({
 
   return (
     <div
-      className={`flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 ${className}`.trim()}
+      className={`${tableToolbarConfig.container} ${className}`.trim()}
     >
       {/* Khối Tìm kiếm & Bộ lọc Menu & Bulk actions */}
       <div className="flex flex-1 flex-wrap items-center gap-3">
         {enableGlobalFilter && (
-          <div className="relative w-full sm:w-64 max-w-xs">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none text-neutral-400">
-              <SearchIcon className="w-4 h-4" />
+          <div className={tableToolbarConfig.searchContainer}>
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
+              <SearchIcon className={tableToolbarConfig.searchIcon} />
             </span>
             <input
               type="text"
@@ -63,7 +64,7 @@ export function TableToolbar<TData extends RowData = RowData>({
               onChange={handleSearchChange}
               placeholder={searchPlaceholder}
               data-testid="table-search-input"
-              className="w-full h-9 pl-8 pr-8 rounded-full border border-neutral-300 bg-white text-xs sm:text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 shadow-xs transition-colors"
+              className={tableToolbarConfig.searchInput}
             />
             {globalFilter && (
               <button
@@ -71,7 +72,7 @@ export function TableToolbar<TData extends RowData = RowData>({
                 onClick={handleClearSearch}
                 aria-label="Xóa tìm kiếm"
                 data-testid="table-clear-search-button"
-                className="absolute inset-y-0 right-0 flex items-center pr-2.5 text-neutral-400 hover:text-neutral-600 cursor-pointer"
+                className={tableToolbarConfig.clearButton}
               >
                 <CloseIcon className="w-3.5 h-3.5" />
               </button>
@@ -126,11 +127,11 @@ export function TableToolbar<TData extends RowData = RowData>({
                 Cột
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-56 p-0 shadow-lg border border-neutral-200">
-              <PopoverHeader className="px-3 py-2 text-xs font-semibold text-neutral-700 border-b border-neutral-100">
+            <PopoverContent className={tableToolbarConfig.columnPopoverContent}>
+              <PopoverHeader className={tableToolbarConfig.columnPopoverHeader}>
                 Hiển thị cột
               </PopoverHeader>
-              <PopoverBody className="max-h-60 overflow-y-auto ui-scrollbar p-1.5 flex flex-col gap-0.5">
+              <PopoverBody className="max-h-60 overflow-y-auto ui-scrollbar p-1 flex flex-col gap-0.5">
                 {hideableColumns.map((column) => {
                   const colHeader =
                     typeof column.columnDef.header === "string"
@@ -144,8 +145,8 @@ export function TableToolbar<TData extends RowData = RowData>({
                         checked={column.getIsVisible()}
                         onChange={column.getToggleVisibilityHandler()}
                         className="w-full"
-                        wrapperClassName="w-full flex items-center px-2 py-1.5 rounded-md hover:bg-neutral-100/80 cursor-pointer select-none"
-                        labelClassName="text-xs text-neutral-700 font-medium truncate"
+                        wrapperClassName={tableToolbarConfig.columnItemCheckbox}
+                        labelClassName="text-xs text-neutral-700 font-normal truncate"
                       />
                     </div>
                   );

@@ -1,4 +1,4 @@
-# 📢 Alert Component (`@owa/ui`)
+# 📢 Alert Component (`@openway/ui`)
 
 Component **Alert** hiển thị thông báo, cảnh báo theo ngữ cảnh (Inline Alert / Banner) với hiệu năng cao, thiết kế chuẩn **Design System**, **Pure Stateless Component** (0 dependencies) và hỗ trợ đầy đủ **WAI-ARIA Accessibility**.
 
@@ -34,8 +34,8 @@ Component **Alert** hiển thị thông báo, cảnh báo theo ngữ cảnh (Inl
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { Alert } from "@owa/ui";
-import type { AlertProps, AlertColor, AlertVariant, AlertSize, AlertRadius } from "@owa/ui";
+import { Alert } from "@openway/ui";
+import type { AlertProps, AlertColor, AlertVariant, AlertSize, AlertRadius } from "@openway/ui";
 ```
 
 ---
@@ -47,7 +47,7 @@ import type { AlertProps, AlertColor, AlertVariant, AlertSize, AlertRadius } fro
 Bạn có thể truyền nội dung thông báo qua prop `description` hoặc qua thẻ con `children`:
 
 ```tsx
-import { Alert } from "@owa/ui";
+import { Alert } from "@openway/ui";
 
 // Cách 1: Sử dụng prop description (ngắn gọn)
 export function BasicAlertExample() {
@@ -183,7 +183,7 @@ Chế độ Banner giúp thông báo trải rộng toàn bộ chiều ngang (`w-
 ### 7. Icon tùy biến & Action Slot
 
 ```tsx
-import { Alert, Button } from "@owa/ui";
+import { Alert, Button } from "@openway/ui";
 
 export function AdvancedAlertExample() {
   return (

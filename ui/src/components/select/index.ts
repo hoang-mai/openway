@@ -16,3 +16,4 @@ export {
   getVisibleTags,
   formatFilterBadgeValue,
 } from "./utils";
+export { filterSizeConfig } from "./constants";

@@ -1104,7 +1104,7 @@ describe("Table & DataTable Component Tests", () => {
     cy.viewport(1440, 900);
   });
 
-  it("1. Toàn bộ 11 Component trên cùng 1 màn hình máy tính (Single Mount Harness)", () => {
+  it.only("1. Toàn bộ 11 Component trên cùng 1 màn hình máy tính (Single Mount Harness)", () => {
     const onRowClick = cy.stub().as("onRowClick");
     const onRefresh = cy.stub().as("onRefresh");
     const onColumnOrderChange = cy.stub().as("onColumnOrderChange");
@@ -1417,13 +1417,13 @@ describe("Table & DataTable Component Tests", () => {
     // ==========================================================
     // 7. Kiểm tra DataTable Bộ Lọc Menu (SelectMenuFilter style)
     // ==========================================================
-    // 7.1 Client-side Filtering & Rounded-full UI
+    // 7.1 Client-side Filtering & Notion UI
     cy.get("[data-testid='client-filter-datatable-section']").within(() => {
-        // 7.1.1 Ô tìm kiếm Search có bo tròn full (rounded-full)
-        cy.get("[data-testid='table-search-input']").should("have.class", "rounded-full");
+        // 7.1.1 Ô tìm kiếm Search có bo góc chuẩn Notion (rounded-md)
+        cy.get("[data-testid='table-search-input']").should("have.class", "rounded-md");
 
-        // Nút "+ Bộ lọc" có bo tròn full (rounded-full)
-        cy.get("[data-testid='table-add-filter-button']").should("have.class", "rounded-full");
+        // Nút "+ Bộ lọc" có bo góc chuẩn Notion (rounded-md)
+        cy.get("[data-testid='table-add-filter-button']").should("have.class", "rounded-md");
 
         // Click nút "+ Bộ lọc"
         cy.get("[data-testid='table-add-filter-button']").click();
@@ -1433,11 +1433,11 @@ describe("Table & DataTable Component Tests", () => {
       cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
       cy.get("[data-testid='filter-option-role']").click();
 
-      // Chip lọc Role xuất hiện và có class rounded-full
+      // Chip lọc Role xuất hiện và có class rounded-md
       cy.get("[data-testid='client-filter-datatable-section']").within(() => {
         cy.get("[data-testid='filter-chip-role']")
           .should("be.visible")
-          .and("have.class", "rounded-full");
+          .and("have.class", "rounded-md");
       });
 
       // Popover editor cho Role xuất hiện (CheckboxGroup)
@@ -1482,11 +1482,11 @@ describe("Table & DataTable Component Tests", () => {
       cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
       cy.get("[data-testid='filter-option-createdAt']").click();
 
-      // Chip Khoảng ngày xuất hiện với rounded-full
+      // Chip Khoảng ngày xuất hiện với rounded-md
       cy.get("[data-testid='client-filter-datatable-section']").within(() => {
         cy.get("[data-testid='filter-chip-createdAt']")
           .should("be.visible")
-          .and("have.class", "rounded-full");
+          .and("have.class", "rounded-md");
       });
 
       // Popover editor cho DateRange xuất hiện chứa lịch chọn khoảng ngày giống SelectMenuFilter
@@ -1501,8 +1501,8 @@ describe("Table & DataTable Component Tests", () => {
 
       // 7.2 Server-side Filtering & Client-side Global Search
       cy.get("[data-testid='server-filter-datatable-section']").within(() => {
-        // Ô tìm kiếm có class rounded-full
-        cy.get("[data-testid='table-search-input']").should("have.class", "rounded-full");
+        // Ô tìm kiếm có class rounded-md
+        cy.get("[data-testid='table-search-input']").should("have.class", "rounded-md");
 
         // Click nút "+ Bộ lọc"
         cy.get("[data-testid='table-add-filter-button']").click();
@@ -2003,7 +2003,7 @@ describe("Table & DataTable Component Tests", () => {
 
     // Client-side filtering
     cy.get("[data-testid='client-filter-datatable-section']").within(() => {
-      cy.get("[data-testid='table-search-input']").should("have.class", "rounded-full");
+      cy.get("[data-testid='table-search-input']").should("have.class", "rounded-md");
       cy.get("[data-testid='table-add-filter-button']").click();
     });
 

@@ -228,7 +228,7 @@ export default function DateRangeCalendar({
   return (
     <div
       className={`inline-flex flex-col ${
-        bordered ? "border border-neutral-200/80 bg-neutral-white shadow-xl" : "border-0 shadow-none bg-transparent"
+        bordered ? "border border-neutral-200/80 bg-neutral-white shadow-notion-dropdown" : "border-0 shadow-none bg-transparent"
       } ${radiusClass} overflow-hidden select-none ${className}`}
     >
       {/* View Switcher Tabs (Days / Months / Years) */}

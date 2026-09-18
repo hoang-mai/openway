@@ -1,4 +1,4 @@
-# 🔤 Input Component Suite (`@owa/ui`)
+# 🔤 Input Component Suite (`@openway/ui`)
 
 Bộ component **Input** toàn diện, linh hoạt và tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **Safe Config Fallback**, **Floating Labels**, **Loading & Spinners**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -44,7 +44,7 @@ import {
   splitTagsFromText,
   isValidOtpChar,
   sanitizeOtpString,
-} from "@owa/ui";
+} from "@openway/ui";
 import type {
   InputProps,
   InputConfig,
@@ -61,7 +61,7 @@ import type {
   InputColor,
   InputRadius,
   InputLabelPlacement,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -71,7 +71,7 @@ import type {
 ### 1. Cách sử dụng cơ bản
 
 ```tsx
-import { Input } from "@owa/ui";
+import { Input } from "@openway/ui";
 
 export function BasicInputExample() {
   return (
@@ -189,7 +189,7 @@ Component **`NumberInput`** chuyên dụng cho việc nhập số, tiền tệ, 
 
 #### 1. Nhập số tiền cơ bản (Chuẩn Việt Nam)
 ```tsx
-import { NumberInput } from "@owa/ui";
+import { NumberInput } from "@openway/ui";
 
 export function CurrencyExample() {
   const [amount, setAmount] = useState<string | number>("");
@@ -274,7 +274,7 @@ Component **`OtpInput`** chuyên dụng cho việc nhập mã xác thực OTP (O
 
 #### 1. Sử dụng cơ bản & Lắng nghe hoàn thành
 ```tsx
-import { OtpInput } from "@owa/ui";
+import { OtpInput } from "@openway/ui";
 
 export function OtpBasicExample() {
   return (
@@ -292,7 +292,7 @@ export function OtpBasicExample() {
 #### 2. Điều khiển bằng `ref` (`OtpInputRef`)
 ```tsx
 import { useRef } from "react";
-import { OtpInput, type OtpInputRef } from "@owa/ui";
+import { OtpInput, type OtpInputRef } from "@openway/ui";
 
 export function OtpRefExample() {
   const otpRef = useRef<OtpInputRef>(null);
@@ -417,7 +417,7 @@ Component **`MultiInput`** chuyên dụng cho việc nhập nhiều giá trị (
 
 #### 1. Sử dụng cơ bản với phím Enter & Dấu phẩy
 ```tsx
-import { MultiInput } from "@owa/ui";
+import { MultiInput } from "@openway/ui";
 
 export function BasicTagsExample() {
   return (

@@ -90,7 +90,7 @@ export function TableBody({
   return (
     <tbody
       ref={ref}
-      className={`divide-y divide-neutral-200/70 ${className}`.trim()}
+      className={`divide-y divide-neutral-100 ${className}`.trim()}
       {...props}
     >
       {children}
@@ -107,7 +107,7 @@ export function TableFooter({
   return (
     <tfoot
       ref={ref}
-      className={`border-t border-neutral-200 bg-neutral-50/60 font-medium text-neutral-600 ${className}`.trim()}
+      className={`border-t border-neutral-200 bg-neutral-50/50 font-medium text-neutral-600 ${className}`.trim()}
       {...props}
     >
       {children}
@@ -126,7 +126,7 @@ export function TableRow({
   const { variantStyles } = useTableStyles();
 
   const selectedClass = isSelected
-    ? "bg-primary-50/70 hover:bg-primary-50 text-primary-950 font-medium"
+    ? "bg-primary-50/60 hover:bg-primary-50/80 text-neutral-900 font-medium"
     : "";
   const hoverClass = isHoverable && !isSelected ? variantStyles.row : "";
 

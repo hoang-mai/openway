@@ -1,4 +1,4 @@
-# ☑️ Checkbox & CheckboxGroup Component (`@owa/ui`)
+# ☑️ Checkbox & CheckboxGroup Component (`@openway/ui`)
 
 Bộ đôi component **Checkbox** và **CheckboxGroup** chuyên nghiệp, thiết kế theo kiến trúc **Data-driven thuần túy (Pure Data-driven)**, không sử dụng React Context, loại bỏ hoàn toàn `useEffect` gây cascading render, tích hợp **Live Search (Client & Server modes)** thông qua component `Input` variant `outline`, hỗ trợ **bảo lưu mục đã chọn (Preserve Selected)** và tuân thủ chặt chẽ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -36,7 +36,7 @@ Bộ đôi component **Checkbox** và **CheckboxGroup** chuyên nghiệp, thiế
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { Checkbox, CheckboxGroup } from "@owa/ui";
+import { Checkbox, CheckboxGroup } from "@openway/ui";
 import type {
   CheckboxProps,
   CheckboxGroupProps,
@@ -47,7 +47,7 @@ import type {
   CheckboxRadius,
   CheckboxLabelPlacement,
   CheckboxSearchMode,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -58,7 +58,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { Checkbox } from "@owa/ui";
+import { Checkbox } from "@openway/ui";
 
 export function SingleCheckboxExample() {
   const [agree, setAgree] = useState(false);
@@ -81,7 +81,7 @@ export function SingleCheckboxExample() {
 
 ```tsx
 import { useState } from "react";
-import { CheckboxGroup } from "@owa/ui";
+import { CheckboxGroup } from "@openway/ui";
 
 export function BasicGroupExample() {
   const [selected, setSelected] = useState<string[]>(["react"]);
@@ -111,7 +111,7 @@ export function BasicGroupExample() {
 
 ```tsx
 import { useState } from "react";
-import { CheckboxGroup } from "@owa/ui";
+import { CheckboxGroup } from "@openway/ui";
 
 const frameworks = [
   { value: "react", label: "React JS", code: "FE-01", description: "Facebook library" },
@@ -148,8 +148,8 @@ export function ClientSearchExample() {
 - Hỗ trợ cuộn vô tận mượt mà khi kết hợp `maxHeight` và `listFooter`.
 
 ```tsx
-import { CheckboxGroup } from "@owa/ui";
-import { useSelectInfiniteQuery } from "@owa/ui/query";
+import { CheckboxGroup } from "@openway/ui";
+import { useSelectInfiniteQuery } from "@openway/ui/query";
 
 export function InfiniteProductCheckboxGroup() {
   const { selectProps } = useSelectInfiniteQuery({

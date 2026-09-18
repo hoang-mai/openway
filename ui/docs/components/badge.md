@@ -1,4 +1,4 @@
-# 🏷️ Badge Component (`@owa/ui`)
+# 🏷️ Badge Component (`@openway/ui`)
 
 Component **Badge** (Huy hiệu / Nhãn trạng thái / Chip) hiệu năng cao, thiết kế chuẩn **Design System**, **Pure Stateless Component** (0 dependencies) và hỗ trợ đầy đủ **WAI-ARIA Accessibility**.
 
@@ -29,8 +29,8 @@ Component **Badge** (Huy hiệu / Nhãn trạng thái / Chip) hiệu năng cao, 
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { Badge } from "@owa/ui";
-import type { BadgeProps, BadgeSize, BadgeVariant, BadgeColor, BadgeRadius } from "@owa/ui";
+import { Badge } from "@openway/ui";
+import type { BadgeProps, BadgeSize, BadgeVariant, BadgeColor, BadgeRadius } from "@openway/ui";
 ```
 
 ---
@@ -40,7 +40,7 @@ import type { BadgeProps, BadgeSize, BadgeVariant, BadgeColor, BadgeRadius } fro
 ### 1. Cách sử dụng cơ bản
 
 ```tsx
-import { Badge } from "@owa/ui";
+import { Badge } from "@openway/ui";
 
 export function BasicBadgeExample() {
   return (
@@ -131,7 +131,7 @@ Thích hợp hiển thị trạng thái tài khoản, server, tiến trình:
 ### 6. Icon trước & sau (`leftIcon`, `rightIcon`)
 
 ```tsx
-import { Badge } from "@owa/ui";
+import { Badge } from "@openway/ui";
 import { SparklesIcon, CheckIcon, ShieldIcon } from "@/components/icons";
 
 export function IconBadgeExample() {
@@ -159,7 +159,7 @@ Khi truyền prop `onDelete`, Badge sẽ hiển thị nút đóng `(X)` ở góc
 
 ```tsx
 import { useState } from "react";
-import { Badge } from "@owa/ui";
+import { Badge } from "@openway/ui";
 
 export function ChipListExample() {
   const [tags, setTags] = useState(["React", "TypeScript", "TailwindCSS"]);

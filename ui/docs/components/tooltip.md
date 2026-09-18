@@ -1,4 +1,4 @@
-# 💡 Tooltip Component (`@owa/ui`)
+# 💡 Tooltip Component (`@openway/ui`)
 
 Component **Tooltip** (chú giải ngữ cảnh nhanh) xây dựng trên nền tảng **`@floating-ui/react`**, hỗ trợ **chuẩn WAI-ARIA Tooltip**, **tự động căn vị trí thông minh (flip/shift/offset)**, **mũi tên động (FloatingArrow)**, **tích hợp Slot pattern React 19**, và tương thích với hệ thống **Safe Config Fallback**.
 
@@ -7,7 +7,7 @@ Component **Tooltip** (chú giải ngữ cảnh nhanh) xây dựng trên nền t
 ## 🌟 Điểm nổi bật
 
 - **Tích hợp Slot & React 19**: Tự động gán trực tiếp event listeners và ref vào phần tử con thông qua mô hình `Slot` component mà không cần bọc thêm thẻ `<span>` thừa, bảo toàn 100% layout flexbox/grid ban đầu.
-- **Hệ thống z-index đồng bộ**: Sử dụng `DEFAULT_Z_INDEX.TOOLTIP` (mặc định `60`) từ hệ sinh thái constant toàn cục của `@owa/ui`, luôn nổi trên Dropdown và Popover.
+- **Hệ thống z-index đồng bộ**: Sử dụng `DEFAULT_Z_INDEX.TOOLTIP` (mặc định `60`) từ hệ sinh thái constant toàn cục của `@openway/ui`, luôn nổi trên Dropdown và Popover.
 - **Mũi tên chỉ hướng thông minh (FloatingArrow)**: Mũi tên SVG tự động xoay và định vị chính xác theo góc lật của tooltip, tự đổi màu viền và nền đồng bộ theo `variant` và `color`.
 - **Tự động định vị & chống tràn màn hình**:
   - `offset`: Tự động duy trì khoảng cách tiêu chuẩn với trigger.
@@ -29,7 +29,7 @@ Component **Tooltip** (chú giải ngữ cảnh nhanh) xây dựng trên nền t
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { Tooltip } from "@owa/ui";
+import { Tooltip } from "@openway/ui";
 import type {
   TooltipProps,
   TooltipPlacement,
@@ -37,7 +37,7 @@ import type {
   TooltipColor,
   TooltipSize,
   TooltipRadius,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -47,7 +47,7 @@ import type {
 ### 1. Tooltip cơ bản
 
 ```tsx
-import { Tooltip, Button } from "@owa/ui";
+import { Tooltip, Button } from "@openway/ui";
 
 export function BasicTooltip() {
   return (
@@ -151,7 +151,7 @@ Hỗ trợ 12 hướng hiển thị phong phú:
 ### 5. Kết hợp với IconButton & Trạng thái Disabled
 
 ```tsx
-import { Tooltip, IconButton } from "@owa/ui";
+import { Tooltip, IconButton } from "@openway/ui";
 import { EditIcon, TrashIcon } from "@/components/icons";
 
 export function IconButtonsWithTooltip() {

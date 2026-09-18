@@ -1,4 +1,4 @@
-# 📦 Confirm Component (`@owa/ui`)
+# 📦 Confirm Component (`@openway/ui`)
 
 Bộ component **Confirm** (Hộp thoại xác nhận) hiệu năng cao, chuẩn **HTML5 Native `<dialog>`** và thiết kế theo mô hình **Pure Compound Pattern** linh hoạt.
 
@@ -27,7 +27,7 @@ import {
   ConfirmFooter,
   ConfirmClose,
   useConfirmContext,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -45,7 +45,7 @@ import {
   ConfirmHeader,
   ConfirmBody,
   ConfirmFooter,
-} from "@owa/ui";
+} from "@openway/ui";
 
 export function BasicConfirmExample() {
   const [open, setOpen] = useState(false);
@@ -93,7 +93,7 @@ import {
   ConfirmHeader,
   ConfirmBody,
   ConfirmFooter,
-} from "@owa/ui";
+} from "@openway/ui";
 
 export function AsyncConfirmExample() {
   const [open, setOpen] = useState(false);
@@ -147,7 +147,7 @@ import {
   ConfirmFooter,
   ConfirmClose,
   Button,
-} from "@owa/ui";
+} from "@openway/ui";
 
 export function CompoundConfirmExample({ open, onClose }) {
   return (
@@ -184,7 +184,7 @@ export function CompoundConfirmExample({ open, onClose }) {
 ### 4. Đóng Confirm lập trình qua Hook (`useConfirmContext`)
 
 ```tsx
-import { useConfirmContext, Button } from "@owa/ui";
+import { useConfirmContext, Button } from "@openway/ui";
 
 function CustomChildAction() {
   const { onClose, isLoading } = useConfirmContext();

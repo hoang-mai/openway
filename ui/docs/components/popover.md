@@ -1,4 +1,4 @@
-# 💬 Popover Component (`@owa/ui`)
+# 💬 Popover Component (`@openway/ui`)
 
 Bộ component **Popover** (hộp thoại nổi tương tác) xây dựng theo mô hình **Compound Component** trên nền tảng **`@floating-ui/react`**, hỗ trợ **chuẩn WAI-ARIA Dialog**, **quản lý tiêu điểm thông minh (FloatingFocusManager)**, **tự động căn vị trí thông minh (flip/shift/offset)**, và tương thích hoàn toàn với **React 19 / React Compiler**.
 
@@ -9,7 +9,7 @@ Bộ component **Popover** (hộp thoại nổi tương tác) xây dựng theo m
 - **Compound Component Pattern**: Cấu trúc module rõ ràng gồm `<Popover>`, `<PopoverTrigger>`, `<PopoverContent>`, `<PopoverHeader>`, `<PopoverBody>`, `<PopoverFooter>`, `<PopoverClose>`.
 - **Hỗ trợ React 19 & React Compiler**: Áp dụng mô hình `Slot` component trên cả `PopoverTrigger` và `PopoverClose`, đảm bảo xử lý `ref` sạch sẽ và an toàn tuyệt đối khi render.
 - **Quản lý tiêu điểm (Focus Management)**: Tích hợp `FloatingFocusManager`, tự động bẫy/khóa focus bên trong popover khi ở chế độ `modal={true}` và khôi phục focus về trigger khi đóng.
-- **Hệ thống z-index đồng bộ**: Sử dụng `DEFAULT_Z_INDEX.POPOVER` (mặc định `50`) từ hệ thống constants của `@owa/ui`.
+- **Hệ thống z-index đồng bộ**: Sử dụng `DEFAULT_Z_INDEX.POPOVER` (mặc định `50`) từ hệ thống constants của `@openway/ui`.
 - **Luôn nổi trên cùng (Floating Portal)**: Nội dung popover luôn được gắn vào `<FloatingPortal>`, không bị ảnh hưởng bởi layout cha hay `overflow: hidden`.
 - **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` giúp các subcomponents (`PopoverContent`, `PopoverHeader`, `PopoverBody`, `PopoverFooter`) lấy an toàn cấu hình `sizeConfig` và `radiusConfig`.
 - **WAI-ARIA Accessibility**:
@@ -34,7 +34,7 @@ import {
   PopoverBody,
   PopoverFooter,
   PopoverClose,
-} from "@owa/ui";
+} from "@openway/ui";
 import type {
   PopoverProps,
   PopoverTriggerProps,
@@ -48,7 +48,7 @@ import type {
   PopoverSize,
   PopoverRadius,
   PopoverColor,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -67,7 +67,7 @@ import {
   PopoverFooter,
   PopoverClose,
   Button,
-} from "@owa/ui";
+} from "@openway/ui";
 
 export function BasicPopover() {
   return (
@@ -114,7 +114,7 @@ export function BasicPopover() {
 ### 2. Tùy biến Trigger với `asChild`
 
 ```tsx
-import { Popover, PopoverTrigger, PopoverContent, PopoverBody, IconButton } from "@owa/ui";
+import { Popover, PopoverTrigger, PopoverContent, PopoverBody, IconButton } from "@openway/ui";
 import { InfoIcon } from "@/components/icons";
 
 export function InfoPopover() {

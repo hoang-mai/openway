@@ -83,16 +83,29 @@ export interface FieldLabelProps {
    * Cấu hình bảng màu tùy biến (nếu không dùng bảng màu mặc định)
    */
   colorConfig?: Record<string, string>;
+
+  /**
+   * Trạng thái khi trường đang mở dropdown/popover (giữ màu highlight của nhãn khi focus chuyển sang floating)
+   * @default false
+   */
+  isOpen?: boolean;
 }
 
 export const defaultLabelColorConfig: Record<string, string> = {
-  primary: "text-neutral-700 group-focus-within/field:text-primary-600",
-  secondary: "text-neutral-700 group-focus-within/field:text-secondary-600",
-  error: "text-error-600 group-focus-within/field:text-error-600",
-  success: "text-neutral-700 group-focus-within/field:text-success-600",
-  warning: "text-neutral-700 group-focus-within/field:text-warning-600",
-  info: "text-neutral-700 group-focus-within/field:text-info-600",
-  neutral: "text-neutral-700 group-focus-within/field:text-neutral-900",
+  primary:
+    "text-neutral-700 group-focus-within/field:text-primary-600 group-data-[state=open]/field:text-primary-600 group-data-[state=open]:text-primary-600 group-aria-expanded/field:text-primary-600 data-[state=open]:text-primary-600",
+  secondary:
+    "text-neutral-700 group-focus-within/field:text-secondary-600 group-data-[state=open]/field:text-secondary-600 group-data-[state=open]:text-secondary-600 group-aria-expanded/field:text-secondary-600 data-[state=open]:text-secondary-600",
+  error:
+    "text-error-600 group-focus-within/field:text-error-600 group-data-[state=open]/field:text-error-600 group-data-[state=open]:text-error-600 group-aria-expanded/field:text-error-600 data-[state=open]:text-error-600",
+  success:
+    "text-neutral-700 group-focus-within/field:text-success-600 group-data-[state=open]/field:text-success-600 group-data-[state=open]:text-success-600 group-aria-expanded/field:text-success-600 data-[state=open]:text-success-600",
+  warning:
+    "text-neutral-700 group-focus-within/field:text-warning-600 group-data-[state=open]/field:text-warning-600 group-data-[state=open]:text-warning-600 group-aria-expanded/field:text-warning-600 data-[state=open]:text-warning-600",
+  info:
+    "text-neutral-700 group-focus-within/field:text-info-600 group-data-[state=open]/field:text-info-600 group-data-[state=open]:text-info-600 group-aria-expanded/field:text-info-600 data-[state=open]:text-info-600",
+  neutral:
+    "text-neutral-700 group-focus-within/field:text-neutral-900 group-data-[state=open]/field:text-neutral-900 group-data-[state=open]:text-neutral-900 group-aria-expanded/field:text-neutral-900 data-[state=open]:text-neutral-900",
 };
 
 export const defaultLabelSizeConfig: Record<
@@ -142,6 +155,7 @@ export default function FieldLabel({
   cursor,
   className = "",
   colorConfig = defaultLabelColorConfig,
+  isOpen = false,
 }: FieldLabelProps) {
   const content = label ?? children;
   if (!content) return null;
@@ -168,6 +182,7 @@ export default function FieldLabel({
       <label
         htmlFor={htmlFor}
         id={id}
+        data-state={isOpen ? "open" : "closed"}
         className={`absolute top-0 -translate-y-1/2 left-3 px-1.5 rounded-sm select-none z-10 font-medium bg-neutral-white transition-colors duration-150 ${cursorClass} ${currentSizeClass} ${labelColorStyle} ${className}`}
       >
         {content}
@@ -184,6 +199,7 @@ export default function FieldLabel({
     <label
       htmlFor={htmlFor}
       id={id}
+      data-state={isOpen ? "open" : "closed"}
       className={`inline-flex items-center font-medium transition-colors duration-150 ${cursorClass} ${currentSizeClass} ${labelColorStyle} ${className}`}
     >
       {content}

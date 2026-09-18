@@ -1,4 +1,4 @@
-# 📝 TextArea Component (`@owa/ui`)
+# 📝 TextArea Component (`@openway/ui`)
 
 Component **TextArea** đa năng, hỗ trợ **tự động co giãn chiều cao (AutoResize)** bằng thư viện `react-textarea-autosize`, tích hợp **Safe Config Fallback**, **quản lý Ref tối ưu** qua `@floating-ui/react`, **bộ đếm ký tự (Character Counter)** và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -35,7 +35,7 @@ Component **TextArea** đa năng, hỗ trợ **tự động co giãn chiều cao
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { TextArea } from "@owa/ui";
+import { TextArea } from "@openway/ui";
 import type {
   TextAreaProps,
   TextAreaConfig,
@@ -45,7 +45,7 @@ import type {
   TextAreaRadius,
   TextAreaLabelPlacement,
   TextAreaResize,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -55,7 +55,7 @@ import type {
 ### 1. Cách sử dụng cơ bản
 
 ```tsx
-import { TextArea } from "@owa/ui";
+import { TextArea } from "@openway/ui";
 
 export function BasicTextAreaExample() {
   return (

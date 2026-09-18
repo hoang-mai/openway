@@ -50,7 +50,7 @@ export default function Checkbox({
   const id = idProp || generatedId;
   const helperId = `${id}-helper`;
 
-  const isInvalid = Boolean(isInvalidFromConfig ?? !!errorMessage);
+  const isInvalid = Boolean(isInvalidFromConfig || !!errorMessage);
 
   // Determine controlled vs uncontrolled state
   const isControlled = checkedProp !== undefined;

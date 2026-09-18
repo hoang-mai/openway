@@ -1,4 +1,4 @@
-# ⏰ TimePicker Component Suite (`@owa/ui`)
+# ⏰ TimePicker Component Suite (`@openway/ui`)
 
 Bộ component **TimePicker**, **TimeView**, và **TimeColumn** toàn diện, linh hoạt và trực quan, được thiết kế theo chuẩn **Design System**, hỗ trợ **Chế độ 12h (AM/PM) & 24h**, **Tùy chọn hiển thị giây (`showSeconds`)**, **Bước nhảy tùy biến (`hourStep`, `minuteStep`, `secondStep`)**, **Tách bạch Định dạng Dữ liệu (`format`) & Hiển thị (`displayFormat`)**, **Giới hạn thời gian (`minTime`, `maxTime`)**, **Vô hiệu hóa giờ/phút/giây linh hoạt**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility** với hỗ trợ bàn phím thông minh.
 
@@ -30,7 +30,7 @@ Bộ component **TimePicker**, **TimeView**, và **TimeColumn** toàn diện, li
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { TimePicker, TimeView, TimeColumn } from "@owa/ui";
+import { TimePicker, TimeView, TimeColumn } from "@openway/ui";
 import type {
   TimePickerProps,
   TimePickerConfig,
@@ -42,7 +42,7 @@ import type {
   TimePickerColor,
   TimePickerRadius,
   LabelPlacement,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -53,7 +53,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { TimePicker } from "@owa/ui";
+import { TimePicker } from "@openway/ui";
 
 export function BasicTimePickerExample() {
   const [time, setTime] = useState<string | null>("14:30:00");
@@ -115,7 +115,7 @@ export function BasicTimePickerExample() {
 
 ```tsx
 import { useState } from "react";
-import { TimeView } from "@owa/ui";
+import { TimeView } from "@openway/ui";
 
 export function StandaloneTimeViewExample() {
   const [time, setTime] = useState<Date>(new Date());

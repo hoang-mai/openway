@@ -256,9 +256,8 @@ const DatePickerShowcase = ({ onDateChange, onIOChange, onMonthOnlyChange }: Har
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="space-y-2">
+          <div id="dp-format-us" className="space-y-2">
             <DatePicker
-              id="dp-format-us"
               label="US Format (MM/DD/YYYY)"
               value={usDate}
               format="MM/DD/YYYY"
@@ -271,9 +270,8 @@ const DatePickerShowcase = ({ onDateChange, onIOChange, onMonthOnlyChange }: Har
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div id="dp-format-iso" className="space-y-2">
             <DatePicker
-              id="dp-format-iso"
               label="ISO Format (YYYY-MM-DD)"
               value={isoDate}
               format="YYYY-MM-DD"
@@ -286,9 +284,8 @@ const DatePickerShowcase = ({ onDateChange, onIOChange, onMonthOnlyChange }: Har
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div id="dp-format-io" className="space-y-2">
             <DatePicker
-              id="dp-format-io"
               label="Format ISO, Display VN"
               value={ioDate}
               format="YYYY-MM-DD"
@@ -306,9 +303,8 @@ const DatePickerShowcase = ({ onDateChange, onIOChange, onMonthOnlyChange }: Har
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div id="dp-format-locale-en" className="space-y-2">
             <DatePicker
-              id="dp-format-locale-en"
               label="English Locale (en)"
               defaultValue="25/08/2026"
               locale="en"
@@ -320,9 +316,8 @@ const DatePickerShowcase = ({ onDateChange, onIOChange, onMonthOnlyChange }: Har
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div id="dp-month-no-tabs" className="space-y-2">
             <DatePicker
-              id="dp-month-no-tabs"
               label="Month View Only (No ViewTabs)"
               value={monthOnlyDate}
               defaultView="months"
@@ -376,7 +371,14 @@ describe("<DatePicker /> Component Showcase", () => {
   it("renders comprehensive DatePicker showcase in a single mount and performs interactions", () => {
     const onDateChangeSpy = cy.spy().as("onDateChange");
     const onIOChangeSpy = cy.spy().as("onIOChange");
-    cy.mount(<DatePickerShowcase onDateChange={onDateChangeSpy} onIOChange={onIOChangeSpy} />);
+    const onMonthOnlyChangeSpy = cy.spy().as("onMonthOnlyChange");
+    cy.mount(
+      <DatePickerShowcase
+        onDateChange={onDateChangeSpy}
+        onIOChange={onIOChangeSpy}
+        onMonthOnlyChange={onMonthOnlyChangeSpy}
+      />
+    );
 
     // 1. Verify Header & Layout
     cy.get("h1").should("contain.text", "DatePicker Component Showcase");
@@ -407,7 +409,7 @@ describe("<DatePicker /> Component Showcase", () => {
     // Select day 28 in dp-format-io: Output emits ISO "2026-08-28" while Input displays "28/08/2026"
     cy.get("#dp-format-io input").click();
     cy.get('[role="dialog"]').should("be.visible");
-    cy.contains("button", /^28$/).click();
+    cy.get('[role="dialog"]').find('button[aria-label="28 Tháng 8 2026"]').click();
     cy.get("#dp-format-io input").should("have.value", "28/08/2026");
     cy.get("@onIOChange").should("have.been.calledWith", "2026-08-28");
 
@@ -423,7 +425,7 @@ describe("<DatePicker /> Component Showcase", () => {
     // 8. Interactive Testing: Open Popover and select date
     cy.get("#interactive-datepicker input").click();
     cy.get('[role="dialog"]').should("be.visible");
-    cy.contains("button", /^20$/).click();
+    cy.get('[role="dialog"]').find('button[aria-label="20 Tháng 8 2026"]').click();
     cy.get("#interactive-datepicker input").should("have.value", "20/08/2026");
     cy.get("@onDateChange").should("have.been.calledWith", "20/08/2026");
 
@@ -439,38 +441,39 @@ describe("<DatePicker /> Component Showcase", () => {
       cy.contains("[role='columnheader']", "#").should("be.visible");
       cy.contains("div", /^W\d+$/).should("be.visible");
     });
+    cy.get("body").type("{esc}");
 
     // 10. ViewTabs Initial State (Month mode from "08/2026")
     cy.get("#interactive-viewtabs-datepicker input").should("have.value", "08/2026");
 
     // Switch Tab to Ngày and select day
     cy.get("#interactive-viewtabs-datepicker input").click();
-    cy.contains("button", "Ngày").click();
-    cy.contains("button", "Ngày").should("have.attr", "aria-selected", "true");
-    cy.contains("button", /^15$/).click();
+    cy.get('[role="dialog"]').contains("button", "Ngày").click();
+    cy.get('[role="dialog"]').contains("button", "Ngày").should("have.attr", "aria-selected", "true");
+    cy.get('[role="dialog"]').find('button[aria-label="15 Tháng 8 2026"]').click();
     cy.get("#interactive-viewtabs-datepicker input").should("have.value", "15/08/2026");
 
     // CalendarHeader Drill-down without changing Tab:
     cy.get("#interactive-viewtabs-datepicker input").click();
-    cy.contains("button", "Ngày").should("have.attr", "aria-selected", "true");
-    cy.contains("button", /Tháng 8 2026/).click();
+    cy.get('[role="dialog"]').contains("button", "Ngày").should("have.attr", "aria-selected", "true");
+    cy.get('[role="dialog"]').contains("button", /Tháng 8 2026/).click();
     // MonthGrid is now visible, but Tab "Ngày" STILL stays selected!
-    cy.contains("button", "Thg 5").should("be.visible");
-    cy.contains("button", "Ngày").should("have.attr", "aria-selected", "true");
+    cy.get('[role="dialog"]').contains("button", "Thg 5").should("be.visible");
+    cy.get('[role="dialog"]').contains("button", "Ngày").should("have.attr", "aria-selected", "true");
     // Click "Thg 5" returns to DayGrid for Tháng 5
-    cy.contains("button", "Thg 5").click();
-    cy.contains("button", /^20$/).should("be.visible");
-    cy.contains("button", "Ngày").should("have.attr", "aria-selected", "true");
+    cy.get('[role="dialog"]').contains("button", "Thg 5").click();
+    cy.get('[role="dialog"]').contains("button", /^20$/).should("be.visible");
+    cy.get('[role="dialog"]').contains("button", "Ngày").should("have.attr", "aria-selected", "true");
     // Click day 20 selects 20/05/2026
-    cy.contains("button", /^20$/).click();
+    cy.get('[role="dialog"]').find('button[aria-label="20 Tháng 5 2026"]').click();
     cy.get("#interactive-viewtabs-datepicker input").should("have.value", "20/05/2026");
 
     // 11. ViewTabs Interactive Testing: Explicitly switch Tab to Tháng
     cy.get("#interactive-viewtabs-datepicker input").click();
-    cy.contains("button", "Tháng").click();
-    cy.contains("button", "Tháng").should("have.attr", "aria-selected", "true");
+    cy.get('[role="dialog"]').contains("button", "Tháng").click();
+    cy.get('[role="dialog"]').contains("button", "Tháng").should("have.attr", "aria-selected", "true");
     cy.get("#interactive-viewtabs-datepicker input").should("have.value", "05/2026");
-    cy.contains("button", "Thg 11").click();
+    cy.get('[role="dialog"]').contains("button", "Thg 11").click();
     cy.get("#interactive-viewtabs-datepicker input").should("have.value", "11/2026");
 
     // 12. Month View without ViewTabs Testing (defaultView="months", showViewTabs=false)

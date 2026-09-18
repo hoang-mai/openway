@@ -32,7 +32,7 @@ export interface MultiSelectTriggerProps<TData = unknown> {
   renderValue?: (selected: SelectOptionItem<TData>[]) => ReactNode;
   triggerRef: (node: HTMLElement | null) => void;
   getReferenceProps: (userProps?: Record<string, unknown>) => Record<string, unknown>;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
   className?: string;
 }
 
@@ -132,6 +132,9 @@ export function MultiSelectTrigger<TData = unknown>({
                 e.stopPropagation();
               }
               onKeyDown?.(e);
+              if (e.key === "Enter") {
+                e.stopPropagation();
+              }
             }}
             className={`bg-transparent outline-none border-none p-0 flex-1 min-w-15 text-neutral-900 placeholder:text-neutral-400 ${currentSize.input}`}
           />
@@ -156,6 +159,7 @@ export function MultiSelectTrigger<TData = unknown>({
       triggerRef={triggerRef}
       getReferenceProps={getReferenceProps}
       onClick={handleContainerClick}
+      onKeyDown={onKeyDown}
       roundedClass={roundedClass}
       currentSize={currentSize}
       variantStyle={variantStyle}

@@ -1,4 +1,4 @@
-# 🎠 Carousel Component (`@owa/ui`)
+# 🎠 Carousel Component (`@openway/ui`)
 
 Component **Carousel** (băng chuyền / slider) hiện đại, hiệu năng cao, thiết kế chuẩn **Compound Components Pattern** (`<Carousel>`, `<CarouselContent>`, `<CarouselSlide>`, `<CarouselPrevious>`, `<CarouselNext>`, `<CarouselPagination>`), hỗ trợ **Pointer Drag/Touch Gestures**, **Autoplay thông minh**, **Infinite Looping**, **Glassmorphism Design**, **Dynamic Slide Registration**, **Safe Config Fallback** (`getSafeConfig`) và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -46,7 +46,7 @@ import {
   carouselNavVariantConfig,
   carouselDotStyleConfig,
   carouselGlassPaginationWrapper,
-} from "@owa/ui";
+} from "@openway/ui";
 
 import type {
   CarouselProps,
@@ -60,7 +60,7 @@ import type {
   CarouselArrowPosition,
   CarouselNavigationVariant,
   CarouselContextValue,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -77,7 +77,7 @@ import {
   CarouselPrevious,
   CarouselNext,
   CarouselPagination,
-} from "@owa/ui";
+} from "@openway/ui";
 
 export function BasicCarousel() {
   return (
@@ -227,7 +227,7 @@ Bạn có thể dễ dàng đặt nút điều hướng và phân trang vào tro
 
 ```tsx
 import { useState } from "react";
-import { Carousel, CarouselContent, CarouselSlide, CarouselPrevious, CarouselNext, CarouselPagination } from "@owa/ui";
+import { Carousel, CarouselContent, CarouselSlide, CarouselPrevious, CarouselNext, CarouselPagination } from "@openway/ui";
 
 export function ControlledDemo() {
   const [index, setIndex] = useState(0);
@@ -350,5 +350,5 @@ export function ControlledDemo() {
 Component được kiểm thử 100% bằng **Cypress Component Testing** tại [`Carousel.cy.tsx`](Carousel.cy.tsx):
 
 ```bash
-pnpm --filter @owa/ui cypress:run --spec "src/components/carousel/Carousel.cy.tsx"
+pnpm --filter @openway/ui cypress:run --spec "src/components/carousel/Carousel.cy.tsx"
 ```

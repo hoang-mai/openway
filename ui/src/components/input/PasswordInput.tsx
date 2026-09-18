@@ -5,7 +5,7 @@ import { EyeIcon, EyeOffIcon } from "@/components/icons/EyeIcon";
 
 export default function PasswordInput({
   defaultVisible = false,
-  toggleAriaLabel = "Hiển thị/ẩn mật khẩu",
+  toggleAriaLabel = "Toggle password visibility",
   onVisibilityChange,
   rightIcon,
   disabled,

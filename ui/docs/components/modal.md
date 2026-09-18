@@ -1,4 +1,4 @@
-# 📦 Modal Component (`@owa/ui`)
+# 📦 Modal Component (`@openway/ui`)
 
 Bộ component **Modal** hiệu năng cao, chuẩn **HTML5 Native `<dialog>`** và thiết kế theo mô hình **Pure Compound Pattern** linh hoạt.
 
@@ -27,7 +27,7 @@ import {
   ModalFooter,
   ModalClose,
   useModalContext,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -46,7 +46,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalClose,
-} from "@owa/ui";
+} from "@openway/ui";
 
 export function BasicModalExample() {
   const [open, setOpen] = useState(false);
@@ -148,7 +148,7 @@ export function CreateUserModal({ open, onClose, onSuccess }) {
 Nếu cần thực hiện logic bất đồng bộ (validate, fetch) trong các component con nằm sâu bên trong Modal:
 
 ```tsx
-import { useModalContext, Button } from "@owa/ui";
+import { useModalContext, Button } from "@openway/ui";
 
 function CustomAction() {
   const { onClose, isLoading } = useModalContext();

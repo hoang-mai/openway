@@ -1,4 +1,4 @@
-# 📅 DatePicker Component Suite (`@owa/ui`)
+# 📅 DatePicker Component Suite (`@openway/ui`)
 
 Bộ component **DatePicker** & **Calendar** toàn diện, linh hoạt và tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **3 Chế độ View (Ngày / Tháng / Năm)**, **Định dạng dữ liệu chuẩn hóa (`format`)**, **Hiển thị trực quan thích ứng (`displayFormat`)**, **Số thứ tự tuần (`showWeekNumbers`)**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -29,7 +29,7 @@ Bộ component **DatePicker** & **Calendar** toàn diện, linh hoạt và tươ
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { DatePicker, Calendar } from "@owa/ui";
+import { DatePicker, Calendar } from "@openway/ui";
 import type {
   DatePickerProps,
   DatePickerConfig,
@@ -41,7 +41,7 @@ import type {
   DatePickerRadius,
   LabelPlacement,
   LocaleConfig,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -52,7 +52,7 @@ import type {
 
 ```tsx
 import { useState } from "react";
-import { DatePicker } from "@owa/ui";
+import { DatePicker } from "@openway/ui";
 
 export function BasicDatePickerExample() {
   const [date, setDate] = useState<string | null>("25/08/2026");
@@ -120,7 +120,7 @@ Bật `config={{ showViewTabs: true }}` để cho phép người dùng chuyển 
 
 ```tsx
 import { useState } from "react";
-import { Calendar } from "@owa/ui";
+import { Calendar } from "@openway/ui";
 
 export function StandaloneCalendarExample() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());

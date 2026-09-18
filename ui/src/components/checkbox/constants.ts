@@ -49,10 +49,10 @@ export const sizeConfig: Record<
 
 export const radiusConfig: Record<CheckboxRadius, string> = {
   none: "rounded-none",
-  sm: "rounded-sm",
-  md: "rounded-md",
-  lg: "rounded-lg",
-  xl: "rounded-xl",
+  sm: "rounded-2xs",
+  md: "rounded-xs",
+  lg: "rounded-sm",
+  xl: "rounded-md",
   full: "rounded-full",
 };
 

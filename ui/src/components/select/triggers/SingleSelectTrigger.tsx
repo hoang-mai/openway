@@ -34,7 +34,7 @@ export interface SingleSelectTriggerProps<TData = unknown> {
   renderValue?: (selected: SelectOptionItem<TData>) => ReactNode;
   triggerRef: (node: HTMLElement | null) => void;
   getReferenceProps: (userProps?: Record<string, unknown>) => Record<string, unknown>;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
   className?: string;
 }
 
@@ -105,6 +105,9 @@ export function SingleSelectTrigger<TData = unknown>({
                 e.stopPropagation();
               }
               onKeyDown?.(e);
+              if (e.key === "Enter") {
+                e.stopPropagation();
+              }
             }}
             className={`w-full bg-transparent outline-none border-none p-0 text-neutral-900 ${
               !searchValue && selectedOption
@@ -141,6 +144,7 @@ export function SingleSelectTrigger<TData = unknown>({
       triggerRef={triggerRef}
       getReferenceProps={getReferenceProps}
       onClick={handleContainerClick}
+      onKeyDown={onKeyDown}
       roundedClass={roundedClass}
       currentSize={currentSize}
       variantStyle={variantStyle}

@@ -16,6 +16,7 @@ export interface SelectTriggerContainerProps {
   triggerRef: (node: HTMLElement | null) => void;
   getReferenceProps: (userProps?: Record<string, unknown>) => Record<string, unknown>;
   onClick?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
   roundedClass: string;
   currentSize: { trigger: string; gap: string; icon: string };
   variantStyle: string;
@@ -36,6 +37,7 @@ export function SelectTriggerContainer({
   triggerRef,
   getReferenceProps,
   onClick,
+  onKeyDown,
   roundedClass,
   currentSize,
   variantStyle,
@@ -54,11 +56,14 @@ export function SelectTriggerContainer({
       aria-haspopup="listbox"
       aria-controls={id ? `${id}-listbox` : undefined}
       tabIndex={disabled ? -1 : 0}
-      onClick={onClick}
+      data-state={isOpen ? "open" : "closed"}
       aria-busy={isLoading}
       aria-disabled={disabled || isLoading}
       {...getReferenceProps({
         id,
+        onClick,
+        onKeyDown,
+        "data-state": isOpen ? "open" : "closed",
         className: `group relative flex items-center justify-between transition-all duration-150 ease-in-out border select-none ${roundedClass} ${
           currentSize.trigger
         } ${currentSize.gap} ${variantStyle} ${statusStyles} ${className}`,

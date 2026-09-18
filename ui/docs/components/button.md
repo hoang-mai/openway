@@ -1,4 +1,4 @@
-# 🔘 Button & IconButton Component (`@owa/ui`)
+# 🔘 Button & IconButton Component (`@openway/ui`)
 
 Bộ component **Button** & **IconButton** tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **trạng thái Loading linh hoạt**, **Safe Config Fallback** và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
 
@@ -32,7 +32,7 @@ Bộ component **Button** & **IconButton** tương tác cao, thiết kế chuẩ
 ## 🚀 Cài đặt & Import
 
 ```tsx
-import { Button, IconButton } from "@owa/ui";
+import { Button, IconButton } from "@openway/ui";
 import type {
   ButtonProps,
   IconButtonProps,
@@ -40,7 +40,7 @@ import type {
   ButtonVariant,
   ButtonColor,
   ButtonRadius,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
@@ -50,7 +50,7 @@ import type {
 ### 1. Cách sử dụng cơ bản
 
 ```tsx
-import { Button } from "@owa/ui";
+import { Button } from "@openway/ui";
 
 export function BasicButtonExample() {
   return (
@@ -128,7 +128,7 @@ Cung cấp 7 tông màu theo chuẩn Design System:
 ### 5. Hỗ trợ Icon (`leftIcon`, `rightIcon`) & Component `<IconButton>`
 
 ```tsx
-import { Button, IconButton } from "@owa/ui";
+import { Button, IconButton } from "@openway/ui";
 import { PlusIcon, ArrowRightIcon, TrashIcon, HeartIcon } from "@/components/icons";
 
 export function ButtonIconExample() {

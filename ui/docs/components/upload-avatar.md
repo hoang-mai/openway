@@ -1,43 +1,43 @@
-﻿# 👤 Upload Avatar Component Suite (`@owa/ui`)
+# ?? Upload Avatar Component Suite (`@openway/ui`)
 
-Component **UploadAvatar** toàn diện, linh hoạt và tương tác cao cho phép người dùng tải lên, kéo thả (Drag & Drop), cắt xén (Crop), xem trước (Lightbox Preview) và quản lý ảnh đại diện. Thiết kế đồng bộ hoàn hảo với hệ thống **Design System**, hỗ trợ **Safe Config Fallback**, **Quản lý bộ nhớ tự động (Lifecycle Cleanup)** và tuân thủ tiêu chuẩn **WAI-ARIA Accessibility**.
+Component **UploadAvatar** to�n di?n, linh ho?t v� tuong t�c cao cho ph�p ngu?i d�ng t?i l�n, k�o th? (Drag & Drop), c?t x�n (Crop), xem tru?c (Lightbox Preview) v� qu?n l� ?nh d?i di?n. Thi?t k? d?ng b? ho�n h?o v?i h? th?ng **Design System**, h? tr? **Safe Config Fallback**, **Qu?n l� b? nh? t? d?ng (Lifecycle Cleanup)** v� tu�n th? ti�u chu?n **WAI-ARIA Accessibility**.
 
 ---
 
-## 🌟 Điểm nổi bật
+## ?? �i?m n?i b?t
 
-- **Tích hợp quy trình xử lý ảnh trọn gói**:
-  - 🖱️ **Kéo thả & Chọn tệp**: Hỗ trợ kéo thả ảnh trực quan nhờ `react-dropzone`, tự động kiểm tra định dạng MIME (`accept`) và giới hạn dung lượng (`maxSize`).
-  - ✂️ **Cắt xén ảnh tích hợp (`UploadAvatarCropModal`)**: Tích hợp sẵn modal cắt ảnh trực quan hỗ trợ Zoom, Xoay (Rotate 90°), Lật ảnh (Flip), Reset và Chọn tệp khác ngay trong modal.
-  - 🔍 **Xem trước phóng to (Lightbox Preview)**: Tích hợp với `<FileContainer>` và `<FilePreview>` để phóng to, xoay ảnh và tải xuống ảnh chất lượng gốc.
-  - 🗑️ **Xóa nhanh & Thao tác tiện lợi**: Menu hành động hiển thị mượt mà khi hover (hoặc focus) cho phép Xem trước, Cắt lại và Xóa ảnh.
-- **Quản lý bộ nhớ tối ưu (Zero Memory Leak)**:
-  - Ứng dụng mô hình **Lifecycle Cleanup**: Tự động giải phóng Blob URL (`URL.revokeObjectURL`) bên trong `useEffect cleanup` khi đóng modal, đổi ảnh hoặc khi component unmount.
-- **5 Kích thước tiêu chuẩn (`size`)**:
+- **T�ch h?p quy tr�nh x? l� ?nh tr?n g�i**:
+  - ??? **K�o th? & Ch?n t?p**: H? tr? k�o th? ?nh tr?c quan nh? `react-dropzone`, t? d?ng ki?m tra d?nh d?ng MIME (`accept`) v� gi?i h?n dung lu?ng (`maxSize`).
+  - ?? **C?t x�n ?nh t�ch h?p (`UploadAvatarCropModal`)**: T�ch h?p s?n modal c?t ?nh tr?c quan h? tr? Zoom, Xoay (Rotate 90�), L?t ?nh (Flip), Reset v� Ch?n t?p kh�c ngay trong modal.
+  - ?? **Xem tru?c ph�ng to (Lightbox Preview)**: T�ch h?p v?i `<FileContainer>` v� `<FilePreview>` d? ph�ng to, xoay ?nh v� t?i xu?ng ?nh ch?t lu?ng g?c.
+  - ??? **X�a nhanh & Thao t�c ti?n l?i**: Menu h�nh d?ng hi?n th? mu?t m� khi hover (ho?c focus) cho ph�p Xem tru?c, C?t l?i v� X�a ?nh.
+- **Qu?n l� b? nh? t?i uu (Zero Memory Leak)**:
+  - ?ng d?ng m� h�nh **Lifecycle Cleanup**: T? d?ng gi?i ph�ng Blob URL (`URL.revokeObjectURL`) b�n trong `useEffect cleanup` khi d�ng modal, d?i ?nh ho?c khi component unmount.
+- **5 K�ch thu?c ti�u chu?n (`size`)**:
   - `xs`: 48x48px (`size-12`)
   - `sm`: 64x64px (`size-16`)
-  - `md`: 80x80px (`size-20` - *mặc định*)
+  - `md`: 80x80px (`size-20` - *m?c d?nh*)
   - `lg`: 96x96px (`size-24`)
   - `xl`: 128x128px (`size-32`)
-- **3 Biến thể giao diện (`variant`)**:
-  - `outline` *(mặc định)*: Viền nét rõ ràng quanh khung avatar, hover/focus đổi màu viền chủ đề.
-  - `filled`: Nền pastel nhạt (`bg-{color}-50/60`), viền đồng điệu.
-  - `ghost`: Nền trong suốt, viền mờ tối giản.
-  - `other`: Bỏ qua các style mặc định, tự do tùy biến qua `avatarClassName`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
-- **2 Hình dạng linh hoạt (`shape`)**:
-  - `circle` *(mặc định)*: Hình tròn hoàn hảo (`rounded-full`).
-  - `square`: Hình vuông với tùy chọn bo góc `radius` (`none`, `sm`, `md`, `lg`, `xl`, `full`).
-- **Icon Avatar mặc định tinh tế**: Sử dụng silhouette `<AvatarIcon />` sắc nét làm icon giữ chỗ (placeholder) thay thế cho icon đám mây truyền thống.
-- **Đồng bộ cấu hình Form & A11y như `Input`**:
-  - Nhóm các cờ boolean vào prop `config`: `isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`.
-  - Hỗ trợ `labelPlacement` (`top` hoặc `left`) cùng văn bản trợ giúp `helperText` và thông báo lỗi `errorMessage`.
-  - Tương thích bàn phím: <kbd>Space</kbd> / <kbd>Enter</kbd> để chọn ảnh, <kbd>Delete</kbd> / <kbd>Backspace</kbd> để xóa ảnh.
-  - Hỗ trợ Screen Reader với vùng thông báo động `aria-live`.
+- **3 Bi?n th? giao di?n (`variant`)**:
+  - `outline` *(m?c d?nh)*: Vi?n n�t r� r�ng quanh khung avatar, hover/focus d?i m�u vi?n ch? d?.
+  - `filled`: N?n pastel nh?t (`bg-{color}-50/60`), vi?n d?ng di?u.
+  - `ghost`: N?n trong su?t, vi?n m? t?i gi?n.
+  - `other`: B? qua c�c style m?c d?nh, t? do t�y bi?n qua `avatarClassName`.
+- **7 Ch? d? m�u s?c (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
+- **2 H�nh d?ng linh ho?t (`shape`)**:
+  - `circle` *(m?c d?nh)*: H�nh tr�n ho�n h?o (`rounded-full`).
+  - `square`: H�nh vu�ng v?i t�y ch?n bo g�c `radius` (`none`, `sm`, `md`, `lg`, `xl`, `full`).
+- **Icon Avatar m?c d?nh tinh t?**: S? d?ng silhouette `<AvatarIcon />` s?c n�t l�m icon gi? ch? (placeholder) thay th? cho icon d�m m�y truy?n th?ng.
+- **�?ng b? c?u h�nh Form & A11y nhu `Input`**:
+  - Nh�m c�c c? boolean v�o prop `config`: `isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`.
+  - H? tr? `labelPlacement` (`top` ho?c `left`) c�ng van b?n tr? gi�p `helperText` v� th�ng b�o l?i `errorMessage`.
+  - Tuong th�ch b�n ph�m: <kbd>Space</kbd> / <kbd>Enter</kbd> d? ch?n ?nh, <kbd>Delete</kbd> / <kbd>Backspace</kbd> d? x�a ?nh.
+  - H? tr? Screen Reader v?i v�ng th�ng b�o d?ng `aria-live`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## ?? C�i d?t & Import
 
 ```tsx
 import {
@@ -47,7 +47,7 @@ import {
   getCroppedImage,
   createImage,
   rotateSize,
-} from "@owa/ui";
+} from "@openway/ui";
 
 import type {
   UploadAvatarProps,
@@ -64,35 +64,35 @@ import type {
   PreviewFile,
   ServerFile,
   PixelCrop,
-} from "@owa/ui";
+} from "@openway/ui";
 ```
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## ?? Hu?ng d?n s? d?ng
 
-### 1. Sử dụng cơ bản (Uncontrolled & Controlled)
+### 1. S? d?ng co b?n (Uncontrolled & Controlled)
 
-#### Cách 1: Tự quản lý (Uncontrolled với `defaultValue`)
+#### C�ch 1: T? qu?n l� (Uncontrolled v?i `defaultValue`)
 ```tsx
-import { UploadAvatar } from "@owa/ui";
+import { UploadAvatar } from "@openway/ui";
 
 export function UncontrolledExample() {
   return (
     <UploadAvatar
       defaultValue="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300"
-      label="Ảnh đại diện"
-      helperText="Hỗ trợ JPG, PNG, WEBP dưới 5MB"
+      label="?nh d?i di?n"
+      helperText="H? tr? JPG, PNG, WEBP du?i 5MB"
       onChange={(item) => console.log("Avatar changed:", item)}
     />
   );
 }
 ```
 
-#### Cách 2: Quản lý trạng thái (Controlled với `value`)
+#### C�ch 2: Qu?n l� tr?ng th�i (Controlled v?i `value`)
 ```tsx
 import { useState } from "react";
-import { UploadAvatar, PreviewFile } from "@owa/ui";
+import { UploadAvatar, PreviewFile } from "@openway/ui";
 
 export function ControlledExample() {
   const [avatar, setAvatar] = useState<PreviewFile | string | null>(null);
@@ -102,11 +102,11 @@ export function ControlledExample() {
       <UploadAvatar
         value={avatar}
         onChange={setAvatar}
-        label="Ảnh đại diện hồ sơ"
-        helperText="Click để tải ảnh lên và cắt xén"
+        label="?nh d?i di?n h? so"
+        helperText="Click d? t?i ?nh l�n v� c?t x�n"
       />
       <p className="text-xs text-neutral-500">
-        Đã chọn: {avatar ? (typeof avatar === "string" ? avatar : avatar.name) : "Chưa có ảnh"}
+        �� ch?n: {avatar ? (typeof avatar === "string" ? avatar : avatar.name) : "Chua c� ?nh"}
       </p>
     </div>
   );
@@ -115,53 +115,53 @@ export function ControlledExample() {
 
 ---
 
-### 2. Tùy chỉnh tính năng Cắt ảnh (`crop`)
+### 2. T�y ch?nh t�nh nang C?t ?nh (`crop`)
 
-Bạn có thể cấu hình modal cắt ảnh chi tiết hoặc tắt hoàn toàn tính năng này:
+B?n c� th? c?u h�nh modal c?t ?nh chi ti?t ho?c t?t ho�n to�n t�nh nang n�y:
 
 ```tsx
-import { UploadAvatar } from "@owa/ui";
+import { UploadAvatar } from "@openway/ui";
 
-// 1. Tùy chỉnh modal cắt ảnh
+// 1. T�y ch?nh modal c?t ?nh
 <UploadAvatar
   crop={{
-    aspectRatio: 1, // Tỷ lệ 1:1
-    cropShape: "round", // Vùng cắt tròn "round" hoặc vuông "rect"
-    showGrid: true, // Hiển thị lưới căn chỉnh
+    aspectRatio: 1, // T? l? 1:1
+    cropShape: "round", // V�ng c?t tr�n "round" ho?c vu�ng "rect"
+    showGrid: true, // Hi?n th? lu?i can ch?nh
     minZoom: 1,
     maxZoom: 5,
-    modalTitle: "Tùy chỉnh góc chụp ảnh đại diện",
+    modalTitle: "T�y ch?nh g�c ch?p ?nh d?i di?n",
   }}
 />
 
-// 2. Tắt hoàn toàn modal cắt ảnh (Nhận file trực tiếp sau khi chọn)
+// 2. T?t ho�n to�n modal c?t ?nh (Nh?n file tr?c ti?p sau khi ch?n)
 <UploadAvatar crop={false} />
 ```
 
 ---
 
-### 3. Kích thước (`size`) & Hình dạng (`shape`)
+### 3. K�ch thu?c (`size`) & H�nh d?ng (`shape`)
 
 ```tsx
-import { UploadAvatar } from "@owa/ui";
+import { UploadAvatar } from "@openway/ui";
 
 export function SizesAndShapesExample() {
   return (
     <div className="flex flex-wrap items-center gap-6">
-      {/* Các kích thước */}
+      {/* C�c k�ch thu?c */}
       <UploadAvatar size="xs" label="XS (48px)" />
       <UploadAvatar size="sm" label="SM (64px)" />
       <UploadAvatar size="md" label="MD (80px)" />
       <UploadAvatar size="lg" label="LG (96px)" />
       <UploadAvatar size="xl" label="XL (128px)" />
 
-      {/* Hình vuông bo góc */}
+      {/* H�nh vu�ng bo g�c */}
       <UploadAvatar
         shape="square"
         radius="lg"
         size="lg"
         crop={{ cropShape: "rect" }}
-        label="Logo công ty"
+        label="Logo c�ng ty"
       />
     </div>
   );
@@ -170,10 +170,10 @@ export function SizesAndShapesExample() {
 
 ---
 
-### 4. Biến thể (`variant`) & Màu sắc (`color`)
+### 4. Bi?n th? (`variant`) & M�u s?c (`color`)
 
 ```tsx
-import { UploadAvatar } from "@owa/ui";
+import { UploadAvatar } from "@openway/ui";
 
 export function VariantsAndColorsExample() {
   return (
@@ -181,7 +181,7 @@ export function VariantsAndColorsExample() {
       <UploadAvatar variant="outline" color="primary" label="Outline Primary" />
       <UploadAvatar variant="filled" color="secondary" label="Filled Secondary" />
       <UploadAvatar variant="ghost" color="neutral" label="Ghost Neutral" />
-      <UploadAvatar config={{ isInvalid: true }} errorMessage="Ảnh không hợp lệ" />
+      <UploadAvatar config={{ isInvalid: true }} errorMessage="?nh kh�ng h?p l?" />
     </div>
   );
 }
@@ -189,11 +189,11 @@ export function VariantsAndColorsExample() {
 
 ---
 
-### 5. Tích hợp React Hook Form
+### 5. T�ch h?p React Hook Form
 
 ```tsx
 import { useForm, Controller } from "react-hook-form";
-import { UploadAvatar, Button } from "@owa/ui";
+import { UploadAvatar, Button } from "@openway/ui";
 
 interface ProfileFormData {
   avatar: File | null;
@@ -213,14 +213,14 @@ export function ProfileForm() {
       <Controller
         name="avatar"
         control={control}
-        rules={{ required: "Vui lòng tải lên ảnh đại diện của bạn" }}
+        rules={{ required: "Vui l�ng t?i l�n ?nh d?i di?n c?a b?n" }}
         render={({ field: { value, onChange, ref } }) => (
           <UploadAvatar
             ref={ref}
             value={value}
             onChange={onChange}
-            label="Ảnh đại diện"
-            helperText="Kích thước tối đa 2MB"
+            label="?nh d?i di?n"
+            helperText="K�ch thu?c t?i da 2MB"
             maxSize={2 * 1024 * 1024}
             config={{
               isRequired: true,
@@ -232,7 +232,7 @@ export function ProfileForm() {
           />
         )}
       />
-      <Button type="submit" disabled={isSubmitting}>Lưu thông tin</Button>
+      <Button type="submit" disabled={isSubmitting}>Luu th�ng tin</Button>
     </form>
   );
 }
@@ -240,79 +240,79 @@ export function ProfileForm() {
 
 ---
 
-## ⚙️ Bảng thuộc tính Props
+## ?? B?ng thu?c t�nh Props
 
 ### `UploadAvatarProps`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Thu?c t�nh | Ki?u d? li?u | M?c d?nh | M� t? |
 | :--- | :--- | :--- | :--- |
-| `value` | `PreviewFile \| string \| null` | `undefined` | Giá trị ảnh avatar hiện tại (dùng ở chế độ Controlled). |
-| `defaultValue` | `PreviewFile \| string \| null` | `null` | Giá trị ảnh avatar khởi tạo ban đầu (dùng ở chế độ Uncontrolled). |
-| `onChange` | `(item: PreviewFile \| null) => void` | `undefined` | Callback khi ảnh avatar thay đổi hoặc bị xóa (`null`). |
-| `onRemove` | `(item: PreviewFile) => void` | `undefined` | Callback khi người dùng nhấn nút xóa ảnh. |
-| `onPreview` | `(item: PreviewFile) => void` | `undefined` | Callback khi người dùng mở modal xem trước phóng to (lightbox). |
-| `onClear` | `() => void` | `undefined` | Callback kích hoạt khi nút xóa nhanh được gọi. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích thước avatar (48px, 64px, 80px, 96px, 128px). |
-| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Kiểu biến thể hiển thị khung viền avatar. |
-| `color` | `'primary' \| 'secondary' \| 'neutral' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'primary'` | Chủ đề bảng màu sắc hiển thị. |
-| `shape` | `'circle' \| 'square'` | `'circle'` | Hình dạng avatar (`circle`: tròn hoàn toàn; `square`: vuông). |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | Theo `size` | Tùy biến bo góc khi `shape="square"`. |
-| `crop` | `boolean \| UploadAvatarCropOptions` | `true` | Bật/tắt hoặc cấu hình modal cắt xén ảnh trước khi tải lên. |
-| `maxSize` | `number` | `undefined` | Kích thước tệp tối đa cho phép (đơn vị: bytes). |
-| `accept` | `string \| Accept` | `"image/*"` | Các định dạng MIME type được phép tải lên. |
-| `config` | `UploadAvatarConfig` | `{}` | Gom nhóm các cờ boolean trạng thái và tính năng (xem bảng bên dưới). |
-| `label` | `ReactNode` | `undefined` | Nhãn hiển thị tiêu đề cho trường avatar. |
-| `labelPlacement`| `'top' \| 'left'` | `'top'` | Vị trí đặt nhãn so với avatar. |
-| `helperText` | `ReactNode` | `undefined` | Đoạn văn bản hướng dẫn/chú thích bên dưới avatar. |
-| `errorMessage` | `ReactNode` | `undefined` | Thông báo lỗi hiển thị bên dưới avatar (tự động kích hoạt viền đỏ). |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ tương tác tải lên. |
-| `readOnly` | `boolean` | `false` | Chế độ chỉ xem, không cho phép thay đổi hay xóa. |
-| `icon` | `ReactNode` | `<AvatarIcon />` | Tùy biến icon placeholder khi chưa có ảnh. |
-| `name` | `string` | `undefined` | Tên của trường input file trong form HTML. |
-| `id` | `string` | Tự động sinh | ID của phần tử input (dùng cho liên kết label & a11y). |
-| `ref` | `Ref<HTMLInputElement>` | `undefined` | Ref chuyển tiếp đến thẻ input file ẩn bên trong. |
-| `className` | `string` | `""` | Tùy biến class container ngoài cùng. |
-| `wrapperClassName` | `string` | `""` | Alias của `className`. |
-| `avatarClassName` | `string` | `""` | Tùy biến class áp dụng riêng cho khung viền của avatar. |
-| `labelClassName` | `string` | `""` | Tùy biến class cho nhãn `<label>`. |
-| `helperClassName` | `string` | `""` | Tùy biến class cho text hướng dẫn / thông báo lỗi. |
+| `value` | `PreviewFile \| string \| null` | `undefined` | Gi� tr? ?nh avatar hi?n t?i (d�ng ? ch? d? Controlled). |
+| `defaultValue` | `PreviewFile \| string \| null` | `null` | Gi� tr? ?nh avatar kh?i t?o ban d?u (d�ng ? ch? d? Uncontrolled). |
+| `onChange` | `(item: PreviewFile \| null) => void` | `undefined` | Callback khi ?nh avatar thay d?i ho?c b? x�a (`null`). |
+| `onRemove` | `(item: PreviewFile) => void` | `undefined` | Callback khi ngu?i d�ng nh?n n�t x�a ?nh. |
+| `onPreview` | `(item: PreviewFile) => void` | `undefined` | Callback khi ngu?i d�ng m? modal xem tru?c ph�ng to (lightbox). |
+| `onClear` | `() => void` | `undefined` | Callback k�ch ho?t khi n�t x�a nhanh du?c g?i. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | K�ch thu?c avatar (48px, 64px, 80px, 96px, 128px). |
+| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Ki?u bi?n th? hi?n th? khung vi?n avatar. |
+| `color` | `'primary' \| 'secondary' \| 'neutral' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'primary'` | Ch? d? b?ng m�u s?c hi?n th?. |
+| `shape` | `'circle' \| 'square'` | `'circle'` | H�nh d?ng avatar (`circle`: tr�n ho�n to�n; `square`: vu�ng). |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | Theo `size` | T�y bi?n bo g�c khi `shape="square"`. |
+| `crop` | `boolean \| UploadAvatarCropOptions` | `true` | B?t/t?t ho?c c?u h�nh modal c?t x�n ?nh tru?c khi t?i l�n. |
+| `maxSize` | `number` | `undefined` | K�ch thu?c t?p t?i da cho ph�p (don v?: bytes). |
+| `accept` | `string \| Accept` | `"image/*"` | C�c d?nh d?ng MIME type du?c ph�p t?i l�n. |
+| `config` | `UploadAvatarConfig` | `{}` | Gom nh�m c�c c? boolean tr?ng th�i v� t�nh nang (xem b?ng b�n du?i). |
+| `label` | `ReactNode` | `undefined` | Nh�n hi?n th? ti�u d? cho tru?ng avatar. |
+| `labelPlacement`| `'top' \| 'left'` | `'top'` | V? tr� d?t nh�n so v?i avatar. |
+| `helperText` | `ReactNode` | `undefined` | �o?n van b?n hu?ng d?n/ch� th�ch b�n du?i avatar. |
+| `errorMessage` | `ReactNode` | `undefined` | Th�ng b�o l?i hi?n th? b�n du?i avatar (t? d?ng k�ch ho?t vi?n d?). |
+| `disabled` | `boolean` | `false` | V� hi?u h�a to�n b? tuong t�c t?i l�n. |
+| `readOnly` | `boolean` | `false` | Ch? d? ch? xem, kh�ng cho ph�p thay d?i hay x�a. |
+| `icon` | `ReactNode` | `<AvatarIcon />` | T�y bi?n icon placeholder khi chua c� ?nh. |
+| `name` | `string` | `undefined` | T�n c?a tru?ng input file trong form HTML. |
+| `id` | `string` | T? d?ng sinh | ID c?a ph?n t? input (d�ng cho li�n k?t label & a11y). |
+| `ref` | `Ref<HTMLInputElement>` | `undefined` | Ref chuy?n ti?p d?n th? input file ?n b�n trong. |
+| `className` | `string` | `""` | T�y bi?n class container ngo�i c�ng. |
+| `wrapperClassName` | `string` | `""` | Alias c?a `className`. |
+| `avatarClassName` | `string` | `""` | T�y bi?n class �p d?ng ri�ng cho khung vi?n c?a avatar. |
+| `labelClassName` | `string` | `""` | T�y bi?n class cho nh�n `<label>`. |
+| `helperClassName` | `string` | `""` | T�y bi?n class cho text hu?ng d?n / th�ng b�o l?i. |
 
 ---
 
 ### `UploadAvatarConfig`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Thu?c t�nh | Ki?u d? li?u | M?c d?nh | M� t? |
 | :--- | :--- | :--- | :--- |
-| `isRequired` | `boolean` | `false` | Đánh dấu bắt buộc nhập (hiển thị dấu `*` đỏ cạnh label). |
-| `isInvalid` | `boolean` | `false` | Đánh dấu trường không hợp lệ (kích hoạt viền đỏ và `aria-invalid`). |
-| `isLoading` | `boolean` | `false` | Đang tải tệp, khóa tương tác và kích hoạt `aria-busy`. |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner overlay khi `isLoading=true`. |
-| `isClearable` | `boolean` | `false` | Cho phép hiển thị nút xóa nhanh avatar. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng container bao ngoài chiếm 100% chiều rộng khung cha. |
+| `isRequired` | `boolean` | `false` | ��nh d?u b?t bu?c nh?p (hi?n th? d?u `*` d? c?nh label). |
+| `isInvalid` | `boolean` | `false` | ��nh d?u tru?ng kh�ng h?p l? (k�ch ho?t vi?n d? v� `aria-invalid`). |
+| `isLoading` | `boolean` | `false` | �ang t?i t?p, kh�a tuong t�c v� k�ch ho?t `aria-busy`. |
+| `showSpinner` | `boolean` | `false` | Hi?n th? bi?u tu?ng xoay spinner overlay khi `isLoading=true`. |
+| `isClearable` | `boolean` | `false` | Cho ph�p hi?n th? n�t x�a nhanh avatar. |
+| `isFullWidth` | `boolean` | `false` | M? r?ng container bao ngo�i chi?m 100% chi?u r?ng khung cha. |
 
 ---
 
 ### `UploadAvatarCropOptions`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Thu?c t�nh | Ki?u d? li?u | M?c d?nh | M� t? |
 | :--- | :--- | :--- | :--- |
-| `aspectRatio` | `number` | `1` | Tỷ lệ khung hình cắt (mặc định 1:1 cho avatar). |
-| `cropShape` | `'round' \| 'rect'` | `'round'` cho circle, `'rect'` cho square | Hình dạng mặt nạ cắt xén ảnh trong modal. |
-| `showGrid` | `boolean` | `true` | Hiển thị đường lưới tỷ lệ 3x3 khi cắt ảnh. |
-| `minZoom` | `number` | `1` | Mức độ thu nhỏ tối thiểu. |
-| `maxZoom` | `number` | `4` | Mức độ phóng to tối đa. |
-| `modalTitle` | `string` | `"Cắt ảnh đại diện"` | Tiêu đề thanh header của modal cắt ảnh. |
+| `aspectRatio` | `number` | `1` | T? l? khung h�nh c?t (m?c d?nh 1:1 cho avatar). |
+| `cropShape` | `'round' \| 'rect'` | `'round'` cho circle, `'rect'` cho square | H�nh d?ng m?t n? c?t x�n ?nh trong modal. |
+| `showGrid` | `boolean` | `true` | Hi?n th? du?ng lu?i t? l? 3x3 khi c?t ?nh. |
+| `minZoom` | `number` | `1` | M?c d? thu nh? t?i thi?u. |
+| `maxZoom` | `number` | `4` | M?c d? ph�ng to t?i da. |
+| `modalTitle` | `string` | `"C?t ?nh d?i di?n"` | Ti�u d? thanh header c?a modal c?t ?nh. |
 
 ---
 
-## 🛡️ Khả năng tiếp cận (Accessibility)
+## ??? Kh? nang ti?p c?n (Accessibility)
 
 - **WAI-ARIA & Keyboard Navigation**:
-  - Phần tử avatar được gán `role="button"`, `tabIndex={0}`, có thể điều hướng bằng phím <kbd>Tab</kbd>.
-  - Nhấn <kbd>Space</kbd> hoặc <kbd>Enter</kbd> để kích hoạt hộp thoại chọn tệp tin.
-  - Khi đã có ảnh, nhấn <kbd>Delete</kbd> hoặc <kbd>Backspace</kbd> sẽ xóa ảnh ngay lập tức.
+  - Ph?n t? avatar du?c g�n `role="button"`, `tabIndex={0}`, c� th? di?u hu?ng b?ng ph�m <kbd>Tab</kbd>.
+  - Nh?n <kbd>Space</kbd> ho?c <kbd>Enter</kbd> d? k�ch ho?t h?p tho?i ch?n t?p tin.
+  - Khi d� c� ?nh, nh?n <kbd>Delete</kbd> ho?c <kbd>Backspace</kbd> s? x�a ?nh ngay l?p t?c.
 - **Screen Reader Support**:
-  - Tích hợp vùng chứa `aria-live="polite"` (`sr-only`) tự động thông báo trạng thái cập nhật hoặc xóa ảnh cho người khiếm thị bằng tiếng Việt chuẩn.
-  - Liên kết tự động giữa label, helperText, errorMessage với input thông qua `aria-describedby` và `htmlFor`.
-- **Trạng thái vô hiệu hóa**:
-  - Khi `disabled={true}` hoặc `isLoading={true}`, phần tử tự động thiết lập `aria-disabled="true"`, `aria-busy="true"` và ngăn chặn toàn bộ sự kiện click, kéo thả.
+  - T�ch h?p v�ng ch?a `aria-live="polite"` (`sr-only`) t? d?ng th�ng b�o tr?ng th�i c?p nh?t ho?c x�a ?nh cho ngu?i khi?m th? b?ng ti?ng Vi?t chu?n.
+  - Li�n k?t t? d?ng gi?a label, helperText, errorMessage v?i input th�ng qua `aria-describedby` v� `htmlFor`.
+- **Tr?ng th�i v� hi?u h�a**:
+  - Khi `disabled={true}` ho?c `isLoading={true}`, ph?n t? t? d?ng thi?t l?p `aria-disabled="true"`, `aria-busy="true"` v� ngan ch?n to�n b? s? ki?n click, k�o th?.

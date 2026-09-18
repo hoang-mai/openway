@@ -22,6 +22,7 @@ import {
   timePickerRadiusConfig,
   timePickerSizeConfig,
   timePickerVariantStyles,
+  labelColorConfig,
 } from "./constants";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
@@ -188,6 +189,8 @@ export default function TimePicker({
       hasError={hasError}
       cursor="pointer"
       className={labelClassName}
+      colorConfig={labelColorConfig}
+      isOpen={isOpen && !isLoading}
     />
   );
 
@@ -234,13 +237,22 @@ export default function TimePicker({
     .join(" ");
 
   return (
-    <div className={fieldWrapperClasses}>
+    <div
+      className={fieldWrapperClasses}
+      data-state={isOpen && !isLoading ? "open" : "closed"}
+    >
       {/* Label (Top / Left) */}
       {!isFloating && renderLabel()}
 
       <div className={`flex flex-col ${isFullWidth ? "w-full" : ""}`}>
         {/* Input container */}
-        <div ref={setReference} {...getReferenceProps()} className={containerClasses}>
+        <div
+          ref={setReference}
+          {...getReferenceProps()}
+          data-state={isOpen && !isLoading ? "open" : "closed"}
+          aria-expanded={isOpen && !isLoading}
+          className={containerClasses}
+        >
           {isFloating && renderLabel()}
 
           <input
@@ -278,7 +290,7 @@ export default function TimePicker({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Xóa thời gian"
+                aria-label="Clear time"
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${

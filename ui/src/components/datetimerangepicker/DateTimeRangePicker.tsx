@@ -22,6 +22,7 @@ import { combineDateTime, formatDateTime, getDefaultDateTimeFormat, toDateTime }
 import {
   dateTimeRangePickerSizeConfig,
   dateTimeRangePickerButtonColorConfig,
+  labelColorConfig,
 } from "./constants";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import FieldLabel from "@/components/common/FieldLabel";
@@ -272,6 +273,8 @@ export default function DateTimeRangePicker({
       hasError={hasError}
       cursor="pointer"
       className={labelClassName}
+      colorConfig={labelColorConfig}
+      isOpen={isOpen && !isLoading}
     />
   );
 
@@ -320,13 +323,22 @@ export default function DateTimeRangePicker({
   const currentStepDate = activeStep === "start" ? selectedRange[0] : selectedRange[1];
 
   return (
-    <div className={fieldWrapperClasses}>
+    <div
+      className={fieldWrapperClasses}
+      data-state={isOpen && !isLoading ? "open" : "closed"}
+    >
       {/* Label (Top / Left) */}
       {!isFloating && renderLabel()}
 
       <div className={`flex flex-col ${isFullWidth ? "w-full" : ""}`}>
         {/* Input container */}
-        <div ref={setReference} {...getReferenceProps()} className={containerClasses}>
+        <div
+          ref={setReference}
+          {...getReferenceProps()}
+          data-state={isOpen && !isLoading ? "open" : "closed"}
+          aria-expanded={isOpen && !isLoading}
+          className={containerClasses}
+        >
           {isFloating && renderLabel()}
 
           <input
