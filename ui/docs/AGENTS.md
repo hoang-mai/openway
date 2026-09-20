@@ -27,7 +27,7 @@ Khi tạo mới, sửa đổi hoặc sử dụng các component UI trong dự á
 ## 📦 Quy tắc Import Chuẩn
 
 ```tsx
-// 1. Tất cả 35 UI Components, Icons, và Core Hooks dùng chung
+// 1. Tất cả 36 UI Components, Icons, và Core Hooks dùng chung
 import {
   Button,
   IconButton,
@@ -74,6 +74,8 @@ import {
   UploadImage,
   FilePreview,
   Carousel,
+  Typography,
+  Text,
   useInfiniteScroll,
   useDebounce,
   useDebouncedCallback,
@@ -85,12 +87,13 @@ import { useTableQuery, useSelectInfiniteQuery } from "@openway/ui/query";
 
 ---
 
-## 🧭 Danh mục 35 Components & Tài liệu Chi tiết
+## 🧭 Danh mục 36 Components & Tài liệu Chi tiết
 
 Tất cả tài liệu chi tiết của từng component được lưu trữ tại `node_modules/@openway/ui/docs/components/<name>.md`:
 
 | Phân nhóm | Component | File Tài liệu | Mục đích sử dụng |
 | :--- | :--- | :--- | :--- |
+| **Typography & Content**| `<Typography>`, `<Text>` | [`typography.md`](./components/typography.md) | Hệ thống văn bản & khối nội dung chuẩn 100% Notion Design System (h1–h6, p, code đỏ #eb5757, quote 3px, 10 màu Notion, copyable, ellipsis, tabular). |
 | **Buttons & Actions** | `<Button>`, `<IconButton>` | [`button.md`](./components/button.md) | Nút chính xanh `#2383e2`, nút phụ viền `#e3e2e0`, bo góc 4px–8px, loading spinner. |
 | **Form Inputs** | `<Input>`, `<MultiInput>`, `<OtpInput>` | [`input.md`](./components/input.md) | Viền `#e3e2e0 hover:border-[#d3d1cb]`, focus ring `#2383e2/25`, con trỏ than chì. |
 | | `<Textarea>` | [`textarea.md`](./components/textarea.md) | Nhập nhiều dòng, auto-resize, thanh cuộn mỏng `.ui-scrollbar`. |

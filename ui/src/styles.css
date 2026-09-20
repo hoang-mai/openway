@@ -98,6 +98,29 @@
   --color-info-900: #0f4b67;    /* Deep clear info text */
   --color-info-950: #092f42;
 
+  /* ================= NOTION 10 TEXT COLORS ================= */
+  --color-notion-default: #37352f;
+  --color-notion-gray: #787774;
+  --color-notion-brown: #9f6b53;
+  --color-notion-orange: #d9730d;
+  --color-notion-yellow: #cb912f;
+  --color-notion-green: #448361;
+  --color-notion-blue: #337ea9;
+  --color-notion-purple: #9065b0;
+  --color-notion-pink: #c14c8a;
+  --color-notion-red: #d44c47;
+
+  /* ================= NOTION 10 HIGHLIGHT / BACKGROUND COLORS ================= */
+  --color-notion-bg-gray: #f1f1ef;
+  --color-notion-bg-brown: #f4eeee;
+  --color-notion-bg-orange: #fbecdd;
+  --color-notion-bg-yellow: #fbf3db;
+  --color-notion-bg-green: #edf3ec;
+  --color-notion-bg-blue: #e7f3f8;
+  --color-notion-bg-purple: #f4f0f7;
+  --color-notion-bg-pink: #f9eef3;
+  --color-notion-bg-red: #fdebec;
+
   /* ================= NOTION CRISP GEOMETRY (BORDER RADII) ================= */
   --radius-2xs: 2px;
   --radius-xs: 3px;
@@ -127,6 +150,45 @@ button:focus:not(:focus-visible),
 .tabular-nums {
   font-feature-settings: "tnum" 1;
   font-variant-numeric: tabular-nums;
+}
+
+/* ================= NOTION TYPOGRAPHY UTILITIES ================= */
+.notion-inline-code {
+  color: #eb5757;
+  background-color: rgba(135, 131, 120, 0.15);
+  font-family: var(--font-mono);
+  font-size: 85%;
+  border-radius: var(--radius-xs);
+  padding: 0.15em 0.35em;
+}
+
+.notion-quote {
+  border-left: 3px solid currentColor;
+  padding-left: 0.875rem;
+  margin: 0.5rem 0;
+  font-style: italic;
+}
+
+.notion-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(55, 53, 47, 0.09);
+  background-color: var(--color-neutral-50);
+}
+
+.notion-hover-trigger .notion-hover-action {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.notion-hover-trigger:hover .notion-hover-action,
+.notion-hover-trigger:focus-within .notion-hover-action {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ================= OPENWAY LAYERED AMBIENT SHADOWS ================= */

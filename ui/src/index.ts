@@ -86,6 +86,10 @@ export { default as ArrowUpDownIcon } from "./components/icons/ArrowUpDownIcon";
 export { default as ArrowUpIcon } from "./components/icons/ArrowUpIcon";
 export { default as ArrowDownIcon } from "./components/icons/ArrowDownIcon";
 export { default as SlidersHorizontalIcon } from "./components/icons/SlidersHorizontalIcon";
+export { default as CopyIcon } from "./components/icons/CopyIcon";
+export { default as EditIcon } from "./components/icons/EditIcon";
+export { default as ExternalLinkIcon } from "./components/icons/ExternalLinkIcon";
+export { default as MoreHorizontalIcon } from "./components/icons/MoreHorizontalIcon";
 
 // Alert
 export { Alert } from "./components/alert";
@@ -414,4 +418,23 @@ export {
 export type { PortalRoot } from "./components/portal";
 export { useFloatingPortalRoot } from "./hooks/useFloatingPortalRoot";
 export type { UseFloatingPortalRootOptions } from "./hooks/useFloatingPortalRoot";
+
+// Typography (Notion Design System)
+export { Typography, Text, CalloutView } from "./components/typography";
+export type * from "./components/typography/types";
+
+// Breadcrumb (Notion Design System)
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+  BreadcrumbContext,
+  useBreadcrumbContext,
+} from "./components/breadcrumb";
+export type * from "./components/breadcrumb/types";
+
 

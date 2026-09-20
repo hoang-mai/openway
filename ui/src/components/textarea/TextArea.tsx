@@ -59,13 +59,45 @@ export default function TextArea({
   const errorHelperId = `${textareaId}-error-helper`;
 
   const internalRef = useRef<HTMLTextAreaElement | null>(null);
-  const [internalValue, setInternalValue] = useState<string | number | readonly string[] | undefined>(
-    defaultValue ?? ""
-  );
   const mergedRef = useMergeRefs([internalRef, ref]);
 
   const isControlled = value !== undefined;
-  const currentValue = isControlled ? (value ?? "") : internalValue;
+  const [uncontrolledValue, setUncontrolledValue] = useState<string | number | readonly string[] | undefined>(
+    defaultValue ?? ""
+  );
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    let nextValue = e.target.value;
+    if (maxLength !== undefined && nextValue.length > maxLength) {
+      nextValue = nextValue.slice(0, maxLength);
+      e.target.value = nextValue;
+    }
+    if (!isControlled) {
+      setUncontrolledValue(nextValue);
+    }
+    onChange?.(e);
+  };
+
+  const handleClear = () => {
+    if (!isControlled) {
+      setUncontrolledValue("");
+    }
+    if (internalRef.current) {
+      internalRef.current.value = "";
+    }
+    if (onChange && internalRef.current) {
+      const syntheticEvent = {
+        target: internalRef.current,
+        currentTarget: internalRef.current,
+      } as ChangeEvent<HTMLTextAreaElement>;
+      onChange(syntheticEvent);
+    }
+    onClear?.();
+  };
+
+  const effectiveValue = isControlled ? (value ?? "") : (uncontrolledValue ?? "");
+  const currentLength = effectiveValue !== undefined && effectiveValue !== null ? String(effectiveValue).length : 0;
+  const hasValue = currentLength > 0;
 
   // Visual error state updates immediately
   const isInvalidState = Boolean(isInvalid || errorMessage);
@@ -79,28 +111,6 @@ export default function TextArea({
     variant === "other"
       ? ""
       : getSafeConfig(activeColor, getSafeConfig(variant, variantColorConfig, "outline"), "primary");
-
-  const currentLength = currentValue !== undefined && currentValue !== null ? String(currentValue).length : 0;
-  const hasValue = currentLength > 0;
-
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    let nextValue = e.target.value;
-    if (maxLength !== undefined && nextValue.length > maxLength) {
-      nextValue = nextValue.slice(0, maxLength);
-      e.target.value = nextValue;
-    }
-    if (!isControlled) {
-      setInternalValue(nextValue);
-    }
-    onChange?.(e);
-  };
-
-  const handleClear = () => {
-    if (!isControlled) {
-      setInternalValue("");
-    }
-    onClear?.();
-  };
 
   const isFloating = labelPlacement === "floating";
   const hasFloatingLabel = isFloating && Boolean(label);
@@ -147,7 +157,7 @@ export default function TextArea({
 
   const commonProps = {
     id: textareaId,
-    value: currentValue,
+    ...(isControlled ? { value: value ?? "" } : { defaultValue }),
     onChange: handleChange,
     disabled: disabled || isLoading,
     readOnly,

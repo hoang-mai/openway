@@ -1,6 +1,6 @@
 {
   "name": "@openway/ui",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": false,
   "license": "MIT",
   "publishConfig": {
@@ -70,7 +70,7 @@
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
-    "cypress": "^15.21.0",
+    "cypress": "^16.1.0",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.3.4",
     "eslint-config-prettier": "^10.1.8",

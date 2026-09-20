@@ -56,25 +56,35 @@ export default function Input({
   const mergedRef = useMergeRefs([internalRef, ref]);
 
   const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = useState(defaultValue ?? "");
-  const currentValue = isControlled ? (value ?? "") : internalValue;
+  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? "");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isControlled) {
-      setInternalValue(e.target.value);
+      setUncontrolledValue(e.target.value);
     }
     onChange?.(e);
   };
 
   const handleClear = () => {
     if (!isControlled) {
-      setInternalValue("");
+      setUncontrolledValue("");
+    }
+    if (internalRef.current) {
+      internalRef.current.value = "";
+    }
+    if (onChange && internalRef.current) {
+      const syntheticEvent = {
+        target: internalRef.current,
+        currentTarget: internalRef.current,
+      } as React.ChangeEvent<HTMLInputElement>;
+      onChange(syntheticEvent);
     }
     onClear?.();
   };
 
-  const hasValue =
-    currentValue !== undefined && currentValue !== null ? Boolean(String(currentValue).length > 0) : false;
+  const hasValue = isControlled
+    ? value !== undefined && value !== null && Boolean(String(value).length > 0)
+    : Boolean(uncontrolledValue && String(uncontrolledValue).length > 0);
   const hasError = Boolean(isInvalid || errorMessage);
   const activeColor = hasError ? "error" : color;
 
@@ -171,7 +181,7 @@ export default function Input({
               ref={mergedRef}
               id={inputId}
               type={type}
-              value={currentValue}
+              {...(isControlled ? { value: value ?? "" } : { defaultValue })}
               onChange={handleChange}
               disabled={disabled || isLoading}
               readOnly={readOnly}

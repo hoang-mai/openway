@@ -39,3 +39,8 @@ export { default as ArrowUpDownIcon } from "./ArrowUpDownIcon";
 export { default as ArrowUpIcon } from "./ArrowUpIcon";
 export { default as ArrowDownIcon } from "./ArrowDownIcon";
 export { default as SlidersHorizontalIcon } from "./SlidersHorizontalIcon";
+export { default as CopyIcon } from "./CopyIcon";
+export { default as EditIcon } from "./EditIcon";
+export { default as ExternalLinkIcon } from "./ExternalLinkIcon";
+export { default as MoreHorizontalIcon } from "./MoreHorizontalIcon";
+export { default as LightbulbIcon } from "./LightbulbIcon";

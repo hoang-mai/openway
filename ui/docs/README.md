@@ -10,7 +10,7 @@ Thư mục này được đóng gói sẵn trong package `node_modules/@openway/
 
 - [1. Hướng dẫn Tích hợp Antigravity AI](#1-hướng-dẫn-tích-hợp-antigravity-ai)
 - [2. Cài đặt & Cấu hình Theme](#2-cài-đặt--cấu-hình-theme)
-- [3. Danh mục 35 Components](#3-danh-mục-35-components)
+- [3. Danh mục 36 Components](#3-danh-mục-36-components)
 - [4. Danh mục Hooks (`@openway/ui` & `@openway/ui/query`)](#4-danh-mục-hooks)
 - [5. Quy chuẩn Thiết kế (Design Tokens)](#5-quy-chuẩn-thiết-kế-design-tokens)
 
@@ -68,9 +68,12 @@ Chỉ cần 3 dòng để kích hoạt toàn bộ OpenWay Design System:
 
 ---
 
-## 3. Danh mục 35 Components
+## 3. Danh mục 36 Components
 
 Tất cả tài liệu chi tiết của từng component được lưu trữ tại thư mục [`components/`](./components/):
+
+### Typography & Content
+- **[`typography.md`](./components/typography.md)**: Hệ thống Typography `<Typography>` và `<Text>` chuẩn 100% Notion Design System (h1–h6, p, callout, code đỏ `#eb5757`, quote viền 3px, 10 màu Notion, copyable, ellipsis, tabular nums).
 
 ### Buttons & Actions
 - **[`button.md`](./components/button.md)**: Nút bấm `<Button>` và nút icon `<IconButton>`, 5 kích cỡ, 6 biến thể (`filled`, `soft`, `outline`, `ghost`, `text`, `other`), bo góc 4px–8px, spinner loading mượt mà.

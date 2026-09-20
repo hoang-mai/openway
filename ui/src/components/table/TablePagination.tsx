@@ -105,6 +105,7 @@ export function TablePagination<TData extends RowData = RowData>({
           icon={<DoubleChevronLeftIcon className="w-3.5 h-3.5" />}
           aria-label="Trang đầu"
           size="sm"
+          radius="md"
           variant="outline"
           color="neutral"
           disabled={!canPrevious}
@@ -114,6 +115,7 @@ export function TablePagination<TData extends RowData = RowData>({
           icon={<ChevronLeftIcon className="w-3.5 h-3.5" />}
           aria-label="Trang trước"
           size="sm"
+          radius="md"
           variant="outline"
           color="neutral"
           disabled={!canPrevious}
@@ -160,6 +162,7 @@ export function TablePagination<TData extends RowData = RowData>({
           icon={<ChevronRightIcon className="w-3.5 h-3.5" />}
           aria-label="Trang sau"
           size="sm"
+          radius="md"
           variant="outline"
           color="neutral"
           disabled={!canNext}
@@ -169,6 +172,7 @@ export function TablePagination<TData extends RowData = RowData>({
           icon={<DoubleChevronRightIcon className="w-3.5 h-3.5" />}
           aria-label="Trang cuối"
           size="sm"
+          radius="md"
           variant="outline"
           color="neutral"
           disabled={!canNext}

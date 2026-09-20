@@ -1,6 +1,6 @@
 # OpenWay Design System — Quy Chuẩn Thiết Kế & Toàn Bộ Component Tokens
 
-> **Tài liệu kim chỉ nam (Single Source of Truth)** về phong cách thiết kế, bảng màu tokens (Light Mode & Dark Mode), typography, đổ bóng đa tầng, animation và quy chuẩn chi tiết cho **toàn bộ 35 component** trong thư viện `@openway/ui`. 
+> **Tài liệu kim chỉ nam (Single Source of Truth)** về phong cách thiết kế, bảng màu tokens (Light Mode & Dark Mode), typography, đổ bóng đa tầng, animation và quy chuẩn chi tiết cho **toàn bộ 36 component** trong thư viện `@openway/ui`. 
 > Tài liệu được đối soát trực tiếp từ mã nguồn CSS đang chạy trên `openway.dev` (qua stylesheet của OpenWay) và hệ thống thiết kế phần mềm quản trị hiện đại.
 
 ---
@@ -469,6 +469,15 @@ Tránh xung đột chồng lớp giữa các component:
 
 #### 40. `Carousel` (Trình chiếu ảnh & nội dung)
 - Khung trượt mượt mà `cubic-bezier(0.16, 1, 0.3, 1)`. Nút mũi tên điều hướng tròn nhỏ với nền trắng, đổ bóng `.shadow-openway-card`, chấm chỉ số (dots) nhỏ gọn `6x6px`, dot đang chọn kéo dài `w-4 bg-[#2383e2]`.
+
+#### 41. `Typography` & `Text` (Hệ thống Văn bản & Khối nội dung chuẩn 100% Notion)
+- **Unified Component**: Một component duy nhất hỗ trợ toàn bộ các biến thể qua prop `as` (`h1` - `h6`, `p`, `callout`, `blockquote`, `code`, `kbd`, `a`, `span`), kèm alias `Text = Typography`.
+- **Bảng 10 Màu Chữ & Highlight Chuẩn Notion**: Default, Gray, Brown, Orange, Yellow, Green, Blue, Purple, Pink, Red.
+- **Inline Code**: Chữ đỏ san hô `#eb5757` trên nền xám ấm nhẹ `rgba(135, 131, 120, 0.15)`, bo góc `3px`.
+- **Quote Block**: Viền trái hairline `3px` than chì, lề đệm `pl-3.5`, font chữ nghiêng.
+- **Callout Block**: Icon/Emoji bên trái + nội dung bên phải trên nền pastel 10 màu Notion, bo góc `6px`.
+- **Tương tác**: `copyable` (icon check xác nhận), `editable` (inline edit), `ellipsis` (cắt dòng kèm xem thêm/thu gọn), `tabular` numbers.
+- **Zen Hover Actions**: Các nút thao tác (copy/edit) ẩn mờ mặc định và chỉ hiện khi hover.
 
 ---
 

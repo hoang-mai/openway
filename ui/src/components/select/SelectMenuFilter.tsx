@@ -26,8 +26,6 @@ import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { filterSizeConfig } from "./constants";
 
-export { filterSizeConfig };
-
 export interface SelectMenuFilterProps<TFilters extends Record<string, unknown> = Record<string, unknown>> {
   filters: SelectFilterField<unknown>[];
   values: Partial<TFilters>;
