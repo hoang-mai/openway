@@ -446,7 +446,7 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
     setPage,
     setPageSize,
     setGlobalFilter: setGlobalFilterValue,
-    setSorting,
-    setColumnFilters,
+    setSorting: handleSortingChange,
+    setColumnFilters: handleColumnFiltersChange,
   };
 }
