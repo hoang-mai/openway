@@ -60,9 +60,15 @@ importers:
       '@types/react-dom':
         specifier: 19.2.2
         version: 19.2.2(@types/react@19.2.2)
+      axe-core:
+        specifier: ^4.13.0
+        version: 4.13.0
       cypress:
         specifier: ^16.1.0
         version: 16.1.0
+      cypress-axe:
+        specifier: ^1.7.0
+        version: 1.7.0(axe-core@4.13.0)(cypress@16.1.0)
       eslint:
         specifier: ^9.39.1
         version: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
@@ -1612,6 +1618,13 @@ packages:
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
+
+  cypress-axe@1.7.0:
+    resolution: {integrity: sha512-zzJpvAAjauEB3GZl0KYXb8i3w6MztWAt2WM3czYTFyNVC30alDmqCm9E7GwZ4bgkldZJlmHakaVEyu73R5St4w==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      axe-core: ^3 || ^4
+      cypress: ^10 || ^11 || ^12 || ^13 || ^14 || ^15
 
   cypress@16.1.0:
     resolution: {integrity: sha512-t8suSUVzQyHI7v6KhhA07M9ChftdfqVZNLCekhguIb+2f0fCmI8WAih5L0oGH7K6slapNduGy5zpJ+17LmSXkQ==}
@@ -4582,6 +4595,11 @@ snapshots:
       which: 2.0.2
 
   csstype@3.2.3: {}
+
+  cypress-axe@1.7.0(axe-core@4.13.0)(cypress@16.1.0):
+    dependencies:
+      axe-core: 4.13.0
+      cypress: 16.1.0
 
   cypress@16.1.0:
     dependencies:

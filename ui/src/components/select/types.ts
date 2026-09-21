@@ -228,6 +228,11 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   /** Tên trường form HTML để submit */
   name?: string;
 
+  /** Nhãn trợ năng cho screen readers */
+  "aria-label"?: string;
+  /** ID phần tử làm nhãn trợ năng */
+  "aria-labelledby"?: string;
+
   // ==================== SEARCH & TRIGGER ====================
   /** Cho phép tìm kiếm. Mặc định false */
   searchable?: boolean;

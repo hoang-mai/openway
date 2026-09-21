@@ -6,7 +6,6 @@ import {
   flip as flipMiddleware,
   shift as shiftMiddleware,
   useDismiss,
-  useRole,
   useInteractions,
   FloatingPortal,
   FloatingFocusManager,
@@ -14,9 +13,7 @@ import {
 import { useFloatingTransition } from "@/hooks/useFloatingTransition";
 import { TimePickerProps } from "./types";
 import TimeView from "./TimeView";
-import ChevronDownIcon from "../icons/ChevronDownIcon";
-import CloseIcon from "../icons/CloseIcon";
-import Spinner from "../icons/Spinner";
+import TimePickerTrigger from "./TimePickerTrigger";
 import { formatTime, getDefaultFormat, parseTimeToDate } from "./utils";
 import {
   timePickerRadiusConfig,
@@ -64,7 +61,6 @@ export default function TimePicker({
   placement = "bottom-start",
   disabled = false,
   readOnly = false,
-  portal = true,
   portalRoot,
   config,
   className = "",
@@ -119,8 +115,7 @@ export default function TimePicker({
     escapeKey: true,
     outsidePress: true,
   });
-  const role = useRole(context, { role: "dialog" });
-  const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
 
@@ -247,72 +242,39 @@ export default function TimePicker({
       {!isFloating && renderLabel()}
 
       <div className={`flex flex-col ${isFullWidth ? "w-full" : ""}`}>
-        {/* Input container */}
-        <div
-          ref={setReference}
-          {...getReferenceProps()}
-          data-state={isOpen && !isLoading ? "open" : "closed"}
-          aria-expanded={isOpen && !isLoading}
-          className={containerClasses}
-        >
-          {isFloating && renderLabel()}
-
-          <input
-            ref={ref}
-            id={inputId}
-            name={name}
-            type="text"
-            value={formattedValue}
-            onClick={() => !disabled && !readOnly && !isLoading && setIsOpen((prev) => !prev)}
-            onKeyDown={handleKeyDown}
-            readOnly={true}
-            autoComplete={autoComplete}
-            placeholder={defaultPlaceholder}
-            disabled={disabled || isLoading}
-            role="combobox"
-            aria-expanded={isOpen && !isLoading}
-            aria-haspopup="dialog"
-            aria-controls={popoverId}
-            aria-required={isRequired}
-            aria-invalid={hasError}
-            aria-busy={isLoading}
-            aria-disabled={disabled || isLoading}
-            aria-describedby={helperText || errorMessage ? errorHelperId : undefined}
-            aria-errormessage={errorMessage ? errorHelperId : undefined}
-            className={inputClasses}
-          />
-
-          {/* Right actions: Spinner, Clear, ChevronDown Icon */}
-          <div className="flex items-center space-x-1.5 pr-2.5 shrink-0">
-            {isLoading && showSpinner && (
-              <div className="flex items-center justify-center shrink-0">{renderIconWrapper(<Spinner />)}</div>
-            )}
-
-            {!isLoading && isClearable && !disabled && !readOnly && (
-              <button
-                type="button"
-                onClick={handleClear}
-                aria-label={timePickerLocale.clearText}
-                tabIndex={hasValue ? 0 : -1}
-                aria-hidden={!hasValue}
-                className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${
-                  hasValue ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-                }`}
-              >
-                <CloseIcon className="size-full" />
-              </button>
-            )}
-
-            <div
-              aria-hidden="true"
-              className={`inline-flex items-center justify-center text-neutral-400 hover:text-neutral-600 transition-transform duration-200 ease-in-out cursor-pointer ${
-                isOpen ? "rotate-180" : "rotate-0"
-              }`}
-            >
-              {renderIconWrapper(<ChevronDownIcon className="size-full" />)}
-            </div>
-          </div>
-        </div>
+        <TimePickerTrigger
+          setReference={setReference}
+          getReferenceProps={getReferenceProps}
+          isOpen={isOpen}
+          isLoading={isLoading}
+          containerClasses={containerClasses}
+          isFloating={isFloating}
+          renderLabel={renderLabel}
+          ref={ref}
+          inputId={inputId}
+          name={name}
+          formattedValue={formattedValue}
+          disabled={disabled}
+          readOnly={readOnly}
+          autoComplete={autoComplete}
+          defaultPlaceholder={defaultPlaceholder}
+          popoverId={popoverId}
+          isRequired={isRequired}
+          hasError={hasError}
+          errorHelperId={errorHelperId}
+          errorMessage={errorMessage}
+          helperText={helperText}
+          inputClasses={inputClasses}
+          showSpinner={showSpinner}
+          renderIconWrapper={renderIconWrapper}
+          isClearable={isClearable}
+          clearText={timePickerLocale.clearText}
+          hasValue={hasValue}
+          iconSizeClass={sizeStyles.icon}
+          onToggleOpen={() => setIsOpen((prev) => !prev)}
+          onKeyDown={handleKeyDown}
+          onClear={handleClear}
+        />
 
         {/* Floating UI Portal */}
         {isMounted && (

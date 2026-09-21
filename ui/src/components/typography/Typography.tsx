@@ -90,13 +90,11 @@ export default function Typography({
   const handleToggleExpand = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
-      setIsExpanded((prev) => {
-        const next = !prev;
-        ellipsisConfig?.onExpand?.(e, { expanded: next });
-        return next;
-      });
+      const next = !isExpanded;
+      setIsExpanded(next);
+      ellipsisConfig?.onExpand?.(e, { expanded: next });
     },
-    [ellipsisConfig]
+    [isExpanded, ellipsisConfig]
   );
 
   // 3. Xây dựng danh sách ClassNames

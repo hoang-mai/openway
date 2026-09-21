@@ -5,6 +5,8 @@ import Spinner from "@/components/icons/Spinner";
 
 export interface SelectTriggerContainerProps {
   id?: string;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
   isOpen: boolean;
   disabled?: boolean;
   isLoading?: boolean;
@@ -26,6 +28,8 @@ export interface SelectTriggerContainerProps {
 
 export function SelectTriggerContainer({
   id,
+  ariaLabel,
+  ariaLabelledBy,
   isOpen,
   disabled = false,
   isLoading = false,
@@ -55,6 +59,8 @@ export function SelectTriggerContainer({
       aria-expanded={isOpen}
       aria-haspopup="listbox"
       aria-controls={id ? `${id}-listbox` : undefined}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       tabIndex={disabled ? -1 : 0}
       data-state={isOpen ? "open" : "closed"}
       aria-busy={isLoading}
@@ -63,6 +69,8 @@ export function SelectTriggerContainer({
         id,
         onClick,
         onKeyDown,
+        "aria-label": ariaLabel,
+        "aria-labelledby": ariaLabelledBy,
         "data-state": isOpen ? "open" : "closed",
         className: `group relative flex items-center justify-between transition-all duration-150 ease-in-out border select-none ${roundedClass} ${
           currentSize.trigger

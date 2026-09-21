@@ -99,7 +99,6 @@ export default function Input({
   const renderIconWrapper = (iconNode: ReactNode) => (
     <span
       className={`inline-flex items-center justify-center shrink-0 text-neutral-400 leading-none select-none ${currentSize.icon}`}
-      aria-hidden="true"
     >
       {iconNode}
     </span>

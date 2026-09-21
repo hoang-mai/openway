@@ -37,8 +37,6 @@ export default function BreadcrumbPage({
   return (
     <span
       ref={ref}
-      role="link"
-      aria-disabled="true"
       aria-current="page"
       className={`inline-flex items-center max-w-70 sm:max-w-105 md:max-w-none cursor-default select-none font-medium transition-colors ${currentSize.page} ${roundedClass} ${currentColorClass} ${variantStyle} ${className}`.trim()}
       {...props}

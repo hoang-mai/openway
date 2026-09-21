@@ -35,7 +35,7 @@ export const variantStyleMap: Record<TypographyType, string> = {
   blockquote: "notion-quote text-neutral-800 block",
   code: "notion-inline-code inline",
   kbd: "inline-flex items-center justify-center font-mono text-[11px] leading-none px-1.5 py-1 rounded-xs bg-neutral-100 border border-neutral-200 text-neutral-700 shadow-xs select-none align-baseline",
-  a: "text-primary-500 hover:text-primary-600 hover:underline transition-colors duration-150 cursor-pointer inline-flex items-center gap-1",
+  a: "text-primary-600 hover:text-primary-700 hover:underline transition-colors duration-150 cursor-pointer inline-flex items-center gap-1",
 };
 
 /**
@@ -43,19 +43,19 @@ export const variantStyleMap: Record<TypographyType, string> = {
  */
 export const colorConfig: Record<string, string> = {
   default: "text-neutral-900",
-  gray: "text-neutral-500",
+  gray: "text-neutral-600",
   brown: "text-[#9f6b53]",
   orange: "text-[#d9730d]",
   yellow: "text-[#cb912f]",
   green: "text-[#448361]",
-  blue: "text-[#337ea9]",
-  purple: "text-[#9065b0]",
+  blue: "text-[#286b90]",
+  purple: "text-[#80559f]",
   pink: "text-[#c14c8a]",
   red: "text-[#d44c47]",
 
   // Design Tokens Aliases
   primary: "text-primary-500",
-  secondary: "text-neutral-500",
+  secondary: "text-neutral-600",
   tertiary: "text-neutral-400",
   muted: "text-neutral-400",
   success: "text-success-700",

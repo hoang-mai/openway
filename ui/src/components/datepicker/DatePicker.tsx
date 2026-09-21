@@ -6,7 +6,6 @@ import {
   flip as flipMiddleware,
   shift as shiftMiddleware,
   useDismiss,
-  useRole,
   useInteractions,
   FloatingPortal,
   FloatingFocusManager,
@@ -118,8 +117,7 @@ export default function DatePicker({
     escapeKey: true,
     outsidePress: true,
   });
-  const role = useRole(context, { role: "dialog" });
-  const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
 
@@ -282,7 +280,6 @@ export default function DatePicker({
           ref={setReference}
           {...getReferenceProps()}
           data-state={isOpen && !isLoading ? "open" : "closed"}
-          aria-expanded={isOpen && !isLoading}
           className={containerClasses}
         >
           {isFloating && renderLabel()}
@@ -351,6 +348,8 @@ export default function DatePicker({
               <div
                 ref={setFloating}
                 id={popoverId}
+                role="dialog"
+                aria-label="Choose date"
                 style={{
                   ...floatingStyles,
                   ...transitionStyles,

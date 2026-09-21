@@ -63,7 +63,7 @@ export default function HelperErrorText({
               ? isExiting
                 ? "text-error-600 animate-error-out"
                 : "text-error-600 animate-error-in"
-              : "text-neutral-500"
+              : "text-neutral-600"
           } ${className}`}
         >
           {activeText || "\u00A0"}

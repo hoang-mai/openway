@@ -6,7 +6,6 @@ import {
   flip as flipMiddleware,
   shift as shiftMiddleware,
   useDismiss,
-  useRole,
   useInteractions,
   FloatingPortal,
   FloatingFocusManager,
@@ -76,7 +75,6 @@ export default function DateTimePicker({
   autoComplete,
   disabled = false,
   readOnly = false,
-  portal = true,
   portalRoot,
   config,
   onClear,
@@ -137,8 +135,7 @@ export default function DateTimePicker({
     escapeKey: true,
     outsidePress: true,
   });
-  const role = useRole(context, { role: "dialog" });
-  const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
 
@@ -288,7 +285,6 @@ export default function DateTimePicker({
           ref={setReference}
           {...getReferenceProps()}
           data-state={isOpen && !isLoading ? "open" : "closed"}
-          aria-expanded={isOpen && !isLoading}
           className={containerClasses}
         >
           {isFloating && renderLabel()}
@@ -357,6 +353,8 @@ export default function DateTimePicker({
               <div
                 ref={setFloating}
                 id={popoverId}
+                role="dialog"
+                aria-label="Choose date and time"
                 style={{
                   ...floatingStyles,
                   ...transitionStyles,

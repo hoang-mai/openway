@@ -8,6 +8,8 @@ import {
   DatePickerRadius,
 } from "./index";
 import { LabelPlacement } from "../input/types";
+import { OpenWayProvider } from "../common/OpenWayProvider";
+import { viVN } from "@/locale/viVN";
 
 // ============================================================================
 // ALL-IN-ONE COMPREHENSIVE SHOWCASE (SINGLE MOUNT FOR VISUAL INSPECTION)
@@ -371,11 +373,13 @@ describe("<DatePicker /> Component Showcase", () => {
     const onIOChangeSpy = cy.spy().as("onIOChange");
     const onMonthOnlyChangeSpy = cy.spy().as("onMonthOnlyChange");
     cy.mount(
-      <DatePickerShowcase
-        onDateChange={onDateChangeSpy}
-        onIOChange={onIOChangeSpy}
-        onMonthOnlyChange={onMonthOnlyChangeSpy}
-      />
+      <OpenWayProvider locale={viVN}>
+        <DatePickerShowcase
+          onDateChange={onDateChangeSpy}
+          onIOChange={onIOChangeSpy}
+          onMonthOnlyChange={onMonthOnlyChangeSpy}
+        />
+      </OpenWayProvider>
     );
 
     // 1. Verify Header & Layout

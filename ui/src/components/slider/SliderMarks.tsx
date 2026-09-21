@@ -40,7 +40,7 @@ export function SliderMarks({ marks, min, max, step, orientation, size, markClas
         return (
           <div
             key={m.value}
-            className={`absolute flex items-center justify-center select-none text-neutral-500 ${
+            className={`absolute flex items-center justify-center select-none text-neutral-600 ${
               currentSize.markText
             } ${markClassName}`}
             style={

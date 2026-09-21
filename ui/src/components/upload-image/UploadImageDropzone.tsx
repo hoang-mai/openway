@@ -198,7 +198,7 @@ export default function UploadImageDropzone({
           </div>
 
           {/* Description */}
-          <div id={describedById} className={`${currentSize.descSize} text-neutral-500`}>
+          <div id={describedById} className={`${currentSize.descSize} text-neutral-600`}>
             {dropzoneDescription ?? defaultDesc}
           </div>
         </div>

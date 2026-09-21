@@ -1,5 +1,6 @@
 import { mount } from "cypress/react";
 import "./commands";
+import "cypress-axe";
 import "@/styles.css";
 
 declare global {
@@ -7,6 +8,10 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
+      checkA11yWCAG: (
+        context?: string | Node,
+        options?: Record<string, unknown>
+      ) => Chainable<void>;
     }
   }
 }

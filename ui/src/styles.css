@@ -65,7 +65,7 @@
   --color-success-200: #93cfa3;
   --color-success-300: #65bc83;
   --color-success-400: #3da868;
-  --color-success-500: #2a8a50;
+  --color-success-500: #237b47;
   --color-success-600: #206d3f;
   --color-success-700: #1c5833;
   --color-success-800: #18482b;
@@ -154,7 +154,7 @@ button:focus:not(:focus-visible),
 
 /* ================= NOTION TYPOGRAPHY UTILITIES ================= */
 .notion-inline-code {
-  color: #eb5757;
+  color: #be3131;
   background-color: rgba(135, 131, 120, 0.15);
   font-family: var(--font-mono);
   font-size: 85%;

@@ -10,19 +10,19 @@ export const tableSizeConfig: Record<
   }
 > = {
   sm: {
-    head: "px-3 py-2 text-xs font-medium text-neutral-500 tracking-normal",
+    head: "px-3 py-2 text-xs font-medium text-neutral-600 tracking-normal",
     cell: "px-3 py-2 text-xs text-neutral-900 tabular-nums",
     text: "text-xs",
     icon: "size-3.5",
   },
   md: {
-    head: "px-4 py-2.5 text-xs font-medium text-neutral-500 tracking-normal",
+    head: "px-4 py-2.5 text-xs font-medium text-neutral-600 tracking-normal",
     cell: "px-4 py-2.5 text-sm text-neutral-900 tabular-nums",
     text: "text-sm",
     icon: "size-4",
   },
   lg: {
-    head: "px-5 py-3 text-sm font-medium text-neutral-500 tracking-normal",
+    head: "px-5 py-3 text-sm font-medium text-neutral-600 tracking-normal",
     cell: "px-5 py-3.5 text-base text-neutral-900 tabular-nums",
     text: "text-base",
     icon: "size-5",
@@ -42,21 +42,21 @@ export const tableVariantConfig: Record<
   default: {
     container: "border border-neutral-200 bg-white shadow-none",
     table: "border-collapse",
-    head: "bg-neutral-50 border-b border-neutral-200 text-neutral-500 font-medium",
+    head: "bg-neutral-50 border-b border-neutral-200 text-neutral-600 font-medium",
     row: "border-b border-neutral-100 hover:bg-neutral-50/70 transition-colors duration-120",
     cell: "text-neutral-900 tabular-nums",
   },
   striped: {
     container: "border border-neutral-200 bg-white shadow-none",
     table: "border-collapse",
-    head: "bg-neutral-50 border-b border-neutral-200 text-neutral-500 font-medium",
+    head: "bg-neutral-50 border-b border-neutral-200 text-neutral-600 font-medium",
     row: "border-b border-neutral-100 even:bg-neutral-50/40 hover:bg-neutral-50/80 transition-colors duration-120",
     cell: "text-neutral-900 tabular-nums",
   },
   bordered: {
     container: "border border-neutral-200 bg-white shadow-none",
     table: "border-collapse border border-neutral-200",
-    head: "bg-neutral-50 border border-neutral-200 text-neutral-500 font-medium",
+    head: "bg-neutral-50 border border-neutral-200 text-neutral-600 font-medium",
     row: "border-b border-neutral-100 hover:bg-neutral-50/70 transition-colors duration-120",
     cell: "border-r border-b border-neutral-200/70 text-neutral-900 tabular-nums",
   },

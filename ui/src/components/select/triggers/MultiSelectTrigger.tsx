@@ -8,6 +8,8 @@ import SelectTriggerContainer from "./SelectTriggerContainer";
 
 export interface MultiSelectTriggerProps<TData = unknown> {
   id?: string;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
   selectedOptions: SelectOptionItem<TData>[];
   isOpen: boolean;
   size?: SelectSize;
@@ -38,6 +40,8 @@ export interface MultiSelectTriggerProps<TData = unknown> {
 
 export function MultiSelectTrigger<TData = unknown>({
   id,
+  ariaLabel,
+  ariaLabelledBy,
   selectedOptions,
   isOpen,
   size = "md",
@@ -139,7 +143,7 @@ export function MultiSelectTrigger<TData = unknown>({
             className={`bg-transparent outline-none border-none p-0 flex-1 min-w-15 text-neutral-900 placeholder:text-neutral-400 ${currentSize.input}`}
           />
         ) : !hasSelection ? (
-          <span className="text-neutral-400 truncate">{placeholder}</span>
+          <span className="text-neutral-600 truncate">{placeholder}</span>
         ) : null}
       </div>
     );
@@ -148,6 +152,8 @@ export function MultiSelectTrigger<TData = unknown>({
   return (
     <SelectTriggerContainer
       id={id}
+      ariaLabel={ariaLabel}
+      ariaLabelledBy={ariaLabelledBy}
       isOpen={isOpen}
       disabled={disabled}
       isLoading={isLoading}

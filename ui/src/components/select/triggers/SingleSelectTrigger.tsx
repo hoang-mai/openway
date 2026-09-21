@@ -12,6 +12,8 @@ import SelectTriggerContainer from "./SelectTriggerContainer";
 
 export interface SingleSelectTriggerProps<TData = unknown> {
   id?: string;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
   selectedOption: SelectOptionItem<TData> | null;
   isOpen: boolean;
   size?: SelectSize;
@@ -40,6 +42,8 @@ export interface SingleSelectTriggerProps<TData = unknown> {
 
 export function SingleSelectTrigger<TData = unknown>({
   id,
+  ariaLabel,
+  ariaLabelledBy,
   selectedOption,
   isOpen,
   size = "md",
@@ -124,7 +128,7 @@ export function SingleSelectTrigger<TData = unknown>({
         {selectedOption ? (
           <span className="text-neutral-900">{selectedOption.label}</span>
         ) : (
-          <span className="text-neutral-400">{placeholder}</span>
+          <span className="text-neutral-600">{placeholder}</span>
         )}
       </div>
     );
@@ -133,6 +137,8 @@ export function SingleSelectTrigger<TData = unknown>({
   return (
     <SelectTriggerContainer
       id={id}
+      ariaLabel={ariaLabel}
+      ariaLabelledBy={ariaLabelledBy}
       isOpen={isOpen}
       disabled={disabled}
       isLoading={isLoading}

@@ -90,19 +90,19 @@ export const variantColorConfig: Record<
 > = {
   standard: {
     neutral:
-      "text-neutral-500 hover:text-neutral-900 active:text-neutral-950",
+      "text-neutral-600 hover:text-neutral-900 active:text-neutral-950",
     primary:
-      "text-neutral-500 hover:text-primary-600 active:text-primary-700",
+      "text-neutral-600 hover:text-primary-600 active:text-primary-700",
     secondary:
-      "text-neutral-500 hover:text-secondary-600 active:text-secondary-700",
+      "text-neutral-600 hover:text-secondary-600 active:text-secondary-700",
     error:
-      "text-neutral-500 hover:text-error-600 active:text-error-700",
+      "text-neutral-600 hover:text-error-600 active:text-error-700",
     success:
-      "text-neutral-500 hover:text-success-600 active:text-success-700",
+      "text-neutral-600 hover:text-success-600 active:text-success-700",
     warning:
-      "text-neutral-500 hover:text-warning-800 active:text-warning-900",
+      "text-neutral-600 hover:text-warning-800 active:text-warning-900",
     info:
-      "text-neutral-500 hover:text-info-600 active:text-info-700",
+      "text-neutral-600 hover:text-info-600 active:text-info-700",
   },
   solid: {
     neutral:

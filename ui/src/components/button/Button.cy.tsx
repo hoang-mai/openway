@@ -117,7 +117,7 @@ describe("<Button /> Tailwind Component Tests", () => {
         </Button>
       );
       cy.get("button")
-        .should("have.class", "bg-gradient-to-r")
+        .should("have.class", "bg-linear-to-r")
         .and("have.class", "from-purple-500")
         .and("have.class", "to-pink-500")
         .and("contain.text", "Custom Gradient Other");

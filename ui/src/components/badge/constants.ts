@@ -71,12 +71,12 @@ export const variantColorConfig: Record<Exclude<BadgeVariant, "other">, Record<B
     neutral: "bg-neutral-100 text-neutral-700 border border-neutral-200/60 hover:bg-neutral-200",
   },
   filled: {
-    primary: "bg-primary-500 text-neutral-white border-transparent hover:bg-primary-600 active:bg-primary-700",
+    primary: "bg-primary-600 text-neutral-white border-transparent hover:bg-primary-700 active:bg-primary-800",
     secondary: "bg-secondary-500 text-neutral-white border-transparent hover:bg-secondary-600 active:bg-secondary-700",
     error: "bg-error-500 text-neutral-white border-transparent hover:bg-error-600 active:bg-error-700",
     success: "bg-success-500 text-neutral-white border-transparent hover:bg-success-600 active:bg-success-700",
-    warning: "bg-warning-500 text-neutral-950 border-transparent hover:bg-warning-600 active:bg-warning-700",
-    info: "bg-info-500 text-neutral-white border-transparent hover:bg-info-600 active:bg-info-700",
+    warning: "bg-warning-400 text-neutral-950 border-transparent hover:bg-warning-500 active:bg-warning-600",
+    info: "bg-info-700 text-neutral-white border-transparent hover:bg-info-800 active:bg-info-900",
     neutral: "bg-neutral-800 text-neutral-white border-transparent hover:bg-neutral-900 active:bg-neutral-950",
   },
   outline: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { BreadcrumbItemProps } from "./types";
 import { useBreadcrumbContext, BreadcrumbItemContext } from "./context";
 import { sizeConfig } from "./constants";
@@ -16,8 +16,13 @@ export default function BreadcrumbItem({
   const { size } = useBreadcrumbContext();
   const currentSize = getSafeConfig(size, sizeConfig, "md");
 
+  const contextValue = useMemo(
+    () => ({ disabled, current }),
+    [disabled, current]
+  );
+
   return (
-    <BreadcrumbItemContext.Provider value={{ disabled, current }}>
+    <BreadcrumbItemContext.Provider value={contextValue}>
       <li
         ref={ref}
         className={`inline-flex items-center shrink-0 ${currentSize.item} ${

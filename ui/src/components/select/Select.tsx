@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useId } from "react";
+import React, { useState, useMemo, useCallback, useId } from "react";
 import { SelectProps, SelectOptionItem } from "./types";
 import SingleSelectTrigger from "./triggers/SingleSelectTrigger";
 import SelectMenu from "./SelectMenu";
@@ -69,6 +69,8 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   menuClassName = "",
   labelClassName = "",
   helperClassName = "",
+  "aria-label": ariaLabelProp,
+  "aria-labelledby": ariaLabelledByProp,
   ...props
 }: SelectProps<TData, TFilters>) {
   const {
@@ -108,23 +110,19 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   });
 
   // Tự động ghi nhớ option đã chọn vào historicalOptions khi options được tải về
-  useEffect(() => {
-    if (currentValue !== null && currentValue !== undefined) {
-      const found = options.find((opt) => opt.value === currentValue);
-      if (found) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+  if (currentValue !== null && currentValue !== undefined) {
+    const found = options.find((opt) => opt.value === currentValue);
+    if (found) {
+      const existing = historicalOptions.get(currentValue);
+      if (!existing || existing.label !== found.label || existing.data !== found.data) {
         setHistoricalOptions((prev) => {
-          const existing = prev.get(currentValue);
-          if (existing && existing.label === found.label && existing.data === found.data) {
-            return prev;
-          }
           const next = new Map(prev);
           next.set(currentValue, found);
           return next;
         });
       }
     }
-  }, [currentValue, options]);
+  }
 
   const selectedOption = useMemo<SelectOptionItem<TData> | null>(() => {
     const item = getSelectedOption(currentValue, options, historicalOptions);
@@ -251,9 +249,17 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   const generatedId = useId();
   const selectId = idProp || generatedId;
   const triggerId = `${selectId}-trigger`;
+  const labelId = `${selectId}-label`;
+
+  const ariaLabel =
+    ariaLabelProp ||
+    (typeof label === "string" ? label : undefined) ||
+    placeholder;
+  const ariaLabelledBy = label ? labelId : ariaLabelledByProp;
 
   const renderLabel = () => (
     <FieldLabel
+      id={labelId}
       htmlFor={triggerId}
       label={label}
       isRequired={isRequired}
@@ -290,6 +296,8 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
           {isFloating && renderLabel()}
           <SingleSelectTrigger
             id={triggerId}
+            ariaLabel={ariaLabel}
+            ariaLabelledBy={ariaLabelledBy}
             triggerRef={refs.setReference}
             getReferenceProps={getReferenceProps}
             selectedOption={selectedOption}

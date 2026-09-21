@@ -33,6 +33,10 @@
     },
     "./styles.css": "./dist/styles.css"
   },
+  "sideEffects": [
+    "dist/styles.css",
+    "*.css"
+  ],
   "files": [
     "dist",
     "docs",
@@ -45,6 +49,7 @@
     "lint": "eslint",
     "check-types": "tsc --noEmit",
     "doctor": "pnpm dlx react-doctor@latest",
+    "test:a11y": "cypress run --component --spec \"src/components/Accessibility.cy.tsx\"",
     "cypress:open": "cypress open --component",
     "cypress:run": "cypress run --component"
   },
@@ -80,7 +85,9 @@
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "axe-core": "^4.13.0",
     "cypress": "^16.1.0",
+    "cypress-axe": "^1.7.0",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.3.4",
     "eslint-config-prettier": "^10.1.8",

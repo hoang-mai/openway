@@ -1,4 +1,5 @@
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
+import { useMergeRefs } from "@floating-ui/react";
 import { CheckboxProps } from "./types";
 import { sizeConfig, radiusConfig, variantColorConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
@@ -57,6 +58,15 @@ export default function Checkbox({
   const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
 
   const isChecked = isControlled ? Boolean(checkedProp) : internalChecked;
+
+  const internalRef = useRef<HTMLInputElement | null>(null);
+  const mergedRef = useMergeRefs([internalRef, ref]);
+
+  useEffect(() => {
+    if (internalRef.current) {
+      internalRef.current.indeterminate = Boolean(indeterminate);
+    }
+  }, [indeterminate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled || readOnly || isLoading) return;
@@ -171,7 +181,7 @@ export default function Checkbox({
       <label className={wrapperClasses} onClick={handleWrapperClick}>
         {/* Hidden native input for Accessibility and form handling */}
         <input
-          ref={ref}
+          ref={mergedRef}
           type="checkbox"
           id={id}
           name={name}

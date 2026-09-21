@@ -47,7 +47,7 @@ export const radiusConfig: Record<ButtonRadius, string> = {
 export const variantColorConfig: Record<Exclude<ButtonVariant, "other">, Record<ButtonColor, string>> = {
   filled: {
     primary:
-      "bg-primary-500 text-neutral-white shadow-xs border-transparent hover:bg-primary-600 hover:shadow-sm active:bg-primary-700 active:shadow-none focus-visible:ring-primary-700",
+      "bg-primary-600 text-neutral-white shadow-xs border-transparent hover:bg-primary-700 hover:shadow-sm active:bg-primary-800 active:shadow-none focus-visible:ring-primary-700",
     secondary:
       "bg-secondary-500 text-neutral-white shadow-xs border-transparent hover:bg-secondary-600 hover:shadow-sm active:bg-secondary-700 active:shadow-none focus-visible:ring-secondary-700",
     neutral:
@@ -55,10 +55,10 @@ export const variantColorConfig: Record<Exclude<ButtonVariant, "other">, Record<
     error:
       "bg-error-500 text-neutral-white shadow-xs border-transparent hover:bg-error-600 hover:shadow-sm active:bg-error-700 active:shadow-none focus-visible:ring-error-700",
     success:
-      "bg-success-500 text-neutral-white shadow-xs border-transparent hover:bg-success-600 hover:shadow-sm active:bg-success-700 active:shadow-none focus-visible:ring-success-700",
+      "bg-success-600 text-neutral-white shadow-xs border-transparent hover:bg-success-700 hover:shadow-sm active:bg-success-800 active:shadow-none focus-visible:ring-success-700",
     warning:
-      "bg-warning-500 text-neutral-white shadow-xs border-transparent hover:bg-warning-600 hover:shadow-sm active:bg-warning-700 active:shadow-none focus-visible:ring-warning-700",
-    info: "bg-info-500 text-neutral-white shadow-xs border-transparent hover:bg-info-600 hover:shadow-sm active:bg-info-700 active:shadow-none focus-visible:ring-info-700",
+      "bg-warning-600 text-neutral-white shadow-xs border-transparent hover:bg-warning-700 hover:shadow-sm active:bg-warning-800 active:shadow-none focus-visible:ring-warning-700",
+    info: "bg-info-700 text-neutral-white shadow-xs border-transparent hover:bg-info-800 hover:shadow-sm active:bg-info-900 active:shadow-none focus-visible:ring-info-700",
   },
   soft: {
     primary:
@@ -103,7 +103,7 @@ export const variantColorConfig: Record<Exclude<ButtonVariant, "other">, Record<
       "bg-transparent text-success-600 border-transparent px-1 hover:text-success-700 active:text-success-800 focus-visible:ring-success-700",
     warning:
       "bg-transparent text-warning-600 border-transparent px-1 hover:text-warning-700 active:text-warning-800 focus-visible:ring-warning-700",
-    info: "bg-transparent text-info-600 border-transparent px-1 hover:text-info-700 active:text-info-800 focus-visible:ring-info-700",
+    info: "bg-transparent text-info-700 border-transparent px-1 hover:text-info-800 active:text-info-900 focus-visible:ring-info-700",
   },
   outline: {
     primary:

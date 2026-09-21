@@ -72,6 +72,8 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   menuClassName = "",
   labelClassName = "",
   helperClassName = "",
+  "aria-label": ariaLabelProp,
+  "aria-labelledby": ariaLabelledByProp,
   ...props
 }: MultiSelectProps<TData, TFilters>) {
   const {
@@ -314,9 +316,17 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   const generatedId = useId();
   const selectId = idProp || generatedId;
   const triggerId = `${selectId}-trigger`;
+  const labelId = `${selectId}-label`;
+
+  const ariaLabel =
+    ariaLabelProp ||
+    (typeof label === "string" ? label : undefined) ||
+    placeholder;
+  const ariaLabelledBy = label ? labelId : ariaLabelledByProp;
 
   const renderLabel = () => (
     <FieldLabel
+      id={labelId}
       htmlFor={triggerId}
       label={label}
       isRequired={isRequired}
@@ -351,6 +361,8 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
           {isFloating && renderLabel()}
           <MultiSelectTrigger
             id={triggerId}
+            ariaLabel={ariaLabel}
+            ariaLabelledBy={ariaLabelledBy}
             triggerRef={refs.setReference}
             getReferenceProps={getReferenceProps}
             selectedOptions={selectedOptions}
