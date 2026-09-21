@@ -8,7 +8,8 @@ import Tabs from "../tabs/Tabs";
 import TabList from "../tabs/TabList";
 import Tab from "../tabs/Tab";
 import { generateRangeCalendarGrid } from "./utils";
-import { resolveLocale, toDate } from "../datepicker/utils";
+import { toDate } from "../datepicker/utils";
+import { useLocale } from "../common/OpenWayProvider";
 import { dateRangeCalendarRadiusConfig, dateRangePickerSizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
@@ -21,7 +22,6 @@ export default function DateRangeCalendar({
   minDate,
   maxDate,
   isDateDisabled,
-  locale = "vi",
   firstDayOfWeek = 1,
   showWeekNumbers = false,
   showViewTabs = false,
@@ -54,16 +54,12 @@ export default function DateRangeCalendar({
   });
 
   // Tabs
-  const loc = resolveLocale(locale);
+  const loc = useLocale("datePicker");
   const tabItems = useMemo(() => {
-    const tabLabels = loc.viewTabs || {
-      days: "Ngày",
-      months: "Tháng",
-      years: "Năm",
-    };
+    const tabLabels = loc.viewTabs;
     return (viewTabs || ["days", "months", "years"]).map((v) => ({
       key: v,
-      label: tabLabels[v] || v,
+      label: tabLabels[v],
     }));
   }, [viewTabs, loc.viewTabs]);
 
@@ -268,7 +264,6 @@ export default function DateRangeCalendar({
         onNextDecade={handleNextDecade}
         size={size}
         color={color}
-        locale={locale}
       />
 
       {/* 2. Two Month Panels Side by Side */}
@@ -283,8 +278,7 @@ export default function DateRangeCalendar({
               size={size}
               color={color}
               radius={radius}
-              locale={locale}
-              firstDayOfWeek={firstDayOfWeek}
+                    firstDayOfWeek={firstDayOfWeek}
               showWeekNumbers={showWeekNumbers}
             />
           )}
@@ -296,8 +290,7 @@ export default function DateRangeCalendar({
               size={size}
               color={color}
               radius={radius}
-              locale={locale}
-              rangeStart={currentRangeStart}
+                    rangeStart={currentRangeStart}
               rangeEnd={currentRangeEnd}
               hoveredDate={hoveredDate}
               onHoverMonth={setHoveredDate}
@@ -329,8 +322,7 @@ export default function DateRangeCalendar({
               size={size}
               color={color}
               radius={radius}
-              locale={locale}
-              firstDayOfWeek={firstDayOfWeek}
+                    firstDayOfWeek={firstDayOfWeek}
               showWeekNumbers={showWeekNumbers}
             />
           )}
@@ -342,8 +334,7 @@ export default function DateRangeCalendar({
               size={size}
               color={color}
               radius={radius}
-              locale={locale}
-              rangeStart={currentRangeStart}
+                    rangeStart={currentRangeStart}
               rangeEnd={currentRangeEnd}
               hoveredDate={hoveredDate}
               onHoverMonth={setHoveredDate}

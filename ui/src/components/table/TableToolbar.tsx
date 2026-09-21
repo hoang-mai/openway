@@ -15,12 +15,13 @@ import CloseIcon from "../icons/CloseIcon";
 import RotateCwIcon from "../icons/RotateCwIcon";
 import { TableMenuFilter } from "./TableMenuFilter";
 import { tableToolbarConfig } from "./constants";
+import { useLocale } from "../common/OpenWayProvider";
 
 const DEFAULT_FILTER_VALUES: Record<string, unknown> = {};
 
 export function TableToolbar<TData extends RowData = RowData>({
   table,
-  searchPlaceholder = "Tìm kiếm trong bảng...",
+  searchPlaceholder: searchPlaceholderProp,
   enableGlobalFilter = true,
   enableColumnVisibility = true,
   isRefresh = false,
@@ -33,6 +34,8 @@ export function TableToolbar<TData extends RowData = RowData>({
   onFilterReset,
   className = "",
 }: TableToolbarProps<TData>) {
+  const tableLocale = useLocale("table");
+  const searchPlaceholder = searchPlaceholderProp ?? tableLocale.searchPlaceholder;
   const globalFilter = (table.state.globalFilter as string) ?? "";
   const hideableColumns = table.getAllLeafColumns().filter((col) => col.getCanHide());
 
@@ -70,7 +73,7 @@ export function TableToolbar<TData extends RowData = RowData>({
               <button
                 type="button"
                 onClick={handleClearSearch}
-                aria-label="Xóa tìm kiếm"
+                aria-label={tableLocale.clearSearch}
                 data-testid="table-clear-search-button"
                 className={tableToolbarConfig.clearButton}
               >
@@ -105,8 +108,8 @@ export function TableToolbar<TData extends RowData = RowData>({
         {(isRefresh || Boolean(onRefresh)) && (
           <IconButton
             icon={<RotateCwIcon className={`w-3.5 h-3.5 ${isRefresh ? "animate-spin" : ""}`} />}
-            aria-label="Làm mới dữ liệu"
-            title="Làm mới dữ liệu"
+            aria-label={tableLocale.refresh}
+            title={tableLocale.refresh}
             size="sm"
             variant="outline"
             color="neutral"
@@ -124,12 +127,12 @@ export function TableToolbar<TData extends RowData = RowData>({
                 color="neutral"
                 leftIcon={<SlidersHorizontalIcon className="w-3.5 h-3.5" />}
               >
-                Cột
+                {tableLocale.columns}
               </Button>
             </PopoverTrigger>
             <PopoverContent className={tableToolbarConfig.columnPopoverContent}>
               <PopoverHeader className={tableToolbarConfig.columnPopoverHeader}>
-                Hiển thị cột
+                {tableLocale.columnVisibility}
               </PopoverHeader>
               <PopoverBody className="max-h-60 overflow-y-auto ui-scrollbar p-1 flex flex-col gap-0.5">
                 {hideableColumns.map((column) => {

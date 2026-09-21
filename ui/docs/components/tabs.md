@@ -1,35 +1,35 @@
 # 📑 Tabs Component (`@openway/ui`)
 
-Bộ component **Tabs** tương tác cao, thiết kế chuẩn **Compound Components Pattern** (`<Tabs>`, `<TabList>`, `<Tab>`, `<TabPanels>`, `<TabPanel>`), tích hợp **Sliding Animated Indicator**, **Overflow Scroll**, **Custom Hook `useTabIndicator`**, **Safe Config Fallback** và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+Highly interactive **Tabs** component suite built with the **Compound Components Pattern** (`<Tabs>`, `<TabList>`, `<Tab>`, `<TabPanels>`, `<TabPanel>`). Features a **Sliding Animated Indicator**, **Overflow Scroll**, the standalone **Custom Hook `useTabIndicator`**, **Safe Config Fallback**, and full compliance with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Compound Components Pattern chuẩn chỉ**: Tách biệt rõ ràng các thành phần `<Tabs>`, `<TabList>`, `<Tab>`, `<TabPanels>`, `<TabPanel>`, tối đa hóa khả năng tùy biến layout và composition.
-- **Sliding Animated Indicator mượt mà**: Tự động tính toán vị trí, kích thước và chuyển động trượt mượt mà cho mọi variant (`line`, `solid`, `bordered`, `flat`), hỗ trợ tự động căn chỉnh khi resize màn hình thông qua `ResizeObserver`.
-- **Custom Hook `useTabIndicator` độc lập**: Tách biệt toàn bộ logic tính toán toạ độ indicator, kiểm tra tràn viền và điều hướng bàn phím thành hook riêng để dễ bảo trì và tái sử dụng.
-- **Controlled & Uncontrolled Mode**: Hỗ trợ linh hoạt cả `activeKey` + `onChange` (Controlled) và `defaultActiveKey` (Uncontrolled).
-- **3 Kích thước tiêu chuẩn (`size`)**: `sm`, `md` (*mặc định*), `lg`.
-- **5 Biến thể giao diện (`variant`)**:
-  - `line` *(mặc định)*: Thanh gạch dưới/bên trượt mượt mà.
-  - `solid`: Khối pill nền đậm nổi bật.
-  - `bordered`: Bao khung viền quanh tab.
-  - `flat`: Khối pill nền mềm nhạt (soft pill).
-  - `other`: Tự do tùy biến 100% qua `className`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
-- **6 Tùy chỉnh bo góc (`radius`)**: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
-- **Hướng & Vị trí đa dạng (`orientation` & `placement`)**:
-  - Ngang (`horizontal`): `top` (*mặc định*), `bottom`.
-  - Dọc (`vertical`): `left`, `right`.
-- **Cuộn khi tràn viền (Scrollable Overflow & Chevrons)**: Tự động hiển thị 2 nút chevron cuộn trái/phải khi danh sách tabs vượt quá chiều rộng container, tự động cuộn `scrollIntoView` tab active.
-- **Đóng / Xóa tab tiện lợi (`closable`)**: Cho phép click nút đóng hoặc nhấn phím `Delete` / `Backspace` khi đang focus vào tab.
-- **WAI-ARIA Accessibility & Keyboard Navigation**: Hỗ trợ đầy đủ `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-controls`, phím mũi tên `ArrowLeft` / `ArrowRight` / `ArrowUp` / `ArrowDown`, `Home`, `End`.
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` giúp component luôn an toàn, không bị crash kể cả khi truyền prop không hợp lệ.
+- **Clean Compound Components Pattern**: Clear separation of concerns between `<Tabs>`, `<TabList>`, `<Tab>`, `<TabPanels>`, and `<TabPanel>`, maximizing layout flexibility and composition.
+- **Smooth Sliding Animated Indicator**: Automatically calculates position, dimensions, and transition animations across all variants (`line`, `solid`, `bordered`, `flat`), with automatic realignments upon container resize via `ResizeObserver`.
+- **Standalone `useTabIndicator` Custom Hook**: Isolates all indicator coordinate calculations, overflow boundary checks, and keyboard navigation into a dedicated hook for easy maintenance and reuse.
+- **Controlled & Uncontrolled Modes**: Supports both `activeKey` + `onChange` (Controlled) and `defaultActiveKey` (Uncontrolled).
+- **3 Standard Sizes (`size`)**: `sm`, `md` (*default*), `lg`.
+- **5 Visual Variants (`variant`)**:
+  - `line` *(default)*: Smooth sliding underline/side indicator bar.
+  - `solid`: High-contrast solid pill background.
+  - `bordered`: Outlined border enclosing the tab.
+  - `flat`: Soft muted pill background.
+  - `other`: Free-form 100% customization via `className`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
+- **Diverse Orientations & Placements (`orientation` & `placement`)**:
+  - Horizontal (`horizontal`): `top` (*default*), `bottom`.
+  - Vertical (`vertical`): `left`, `right`.
+- **Scrollable Overflow & Chevrons**: Automatically displays left and right chevron buttons when the tab list overflows the container width, with auto `scrollIntoView` for active tabs.
+- **Tab Dismissal (`closable`)**: Enables closing tabs via a close button or pressing `Delete` / `Backspace` when focused on the tab.
+- **WAI-ARIA Accessibility & Keyboard Navigation**: Full support for `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-controls`, arrow keys `ArrowLeft` / `ArrowRight` / `ArrowUp` / `ArrowDown`, `Home`, and `End`.
+- **Safe Config Fallback**: Integrates `getSafeConfig` to prevent runtime crashes even with invalid prop inputs.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -60,9 +60,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản (Compound Components)
+### 1. Basic Usage (Compound Components)
 
 ```tsx
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@openway/ui";
@@ -71,20 +71,20 @@ export function BasicTabsExample() {
   return (
     <Tabs defaultActiveKey="overview" variant="line" color="primary">
       <TabList>
-        <Tab value="overview" label="Tổng quan" />
-        <Tab value="profile" label="Hồ sơ" />
-        <Tab value="settings" label="Cài đặt" />
+        <Tab value="overview" label="Overview" />
+        <Tab value="profile" label="Profile" />
+        <Tab value="settings" label="Settings" />
       </TabList>
 
       <TabPanels>
         <TabPanel value="overview">
-          <p className="p-4 text-neutral-700">Nội dung trang tổng quan</p>
+          <p className="p-4 text-neutral-700">Overview tab content</p>
         </TabPanel>
         <TabPanel value="profile">
-          <p className="p-4 text-neutral-700">Thông tin hồ sơ người dùng</p>
+          <p className="p-4 text-neutral-700">User profile information</p>
         </TabPanel>
         <TabPanel value="settings">
-          <p className="p-4 text-neutral-700">Cấu hình cài đặt hệ thống</p>
+          <p className="p-4 text-neutral-700">System settings configuration</p>
         </TabPanel>
       </TabPanels>
     </Tabs>
@@ -94,9 +94,9 @@ export function BasicTabsExample() {
 
 ---
 
-### 2. Chế độ điều khiển (Controlled vs Uncontrolled)
+### 2. Control Modes (Controlled vs Uncontrolled)
 
-#### a) Controlled Mode (Quản lý state từ bên ngoài)
+#### a) Controlled Mode (Externally Managed State)
 ```tsx
 import { useState } from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@openway/ui";
@@ -111,15 +111,15 @@ export function ControlledTabs() {
         <Tab value="tab-2" label="Tab 2" />
       </TabList>
       <TabPanels>
-        <TabPanel value="tab-1">Nội dung 1</TabPanel>
-        <TabPanel value="tab-2">Nội dung 2</TabPanel>
+        <TabPanel value="tab-1">Content 1</TabPanel>
+        <TabPanel value="tab-2">Content 2</TabPanel>
       </TabPanels>
     </Tabs>
   );
 }
 ```
 
-#### b) Uncontrolled Mode (Tự quản lý nội bộ với `defaultActiveKey`)
+#### b) Uncontrolled Mode (Internally Managed with `defaultActiveKey`)
 ```tsx
 <Tabs defaultActiveKey="tab-2">
   <TabList>
@@ -127,17 +127,17 @@ export function ControlledTabs() {
     <Tab value="tab-2" label="Tab 2" />
   </TabList>
   <TabPanels>
-    <TabPanel value="tab-1">Nội dung 1</TabPanel>
-    <TabPanel value="tab-2">Nội dung 2</TabPanel>
+    <TabPanel value="tab-1">Content 1</TabPanel>
+    <TabPanel value="tab-2">Content 2</TabPanel>
   </TabPanels>
 </Tabs>
 ```
 
 ---
 
-### 3. Các kích thước (`size`)
+### 3. Sizing (`size`)
 
-Hỗ trợ 3 kích cỡ: `sm`, `md` (*mặc định*), `lg`:
+Supports 3 sizes: `sm`, `md` (*default*), `lg`:
 
 ```tsx
 <Tabs size="sm" defaultActiveKey="1">
@@ -146,19 +146,19 @@ Hỗ trợ 3 kích cỡ: `sm`, `md` (*mặc định*), `lg`:
     <Tab value="2" label="Tab 2" />
   </TabList>
   <TabPanels>
-    <TabPanel value="1">Nội dung kích thước nhỏ</TabPanel>
-    <TabPanel value="2">Nội dung 2</TabPanel>
+    <TabPanel value="1">Small size content</TabPanel>
+    <TabPanel value="2">Content 2</TabPanel>
   </TabPanels>
 </Tabs>
 
 <Tabs size="md" defaultActiveKey="1">
   <TabList>
-    <Tab value="1" label="Medium Tab (Mặc định)" />
+    <Tab value="1" label="Medium Tab (Default)" />
     <Tab value="2" label="Tab 2" />
   </TabList>
   <TabPanels>
-    <TabPanel value="1">Nội dung kích thước vừa</TabPanel>
-    <TabPanel value="2">Nội dung 2</TabPanel>
+    <TabPanel value="1">Medium size content</TabPanel>
+    <TabPanel value="2">Content 2</TabPanel>
   </TabPanels>
 </Tabs>
 
@@ -168,38 +168,38 @@ Hỗ trợ 3 kích cỡ: `sm`, `md` (*mặc định*), `lg`:
     <Tab value="2" label="Tab 2" />
   </TabList>
   <TabPanels>
-    <TabPanel value="1">Nội dung kích thước lớn</TabPanel>
-    <TabPanel value="2">Nội dung 2</TabPanel>
+    <TabPanel value="1">Large size content</TabPanel>
+    <TabPanel value="2">Content 2</TabPanel>
   </TabPanels>
 </Tabs>
 ```
 
 ---
 
-### 4. Các biến thể giao diện (`variant`)
+### 4. Visual Variants (`variant`)
 
 ```tsx
-// 1. Line (Mặc định): Thanh gạch dưới/bên trượt
+// 1. Line (Default): Smooth sliding underline/side bar
 <Tabs variant="line" defaultActiveKey="1">...</Tabs>
 
-// 2. Solid: Khối pill nền nổi bật
+// 2. Solid: Bold pill background
 <Tabs variant="solid" defaultActiveKey="1">...</Tabs>
 
-// 3. Bordered: Bao viền khung
+// 3. Bordered: Outlined frame
 <Tabs variant="bordered" defaultActiveKey="1">...</Tabs>
 
-// 4. Flat: Khối pill nền mềm nhạt
+// 4. Flat: Soft muted pill background
 <Tabs variant="flat" defaultActiveKey="1">...</Tabs>
 
-// 5. Other: Tự do tùy biến class hoàn toàn
+// 5. Other: Completely customizable via class
 <Tabs variant="other" defaultActiveKey="1">...</Tabs>
 ```
 
 ---
 
-### 5. Các chủ đề màu sắc (`color`)
+### 5. Color Themes (`color`)
 
-Cung cấp 7 màu sắc theo chuẩn Design System:
+Provides 7 colors conforming to Design System tokens:
 
 ```tsx
 <Tabs color="primary" variant="solid" defaultActiveKey="1">...</Tabs>
@@ -213,31 +213,31 @@ Cung cấp 7 màu sắc theo chuẩn Design System:
 
 ---
 
-### 6. Hướng và Vị trí (`orientation` & `placement`)
+### 6. Orientation and Placement (`orientation` & `placement`)
 
 ```tsx
-// Dọc bên trái (Vertical Left)
+// Vertical Left
 <Tabs orientation="vertical" placement="left" defaultActiveKey="1">
   <TabList>
     <Tab value="1" label="Menu 1" />
     <Tab value="2" label="Menu 2" />
   </TabList>
   <TabPanels>
-    <TabPanel value="1">Nội dung menu 1</TabPanel>
-    <TabPanel value="2">Nội dung menu 2</TabPanel>
+    <TabPanel value="1">Menu 1 content</TabPanel>
+    <TabPanel value="2">Menu 2 content</TabPanel>
   </TabPanels>
 </Tabs>
 
-// Dọc bên phải (Vertical Right)
+// Vertical Right
 <Tabs orientation="vertical" placement="right" defaultActiveKey="1">...</Tabs>
 
-// Ngang phía dưới (Horizontal Bottom)
+// Horizontal Bottom
 <Tabs orientation="horizontal" placement="bottom" defaultActiveKey="1">...</Tabs>
 ```
 
 ---
 
-### 7. Icon, Badge & Tab có thể đóng (`closable` & `onClose`)
+### 7. Icons, Badges & Closable Tabs (`closable` & `onClose`)
 
 ```tsx
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@openway/ui";
@@ -245,28 +245,28 @@ import { HomeIcon, UserIcon, SettingsIcon } from "@/components/icons";
 
 export function RichTabsExample() {
   const handleClose = (key: string | number) => {
-    console.log("Đóng tab:", key);
+    console.log("Close tab:", key);
   };
 
   return (
     <Tabs defaultActiveKey="tab-1" onClose={handleClose}>
       <TabList>
-        {/* Tab có icon đầu */}
-        <Tab value="tab-1" startIcon={<HomeIcon />} label="Trang chủ" />
+        {/* Tab with leading icon */}
+        <Tab value="tab-1" startIcon={<HomeIcon />} label="Home" />
         
-        {/* Tab có badge số lượng */}
-        <Tab value="tab-2" startIcon={<UserIcon />} badge={5} label="Thông báo" />
+        {/* Tab with count badge */}
+        <Tab value="tab-2" startIcon={<UserIcon />} badge={5} label="Notifications" />
         
-        {/* Tab có thể đóng (closable) & vô hiệu hóa */}
-        <Tab value="tab-3" startIcon={<SettingsIcon />} label="Tạm thời" closable />
-        <Tab value="tab-4" label="Bị khóa" disabled />
+        {/* Closable and disabled tabs */}
+        <Tab value="tab-3" startIcon={<SettingsIcon />} label="Temporary" closable />
+        <Tab value="tab-4" label="Locked" disabled />
       </TabList>
 
       <TabPanels>
-        <TabPanel value="tab-1">Nội dung trang chủ</TabPanel>
-        <TabPanel value="tab-2">Nội dung thông báo</TabPanel>
-        <TabPanel value="tab-3">Nội dung tab tạm thời</TabPanel>
-        <TabPanel value="tab-4">Nội dung bị khóa</TabPanel>
+        <TabPanel value="tab-1">Home content</TabPanel>
+        <TabPanel value="tab-2">Notifications content</TabPanel>
+        <TabPanel value="tab-3">Temporary tab content</TabPanel>
+        <TabPanel value="tab-4">Locked content</TabPanel>
       </TabPanels>
     </Tabs>
   );
@@ -275,12 +275,12 @@ export function RichTabsExample() {
 
 ---
 
-### 8. Cuộn ngang khi tràn viền (Scrollable Overflow) & Canh giữa (`centered`)
+### 8. Scrollable Overflow & Centering (`centered`)
 
-Khi danh sách tab có độ dài lớn vượt quá container, `TabList` sẽ tự động hiển thị 2 nút chevron trái/phải để người dùng cuộn mượt mà:
+When tabs exceed the container width, `TabList` automatically displays left and right chevron buttons for smooth scrolling:
 
 ```tsx
-// Canh giữa các tab trong container
+// Centered tabs within container
 <Tabs defaultActiveKey="1">
   <TabList centered>
     <Tab value="1" label="Tab 1" />
@@ -289,7 +289,7 @@ Khi danh sách tab có độ dài lớn vượt quá container, `TabList` sẽ t
   <TabPanels>...</TabPanels>
 </Tabs>
 
-// Tabs fullWidth tràn đều 100%
+// Full-width tabs stretching 100%
 <Tabs fullWidth defaultActiveKey="1">
   <TabList>
     <Tab value="1" label="Tab 1" />
@@ -301,14 +301,14 @@ Khi danh sách tab có độ dài lớn vượt quá container, `TabList` sẽ t
 
 ---
 
-### 9. Nội dung mở rộng (`extra`) & Tối ưu DOM (`destroyInactiveTabPane`)
+### 9. Extra Content (`extra`) & DOM Optimization (`destroyInactiveTabPane`)
 
 ```tsx
 <Tabs defaultActiveKey="1" destroyInactiveTabPane>
   <TabList
     extra={
       <button className="px-3 py-1.5 text-xs bg-primary-50 text-primary-700 rounded-md font-medium hover:bg-primary-100">
-        + Thêm mới
+        + Add New
       </button>
     }
   >
@@ -316,9 +316,9 @@ Khi danh sách tab có độ dài lớn vượt quá container, `TabList` sẽ t
     <Tab value="2" label="Tab 2" />
   </TabList>
   <TabPanels>
-    {/* Khi tab không active, DOM của TabPanel sẽ được unmount hoàn toàn để tiết kiệm bộ nhớ */}
-    <TabPanel value="1">Nội dung 1</TabPanel>
-    <TabPanel value="2">Nội dung 2</TabPanel>
+    {/* Unmounts inactive TabPanels completely from the DOM to conserve memory */}
+    <TabPanel value="1">Content 1</TabPanel>
+    <TabPanel value="2">Content 2</TabPanel>
   </TabPanels>
 </Tabs>
 ```
@@ -329,84 +329,84 @@ Khi danh sách tab có độ dài lớn vượt quá container, `TabList` sẽ t
 
 ### 1. `TabsProps`
 
-Kế thừa các thuộc tính HTML `HTMLAttributes<HTMLDivElement>` ngoại trừ `onChange`:
+Inherits HTML attributes `HTMLAttributes<HTMLDivElement>` except `onChange`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `activeKey` | `string \| number` | `undefined` | Khóa của tab đang active (Controlled mode). |
-| `defaultActiveKey` | `string \| number` | `undefined` | Khóa của tab active mặc định ban đầu (Uncontrolled mode). |
-| `onChange` | `(key: string \| number) => void` | `undefined` | Callback kích hoạt khi thay đổi tab được chọn. |
-| `onClose` | `(key: string \| number) => void` | `undefined` | Callback kích hoạt khi người dùng bấm nút đóng tab (`closable`). |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Kích thước giao diện chung cho các tab con. |
-| `variant` | `"line" \| "solid" \| "bordered" \| "flat" \| "other"` | `"line"` | Biến thể kiểu dáng thanh tab & indicator. |
-| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Chủ đề màu sắc theo Design System. |
-| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Độ bo góc của tab và sliding indicator. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Chiều hiển thị danh sách tabs (ngang hoặc dọc). |
-| `placement` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | Vị trí đặt `TabList` so với `TabPanels`. |
-| `fullWidth` | `boolean` | `false` | Tự động giãn đều chiều rộng các tab vừa khớp 100% container. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ tabs trong nhóm. |
-| `destroyInactiveTabPane` | `boolean` | `false` | Tự động unmount nội dung khỏi DOM khi tab không active. |
-| `children` | `ReactNode` | `undefined` | Các component con (`<TabList>`, `<TabPanels>`). |
-| `className` | `string` | `""` | Class CSS tùy biến cho container bao ngoài. |
-| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref chuyển tiếp đến container Tabs. |
+| `activeKey` | `string \| number` | `undefined` | Active tab key (Controlled mode). |
+| `defaultActiveKey` | `string \| number` | `undefined` | Initial active tab key (Uncontrolled mode). |
+| `onChange` | `(key: string \| number) => void` | `undefined` | Callback fired when the active tab changes. |
+| `onClose` | `(key: string \| number) => void` | `undefined` | Callback fired when closing a tab (`closable`). |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Shared size for child tabs. |
+| `variant` | `"line" \| "solid" \| "bordered" \| "flat" \| "other"` | `"line"` | Visual variant for tab bar & indicator. |
+| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Color theme according to Design System tokens. |
+| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Border radius for tabs and sliding indicator. |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout orientation (horizontal or vertical). |
+| `placement` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | Position of `TabList` relative to `TabPanels`. |
+| `fullWidth` | `boolean` | `false` | Stretches tabs equally to fill 100% width of container. |
+| `disabled` | `boolean` | `false` | Disables all tabs in the group. |
+| `destroyInactiveTabPane` | `boolean` | `false` | Unmounts content from DOM when tab is inactive. |
+| `children` | `ReactNode` | `undefined` | Child components (`<TabList>`, `<TabPanels>`). |
+| `className` | `string` | `""` | Custom CSS class for outer container. |
+| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref forwarded to Tabs container. |
 
 ---
 
 ### 2. `TabListProps`
 
-Kế thừa `HTMLAttributes<HTMLDivElement>`:
+Inherits `HTMLAttributes<HTMLDivElement>`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | `undefined` | Danh sách các phần tử `<Tab>` con. |
-| `extra` | `ReactNode` | `undefined` | Nội dung hoặc nút hành động phụ đặt ở góc thanh tab list. |
-| `centered` | `boolean` | `false` | Canh giữa danh sách tabs trong container (`orientation="horizontal"`). |
-| `className` | `string` | `""` | Class CSS tùy biến bổ sung cho TabList. |
-| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref chuyển tiếp đến thẻ tablist. |
+| `children` | `ReactNode` | `undefined` | Array of child `<Tab>` components. |
+| `extra` | `ReactNode` | `undefined` | Extra content or actions rendered at the end of the tab list. |
+| `centered` | `boolean` | `false` | Centers tabs in container (`orientation="horizontal"`). |
+| `className` | `string` | `""` | Additional custom CSS class for TabList. |
+| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref forwarded to tablist element. |
 
 ---
 
 ### 3. `TabProps`
 
-Kế thừa `ButtonHTMLAttributes<HTMLButtonElement>` ngoại trừ `value`:
+Inherits `ButtonHTMLAttributes<HTMLButtonElement>` except `value`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `value` | `string \| number` | *(Bắt buộc)* | Khóa định danh duy nhất của tab để liên kết với `TabPanel`. |
-| `label` | `ReactNode` | `undefined` | Tiêu đề hiển thị của tab. |
-| `startIcon` | `ReactNode` | `undefined` | Icon hiển thị trước tiêu đề. |
-| `endIcon` | `ReactNode` | `undefined` | Icon hiển thị sau tiêu đề. |
-| `badge` | `ReactNode` | `undefined` | Huy hiệu hoặc số lượng hiển thị trên tab. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa riêng tab này. |
-| `closable` | `boolean` | `false` | Cho phép hiển thị nút đóng tab (hỗ trợ phím Delete/Backspace). |
-| `onClose` | `(e: MouseEvent) => void` | `undefined` | Callback khi bấm nút đóng trên tab này. |
-| `children` | `ReactNode` | `undefined` | Nội dung tùy biến thay thế cho prop `label`. |
-| `className` | `string` | `""` | Class CSS tùy biến cho nút tab. |
-| `ref` | `Ref<HTMLButtonElement>` | `undefined` | Ref chuyển tiếp đến thẻ `<button>` của tab. |
+| `value` | `string \| number` | *(Required)* | Unique identifier linking the tab to its corresponding `TabPanel`. |
+| `label` | `ReactNode` | `undefined` | Display label of the tab. |
+| `startIcon` | `ReactNode` | `undefined` | Leading icon before the label. |
+| `endIcon` | `ReactNode` | `undefined` | Trailing icon after the label. |
+| `badge` | `ReactNode` | `undefined` | Badge or count indicator on the tab. |
+| `disabled` | `boolean` | `false` | Disables this individual tab. |
+| `closable` | `boolean` | `false` | Displays a close button (supports Delete/Backspace keys). |
+| `onClose` | `(e: MouseEvent) => void` | `undefined` | Callback fired when the close button is clicked. |
+| `children` | `ReactNode` | `undefined` | Custom content replacing the `label` prop. |
+| `className` | `string` | `""` | Custom CSS class for the tab button. |
+| `ref` | `Ref<HTMLButtonElement>` | `undefined` | Ref forwarded to the `<button>` element of the tab. |
 
 ---
 
 ### 4. `TabPanelsProps` & `TabPanelProps`
 
 #### `TabPanelsProps`
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | `undefined` | Danh sách các component `<TabPanel>` con. |
-| `className` | `string` | `""` | Class CSS tùy biến cho khung chứa TabPanels. |
-| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref chuyển tiếp đến container TabPanels. |
+| `children` | `ReactNode` | `undefined` | Array of child `<TabPanel>` components. |
+| `className` | `string` | `""` | Custom CSS class for TabPanels container. |
+| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref forwarded to TabPanels container. |
 
 #### `TabPanelProps`
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `value` | `string \| number` | *(Bắt buộc)* | Khóa liên kết trực tiếp với `value` của `<Tab>` tương ứng. |
-| `destroyInactiveTabPane` | `boolean` | `undefined` | Ghi đè cấu hình unmount khỏi DOM khi tab không active riêng cho panel này. |
-| `children` | `ReactNode` | `undefined` | Nội dung hiển thị khi tab tương ứng đang active. |
-| `className` | `string` | `""` | Class CSS tùy biến cho panel nội dung. |
-| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref chuyển tiếp đến thẻ tabpanel. |
+| `value` | `string \| number` | *(Required)* | Matching key corresponding to `<Tab>` value. |
+| `destroyInactiveTabPane` | `boolean` | `undefined` | Overrides unmount-when-inactive setting for this panel. |
+| `children` | `ReactNode` | `undefined` | Content displayed when this tab is active. |
+| `className` | `string` | `""` | Custom CSS class for the content panel. |
+| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref forwarded to tabpanel element. |
 
 ---
 
-### 5. Hook `useTabIndicator`
+### 5. `useTabIndicator` Hook
 
 ```tsx
 import { useTabIndicator } from "@openway/ui";

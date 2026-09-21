@@ -1,33 +1,33 @@
 # ⏰ TimePicker Component Suite (`@openway/ui`)
 
-Bộ component **TimePicker**, **TimeView**, và **TimeColumn** toàn diện, linh hoạt và trực quan, được thiết kế theo chuẩn **Design System**, hỗ trợ **Chế độ 12h (AM/PM) & 24h**, **Tùy chọn hiển thị giây (`showSeconds`)**, **Bước nhảy tùy biến (`hourStep`, `minuteStep`, `secondStep`)**, **Tách bạch Định dạng Dữ liệu (`format`) & Hiển thị (`displayFormat`)**, **Giới hạn thời gian (`minTime`, `maxTime`)**, **Vô hiệu hóa giờ/phút/giây linh hoạt**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility** với hỗ trợ bàn phím thông minh.
+A comprehensive, flexible, and intuitive **TimePicker**, **TimeView**, and **TimeColumn** component suite designed to strict **Design System** standards, featuring **12-Hour (AM/PM) & 24-Hour Modes**, **Optional Seconds Display (`showSeconds`)**, **Customizable Steps (`hourStep`, `minuteStep`, `secondStep`)**, **Separation of Data Format (`format`) & Visual Display (`displayFormat`)**, **Time Constraints (`minTime`, `maxTime`)**, **Flexible Disabling of Hours/Minutes/Seconds**, and full **WAI-ARIA Accessibility** compliance with intelligent keyboard navigation.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Features
 
-- **Tách bạch giữa Dữ liệu (`format`) và Hiển thị (`displayFormat`)**:
-  - `format` *(mặc định `'HH:mm:ss'`)*: Định dạng chuỗi thời gian chuẩn lưu trữ và phát ra qua `onChange` (ví dụ: `"14:30:00"`).
-  - `displayFormat` *(tùy chọn)*: Định dạng trực quan hiển thị trên ô nhập liệu (ví dụ: `"02:30:00 PM"`).
-- **Chế độ 12 giờ / 24 giờ linh hoạt (`use12Hours`)**:
-  - Tự động chuyển đổi giữa 24h chuẩn (`00` - `23`) và 12h kèm cột chọn `AM` / `PM`.
-- **Tùy chọn hiển thị Giây (`showSeconds`) & Bước nhảy (`Step`)**:
-  - Bật/tắt cột giây dễ dàng với `showSeconds={false}`.
-  - Tùy chỉnh bước nhảy số phút (`minuteStep={15}`), số giờ (`hourStep={2}`)...
-- **Cột cuộn thông minh (Auto-Scroll & WAI-ARIA Focus Management)**:
-  - Tự động cuộn mượt mà (`smooth`) đến vị trí giá trị đang chọn khi mở popover.
-  - Chuyển tiêu điểm (focus) tự động vào cột thời gian khi mở popup bằng bàn phím.
-  - Hỗ trợ đầy đủ phím mũi tên `ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`, `Home`, `End`, `Enter`, `Escape`.
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *mặc định*), `lg` (48px), `xl` (56px).
-- **3 Biến thể giao diện (`variant`)**: `outline` *(mặc định)*, `filled`, `ghost`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`. Màu `warning` sử dụng chữ `text-neutral-950` tối ưu tương phản chuẩn **WCAG AA**.
-- **6 Mức độ bo góc (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
-- **3 Vị trí đặt nhãn (`labelPlacement`)**: `top` *(mặc định)*, `left`, `floating`.
-- **Standalone `<TimeView>`**: Có thể nhúng trực tiếp bảng chọn giờ tĩnh trên giao diện.
+- **Separation of Data Format (`format`) and Visual Display (`displayFormat`)**:
+  - `format` (*default `'HH:mm:ss'`*): Standard time string format stored internally and emitted via `onChange` (e.g., `"14:30:00"`).
+  - `displayFormat` (*optional*): Visual presentation format rendered in the input field (e.g., `"02:30:00 PM"`).
+- **Flexible 12-Hour / 24-Hour Modes (`use12Hours`)**:
+  - Seamlessly switches between standard 24-hour time (`00` – `23`) and 12-hour format with dedicated `AM` / `PM` selection columns.
+- **Optional Seconds Column (`showSeconds`) & Step Configuration (`Step`)**:
+  - Easily toggle the seconds column with `showSeconds={false}`.
+  - Customize increment steps for minutes (`minuteStep={15}`), hours (`hourStep={2}`), etc.
+- **Intelligent Scroll Columns (Auto-Scroll & WAI-ARIA Focus Management)**:
+  - Smoothly auto-scrolls to the currently selected value upon opening the popover.
+  - Automatically shifts focus into the time column when opened via keyboard navigation.
+  - Full support for arrow keys (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`), `Home`, `End`, `Enter`, and `Escape`.
+- **5 Standard Sizes (`size`)**: `xs` (24px), `sm` (32px), `md` (40px – *default*), `lg` (48px), `xl` (56px).
+- **3 Visual Variants (`variant`)**: `outline` (*default*), `filled`, `ghost`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`. The `warning` color uses `text-neutral-950` text for optimal contrast meeting **WCAG AA** standards.
+- **6 Border Radii (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
+- **3 Label Placements (`labelPlacement`)**: `top` (*default*), `left`, `floating`.
+- **Standalone `<TimeView>`**: Embed a static time picker panel directly into user interfaces without a popover input.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { TimePicker, TimeView, TimeColumn } from "@openway/ui";
@@ -47,9 +47,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản
+### 1. Basic Usage
 
 ```tsx
 import { useState } from "react";
@@ -60,7 +60,7 @@ export function BasicTimePickerExample() {
 
   return (
     <TimePicker
-      label="Giờ hẹn"
+      label="Appointment Time"
       value={time}
       onChange={(formattedTime) => setTime(formattedTime)}
       placeholder="HH:mm:ss"
@@ -71,11 +71,11 @@ export function BasicTimePickerExample() {
 
 ---
 
-### 2. Chế độ 12 giờ với AM / PM
+### 2. 12-Hour Mode with AM / PM
 
 ```tsx
 <TimePicker
-  label="Giờ bắt đầu cuộc họp"
+  label="Meeting Start Time"
   use12Hours={true}
   format="hh:mm:ss A"
   defaultValue="09:15:00 AM"
@@ -84,13 +84,13 @@ export function BasicTimePickerExample() {
 
 ---
 
-### 3. Tắt hiển thị giây (`showSeconds={false}`) & Tùy chỉnh bước nhảy (`minuteStep`)
+### 3. Hide Seconds (`showSeconds={false}`) & Custom Steps (`minuteStep`)
 
 ```tsx
 <TimePicker
-  label="Khung giờ đặt bàn"
+  label="Reservation Window"
   showSeconds={false}
-  minuteStep={15} // Chỉ hiển thị các mốc phút: 00, 15, 30, 45
+  minuteStep={15} // Only shows minute intervals: 00, 15, 30, 45
   format="HH:mm"
   placeholder="HH:mm"
 />
@@ -98,20 +98,20 @@ export function BasicTimePickerExample() {
 
 ---
 
-### 4. Giới hạn khoảng thời gian (`minTime` & `maxTime`)
+### 4. Time Constraints (`minTime` & `maxTime`)
 
 ```tsx
 <TimePicker
-  label="Giờ làm việc"
+  label="Business Hours"
   minTime="08:00:00"
   maxTime="17:30:00"
-  helperText="Chỉ cho phép chọn từ 08:00 đến 17:30"
+  helperText="Selection allowed between 08:00 and 17:30 only"
 />
 ```
 
 ---
 
-### 5. Standalone `<TimeView>` (Bảng chọn giờ độc lập)
+### 5. Standalone `<TimeView>` (Independent Time Panel)
 
 ```tsx
 import { useState } from "react";
@@ -133,110 +133,110 @@ export function StandaloneTimeViewExample() {
 
 ---
 
-### 6. Vị trí đặt nhãn (`labelPlacement`)
+### 6. Label Placement (`labelPlacement`)
 
 ```tsx
-// 1. Top (Phía trên - Mặc định)
-<TimePicker label="Thời gian diễn ra" labelPlacement="top" />
+// 1. Top (Above - Default)
+<TimePicker label="Event Time" labelPlacement="top" />
 
-// 2. Left (Ngang bên trái)
-<TimePicker label="Thời gian diễn ra" labelPlacement="left" />
+// 2. Left (Horizontally aligned)
+<TimePicker label="Event Time" labelPlacement="left" />
 
-// 3. Floating (Lơ lửng trên viền)
-<TimePicker label="Thời gian diễn ra" labelPlacement="floating" />
+// 3. Floating (Overlapping border)
+<TimePicker label="Event Time" labelPlacement="floating" />
 ```
 
 ---
 
-### 7. Trạng thái Form & Loading
+### 7. Form & Loading States
 
 ```tsx
-// Bắt buộc nhập (Required)
-<TimePicker label="Giờ xuất phát" config={{ isRequired: true }} />
+// Required field
+<TimePicker label="Departure Time" config={{ isRequired: true }} />
 
-// Báo lỗi (Invalid)
+// Invalid error state
 <TimePicker
-  label="Giờ hẹn"
-  errorMessage="Vui lòng chọn thời gian hợp lệ."
+  label="Appointment Time"
+  errorMessage="Please select a valid time."
   config={{ isInvalid: true }}
 />
 
-// Đang tải dữ liệu (Loading)
+// Loading state
 <TimePicker
-  label="Đang tải dữ liệu"
+  label="Synchronizing Data"
   config={{ isLoading: true, showSpinner: true }}
 />
 
-// Vô hiệu hóa (Disabled) hoặc Chỉ đọc (ReadOnly)
-<TimePicker label="Không khả dụng" disabled={true} />
-<TimePicker label="Chỉ xem" readOnly={true} />
+// Disabled or ReadOnly
+<TimePicker label="Unavailable" disabled={true} />
+<TimePicker label="View Only" readOnly={true} />
 ```
 
 ---
 
-## ⌨️ Phím tắt điều hướng bàn phím (WAI-ARIA Keyboard Navigation)
+## ⌨️ Keyboard Navigation (WAI-ARIA Keyboard Navigation)
 
-| Vị trí | Phím bấm | Hành động |
+| Location | Key | Action |
 | :--- | :--- | :--- |
-| **Ô Input** | `ArrowDown` / `Enter` / `Space` | Mở popover và tự động chuyển tiêu điểm vào cột Giờ. |
-| **Ô Input** | `Escape` | Đóng popover và giữ tiêu điểm tại ô Input. |
-| **Bảng chọn (Popup)** | `ArrowDown` | Di chuyển xuống và chọn mốc thời gian tiếp theo. |
-| **Bảng chọn (Popup)** | `ArrowUp` | Di chuyển lên và chọn mốc thời gian phía trước. |
-| **Bảng chọn (Popup)** | `ArrowRight` | Chuyển tiêu điểm sang cột kế tiếp (Giờ $\rightarrow$ Phút $\rightarrow$ Giây $\rightarrow$ AM/PM). |
-| **Bảng chọn (Popup)** | `ArrowLeft` | Chuyển tiêu điểm sang cột liền trước. |
-| **Bảng chọn (Popup)** | `Home` | Nhảy nhanh về mốc đầu tiên (ví dụ: `00`). |
-| **Bảng chọn (Popup)** | `End` | Nhảy nhanh về mốc cuối cùng (ví dụ: `23` hoặc `59`). |
-| **Bảng chọn (Popup)** | `Enter` / `Space` | Xác nhận chọn mốc thời gian đang focus. |
-| **Bảng chọn (Popup)** | `Escape` | Đóng popover và trả lại tiêu điểm về ô Input. |
+| **Input Field** | `ArrowDown` / `Enter` / `Space` | Opens popover and shifts focus into the Hours column. |
+| **Input Field** | `Escape` | Closes popover and retains focus on the input field. |
+| **Popup Panel** | `ArrowDown` | Moves down to select the next time slot. |
+| **Popup Panel** | `ArrowUp` | Moves up to select the previous time slot. |
+| **Popup Panel** | `ArrowRight` | Moves focus to the next column (Hours $\rightarrow$ Minutes $\rightarrow$ Seconds $\rightarrow$ AM/PM). |
+| **Popup Panel** | `ArrowLeft` | Moves focus to the preceding column. |
+| **Popup Panel** | `Home` | Jumps to the first time option (e.g., `00`). |
+| **Popup Panel** | `End` | Jumps to the last time option (e.g., `23` or `59`). |
+| **Popup Panel** | `Enter` / `Space` | Confirms selection of the currently focused time option. |
+| **Popup Panel** | `Escape` | Closes popover and returns focus to the input field. |
 
 ---
 
-## 🛠 Bảng thông số Props
+## 🛠 Props Reference
 
 ### `TimePickerProps`
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `value` | `TimeValue` | — | Giá trị thời gian đang được chọn (Controlled). |
-| `defaultValue` | `TimeValue` | — | Giá trị thời gian mặc định ban đầu (Uncontrolled). |
-| `onChange` | `(time: string \| null) => void` | — | Callback khi giá trị thời gian thay đổi (trả về chuỗi theo `format`, hoặc `null` khi xóa). |
-| `format` | `string` | `'HH:mm:ss'` | Định dạng dữ liệu chính dùng cho cả input và đầu ra `onChange`. |
-| `displayFormat` | `string` | Tự động | Định dạng chuỗi hiển thị trực quan trong ô input. |
-| `use12Hours` | `boolean` | `false` | Bật chế độ 12 giờ kèm cột chọn AM / PM. |
-| `showSeconds` | `boolean` | `true` | Hiển thị cột chọn giây. |
-| `hourStep` | `number` | `1` | Bước nhảy cho cột Giờ. |
-| `minuteStep` | `number` | `1` | Bước nhảy cho cột Phút. |
-| `secondStep` | `number` | `1` | Bước nhảy cho cột Giây. |
-| `minTime` | `TimeValue` | — | Thời gian nhỏ nhất cho phép chọn. |
-| `maxTime` | `TimeValue` | — | Thời gian lớn nhất cho phép chọn. |
-| `disabledHours` | `() => number[]` | — | Hàm trả về danh sách giờ bị vô hiệu hóa. |
-| `disabledMinutes` | `(hour: number) => number[]` | — | Hàm trả về danh sách phút bị vô hiệu hóa. |
-| `disabledSeconds` | `(h: number, m: number) => number[]` | — | Hàm trả về danh sách giây bị vô hiệu hóa. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ ô nhập liệu và bảng chọn. |
-| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Biến thể viền/nền của ô nhập. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc theo Design System. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Độ bo góc của ô nhập và popover. |
-| `label` | `ReactNode` | — | Nhãn tiêu đề hiển thị cho ô nhập liệu. |
-| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Vị trí hiển thị của nhãn. |
-| `placeholder` | `string` | Tự động | Văn bản giữ chỗ khi ô input rỗng. |
-| `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn/trợ giúp bên dưới ô. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi (tự động bật viền đỏ và animation). |
-| `disabled` | `boolean` | `false` | Khóa toàn bộ tương tác của ô nhập. |
-| `readOnly` | `boolean` | `false` | Chỉ cho phép xem, không mở popover chọn giờ. |
-| `config` | `TimePickerConfig` | — | Nhóm cấu hình tập trung các cờ tính năng (xem bảng dưới). |
-| `placement` | `Placement` | `'bottom-start'` | Vị trí mở popover chọn giờ (Floating UI). |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp tới thẻ `<input>` HTML bên dưới. |
+| `value` | `TimeValue` | — | Selected time value (Controlled mode). |
+| `defaultValue` | `TimeValue` | — | Initial default time value (Uncontrolled mode). |
+| `onChange` | `(time: string \| null) => void` | — | Callback invoked when time changes (returns string matching `format`, or `null` when cleared). |
+| `format` | `string` | `'HH:mm:ss'` | Primary data format used for internal parsing and `onChange` output. |
+| `displayFormat` | `string` | Automatic | Visual presentation string format displayed inside the input. |
+| `use12Hours` | `boolean` | `false` | Enables 12-hour mode with AM / PM selection column. |
+| `showSeconds` | `boolean` | `true` | Displays the seconds selection column. |
+| `hourStep` | `number` | `1` | Increment step for the Hours column. |
+| `minuteStep` | `number` | `1` | Increment step for the Minutes column. |
+| `secondStep` | `number` | `1` | Increment step for the Seconds column. |
+| `minTime` | `TimeValue` | — | Minimum selectable time boundary. |
+| `maxTime` | `TimeValue` | — | Maximum selectable time boundary. |
+| `disabledHours` | `() => number[]` | — | Function returning an array of disabled hour numbers. |
+| `disabledMinutes` | `(hour: number) => number[]` | — | Function returning an array of disabled minute numbers for a given hour. |
+| `disabledSeconds` | `(h: number, m: number) => number[]` | — | Function returning an array of disabled second numbers for a given hour and minute. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the input field and selection panel. |
+| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Visual style variant for border and background. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color per Design System. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Border radius of the input and popover. |
+| `label` | `ReactNode` | — | Label rendered above or beside the input field. |
+| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Placement of the label. |
+| `placeholder` | `string` | Automatic | Placeholder text displayed when input is empty. |
+| `helperText` | `ReactNode` | — | Helper or instructional text rendered beneath the field. |
+| `errorMessage` | `ReactNode` | — | Error message displayed on validation failure (triggers error styling). |
+| `disabled` | `boolean` | `false` | Disables all user interactions on the input. |
+| `readOnly` | `boolean` | `false` | Read-only mode, prevents opening the popover or altering value. |
+| `config` | `TimePickerConfig` | — | Consolidated configuration object for feature flags (see table below). |
+| `placement` | `Placement` | `'bottom-start'` | Floating UI placement for the time selection popover. |
+| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying native `<input>` HTML element. |
 
 ---
 
 ### `TimePickerConfig`
 
-| Cờ thuộc tính | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu sao đỏ `*` và đánh dấu `aria-required="true"`. |
-| `isInvalid` | `boolean` | `false` | Bật trạng thái viền đỏ báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Khóa tương tác, bật `aria-busy="true"` và `aria-disabled="true"`. |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi `isLoading={true}`. |
-| `isClearable` | `boolean` | `true` | Hiển thị nút xóa nhanh thời gian đã chọn. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng chiếm toàn bộ 100% chiều ngang container cha. |
-| `closeOnSelect` | `boolean` | `false` | Tự động đóng popover sau khi người dùng chọn xong (mặc định `false` cho TimePicker để chọn đủ các cột). |
+| `isRequired` | `boolean` | `false` | Displays a red asterisk `*` and sets `aria-required="true"`. |
+| `isInvalid` | `boolean` | `false` | Enables invalid error styling and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Locks interactions, setting `aria-busy="true"` and `aria-disabled="true"`. |
+| `showSpinner` | `boolean` | `false` | Displays a rotating spinner icon when `isLoading={true}`. |
+| `isClearable` | `boolean` | `true` | Displays a quick clear button when a time is selected. |
+| `isFullWidth` | `boolean` | `false` | Expands the component to 100% width of the parent container. |
+| `closeOnSelect` | `boolean` | `false` | Automatically closes the popover once values are selected (defaults to `false` for TimePicker so users can finish choosing all columns). |

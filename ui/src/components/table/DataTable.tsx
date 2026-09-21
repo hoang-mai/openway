@@ -38,6 +38,7 @@ import Skeleton from "../skeleton/Skeleton";
 import IconButton from "../button/IconButton";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import { DEFAULT_PAGE_SIZE } from "./constants";
+import { useLocale } from "../common/OpenWayProvider";
 
 export function DataTable<TData extends RowData = RowData>({
   columns,
@@ -120,6 +121,7 @@ export function DataTable<TData extends RowData = RowData>({
   className = "",
   containerClassName = "",
 }: DataTableProps<TData>) {
+  const tableLocale = useLocale("table");
   const [internalSorting, setInternalSorting] = useState<SortingState>([]);
   const [internalPagination, setInternalPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -641,7 +643,7 @@ export function DataTable<TData extends RowData = RowData>({
                   image={globalFilter ? "search" : "default"}
                   description={
                     emptyText ||
-                    (globalFilter ? "Không tìm thấy kết quả phù hợp với từ khóa" : "Không có dữ liệu hiển thị")
+                    (globalFilter ? tableLocale.emptyFilteredText : tableLocale.emptyText)
                   }
                 />
               )}

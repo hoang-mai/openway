@@ -1,31 +1,31 @@
 # 🖼️ UploadImage Component (`@openway/ui`)
 
-Component tải lên hình ảnh chuyên nghiệp, hỗ trợ kéo thả (`drag-and-drop`), xem trước ảnh tức thời (`preview`), crop/cắt ảnh trực quan, hiển thị dạng danh sách hoặc lưới thẻ (`picture wall`), và tuân thủ các quy chuẩn **Design System** & **Accessibility**.
+A professional image upload component supporting `drag-and-drop`, instant `preview`, intuitive cropping, list or thumbnail card grid views (`picture wall`), with strict adherence to **Design System** and **Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Features
 
-- **3 Chế độ hiển thị (`viewMode`)**:
-  - `dropzone` *(mặc định)*: Khung kéo thả lớn với icon, tiêu đề và mô tả trực quan.
-  - `card-grid`: Lưới thẻ ảnh dạng thumbnail vuông (picture wall), nút thêm ảnh hiển thị như 1 ô trong lưới.
-  - `button`: Nút bấm kích hoạt mở hộp thoại chọn ảnh gọn gàng.
-- **Tích hợp cắt ảnh linh hoạt (`enableCrop`)**:
-  - Hỗ trợ modal crop ảnh trực quan (`react-easy-crop`) với tỷ lệ tùy biến (`cropAspectRatio`).
-  - Hỗ trợ xoay, zoom và kiểm soát chất lượng ảnh sau crop.
-- **Xem trước ảnh tiện lợi (`enablePreview`)**:
-  - Tích hợp modal phóng to ảnh đầy đủ màn hình, xem chi tiết kích thước và tên tệp.
-- **Kiểm soát dung lượng & Định dạng tệp**:
-  - Giới hạn dung lượng tối đa (`maxSize`), tối thiểu (`minSize`).
-  - Giới hạn số lượng tệp tải lên (`maxFiles`).
-  - Tùy chỉnh danh sách định dạng ảnh cho phép (`accept`, ví dụ: `image/jpeg`, `image/png`, `image/webp`).
-- **Phản hồi lỗi & Trạng thái tải trực quan**:
-  - Báo lỗi tự động khi vượt quá dung lượng hoặc sai loại tệp.
-  - Thanh tiến trình tải lên (`progress`) và hiệu ứng hover sinh động.
+- **3 View Modes (`viewMode`)**:
+  - `dropzone` *(default)*: Large drag-and-drop area with icon, title, and descriptive prompt.
+  - `card-grid`: Thumbnail card grid (picture wall) where the upload trigger appears as an integrated grid tile.
+  - `button`: Compact button trigger that initiates the image picker dialog.
+- **Flexible Cropping Integration (`enableCrop`)**:
+  - Intuitive cropping modal powered by `react-easy-crop` with customizable aspect ratios (`cropAspectRatio`).
+  - Supports rotation, zoom, and post-crop image quality control.
+- **Convenient Image Preview (`enablePreview`)**:
+  - Integrated full-screen lightbox modal displaying high-res image previews, file sizes, and file names.
+- **File Size & Format Validation**:
+  - Configurable maximum (`maxSize`) and minimum (`minSize`) file limits.
+  - Maximum file count limit (`maxFiles`).
+  - Customizable accepted MIME types (`accept`, e.g., `image/jpeg`, `image/png`, `image/webp`).
+- **Visual Error Feedback & Upload States**:
+  - Automated error notifications when file size or MIME type restrictions are violated.
+  - Visual upload progress indicator (`progress`) and lively hover effects.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { UploadImage } from "@openway/ui";
@@ -34,9 +34,9 @@ import type { UploadImageProps, UploadImageFileItem } from "@openway/ui";
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. UploadImage cơ bản dạng Dropzone
+### 1. Basic Dropzone UploadImage
 
 ```tsx
 import { useState } from "react";
@@ -48,12 +48,12 @@ export function BasicUploadImageExample() {
   return (
     <div className="max-w-md">
       <UploadImage
-        label="Ảnh đại diện bài viết"
+        label="Article Featured Image"
         value={files}
         onChange={(newFiles) => setFiles(newFiles)}
         maxFiles={1}
         maxSize={5 * 1024 * 1024} // 5MB
-        helperText="Định dạng PNG, JPG, WEBP tối đa 5MB"
+        helperText="PNG, JPG, WEBP formats up to 5MB"
       />
     </div>
   );
@@ -62,9 +62,9 @@ export function BasicUploadImageExample() {
 
 ---
 
-### 2. Dạng Lưới thẻ (Picture Wall - `card-grid`)
+### 2. Card Grid (Picture Wall - `card-grid`)
 
-Thích hợp cho tải album ảnh sản phẩm hoặc thư viện ảnh:
+Ideal for product image galleries or portfolio albums:
 
 ```tsx
 import { useState } from "react";
@@ -81,7 +81,7 @@ export function PictureWallExample() {
         maxFiles={8}
         value={gallery}
         onChange={(newFiles) => setGallery(newFiles)}
-        label="Bộ sưu tập ảnh sản phẩm"
+        label="Product Photo Gallery"
         enablePreview
       />
     </div>
@@ -91,11 +91,11 @@ export function PictureWallExample() {
 
 ---
 
-### 3. Kích hoạt tính năng Crop ảnh (`enableCrop`)
+### 3. Enabling Image Cropping (`enableCrop`)
 
 ```tsx
 <UploadImage
-  label="Tải ảnh bìa (Tỷ lệ 16:9)"
+  label="Upload Cover Image (16:9 Aspect Ratio)"
   maxFiles={1}
   enableCrop
   cropAspectRatio={16 / 9}
@@ -106,21 +106,21 @@ export function PictureWallExample() {
 
 ---
 
-## 🎛️ Bảng Props Chi tiết
+## 🎛️ Detailed Props Reference
 
-| Tên Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `value` | `UploadImageFileItem[]` | `[]` | Danh sách tệp ảnh hiện tại. |
-| `onChange` | `(files: UploadImageFileItem[]) => void` | `undefined` | Callback khi danh sách ảnh thay đổi (thêm, xóa, crop). |
-| `viewMode` | `"dropzone" \| "card-grid" \| "button"` | `"dropzone"` | Kiểu giao diện tải ảnh. |
-| `shape` | `"rectangle" \| "square"` | `"rectangle"` | Hình dạng khung hiển thị ảnh. |
-| `maxFiles` | `number` | `1` | Số lượng tệp ảnh tối đa được phép tải. |
-| `maxSize` | `number` | `10 * 1024 * 1024` | Kích thước tối đa mỗi tệp (bytes). |
-| `accept` | `Record<string, string[]>` | Ảnh thông dụng | Đối tượng định dạng MIME types cho phép. |
-| `enableCrop` | `boolean` | `false` | Mở hộp thoại crop ảnh trước khi thêm vào danh sách. |
-| `cropAspectRatio` | `number` | `1` | Tỷ lệ khung hình khi crop (ví dụ: `1` cho ảnh vuông, `16/9` cho banner). |
-| `enablePreview` | `boolean` | `true` | Cho phép nhấn vào ảnh để mở modal xem ảnh kích thước lớn. |
-| `disabled` | `boolean` | `false` | Khóa chức năng tải ảnh. |
-| `color` | `ThemeColor` | `"primary"` | Chủ đề màu sắc theo Design System. |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Kích thước khung tải ảnh. |
-| `radius` | `Radius` | `"md"` | Độ bo góc của khung tải và thumbnail. |
+| `value` | `UploadImageFileItem[]` | `[]` | Current list of image file items. |
+| `onChange` | `(files: UploadImageFileItem[]) => void` | `undefined` | Callback invoked when image list changes (add, remove, crop). |
+| `viewMode` | `"dropzone" \| "card-grid" \| "button"` | `"dropzone"` | Visual layout mode for image uploading. |
+| `shape` | `"rectangle" \| "square"` | `"rectangle"` | Geometry of image display containers. |
+| `maxFiles` | `number` | `1` | Maximum number of images allowed to upload. |
+| `maxSize` | `number` | `10 * 1024 * 1024` | Maximum allowable file size per image (in bytes). |
+| `accept` | `Record<string, string[]>` | Standard image types | Object defining allowed MIME types and extensions. |
+| `enableCrop` | `boolean` | `false` | Displays image crop dialog prior to appending to list. |
+| `cropAspectRatio` | `number` | `1` | Aspect ratio for cropping (e.g., `1` for square, `16/9` for banners). |
+| `enablePreview` | `boolean` | `true` | Allows clicking images to open high-res preview modal. |
+| `disabled` | `boolean` | `false` | Disables image upload interactions. |
+| `color` | `ThemeColor` | `"primary"` | Theme color per Design System. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Size scale of the upload area. |
+| `radius` | `Radius` | `"md"` | Border radius of the upload frame and thumbnails. |

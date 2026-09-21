@@ -24,6 +24,7 @@ import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function DatePicker({
   ref,
@@ -33,7 +34,6 @@ export default function DatePicker({
   format = "DD/MM/YYYY",
   displayFormat: customDisplayFormat,
   defaultView = "days",
-  locale = "vi",
   firstDayOfWeek = 1,
   minDate,
   maxDate,
@@ -67,6 +67,7 @@ export default function DatePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DatePickerProps) {
+  const datePickerLocale = useLocale("datePicker");
   const {
     isRequired = false,
     isInvalid = false,
@@ -95,7 +96,7 @@ export default function DatePicker({
   const isControlled = controlledValue !== undefined;
   const [internalDate, setInternalDate] = useState<Date | null>(() => toDate(defaultValue, format));
   const selectedDate = isControlled ? toDate(controlledValue, format) : internalDate;
-  const formattedValue = selectedDate ? formatDate(selectedDate, currentDisplayFormat, locale) : "";
+  const formattedValue = selectedDate ? formatDate(selectedDate, currentDisplayFormat, datePickerLocale) : "";
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -151,7 +152,7 @@ export default function DatePicker({
     if (!isControlled) {
       setInternalDate(date);
     }
-    const formattedOutput = date ? formatDate(date, format, locale) : "";
+    const formattedOutput = date ? formatDate(date, format, datePickerLocale) : "";
     onChange?.(formattedOutput);
 
     if (closeOnSelect) {
@@ -255,7 +256,6 @@ export default function DatePicker({
           minDate={minDate}
           maxDate={maxDate}
           isDateDisabled={isDateDisabled}
-          locale={locale}
           firstDayOfWeek={firstDayOfWeek}
           showWeekNumbers={showWeekNumbers}
           size={size}
@@ -367,7 +367,6 @@ export default function DatePicker({
                   minDate={minDate}
                   maxDate={maxDate}
                   isDateDisabled={isDateDisabled}
-                  locale={locale}
                   firstDayOfWeek={firstDayOfWeek}
                   showWeekNumbers={showWeekNumbers}
                   size={size}

@@ -1,32 +1,35 @@
 # 📅⏳ DateTimeRangePicker Component Suite (`@openway/ui`)
 
-Component **DateTimeRangePicker** toàn diện, linh hoạt và tiện dụng, được thiết kế theo chuẩn **Design System**, hỗ trợ **Chọn khoảng Ngày & Giờ (Start - End) với cơ chế Chuyển bước (Stepped Selection)** giúp giao diện popover luôn nhỏ gọn, vừa vặn trên mọi màn hình, **Tách bạch Định dạng Dữ liệu (`format`) & Hiển thị (`displayFormat`)**, **Chế độ 12h (AM/PM) & 24h**, **Tùy chọn hiển thị giây (`showSeconds`)**, **Bước nhảy tùy biến (`hourStep`, `minuteStep`, `secondStep`)**, **Tự động ràng buộc `minDate` / `minTime` giữa 2 mốc**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+A comprehensive, flexible, and convenient **DateTimeRangePicker** component designed to strict **Design System** standards, featuring **Date & Time Range Selection (Start - End) with a Stepped Selection workflow** keeping the popover compact and responsive across all screens, **Separation of Data Formatting (`format`) & Display (`displayFormat`)**, **12-Hour (AM/PM) & 24-Hour Modes**, **Optional Seconds Column (`showSeconds`)**, **Custom Stepping Intervals (`hourStep`, `minuteStep`, `secondStep`)**, **Automatic `minDate` / `minTime` Cross-Constraint Validation**, and full **WAI-ARIA Accessibility** compliance.
+
+> [!NOTE]
+> Starting in **v2.0.0**, locale configuration (month names, weekday abbreviations, aria-labels, etc.) is handled globally via `<OpenWayProvider>` (see [i18n documentation](../i18n.md)) rather than individual component props. Individual `locale` props on `DateTimeRangePicker` can still be passed for localized overrides when needed.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Cơ chế Chuyển bước thông minh (Stepped Navigation Buttons)**:
-  - Thay vì hiển thị 2 bảng lịch + 2 bảng giờ cồng kềnh (chiếm hơn 800px), DateTimeRangePicker hiển thị 1 bảng chọn tại một thời điểm.
-  - Phía trên có thanh tóm tắt `[ 1. Start: ... ]` và `[ 2. End: ... ]` cho phép click nhảy trực tiếp.
-  - Phía dưới có 2 nút chuyển đổi tiện lợi `[ ← Bắt đầu ]` và `[ Kết thúc → ]` kèm nút `Áp dụng`.
-- **Tách bạch giữa Dữ liệu (`format`) và Hiển thị (`displayFormat`)**:
-  - `format` *(mặc định `'DD/MM/YYYY HH:mm:ss'`)*: Dữ liệu mảng phát ra qua `onChange` là `[string, string]` (ví dụ: `["25/08/2026 08:00:00", "28/08/2026 17:30:00"]`).
-  - `displayFormat` *(tùy chọn)*: Định dạng hiển thị trực quan trong ô input (ví dụ: `"25/08/2026 08:00 AM - 28/08/2026 05:30 PM"`).
-- **2 Bố cục popover linh hoạt (`layout`)**:
-  - `side-by-side` *(mặc định)*: Lịch ngày (`Calendar`) và Cột giờ (`TimeView`) nằm ngang cạnh nhau.
-  - `stacked`: Lịch ngày nằm phía trên, Cột giờ nằm phía dưới theo chiều dọc.
-- **Tự động ràng buộc tính hợp lệ giữa 2 mốc**:
-  - Khi chọn mốc kết thúc (`End`), các ngày và giờ trước mốc bắt đầu (`Start`) sẽ tự động bị vô hiệu hóa.
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *mặc định*), `lg` (48px), `xl` (56px).
-- **3 Biến thể giao diện (`variant`)**: `outline` *(mặc định)*, `filled`, `ghost`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`. Màu `warning` sử dụng chữ `text-neutral-950` tối ưu tương phản chuẩn **WCAG AA**.
-- **6 Mức độ bo góc (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
-- **3 Vị trí đặt nhãn (`labelPlacement`)**: `top` *(mặc định)*, `left`, `floating`.
+- **Intelligent Stepped Navigation Workflow**:
+  - Rather than rendering 2 full calendars + 2 time columns simultaneously (consuming over 800px), DateTimeRangePicker renders one picker at a time.
+  - Features an intuitive top summary bar `[ 1. Start: ... ]` and `[ 2. End: ... ]` allowing instant switching.
+  - Features bottom step control buttons `[ ← Start ]` and `[ End → ]` along with an `Apply` button.
+- **Separation of Data (`format`) and Display (`displayFormat`)**:
+  - `format` *(default `'DD/MM/YYYY HH:mm:ss'`)*: Data emitted through `onChange` is a 2-element array `[string, string]` (e.g. `["25/08/2026 08:00:00", "28/08/2026 17:30:00"]`).
+  - `displayFormat` *(optional)*: Visual formatting displayed inside the input field (e.g. `"25/08/2026 08:00 AM - 28/08/2026 05:30 PM"`).
+- **2 Flexible Popover Layouts (`layout`)**:
+  - `side-by-side` *(default)*: Calendar panel (`Calendar`) and time columns (`TimeView`) are displayed horizontally side-by-side.
+  - `stacked`: Calendar panel is stacked vertically above the time columns.
+- **Automatic Cross-Constraint Validation**:
+  - When picking the `End` time, dates and times preceding the `Start` boundary are automatically disabled.
+- **5 Standard Sizes (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *default*), `lg` (48px), `xl` (56px).
+- **3 Visual Variants (`variant`)**: `outline` *(default)*, `filled`, `ghost`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`. The `warning` color applies `text-neutral-950` text for optimal contrast satisfying **WCAG AA**.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
+- **3 Label Placements (`labelPlacement`)**: `top` *(default)*, `left`, `floating`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { DateTimeRangePicker } from "@openway/ui";
@@ -46,9 +49,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản
+### 1. Basic Usage
 
 ```tsx
 import { useState } from "react";
@@ -62,7 +65,7 @@ export function BasicDateTimeRangePickerExample() {
 
   return (
     <DateTimeRangePicker
-      label="Khoảng thời gian công tác"
+      label="Business Trip Period"
       value={range}
       onChange={(newRange) => setRange(newRange)}
       placeholder="DD/MM/YYYY HH:mm:ss - DD/MM/YYYY HH:mm:ss"
@@ -73,27 +76,27 @@ export function BasicDateTimeRangePickerExample() {
 
 ---
 
-### 2. Chế độ 12 giờ với AM / PM & Tùy biến nhãn
+### 2. 12-Hour Mode with AM / PM & Custom Labels
 
 ```tsx
 <DateTimeRangePicker
-  label="Thời gian thuê phòng"
+  label="Room Booking Period"
   use12Hours={true}
   format="DD/MM/YYYY hh:mm A"
-  startLabel="Giờ nhận phòng"
-  endLabel="Giờ trả phòng"
-  separator=" đến "
+  startLabel="Check-in time"
+  endLabel="Check-out time"
+  separator=" to "
   defaultValue={["25/08/2026 02:00 PM", "27/08/2026 12:00 PM"]}
 />
 ```
 
 ---
 
-### 3. Tắt giây & Bước nhảy 15 phút
+### 3. Disable Seconds & 15-Minute Stepping
 
 ```tsx
 <DateTimeRangePicker
-  label="Ca trực"
+  label="Shift Schedule"
   showSeconds={false}
   minuteStep={15}
   format="DD/MM/YYYY HH:mm"
@@ -103,120 +106,120 @@ export function BasicDateTimeRangePickerExample() {
 
 ---
 
-### 4. Vị trí đặt nhãn (`labelPlacement`)
+### 4. Label Placement (`labelPlacement`)
 
 ```tsx
-// 1. Top (Phía trên - Mặc định)
-<DateTimeRangePicker label="Thời gian diễn ra" labelPlacement="top" />
+// 1. Top (Above - Default)
+<DateTimeRangePicker label="Event Duration" labelPlacement="top" />
 
-// 2. Left (Ngang bên trái)
-<DateTimeRangePicker label="Thời gian diễn ra" labelPlacement="left" />
+// 2. Left (Aligned horizontally to the left)
+<DateTimeRangePicker label="Event Duration" labelPlacement="left" />
 
-// 3. Floating (Lơ lửng trên viền)
-<DateTimeRangePicker label="Thời gian diễn ra" labelPlacement="floating" />
+// 3. Floating (Floating within border)
+<DateTimeRangePicker label="Event Duration" labelPlacement="floating" />
 ```
 
 ---
 
-### 5. Trạng thái Form & Loading
+### 5. Form States & Loading
 
 ```tsx
-// Bắt buộc nhập (Required)
-<DateTimeRangePicker label="Khoảng thời gian" config={{ isRequired: true }} />
+// Required field
+<DateTimeRangePicker label="Time Range" config={{ isRequired: true }} />
 
-// Báo lỗi (Invalid)
+// Validation error (Invalid)
 <DateTimeRangePicker
-  label="Khoảng thời gian"
-  errorMessage="Thời gian bắt đầu không được lớn hơn thời gian kết thúc."
+  label="Time Range"
+  errorMessage="Start time cannot be greater than end time."
   config={{ isInvalid: true }}
 />
 
-// Đang tải dữ liệu (Loading)
+// Loading state with spinner
 <DateTimeRangePicker
-  label="Đang đồng bộ"
+  label="Synchronizing"
   config={{ isLoading: true, showSpinner: true }}
 />
 
-// Vô hiệu hóa (Disabled) hoặc Chỉ đọc (ReadOnly)
-<DateTimeRangePicker label="Không khả dụng" disabled={true} />
-<DateTimeRangePicker label="Chỉ xem" readOnly={true} />
+// Disabled or Read-Only
+<DateTimeRangePicker label="Unavailable" disabled={true} />
+<DateTimeRangePicker label="View only" readOnly={true} />
 ```
 
 ---
 
-## ⌨️ Phím tắt điều hướng bàn phím (WAI-ARIA Keyboard Navigation)
+## ⌨️ Keyboard Navigation Shortcuts (WAI-ARIA Keyboard Navigation)
 
-| Vị trí | Phím bấm | Hành động |
+| Location | Key | Action |
 | :--- | :--- | :--- |
-| **Ô Input** | `ArrowDown` / `Enter` / `Space` | Mở popover và tự động chuyển tiêu điểm vào ô Ngày trong Lịch. |
-| **Ô Input** | `Escape` | Đóng popover và giữ tiêu điểm tại ô Input. |
-| **Bảng Lịch (Calendar)** | `ArrowRight` / `ArrowLeft` | Di chuyển sang ngày kế tiếp (+1) hoặc ngày liền trước (-1). |
-| **Bảng Lịch (Calendar)** | `ArrowDown` / `ArrowUp` | Di chuyển xuống tuần sau (+7) hoặc lên tuần trước (-7). |
-| **Bảng Lịch (Calendar)** | `Home` / `End` | Nhảy về ngày đầu tuần hoặc cuối tuần. |
-| **Bảng Lịch (Calendar)** | `Enter` / `Space` | Chọn ngày đang focus (kết hợp với thời gian hiện tại). |
-| **Cột Giờ (TimeView)** | `ArrowDown` / `ArrowUp` | Tăng / giảm mốc giờ, phút, giây. |
-| **Cột Giờ (TimeView)** | `ArrowRight` / `ArrowLeft` | Chuyển tiêu điểm giữa các cột (Giờ $\rightarrow$ Phút $\rightarrow$ Giây $\rightarrow$ AM/PM). |
-| **Popover** | `Escape` | Đóng popover và trả lại tiêu điểm về ô Input. |
+| **Input Field** | `ArrowDown` / `Enter` / `Space` | Opens popover and automatically moves focus to the date cell in the Calendar. |
+| **Input Field** | `Escape` | Closes popover and retains focus on the input field. |
+| **Calendar Grid** | `ArrowRight` / `ArrowLeft` | Navigates to next day (+1) or previous day (-1). |
+| **Calendar Grid** | `ArrowDown` / `ArrowUp` | Navigates down one week (+7) or up one week (-7). |
+| **Calendar Grid** | `Home` / `End` | Jumps to the start or end of the current week. |
+| **Calendar Grid** | `Enter` / `Space` | Selects the focused date (combined with the current time values). |
+| **Time Column (TimeView)** | `ArrowDown` / `ArrowUp` | Increments / decrements the hour, minute, or second value. |
+| **Time Column (TimeView)** | `ArrowRight` / `ArrowLeft` | Moves focus between columns (Hours $\rightarrow$ Minutes $\rightarrow$ Seconds $\rightarrow$ AM/PM). |
+| **Popover** | `Escape` | Closes popover and returns focus back to the input field. |
 
 ---
 
-## 🛠 Bảng thông số Props
+## 🛠 Props Specification
 
 ### `DateTimeRangePickerProps`
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `value` | `[DateTimeValue, DateTimeValue]` | — | Mảng khoảng ngày giờ đang chọn (Controlled). |
-| `defaultValue` | `[DateTimeValue, DateTimeValue]` | — | Mảng khoảng ngày giờ mặc định ban đầu (Uncontrolled). |
-| `onChange` | `(range: [string, string] \| null) => void` | — | Callback khi khoảng ngày giờ thay đổi (trả về `[start, end]` theo `format` hoặc `null` khi xóa). |
-| `format` | `string` | `'DD/MM/YYYY HH:mm:ss'` | Định dạng dữ liệu chính dùng cho cả input và đầu ra `onChange`. |
-| `displayFormat` | `string` | Tự động | Định dạng chuỗi hiển thị trực quan trong ô input. |
-| `separator` | `string` | `' - '` | Chuỗi ký tự phân cách giữa Start DateTime và End DateTime. |
-| `startLabel` | `string` | `'Start time'` | Nhãn tiêu đề mốc bắt đầu. |
-| `endLabel` | `string` | `'End time'` | Nhãn tiêu đề mốc kết thúc. |
-| `layout` | `'side-by-side' \| 'stacked'` | `'side-by-side'` | Bố cục hiển thị bảng chọn trong popover. |
-| `locale` | `'vi' \| 'en' \| LocaleConfig` | `'vi'` | Cấu hình ngôn ngữ quốc tế hóa. |
-| `use12Hours` | `boolean` | `false` | Bật chế độ 12 giờ kèm cột chọn AM / PM. |
-| `showSeconds` | `boolean` | `true` | Hiển thị cột chọn giây. |
-| `hourStep` | `number` | `1` | Bước nhảy cho cột Giờ. |
-| `minuteStep` | `number` | `1` | Bước nhảy cho cột Phút. |
-| `secondStep` | `number` | `1` | Bước nhảy cho cột Giây. |
-| `minDate` | `Date \| string` | — | Ngày nhỏ nhất cho phép chọn. |
-| `maxDate` | `Date \| string` | — | Ngày lớn nhất cho phép chọn. |
-| `isDateDisabled` | `(date: Date) => boolean` | — | Hàm kiểm tra vô hiệu hóa ngày tùy biến. |
-| `minTime` | `TimeValue` | — | Thời gian nhỏ nhất cho phép chọn. |
-| `maxTime` | `TimeValue` | — | Thời gian lớn nhất cho phép chọn. |
-| `disabledHours` | `() => number[]` | — | Hàm trả về danh sách giờ bị vô hiệu hóa. |
-| `disabledMinutes` | `(h: number) => number[]` | — | Hàm trả về danh sách phút bị vô hiệu hóa. |
-| `disabledSeconds` | `(h: number, m: number) => number[]` | — | Hàm trả về danh sách giây bị vô hiệu hóa. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ ô nhập liệu. |
-| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Biến thể viền/nền của ô nhập. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc theo Design System. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Độ bo góc của ô nhập và popover. |
-| `label` | `ReactNode` | — | Nhãn tiêu đề hiển thị cho ô nhập liệu. |
-| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Vị trí hiển thị của nhãn. |
-| `placeholder` | `string` | Tự động | Văn bản giữ chỗ khi ô input rỗng. |
-| `placeholders` | `[string, string]` | — | Văn bản giữ chỗ riêng cho Start và End. |
-| `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn/trợ giúp bên dưới ô. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi (tự động bật viền đỏ và animation). |
-| `disabled` | `boolean` | `false` | Khóa toàn bộ tương tác của ô nhập. |
-| `readOnly` | `boolean` | `false` | Chỉ cho phép xem, không mở popover chọn ngày giờ. |
-| `config` | `DateTimeRangePickerConfig` | — | Nhóm cấu hình tập trung các cờ tính năng (xem bảng dưới). |
-| `placement` | `Placement` | `'bottom-start'` | Vị trí mở popover chọn ngày giờ (Floating UI). |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp tới thẻ `<input>` HTML bên dưới. |
+| `value` | `[DateTimeValue, DateTimeValue]` | — | Currently selected datetime range array (Controlled). |
+| `defaultValue` | `[DateTimeValue, DateTimeValue]` | — | Initial default datetime range array (Uncontrolled). |
+| `onChange` | `(range: [string, string] \| null) => void` | — | Callback invoked when datetime range changes (returns `[start, end]` per `format`, or `null` when cleared). |
+| `format` | `string` | `'DD/MM/YYYY HH:mm:ss'` | Primary data format used for both input and `onChange` output. |
+| `displayFormat` | `string` | Auto | Visual display format formatted for presentation inside the input field. |
+| `separator` | `string` | `' - '` | Separator string between Start DateTime and End DateTime. |
+| `startLabel` | `string` | `'Start time'` | Label header for start datetime step. |
+| `endLabel` | `string` | `'End time'` | Label header for end datetime step. |
+| `layout` | `'side-by-side' \| 'stacked'` | `'side-by-side'` | Layout arrangement of calendar and time picker inside the popover. |
+| `locale` | `'vi' \| 'en' \| DatePickerLocale` | `'vi'` | Locale configuration for internationalization. In v2.0.0+, preferred to be configured centrally via `OpenWayProvider` (see [i18n documentation](../i18n.md)). |
+| `use12Hours` | `boolean` | `false` | Enables 12-hour format with AM / PM selection column. |
+| `showSeconds` | `boolean` | `true` | Displays seconds selection column. |
+| `hourStep` | `number` | `1` | Stepping interval for Hours column. |
+| `minuteStep` | `number` | `1` | Stepping interval for Minutes column. |
+| `secondStep` | `number` | `1` | Stepping interval for Seconds column. |
+| `minDate` | `Date \| string` | — | Minimum selectable date boundary. |
+| `maxDate` | `Date \| string` | — | Maximum selectable date boundary. |
+| `isDateDisabled` | `(date: Date) => boolean` | — | Function to determine if a specific date is disabled. |
+| `minTime` | `TimeValue` | — | Minimum selectable time boundary. |
+| `maxTime` | `TimeValue` | — | Maximum selectable time boundary. |
+| `disabledHours` | `() => number[]` | — | Function returning an array of disabled hour numbers. |
+| `disabledMinutes` | `(h: number) => number[]` | — | Function returning an array of disabled minute numbers for a given hour. |
+| `disabledSeconds` | `(h: number, m: number) => number[]` | — | Function returning an array of disabled second numbers for given hour and minute. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the input field. |
+| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Visual border and background variant of the input field. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color based on Design System. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Border radius of the input and popover. |
+| `label` | `ReactNode` | — | Label displayed alongside the input field. |
+| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Placement of the label. |
+| `placeholder` | `string` | Auto | Placeholder text when input field is empty. |
+| `placeholders` | `[string, string]` | — | Distinct placeholder strings for Start and End inputs. |
+| `helperText` | `ReactNode` | — | Helper text displayed beneath the input field. |
+| `errorMessage` | `ReactNode` | — | Error message (automatically activates red error border and appearance animation). |
+| `disabled` | `boolean` | `false` | Disables all user interaction with the input. |
+| `readOnly` | `boolean` | `false` | View-only mode; prevents opening the datetime popover. |
+| `config` | `DateTimeRangePickerConfig` | — | Consolidated configuration flags object (see table below). |
+| `placement` | `Placement` | `'bottom-start'` | Popover positioning relative to the input field (Floating UI). |
+| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying HTML `<input>` element. |
 
 ---
 
 ### `DateTimeRangePickerConfig`
 
-| Cờ thuộc tính | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu sao đỏ `*` và đánh dấu `aria-required="true"`. |
-| `isInvalid` | `boolean` | `false` | Bật trạng thái viền đỏ báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Khóa tương tác, bật `aria-busy="true"` và `aria-disabled="true"`. |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi `isLoading={true}`. |
-| `isClearable` | `boolean` | `true` | Hiển thị nút xóa nhanh khoảng ngày giờ đã chọn. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng chiếm toàn bộ 100% chiều ngang container cha. |
-| `closeOnSelect` | `boolean` | `false` | Tự động đóng popover sau khi chọn xong cả 2 mốc. |
-| `showWeekNumbers` | `boolean` | `false` | Hiển thị cột số thứ tự tuần trong bảng lịch. |
-| `showViewTabs` | `boolean` | `false` | Hiển thị thanh Tab Ngày / Tháng / Năm trên lịch. |
+| `isRequired` | `boolean` | `false` | Displays a red asterisk `*` and marks `aria-required="true"`. |
+| `isInvalid` | `boolean` | `false` | Enables red error border state and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Locks interactions and sets `aria-busy="true"` and `aria-disabled="true"`. |
+| `showSpinner` | `boolean` | `false` | Displays a loading spinner icon when `isLoading={true}`. |
+| `isClearable` | `boolean` | `true` | Displays a quick clear button when a datetime range is selected. |
+| `isFullWidth` | `boolean` | `false` | Expands width to occupy 100% of parent container. |
+| `closeOnSelect` | `boolean` | `false` | Automatically closes the popover after selecting both Start and End endpoints. |
+| `showWeekNumbers` | `boolean` | `false` | Displays ISO week number column in the calendar panel. |
+| `showViewTabs` | `boolean` | `false` | Displays Days / Months / Years view switcher tabs on the calendar. |

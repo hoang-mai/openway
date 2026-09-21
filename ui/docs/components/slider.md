@@ -1,35 +1,35 @@
 # 🎚️ Slider Component (`@openway/ui`)
 
-Component **Slider** hiện đại, mượt mà và toàn diện, được xây dựng trên nền tảng logic headless của **`@radix-ui/react-slider`**, tuân thủ cấu trúc thiết kế chuẩn **Design System (`styleCode`)** của `@openway/ui`, tích hợp **Safe Config Fallback**, **Floating UI Tooltip**, hỗ trợ cả thanh trượt đơn (**Single**) lẫn thanh trượt dải (**Range**) và đáp ứng đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+Modern, smooth, and comprehensive **Slider** component built on the headless logic of **`@radix-ui/react-slider`**, adhering to the **Design System (`styleCode`)** standards of `@openway/ui`. Features **Safe Config Fallback**, **Floating UI Tooltip**, support for both **Single** and **Range** sliders, and full compliance with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Engine Headless Radix UI**: Quản lý cử chỉ kéo thả (Pointer Capture, Touch, Multi-touch), tính toán giá trị và điều hướng bàn phím mượt mà, chính xác, không bị giật lag khi kéo ra ngoài track.
-- **Hỗ trợ Single & Range Slider**:
-  - **Single Slider**: Truyền `number` vào `value` / `defaultValue`.
-  - **Range Slider (Dual Thumbs)**: Truyền `[number, number]` vào `value` / `defaultValue` để điều chỉnh khoảng giá trị (giá cả, bộ lọc...).
-- **Cấu hình tập trung chuẩn (`config?: SliderConfig`)**: Toàn bộ cờ trạng thái (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `showSteps`, `showValue`, `isFullWidth`) được quản lý thống nhất qua đối tượng `config`.
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl` với kích thước track, thumb, nấc bước và font chữ được cân chỉnh theo tỷ lệ chuẩn.
-- **4 Biến thể giao diện (`variant`)**:
-  - `filled` *(mặc định)*: Nền track rõ nét, thanh fill màu chủ đề tương phản cao.
-  - `soft`: Nền track màu pastel dịu mắt theo tone màu chủ đề.
-  - `outline`: Track và Thumb dạng viền viền theo màu chủ đề.
-  - `other`: Bỏ qua các class màu mặc định, tự do áp dụng custom style qua `trackClassName`, `fillerClassName`, `thumbClassName`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
-- **6 Mức độ bo góc (`radius` & `thumbRadius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full` (*mặc định*). Có thể tùy biến riêng bo góc cho thanh track và nút kéo thumb.
-- **Tích hợp Tooltip (@floating-ui/react)**: Hỗ trợ 4 chế độ hiển thị tooltip nổi trên thumb: `"always"`, `"active"` (khi kéo / focus), `"hover"`, và `"none"`.
-- **Nấc bước & Đánh dấu (Marks & Step Dots)**:
-  - `showSteps`: Tự động hiển thị các chấm tròn tại từng nấc bước trên thanh trượt.
-  - `marks`: Hiển thị nhãn mốc giá trị bên dưới hoặc bên cạnh thanh trượt.
-- **Tích hợp Form HTML chuẩn**: Tự động render `<input type="hidden" />` khi truyền `name` để hỗ trợ submit form HTML native / FormData.
-- **Đạt chuẩn Accessibility (WAI-ARIA)**: Tích hợp đầy đủ `role="slider"`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, `aria-valuetext`, `aria-invalid`, `aria-required`, `aria-errormessage`, `aria-describedby`.
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` đảm bảo component hoạt động an toàn, không bị crash kể cả khi truyền prop không hợp lệ.
+- **Radix UI Headless Engine**: Handles drag gestures (Pointer Capture, Touch, Multi-touch), value calculation, and keyboard navigation smoothly and accurately, preventing jumps when dragging outside the track.
+- **Single & Range Slider Support**:
+  - **Single Slider**: Pass a `number` to `value` / `defaultValue`.
+  - **Range Slider (Dual Thumbs)**: Pass `[number, number]` to `value` / `defaultValue` to adjust ranges (prices, filters, etc.).
+- **Unified Configuration (`config?: SliderConfig`)**: All status flags (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `showSteps`, `showValue`, `isFullWidth`) are centrally managed via the `config` object.
+- **5 Standard Sizes (`size`)**: `xs`, `sm`, `md` (*default*), `lg`, `xl` with track, thumb, step dots, and font sizes proportionally balanced.
+- **4 Visual Variants (`variant`)**:
+  - `filled` *(default)*: High-contrast filled theme color bar on a clear track.
+  - `soft`: Soft pastel track background tinted with the theme color.
+  - `outline`: Outlined track and thumb following theme color.
+  - `other`: Bypasses default color classes, allowing complete custom styling via `trackClassName`, `fillerClassName`, and `thumbClassName`.
+- **7 Theme Colors (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
+- **6 Border Radius Levels (`radius` & `thumbRadius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full` (*default*). Independent corner radius customization for both track and thumb.
+- **Tooltip Integration (@floating-ui/react)**: Supports 4 tooltip display modes floating above the thumb: `"always"`, `"active"` (on drag / focus), `"hover"`, and `"none"`.
+- **Marks & Step Dots**:
+  - `showSteps`: Automatically renders step dots at each increment along the track.
+  - `marks`: Displays value marker labels below or beside the slider.
+- **Native HTML Form Integration**: Automatically renders `<input type="hidden" />` when `name` is provided to support native HTML form submissions / `FormData`.
+- **WAI-ARIA Accessibility**: Full integration of `role="slider"`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, `aria-valuetext`, `aria-invalid`, `aria-required`, `aria-errormessage`, and `aria-describedby`.
+- **Safe Config Fallback**: Uses `getSafeConfig` to ensure graceful operation and prevent runtime errors even with invalid props.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -57,9 +57,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Slider đơn cơ bản (Single Value)
+### 1. Basic Single Slider (Single Value)
 
 ```tsx
 import { useState } from "react";
@@ -72,14 +72,14 @@ export function BasicSingleSlider() {
     <div className="max-w-md space-y-6">
       {/* Uncontrolled Slider */}
       <Slider
-        label="Âm lượng mặc định"
+        label="Default Volume"
         defaultValue={40}
         config={{ showValue: true }}
       />
 
       {/* Controlled Slider */}
       <Slider
-        label="Âm lượng tùy chỉnh"
+        label="Custom Volume"
         value={volume}
         onChange={(val) => setVolume(val as number)}
         formatValue={(val) => `${val}%`}
@@ -92,9 +92,9 @@ export function BasicSingleSlider() {
 
 ---
 
-### 2. Slider khoảng dải (Range Slider - Dual Thumbs)
+### 2. Range Slider (Dual Thumbs)
 
-Chỉ cần truyền một mảng 2 phần tử `[minVal, maxVal]` vào `value` hoặc `defaultValue`:
+Pass a 2-element array `[minVal, maxVal]` to `value` or `defaultValue`:
 
 ```tsx
 import { useState } from "react";
@@ -106,7 +106,7 @@ export function PriceRangeSlider() {
   return (
     <div className="max-w-md">
       <Slider
-        label="Khoảng giá (USD)"
+        label="Price Range (USD)"
         min={0}
         max={1000}
         step={10}
@@ -125,9 +125,9 @@ export function PriceRangeSlider() {
 
 ---
 
-### 3. Kích thước (`size`)
+### 3. Sizing (`size`)
 
-Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
+Supports 5 sizes: `xs`, `sm`, `md` (*default*), `lg`, `xl`:
 
 ```tsx
 <Slider size="xs" label="Size XS" defaultValue={20} config={{ showValue: true }} />
@@ -139,10 +139,10 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
 
 ---
 
-### 4. Biến thể (`variant`) & Màu sắc (`color`)
+### 4. Variants (`variant`) & Colors (`color`)
 
 ```tsx
-// 7 Bảng màu chủ đề
+// 7 Color Themes
 <Slider color="primary" label="Primary" defaultValue={50} />
 <Slider color="secondary" label="Secondary" defaultValue={50} />
 <Slider color="success" label="Success" defaultValue={50} />
@@ -151,7 +151,7 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
 <Slider color="info" label="Info" defaultValue={50} />
 <Slider color="neutral" label="Neutral" defaultValue={50} />
 
-// 4 Biến thể hiển thị
+// 4 Display Variants
 <Slider variant="filled" color="primary" label="Filled" defaultValue={60} />
 <Slider variant="soft" color="primary" label="Soft" defaultValue={60} />
 <Slider variant="outline" color="primary" label="Outline" defaultValue={60} />
@@ -167,7 +167,7 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
 
 ---
 
-### 5. Bo góc thanh trượt & Nút kéo (`radius` & `thumbRadius`)
+### 5. Track & Thumb Border Radius (`radius` & `thumbRadius`)
 
 ```tsx
 <Slider radius="none" thumbRadius="none" label="Square" defaultValue={40} />
@@ -177,10 +177,10 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
 
 ---
 
-### 6. Tích hợp Tooltip (`showTooltip` & `formatTooltip`)
+### 6. Tooltip Integration (`showTooltip` & `formatTooltip`)
 
 ```tsx
-// 1. Luôn hiển thị Tooltip
+// 1. Tooltip Always Visible
 <Slider
   label="Always Open"
   defaultValue={45}
@@ -188,7 +188,7 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
   formatTooltip={(val) => `${val}%`}
 />
 
-// 2. Hiển thị khi đang kéo hoặc focus bàn phím
+// 2. Visible on Drag or Keyboard Focus
 <Slider
   label="Active On Drag/Focus"
   defaultValue={75}
@@ -197,7 +197,7 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
   formatTooltip={(val) => `${val} kW/h`}
 />
 
-// 3. Hiển thị khi hover chuột
+// 3. Visible on Hover
 <Slider
   label="Hover"
   defaultValue={30}
@@ -209,11 +209,11 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
 
 ---
 
-### 7. Nấc bước & Đánh dấu mốc (`showSteps` & `marks`)
+### 7. Step Dots & Value Marks (`showSteps` & `marks`)
 
 ```tsx
 <Slider
-  label="Nhiệt độ phòng"
+  label="Room Temperature"
   defaultValue={25}
   min={10}
   max={40}
@@ -231,9 +231,9 @@ Hỗ trợ 5 kích thước: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`:
 
 ---
 
-### 8. Hướng dọc (`orientation="vertical"`)
+### 8. Vertical Orientation (`orientation="vertical"`)
 
-Rất thích hợp cho bộ chỉnh âm thanh (Equalizer), thanh chỉnh độ sáng:
+Ideal for audio equalizers and brightness/volume controls:
 
 ```tsx
 <div className="flex items-center gap-6 h-64">
@@ -245,30 +245,30 @@ Rất thích hợp cho bộ chỉnh âm thanh (Equalizer), thanh chỉnh độ s
 
 ---
 
-### 9. Trạng thái Loading, Validation & Form Integration
+### 9. Loading State, Validation & Form Integration
 
 ```tsx
-// Trạng thái Loading kèm Spinner
+// Loading State with Spinner
 <Slider
-  label="Đang đồng bộ dữ liệu"
+  label="Synchronizing Data"
   defaultValue={50}
-  helperText="Vui lòng chờ..."
+  helperText="Please wait..."
   config={{ isLoading: true, showSpinner: true }}
 />
 
-// Trạng thái Báo lỗi (Invalid)
+// Error State (Invalid)
 <Slider
-  label="Công suất máy"
+  label="Machine Power"
   defaultValue={10}
-  errorMessage="Giá trị công suất tối thiểu là 20!"
+  errorMessage="Minimum power value is 20!"
   config={{ isInvalid: true, isRequired: true }}
 />
 
-// Tích hợp Form HTML (FormData)
+// HTML Form Integration (FormData)
 <form onSubmit={(e) => {
   e.preventDefault();
   const data = new FormData(e.currentTarget);
-  console.log(data.get("volume")); // Output: giá trị số
+  console.log(data.get("volume")); // Output: numeric value
 }}>
   <Slider name="volume" defaultValue={80} label="Volume" />
   <button type="submit">Submit</button>
@@ -277,70 +277,70 @@ Rất thích hợp cho bộ chỉnh âm thanh (Equalizer), thanh chỉnh độ s
 
 ---
 
-## 📋 Bảng thuộc tính (Props Reference)
+## 📋 Props Reference
 
 ### `SliderProps`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| **`config`** | `SliderConfig` | `{}` | Đối tượng gom nhóm các cờ cấu hình tính năng/trạng thái. |
-| **`value`** | `number \| [number, number]` | `undefined` | Giá trị controlled của thanh trượt. |
-| **`defaultValue`** | `number \| [number, number]` | `undefined` | Giá trị khởi tạo mặc định (uncontrolled). |
-| **`min`** | `number` | `0` | Giá trị tối thiểu. |
-| **`max`** | `number` | `100` | Giá trị tối đa. |
-| **`step`** | `number` | `1` | Bước nhảy giữa các giá trị. |
-| **`minStepsBetweenThumbs`** | `number` | `0` | Số bước nhảy tối thiểu giữa 2 thumbs ở Range mode. |
-| **`inverted`** | `boolean` | `false` | Đảo ngược chiều thanh trượt. |
-| **`size`** | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Kích thước component. |
-| **`variant`** | `"filled" \| "soft" \| "outline" \| "other"` | `"filled"` | Biến thể giao diện của thanh trượt. |
-| **`color`** | `"primary" \| "secondary" \| "error" \| "success" \| "warning" \| "info" \| "neutral"` | `"primary"` | Chủ đề màu sắc. |
-| **`radius`** | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"full"` | Bo góc của track. |
-| **`thumbRadius`** | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"full"` | Bo góc của thumb. |
-| **`orientation`** | `"horizontal" \| "vertical"` | `"horizontal"` | Chiều hướng trượt. |
-| **`label`** | `ReactNode` | `undefined` | Nhãn tiêu đề của slider. |
-| **`labelPlacement`** | `"top" \| "left" \| "right"` | `"top"` | Vị trí đặt nhãn tiêu đề. |
-| **`formatValue`** | `(val: SliderValue) => ReactNode` | `undefined` | Hàm format hiển thị giá trị cạnh label. |
-| **`showTooltip`** | `"none" \| "hover" \| "active" \| "always"` | `"none"` | Chế độ hiển thị Tooltip nổi trên thumb. |
-| **`tooltipPlacement`** | `"top" \| "bottom" \| "left" \| "right"` | `undefined` | Vị trí đặt tooltip. |
-| **`formatTooltip`** | `(val: number) => ReactNode` | `undefined` | Hàm format nội dung hiển thị trong tooltip. |
-| **`marks`** | `SliderMark[] \| boolean` | `false` | Danh sách mốc đánh dấu hoặc `true` để tự sinh theo step. |
-| **`startContent`** | `ReactNode` | `undefined` | Icon hoặc nội dung đầu thanh trượt. |
-| **`endContent`** | `ReactNode` | `undefined` | Icon hoặc nội dung cuối thanh trượt. |
-| **`disabled`** | `boolean` | `false` | Vô hiệu hóa toàn bộ tương tác. |
-| **`readOnly`** | `boolean` | `false` | Chế độ chỉ đọc (không kéo được nhưng vẫn submit form). |
-| **`helperText`** | `ReactNode` | `undefined` | Văn bản hướng dẫn phía dưới. |
-| **`errorMessage`** | `ReactNode` | `undefined` | Thông báo lỗi phía dưới (tự động bật `hasError`). |
-| **`name`** | `string` | `undefined` | Tên input ẩn dùng cho form submit. |
-| **`onChange`** | `(val: SliderValue) => void` | `undefined` | Callback gọi liên tục khi đang kéo thay đổi giá trị. |
-| **`onChangeEnd`** | `(val: SliderValue) => void` | `undefined` | Callback chỉ gọi khi thả tay/kết thúc kéo. |
-| **`trackClassName`** | `string` | `""` | Tùy biến class của thanh track. |
-| **`fillerClassName`** | `string` | `""` | Tùy biến class của thanh đã fill. |
-| **`thumbClassName`** | `string` | `""` | Tùy biến class của nút kéo thumb. |
+| **`config`** | `SliderConfig` | `{}` | Object grouping feature and status flags. |
+| **`value`** | `number \| [number, number]` | `undefined` | Controlled value of the slider. |
+| **`defaultValue`** | `number \| [number, number]` | `undefined` | Initial uncontrolled default value. |
+| **`min`** | `number` | `0` | Minimum value. |
+| **`max`** | `number` | `100` | Maximum value. |
+| **`step`** | `number` | `1` | Step increment between values. |
+| **`minStepsBetweenThumbs`** | `number` | `0` | Minimum steps separating 2 thumbs in Range mode. |
+| **`inverted`** | `boolean` | `false` | Inverts slider direction. |
+| **`size`** | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Component size. |
+| **`variant`** | `"filled" \| "soft" \| "outline" \| "other"` | `"filled"` | Visual variant of the slider. |
+| **`color`** | `"primary" \| "secondary" \| "error" \| "success" \| "warning" \| "info" \| "neutral"` | `"primary"` | Color theme. |
+| **`radius`** | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"full"` | Border radius of the track. |
+| **`thumbRadius`** | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"full"` | Border radius of the thumb. |
+| **`orientation`** | `"horizontal" \| "vertical"` | `"horizontal"` | Sliding orientation. |
+| **`label`** | `ReactNode` | `undefined` | Label text of the slider. |
+| **`labelPlacement`** | `"top" \| "left" \| "right"` | `"top"` | Placement position of the label. |
+| **`formatValue`** | `(val: SliderValue) => ReactNode` | `undefined` | Custom formatting function for the value next to label. |
+| **`showTooltip`** | `"none" \| "hover" \| "active" \| "always"` | `"none"` | Tooltip display mode over the thumb. |
+| **`tooltipPlacement`** | `"top" \| "bottom" \| "left" \| "right"` | `undefined` | Placement direction for the tooltip. |
+| **`formatTooltip`** | `(val: number) => ReactNode` | `undefined` | Custom formatting function for tooltip content. |
+| **`marks`** | `SliderMark[] \| boolean` | `false` | Array of marks or `true` to auto-generate marks per step. |
+| **`startContent`** | `ReactNode` | `undefined` | Icon or content before the slider track. |
+| **`endContent`** | `ReactNode` | `undefined` | Icon or content after the slider track. |
+| **`disabled`** | `boolean` | `false` | Disables user interaction. |
+| **`readOnly`** | `boolean` | `false` | Read-only mode (prevents dragging while permitting form submit). |
+| **`helperText`** | `ReactNode` | `undefined` | Helper text below the slider. |
+| **`errorMessage`** | `ReactNode` | `undefined` | Error message below the slider (automatically enables `hasError`). |
+| **`name`** | `string` | `undefined` | Name of hidden input for HTML form submission. |
+| **`onChange`** | `(val: SliderValue) => void` | `undefined` | Continuous callback fired as value changes during drag. |
+| **`onChangeEnd`** | `(val: SliderValue) => void` | `undefined` | Callback fired only upon releasing drag/finishing change. |
+| **`trackClassName`** | `string` | `""` | Custom CSS class for the track. |
+| **`fillerClassName`** | `string` | `""` | Custom CSS class for the filled range track. |
+| **`thumbClassName`** | `string` | `""` | Custom CSS class for the draggable thumb. |
 
 ---
 
 ### `SliderConfig`
 
-| Cờ cấu hình | Kiểu dữ liệu | Mặc định | Mô tả |
+| Configuration Flag | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| **`isRequired`** | `boolean` | `false` | Đánh dấu trường bắt buộc (hiển thị dấu `*` đỏ cạnh label). |
-| **`isInvalid`** | `boolean` | `false` | Bật trạng thái lỗi (chuyển màu track, thumb, label sang tone error). |
-| **`isLoading`** | `boolean` | `false` | Khóa tương tác và kích hoạt trạng thái loading. |
-| **`showSpinner`** | `boolean` | `false` | Hiển thị biểu tượng xoay Spinner bên trong nút thumb khi đang loading. |
-| **`showSteps`** | `boolean` | `false` | Hiển thị các chấm nấc bước (Step Dots) trên track. |
-| **`showValue`** | `boolean` | `false` | Hiển thị giá trị dạng text bên cạnh nhãn. |
-| **`isFullWidth`** | `boolean` | `true` | Mở rộng 100% chiều rộng khung chứa. |
+| **`isRequired`** | `boolean` | `false` | Marks field as required (renders red `*` next to label). |
+| **`isInvalid`** | `boolean` | `false` | Enables error state (turns track, thumb, and label to error theme). |
+| **`isLoading`** | `boolean` | `false` | Locks interaction and activates loading state. |
+| **`showSpinner`** | `boolean` | `false` | Renders a loading spinner icon inside the thumb when loading. |
+| **`showSteps`** | `boolean` | `false` | Displays step dots on the track. |
+| **`showValue`** | `boolean` | `false` | Displays current value text beside the label. |
+| **`isFullWidth`** | `boolean` | `true` | Stretches slider to 100% width of parent container. |
 
 ---
 
-## ♿ Khả năng tiếp cận (Accessibility / WAI-ARIA)
+## ♿ Accessibility (Accessibility / WAI-ARIA)
 
-- **Tuân thủ WAI-ARIA Slider Pattern**: Tự động gán `role="slider"`, `tabIndex={0}`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax` trên từng thumb.
-- **Screen Reader Friendly**: Hỗ trợ `aria-valuetext` để phát âm các định dạng giá trị tùy biến (tiền tệ, phần trăm, độ C).
-- **Hỗ trợ đầy đủ bàn phím**:
-  - `←` / `↓`: Giảm 1 bước (`-step`).
-  - `→` / `↑`: Tăng 1 bước (`+step`).
-  - `Page Down` / `Page Up`: Giảm/Tăng một khoảng lớn ($10\%$).
-  - `Home`: Về giá trị nhỏ nhất (`min`).
-  - `End`: Lên giá trị lớn nhất (`max`).
-- **Liên kết ngữ cảnh lỗi**: Tự động gán `aria-invalid`, `aria-errormessage`, `aria-describedby` trỏ tới phần tử thông báo lỗi.
+- **WAI-ARIA Slider Pattern Compliance**: Automatically assigns `role="slider"`, `tabIndex={0}`, `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` to each thumb.
+- **Screen Reader Friendly**: Supports `aria-valuetext` to announce custom formatted values (currencies, percentages, temperatures).
+- **Full Keyboard Navigation**:
+  - `←` / `↓`: Decrements by 1 step (`-step`).
+  - `→` / `↑`: Increments by 1 step (`+step`).
+  - `Page Down` / `Page Up`: Large decrement/increment ($10\%$).
+  - `Home`: Jumps to minimum value (`min`).
+  - `End`: Jumps to maximum value (`max`).
+- **Error Context Linking**: Automatically binds `aria-invalid`, `aria-errormessage`, and `aria-describedby` pointing to the error message element.

@@ -1,34 +1,37 @@
 # 📆 DateRangePicker Component Suite (`@openway/ui`)
 
-Bộ component **DateRangePicker** & **DateRangeCalendar** toàn diện, linh hoạt và tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **Chọn khoảng ngày trên 2 tháng liên tiếp song song**, **3 Chế độ View (Khoảng Ngày / Tháng / Năm)**, **Định dạng dữ liệu chuẩn hóa (`format`)**, **Hiển thị trực quan thích ứng (`displayFormat`)**, **Số thứ tự tuần (`showWeekNumbers`)**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+A comprehensive, flexible, and highly interactive **DateRangePicker** & **DateRangeCalendar** component suite designed to strict **Design System** standards, featuring **Side-by-side Dual Month Range Selection**, **3 View Modes (Days / Months / Years)**, **standardized data formatting (`format`)**, **adaptive visual display (`displayFormat`)**, **ISO week numbering (`showWeekNumbers`)**, and full **WAI-ARIA Accessibility** compliance.
+
+> [!NOTE]
+> Starting in **v2.0.0**, locale configuration (month names, weekday abbreviations, aria-labels, etc.) is handled globally via `<OpenWayProvider>` (see [i18n documentation](../i18n.md)) rather than individual component props. Individual `locale` props on `DateRangePicker` and `DateRangeCalendar` can still be passed for localized overrides when needed.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Chọn khoảng ngày trực quan (2 Tháng song song)**:
-  - Hiển thị cùng lúc 2 tháng liên tiếp cạnh nhau giúp người dùng dễ dàng chọn khoảng thời gian kéo dài qua nhiều tháng.
-  - Hỗ trợ hiệu ứng rê chuột xem trước khoảng ngày (Hover Range Preview).
-- **Tách bạch giữa Dữ liệu (`format`) và Hiển thị (`displayFormat`)**:
-  - `format` *(mặc định `'DD/MM/YYYY'`)*: Dữ liệu phát ra qua `onChange` là mảng 2 phần tử `[string, string]` luôn tuân thủ 100% theo chuẩn quy định (ví dụ: `["2026-08-01", "2026-08-15"]`).
-  - `displayFormat` *(tùy chọn)*: Tùy biến hiển thị trên ô input (ví dụ: `01/08/2026 - 15/08/2026`).
-- **3 Chế độ Xem Linh Hoạt (`view` & `viewTabs`)**:
-  - `days`: Chọn khoảng ngày cụ thể.
-  - `months`: Chọn khoảng tháng trong năm (hiển thị `MM-YYYY - MM-YYYY` hoặc `MM/YYYY - MM/YYYY`).
-  - `years`: Chọn khoảng năm trong thập kỷ (hiển thị `YYYY - YYYY`).
-- **Tùy biến ký tự phân cách (`separator`)**: Mặc định là `' - '`, có thể tùy biến thành `' to '`, `' ~ '`...
-- **Standalone `<DateRangeCalendar>` Component**: Có thể sử dụng độc lập dưới dạng lịch chọn range gắn tĩnh trên giao diện.
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *mặc định*), `lg` (48px), `xl` (56px).
-- **3 Biến thể giao diện (`variant`)**: `outline` *(mặc định)*, `filled`, `ghost`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
-- **6 Mức độ bo góc (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
-- **3 Vị trí đặt nhãn (`labelPlacement`)**: `top` *(mặc định)*, `left`, `floating`.
-- **Hỗ trợ Đa Ngôn Ngữ (`locale`)**: Tích hợp sẵn tiếng Việt (`'vi'`), tiếng Anh (`'en'`), và cho phép tùy biến `LocaleConfig`.
-- **Số thứ tự tuần (`showWeekNumbers`)**: Tự động tính số tuần chuẩn ISO 8601 kèm cột header `#` và nhãn `W1` - `W53`.
+- **Intuitive Range Selection (Dual Side-by-Side Months)**:
+  - Displays two consecutive months simultaneously side-by-side, making multi-month range selections seamless and clear.
+  - Supports interactive hover preview effects across the range (Hover Range Preview).
+- **Separation of Data (`format`) and Display (`displayFormat`)**:
+  - `format` *(default `'DD/MM/YYYY'`)*: Data emitted through `onChange` is a 2-element array `[string, string]` adhering 100% to the specified format standard (e.g. `["2026-08-01", "2026-08-15"]`).
+  - `displayFormat` *(optional)*: Customize the display text within the input field (e.g. `01/08/2026 - 15/08/2026`).
+- **3 Flexible View Modes (`view` & `viewTabs`)**:
+  - `days`: Select a specific date range.
+  - `months`: Select a month range within the year (displays `MM-YYYY - MM-YYYY` or `MM/YYYY - MM/YYYY`).
+  - `years`: Select a multi-year range within decades (displays `YYYY - YYYY`).
+- **Custom Range Separator (`separator`)**: Defaults to `' - '`, customizable to `' to '`, `' ~ '`, etc.
+- **Standalone `<DateRangeCalendar>` Component**: Can be used independently as an inline/static dual-calendar range picker embedded directly in the view.
+- **5 Standard Sizes (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *default*), `lg` (48px), `xl` (56px).
+- **3 Visual Variants (`variant`)**: `outline` *(default)*, `filled`, `ghost`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
+- **3 Label Placements (`labelPlacement`)**: `top` *(default)*, `left`, `floating`.
+- **Internationalization (`locale`)**: Built-in support for Vietnamese (`'vi'`), English (`'en'`), and custom `DatePickerLocale`. Centrally configured via `OpenWayProvider` since v2.0.0.
+- **ISO Week Numbers (`showWeekNumbers`)**: Automatically calculates standard ISO 8601 week numbers with a `#` header column and `W1` - `W53` tags.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { DateRangePicker, DateRangeCalendar } from "@openway/ui";
@@ -43,15 +46,15 @@ import type {
   DateRangePickerColor,
   DateRangePickerRadius,
   LabelPlacement,
-  LocaleConfig,
+  DatePickerLocale,
 } from "@openway/ui";
 ```
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản
+### 1. Basic Usage
 
 ```tsx
 import { useState } from "react";
@@ -62,7 +65,7 @@ export function BasicDateRangePickerExample() {
 
   return (
     <DateRangePicker
-      label="Khoảng thời gian nghỉ phép"
+      label="Leave of Absence Period"
       value={range}
       onChange={setRange}
       placeholder="DD/MM/YYYY - DD/MM/YYYY"
@@ -73,27 +76,27 @@ export function BasicDateRangePickerExample() {
 
 ---
 
-### 2. Định dạng Dữ liệu (`format`) và Hiển thị (`displayFormat`)
+### 2. Data Formatting (`format`) vs. Display Formatting (`displayFormat`)
 
 ```tsx
-// 1. Dùng chung 1 format ISO cho cả dữ liệu và hiển thị
+// 1. Shared ISO format for both data and visual display
 <DateRangePicker 
-  label="Khoảng ngày ISO" 
+  label="ISO Date Range" 
   format="YYYY-MM-DD" 
   defaultValue={["2026-08-01", "2026-08-15"]} 
 />
 
-// 2. Dữ liệu chuẩn ISO (gửi API) nhưng hiển thị tiếng Việt
+// 2. Standard ISO data (for APIs) with formatted local display
 <DateRangePicker
-  label="Khoảng ngày dự án"
-  format="YYYY-MM-DD"        // onChange trả về: ["2026-08-01", "2026-08-15"]
-  displayFormat="DD/MM/YYYY" // Ô input hiển thị: "01/08/2026 - 15/08/2026"
+  label="Project Duration"
+  format="YYYY-MM-DD"        // onChange returns: ["2026-08-01", "2026-08-15"]
+  displayFormat="DD/MM/YYYY" // Input field displays: "01/08/2026 - 15/08/2026"
   defaultValue={["2026-08-01", "2026-08-15"]}
 />
 
-// 3. Tùy biến ký tự phân cách (separator)
+// 3. Custom separator string
 <DateRangePicker
-  label="Khoảng thời gian"
+  label="Time Period"
   separator=" to "
   defaultValue={["01/08/2026", "15/08/2026"]}
 />
@@ -101,25 +104,25 @@ export function BasicDateRangePickerExample() {
 
 ---
 
-### 3. Tích hợp View Tabs (Khoảng Ngày / Tháng / Năm)
+### 3. Integrated View Tabs (Days / Months / Years)
 
-Bật `config={{ showViewTabs: true }}` để cho phép người dùng chọn khoảng tháng hoặc năm:
+Enable `config={{ showViewTabs: true }}` to allow users to select month or year ranges:
 
 ```tsx
 <DateRangePicker
-  label="Kỳ kế toán / Báo cáo tài chính"
+  label="Accounting Period / Financial Report"
   format="YYYY-MM-DD"
   displayFormat="DD-MM-YYYY"
   config={{ showViewTabs: true, isClearable: true }}
-  // Khi ở Tab Ngày: Hiển thị "01-08-2026 - 15-08-2026", onChange phát ["2026-08-01", "2026-08-15"]
-  // Khi ở Tab Tháng: Hiển thị "03-2026 - 08-2026", onChange phát ["2026-03-01", "2026-08-01"]
-  // Khi ở Tab Năm: Hiển thị "2026 - 2030", onChange phát ["2026-01-01", "2030-01-01"]
+  // In Days tab: Displays "01-08-2026 - 15-08-2026", onChange emits ["2026-08-01", "2026-08-15"]
+  // In Months tab: Displays "03-2026 - 08-2026", onChange emits ["2026-03-01", "2026-08-01"]
+  // In Years tab: Displays "2026 - 2030", onChange emits ["2026-01-01", "2030-01-01"]
 />
 ```
 
 ---
 
-### 4. Standalone `<DateRangeCalendar>` (Lịch tĩnh 2 tháng)
+### 4. Standalone `<DateRangeCalendar>` (Static Dual Calendar)
 
 ```tsx
 import { useState } from "react";
@@ -144,117 +147,117 @@ export function StandaloneDateRangeCalendarExample() {
 
 ---
 
-### 5. Vị trí đặt nhãn (`labelPlacement`)
+### 5. Label Placement (`labelPlacement`)
 
 ```tsx
-// 1. Top (Phía trên - Mặc định)
-<DateRangePicker label="Thời gian thực hiện" labelPlacement="top" />
+// 1. Top (Above - Default)
+<DateRangePicker label="Execution Period" labelPlacement="top" />
 
-// 2. Left (Ngang bên trái)
-<DateRangePicker label="Thời gian thực hiện" labelPlacement="left" />
+// 2. Left (Aligned horizontally to the left)
+<DateRangePicker label="Execution Period" labelPlacement="left" />
 
-// 3. Floating (Lơ lửng trên viền)
-<DateRangePicker label="Thời gian thực hiện" labelPlacement="floating" />
+// 3. Floating (Floating within border)
+<DateRangePicker label="Execution Period" labelPlacement="floating" />
 ```
 
 ---
 
-### 6. Trạng thái Form & Loading
+### 6. Form States & Loading
 
 ```tsx
-// Bắt buộc nhập (Required)
-<DateRangePicker label="Thời gian hiệu lực" config={{ isRequired: true }} />
+// Required field
+<DateRangePicker label="Validity Period" config={{ isRequired: true }} />
 
-// Báo lỗi (Invalid)
+// Validation error (Invalid)
 <DateRangePicker
-  label="Khoảng ngày"
-  errorMessage="Khoảng ngày đã chọn không hợp lệ."
+  label="Date Range"
+  errorMessage="Selected date range is invalid."
   config={{ isInvalid: true }}
 />
 
-// Đang tải (Loading & Spinner)
+// Loading state with spinner
 <DateRangePicker
-  label="Đang tải dữ liệu"
+  label="Loading data"
   config={{ isLoading: true, showSpinner: true }}
 />
 
-// Vô hiệu hóa (Disabled) hoặc Chỉ đọc (ReadOnly)
-<DateRangePicker label="Không khả dụng" disabled={true} />
-<DateRangePicker label="Chỉ xem" readOnly={true} />
+// Disabled or Read-Only
+<DateRangePicker label="Unavailable" disabled={true} />
+<DateRangePicker label="View only" readOnly={true} />
 ```
 
 ---
 
-## 🛠 Bảng thông số Props
+## 🛠 Props Specification
 
 ### `DateRangePickerProps`
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `value` | `[DateValue, DateValue]` | — | Mảng khoảng ngày đang được chọn (Controlled). |
-| `defaultValue` | `[DateValue, DateValue]` | — | Mảng khoảng ngày mặc định ban đầu (Uncontrolled). |
-| `onChange` | `(range: [string, string] \| null) => void` | — | Callback kích hoạt khi thay đổi khoảng ngày (trả về mảng 2 chuỗi định dạng theo `format`, hoặc `null` khi xóa). |
-| `separator` | `string` | `' - '` | Chuỗi ký tự phân cách giữa 2 ngày trong ô input. |
-| `format` | `string` | `'DD/MM/YYYY'` | Định dạng dữ liệu chính dùng chung cho cả đầu vào (`value`/`defaultValue`) và đầu ra (`onChange`). |
-| `displayFormat` | `string` | Tự động | Định dạng chuỗi hiển thị trực quan trong ô input cho người xem. |
-| `defaultView` | `'days' \| 'months' \| 'years'` | `'days'` | Chế độ xem mặc định ban đầu. |
-| `view` | `'days' \| 'months' \| 'years'` | — | Chế độ xem đang kích hoạt (Controlled). |
-| `onViewChange` | `(view: CalendarView) => void` | — | Callback khi người dùng chuyển đổi chế độ xem. |
-| `viewTabs` | `CalendarView[]` | `['days', 'months', 'years']` | Danh sách các tab hiển thị trên thanh tab. |
-| `minDate` | `Date \| string` | — | Giới hạn ngày nhỏ nhất cho phép chọn. |
-| `maxDate` | `Date \| string` | — | Giới hạn ngày lớn nhất cho phép chọn. |
-| `isDateDisabled` | `(date: Date) => boolean` | — | Hàm callback kiểm tra ngày cụ thể có bị vô hiệu hóa hay không. |
-| `locale` | `'vi' \| 'en' \| LocaleConfig` | `'en'` | Cấu hình ngôn ngữ cho lịch. |
-| `firstDayOfWeek` | `0 \| 1` | `1` | Ngày bắt đầu tuần: `0` (Chủ Nhật) hoặc `1` (Thứ Hai). |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ ô nhập liệu và các nút bấm. |
-| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Biến thể giao diện của ô nhập liệu. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc theo Design System. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Độ bo góc của ô nhập và popover. |
-| `label` | `ReactNode` | — | Nhãn tiêu đề hiển thị cho ô nhập liệu. |
-| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Vị trí hiển thị của nhãn. |
-| `placeholder` | `string` | Tự động | Văn bản giữ chỗ khi ô input rỗng. |
-| `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn/trợ giúp bên dưới ô. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi (tự động bật trạng thái viền đỏ và hiệu ứng xuất hiện). |
-| `disabled` | `boolean` | `false` | Khóa toàn bộ tương tác của ô nhập liệu. |
-| `readOnly` | `boolean` | `false` | Chỉ cho phép xem, không mở popover lịch. |
-| `placement` | `Placement` | `'bottom-start'` | Vị trí mở popover lịch so với ô input (Floating UI). |
-| `config` | `DateRangePickerConfig` | — | Nhóm cấu hình tập trung các cờ tính năng (xem bảng dưới). |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp đến thẻ `<input>` HTML bên dưới. |
+| `value` | `[DateValue, DateValue]` | — | Currently selected date range array (Controlled). |
+| `defaultValue` | `[DateValue, DateValue]` | — | Initial default date range array (Uncontrolled). |
+| `onChange` | `(range: [string, string] \| null) => void` | — | Callback invoked when date range changes (returns a 2-string array per `format`, or `null` when cleared). |
+| `separator` | `string` | `' - '` | Separator string between the two dates inside the input field. |
+| `format` | `string` | `'DD/MM/YYYY'` | Primary data format used for both input (`value`/`defaultValue`) and output (`onChange`). |
+| `displayFormat` | `string` | Auto | Visual display format formatted for presentation inside the input field. |
+| `defaultView` | `'days' \| 'months' \| 'years'` | `'days'` | Initial calendar view mode. |
+| `view` | `'days' \| 'months' \| 'years'` | — | Active calendar view mode (Controlled). |
+| `onViewChange` | `(view: CalendarView) => void` | — | Callback invoked when the user switches view modes. |
+| `viewTabs` | `CalendarView[]` | `['days', 'months', 'years']` | List of tabs displayed on the view tab bar. |
+| `minDate` | `Date \| string` | — | Minimum selectable date boundary. |
+| `maxDate` | `Date \| string` | — | Maximum selectable date boundary. |
+| `isDateDisabled` | `(date: Date) => boolean` | — | Callback function to determine if a specific date should be disabled. |
+| `locale` | `'vi' \| 'en' \| DatePickerLocale` | `'en'` | Locale configuration for calendar strings. In v2.0.0+, preferred to be configured centrally via `OpenWayProvider` (see [i18n documentation](../i18n.md)). |
+| `firstDayOfWeek` | `0 \| 1` | `1` | Starting day of the week: `0` (Sunday) or `1` (Monday). |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the input field and trigger buttons. |
+| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Visual variant of the input field. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color based on Design System. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Border radius of the input and calendar popover. |
+| `label` | `ReactNode` | — | Label displayed alongside the input field. |
+| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Placement of the label. |
+| `placeholder` | `string` | Auto | Placeholder text when input field is empty. |
+| `helperText` | `ReactNode` | — | Helper text displayed beneath the input field. |
+| `errorMessage` | `ReactNode` | — | Error message (automatically activates red error border and appearance animation). |
+| `disabled` | `boolean` | `false` | Disables all user interaction with the input. |
+| `readOnly` | `boolean` | `false` | View-only mode; prevents opening the calendar popover. |
+| `placement` | `Placement` | `'bottom-start'` | Popover positioning relative to the input field (Floating UI). |
+| `config` | `DateRangePickerConfig` | — | Consolidated configuration flags object (see table below). |
+| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying HTML `<input>` element. |
 
 ---
 
 ### `DateRangePickerConfig`
 
-| Cờ thuộc tính | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu sao đỏ `*` và đánh dấu `aria-required="true"`. |
-| `isInvalid` | `boolean` | `false` | Bật trạng thái viền đỏ báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Khóa tương tác, bật `aria-busy="true"` và `aria-disabled="true"`. |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi `isLoading={true}`. |
-| `isClearable` | `boolean` | `true` | Hiển thị nút xóa nhanh khoảng ngày đã chọn. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng chiếm toàn bộ 100% chiều ngang container cha. |
-| `showWeekNumbers` | `boolean` | `false` | Hiển thị cột số thứ tự tuần trong cả 2 bảng lịch. |
-| `showViewTabs` | `boolean` | `false` | Hiển thị thanh chuyển Tab Ngày / Tháng / Năm. |
-| `closeOnSelect` | `boolean` | `true` | Tự động đóng popover lịch ngay sau khi chọn xong ngày kết thúc. |
+| `isRequired` | `boolean` | `false` | Displays a red asterisk `*` and marks `aria-required="true"`. |
+| `isInvalid` | `boolean` | `false` | Enables red error border state and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Locks interactions and sets `aria-busy="true"` and `aria-disabled="true"`. |
+| `showSpinner` | `boolean` | `false` | Displays a loading spinner icon when `isLoading={true}`. |
+| `isClearable` | `boolean` | `true` | Displays a quick clear button when a date range is selected. |
+| `isFullWidth` | `boolean` | `false` | Expands width to occupy 100% of parent container. |
+| `showWeekNumbers` | `boolean` | `false` | Displays ISO week number column in both calendar panels. |
+| `showViewTabs` | `boolean` | `false` | Displays the Days / Months / Years view switcher tab bar. |
+| `closeOnSelect` | `boolean` | `true` | Automatically closes the calendar popover immediately after selecting the end date. |
 
 ---
 
 ### `DateRangeCalendarProps` (Standalone)
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `value` | `[Date \| null, Date \| null]` | — | Mảng 2 đối tượng `[start, end]` đang được chọn. |
-| `onChange` | `(range: [Date \| null, Date \| null]) => void` | — | Callback khi chọn khoảng ngày trên lịch. |
-| `view` | `'days' \| 'months' \| 'years'` | `'days'` | Chế độ xem hiện tại của lịch. |
-| `onViewChange` | `(view: CalendarView) => void` | — | Callback khi người dùng chuyển đổi chế độ xem. |
-| `minDate` | `Date \| string` | — | Giới hạn ngày nhỏ nhất cho phép chọn. |
-| `maxDate` | `Date \| string` | — | Giới hạn ngày lớn nhất cho phép chọn. |
-| `isDateDisabled` | `(date: Date) => boolean` | — | Hàm kiểm tra ngày bị disable. |
-| `locale` | `'vi' \| 'en' \| LocaleConfig` | `'vi'` | Cấu hình ngôn ngữ cho lịch. |
-| `firstDayOfWeek` | `0 \| 1` | `1` | Ngày bắt đầu tuần: `0` (Chủ Nhật) hoặc `1` (Thứ Hai). |
-| `showWeekNumbers` | `boolean` | `false` | Hiển thị cột số thứ tự tuần. |
-| `showViewTabs` | `boolean` | `false` | Hiển thị thanh Tab Ngày / Tháng / Năm phía trên lịch. |
-| `viewTabs` | `CalendarView[]` | `['days', 'months', 'years']` | Danh sách các tab hiển thị. |
-| `size` | `DateRangePickerSize` | `'md'` | Kích cỡ các ô ngày và nút bấm trong lịch. |
-| `color` | `DateRangePickerColor` | `'primary'` | Chủ đề màu sắc theo Design System. |
-| `radius` | `DateRangePickerRadius` | `'lg'` | Bo góc khung viền lịch. |
+| `value` | `[Date \| null, Date \| null]` | — | Array of 2 selected Date objects `[start, end]`. |
+| `onChange` | `(range: [Date \| null, Date \| null]) => void` | — | Callback invoked when selecting a date range on the calendar. |
+| `view` | `'days' \| 'months' \| 'years'` | `'days'` | Current calendar view mode. |
+| `onViewChange` | `(view: CalendarView) => void` | — | Callback invoked when the user changes view mode. |
+| `minDate` | `Date \| string` | — | Minimum selectable date boundary. |
+| `maxDate` | `Date \| string` | — | Maximum selectable date boundary. |
+| `isDateDisabled` | `(date: Date) => boolean` | — | Function to determine if a specific date is disabled. |
+| `locale` | `'vi' \| 'en' \| DatePickerLocale` | `'vi'` | Locale configuration for calendar. In v2.0.0+, preferred to be configured centrally via `OpenWayProvider` (see [i18n documentation](../i18n.md)). |
+| `firstDayOfWeek` | `0 \| 1` | `1` | Starting day of the week: `0` (Sunday) or `1` (Monday). |
+| `showWeekNumbers` | `boolean` | `false` | Displays week numbers column. |
+| `showViewTabs` | `boolean` | `false` | Displays the Days / Months / Years tab bar above the calendar. |
+| `viewTabs` | `CalendarView[]` | `['days', 'months', 'years']` | List of view tabs to display. |
+| `size` | `DateRangePickerSize` | `'md'` | Size of date cells and navigation buttons in the calendar. |
+| `color` | `DateRangePickerColor` | `'primary'` | Color theme per Design System. |
+| `radius` | `DateRangePickerRadius` | `'lg'` | Border radius of the calendar container. |

@@ -1,37 +1,37 @@
 # 📢 Alert Component (`@openway/ui`)
 
-Component **Alert** hiển thị thông báo, cảnh báo theo ngữ cảnh (Inline Alert / Banner) với hiệu năng cao, thiết kế chuẩn **Design System**, **Pure Stateless Component** (0 dependencies) và hỗ trợ đầy đủ **WAI-ARIA Accessibility**.
+The **Alert** component displays contextual notifications and alerts (Inline Alert / Banner) with high performance, a standardized **Design System** design, **Pure Stateless Component** architecture (0 dependencies), and full **WAI-ARIA Accessibility** support.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Key Features
 
-- **Pure Stateless Component**: Hoàn toàn không phụ thuộc vào global store (Zustand/Redux). Render trực tiếp tại bất kỳ vị trí nào trong cây JSX.
-- **Tự động đóng thông minh (`closable`)**: Mặc định `closable={true}`, khi bấm nút `(X)` Alert sẽ **tự động đóng/ẩn ngay lập tức** mà không bắt buộc phải viết hàm `onClose`. Nếu có truyền callback `onClose`, Alert sẽ tự động kích hoạt callback này.
-- **Hỗ trợ linh hoạt cả `description` & `children`**: Cho phép truyền nội dung mô tả qua prop `description` (chuỗi text hoặc JSX ngắn) hoặc bọc qua `children` (JSX phức tạp).
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs`, `sm`, `md` *(mặc định)*, `lg`, `xl` với typography và spacing được căn chỉnh chính xác.
-- **6 Biến thể giao diện (`variant`)**:
-  - `soft` *(mặc định)*: Nền pastel nhạt, viền mờ 2px tinh tế.
-  - `filled`: Nền màu đậm, chữ trắng tương phản cao.
-  - `outline`: Nền trắng, viền rõ nét theo màu chủ đề.
-  - `accent-left`: Nền pastel kèm viền nhấn bên trái dày 4px (`border-l-4`).
-  - `ghost`: Nền và viền trong suốt.
-  - `other`: Bỏ qua các class màu mặc định, tự do tùy biến màu sắc qua `className`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info` *(mặc định)*.
-- **Tùy chỉnh bo góc (`radius`)**: `none`, `sm`, `md`, `lg` *(mặc định)*, `xl`, `full`.
-- **Chế độ Banner (`banner`)**: Chiều rộng 100% (`w-full`), góc vuông phẳng (`rounded-none`), không viền 2 bên (`border-x-0`), thích hợp gắn cố định trên đầu trang.
-- **Hỗ trợ Icon thông minh (`icon`)**:
-  - Tự động hiển thị icon SVG chuẩn theo `color` (`CheckCircleIcon`, `AlertTriangleIcon`, `AlertCircleIcon`, `InfoCircleIcon`).
-  - Tắt icon dễ dàng với `icon={false}`.
-  - Hỗ trợ truyền custom icon dạng JSX (`ReactNode`).
-- **Action Slot (`action`)**: Vùng chuyên biệt để chèn nút bấm, liên kết thao tác nhanh.
-- **Chuẩn Accessibility (A11y)**:
-  - Tự động thiết lập `role="alert"` và `aria-live="assertive"` cho các trạng thái nguy cấp (`error`, `warning`).
-  - Thiết lập `role="status"` và `aria-live="polite"` cho các trạng thái thông thường (`info`, `success`, `primary`, `secondary`, `neutral`).
+- **Pure Stateless Component**: Completely independent of global stores (Zustand/Redux). Renders directly anywhere in the JSX tree.
+- **Smart Auto-Dismiss (`closable`)**: Defaults to `closable={true}`. Clicking the `(X)` button **automatically dismisses/hides the alert immediately** without requiring an `onClose` handler. If an `onClose` callback is provided, the Alert triggers it automatically.
+- **Flexible `description` & `children` Support**: Allows passing description content via the `description` prop (text string or short JSX) or wrapped inside `children` (complex JSX).
+- **5 Standard Sizes (`size`)**: `xs`, `sm`, `md` *(default)*, `lg`, `xl` with precisely aligned typography and spacing.
+- **6 Visual Variants (`variant`)**:
+  - `soft` *(default)*: Light pastel background with a subtle 2px border.
+  - `filled`: Solid color background with high-contrast white text.
+  - `outline`: White background with a crisp border matching the theme color.
+  - `accent-left`: Pastel background with a 4px accent border on the left (`border-l-4`).
+  - `ghost`: Transparent background and border.
+  - `other`: Skips default color classes, allowing full color customization via `className`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info` *(default)*.
+- **Custom Border Radius (`radius`)**: `none`, `sm`, `md`, `lg` *(default)*, `xl`, `full`.
+- **Banner Mode (`banner`)**: Full-width (`w-full`), square corners (`rounded-none`), borderless sides (`border-x-0`), ideal for fixed placement at the top of the page.
+- **Smart Icon Support (`icon`)**:
+  - Automatically displays the standard SVG icon matching the `color` (`CheckCircleIcon`, `AlertTriangleIcon`, `AlertCircleIcon`, `InfoCircleIcon`).
+  - Easily disable icons with `icon={false}`.
+  - Supports custom JSX icons (`ReactNode`).
+- **Action Slot (`action`)**: Dedicated slot for action buttons and quick-action links.
+- **Accessibility Standards (A11y)**:
+  - Automatically sets `role="alert"` and `aria-live="assertive"` for critical statuses (`error`, `warning`).
+  - Sets `role="status"` and `aria-live="polite"` for standard statuses (`info`, `success`, `primary`, `secondary`, `neutral`).
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Alert } from "@openway/ui";
@@ -40,32 +40,32 @@ import type { AlertProps, AlertColor, AlertVariant, AlertSize, AlertRadius } fro
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản (Inline Alert)
+### 1. Basic Usage (Inline Alert)
 
-Bạn có thể truyền nội dung thông báo qua prop `description` hoặc qua thẻ con `children`:
+You can pass notification content via the `description` prop or as child elements (`children`):
 
 ```tsx
 import { Alert } from "@openway/ui";
 
-// Cách 1: Sử dụng prop description (ngắn gọn)
+// Approach 1: Using the description prop (concise)
 export function BasicAlertExample() {
   return (
     <Alert
       color="info"
       variant="soft"
-      title="Thông tin hệ thống"
-      description="Hệ thống sẽ tiến hành bảo trì định kỳ vào cuối tuần này."
+      title="System Information"
+      description="The system will undergo scheduled maintenance this weekend."
     />
   );
 }
 
-// Cách 2: Sử dụng children (dành cho JSX tùy biến)
+// Approach 2: Using children (for custom JSX)
 export function ChildrenAlertExample() {
   return (
-    <Alert color="success" title="Đã lưu thành công!">
-      <p className="mt-1">Dữ liệu hồ sơ của bạn đã được cập nhật.</p>
+    <Alert color="success" title="Successfully saved!">
+      <p className="mt-1">Your profile data has been updated.</p>
     </Alert>
   );
 }
@@ -73,106 +73,106 @@ export function ChildrenAlertExample() {
 
 ---
 
-### 2. Tự động đóng thông báo (`closable` & `onClose`)
+### 2. Auto-dismissing Alerts (`closable` & `onClose`)
 
-Nút đóng `(X)` mặc định luôn bật (`closable=true`). Người dùng có thể click để tắt thông báo ngay mà **không cần truyền bất kỳ hàm nào**:
+The close button `(X)` is enabled by default (`closable=true`). Users can click to dismiss the alert immediately without having to provide any handler:
 
 ```tsx
-// 1. Tự động đóng/ẩn ngay khi click (x) mà không cần viết thêm hàm gì:
-<Alert title="Thông báo" description="Click nút x bên phải sẽ tự ẩn thông báo này." />
+// 1. Auto-dismisses immediately on click without any extra handler:
+<Alert title="Notice" description="Clicking the close button on the right will dismiss this alert." />
 
-// 2. Tự động đóng kèm theo callback onClose (nếu muốn xử lý thêm logic):
+// 2. Auto-dismisses with an onClose callback (to execute additional logic):
 <Alert
-  title="Thông báo"
-  description="Thực hiện logic khi người dùng tắt thông báo."
-  onClose={() => console.log("Alert đã được đóng!")}
+  title="Notice"
+  description="Execute logic when the user dismisses the alert."
+  onClose={() => console.log("Alert dismissed!")}
 />
 
-// 3. Tắt nút đóng (không cho người dùng đóng):
-<Alert closable={false} title="Thông báo bắt buộc" description="Nội dung không thể đóng." />
+// 3. Disable the close button (non-dismissible):
+<Alert closable={false} title="Mandatory Notice" description="This alert cannot be dismissed." />
 ```
 
 ---
 
-### 3. Các chủ đề màu sắc (`color`)
+### 3. Color Themes (`color`)
 
-Component cung cấp 7 tông màu chuẩn Design System:
+The component provides 7 standard Design System color themes:
 
 ```tsx
-<Alert color="primary" title="Primary" description="Thông báo chính của ứng dụng." />
-<Alert color="secondary" title="Secondary" description="Thông báo phụ bổ sung thông tin." />
-<Alert color="neutral" title="Neutral" description="Thông báo trung tính dạng ghi chú." />
-<Alert color="info" title="Info" description="Thông tin hướng dẫn sử dụng." />
-<Alert color="success" title="Success" description="Dữ liệu đã được lưu thành công." />
-<Alert color="warning" title="Warning" description="Dung lượng bộ nhớ đã đạt mức 90%." />
-<Alert color="error" title="Error" description="Không thể kết nối đến máy chủ." />
+<Alert color="primary" title="Primary" description="Primary application notification." />
+<Alert color="secondary" title="Secondary" description="Secondary informational notification." />
+<Alert color="neutral" title="Neutral" description="Neutral note-style notification." />
+<Alert color="info" title="Info" description="Usage instruction information." />
+<Alert color="success" title="Success" description="Data saved successfully." />
+<Alert color="warning" title="Warning" description="Memory usage has reached 90%." />
+<Alert color="error" title="Error" description="Unable to connect to the server." />
 ```
 
 ---
 
-### 4. Các biến thể giao diện (`variant`)
+### 4. Visual Variants (`variant`)
 
 ```tsx
-// 1. Soft (Mặc định)
-<Alert variant="soft" color="success" title="Soft Variant" description="Nền pastel nhạt, chữ và viền cùng tông màu." />
+// 1. Soft (Default)
+<Alert variant="soft" color="success" title="Soft Variant" description="Light pastel background, matching text and border color tone." />
 
 // 2. Filled
-<Alert variant="filled" color="error" title="Filled Variant" description="Nền màu đậm, độ tương phản cao, nổi bật." />
+<Alert variant="filled" color="error" title="Filled Variant" description="Solid deep background, high contrast, prominent." />
 
 // 3. Outline
-<Alert variant="outline" color="primary" title="Outline Variant" description="Nền trắng, viền rõ nét theo màu chủ đề." />
+<Alert variant="outline" color="primary" title="Outline Variant" description="White background, crisp border matching theme color." />
 
 // 4. Accent Left
-<Alert variant="accent-left" color="warning" title="Accent Left Variant" description="Nền pastel kèm viền nhấn dày 4px bên trái." />
+<Alert variant="accent-left" color="warning" title="Accent Left Variant" description="Pastel background with a 4px accent border on the left." />
 
 // 5. Ghost
-<Alert variant="ghost" color="info" title="Ghost Variant" description="Nền và viền trong suốt, chỉ hiển thị icon và chữ." />
+<Alert variant="ghost" color="info" title="Ghost Variant" description="Transparent background and border, showing only icon and text." />
 
-// 6. Other (Tự do tùy biến)
+// 6. Other (Custom styling)
 <Alert
   variant="other"
   className="bg-purple-100 text-purple-900 border-2 border-purple-300"
   title="Other Variant"
-  description="Tự do áp dụng class Tailwind tùy chỉnh bên ngoài."
+  description="Freely apply custom external Tailwind classes."
 />
 ```
 
 ---
 
-### 5. Kích cỡ (`size`) & Độ bo góc (`radius`)
+### 5. Sizes (`size`) & Border Radius (`radius`)
 
 ```tsx
-// 5 kích cỡ tiêu chuẩn
-<Alert size="xs" title="Size XS" description="Thông báo kích cỡ rất nhỏ" />
-<Alert size="sm" title="Size SM" description="Thông báo kích cỡ nhỏ" />
-<Alert size="md" title="Size MD" description="Thông báo kích cỡ vừa (mặc định)" />
-<Alert size="lg" title="Size LG" description="Thông báo kích cỡ lớn" />
-<Alert size="xl" title="Size XL" description="Thông báo kích cỡ rất lớn" />
+// 5 standard sizes
+<Alert size="xs" title="Size XS" description="Extra small size alert" />
+<Alert size="sm" title="Size SM" description="Small size alert" />
+<Alert size="md" title="Size MD" description="Medium size alert (default)" />
+<Alert size="lg" title="Size LG" description="Large size alert" />
+<Alert size="xl" title="Size XL" description="Extra large size alert" />
 
-// Tùy chỉnh độ bo góc
-<Alert radius="none" title="Không bo góc" description="Góc vuông 0px" />
-<Alert radius="sm" title="Bo góc nhỏ" description="rounded-sm" />
-<Alert radius="md" title="Bo góc vừa" description="rounded-md" />
-<Alert radius="lg" title="Bo góc lớn" description="rounded-lg (mặc định)" />
-<Alert radius="xl" title="Bo góc rất lớn" description="rounded-xl" />
-<Alert radius="full" title="Bo tròn" description="rounded-2xl" />
+// Border radius customization
+<Alert radius="none" title="No Radius" description="Square corners 0px" />
+<Alert radius="sm" title="Small Radius" description="rounded-sm" />
+<Alert radius="md" title="Medium Radius" description="rounded-md" />
+<Alert radius="lg" title="Large Radius" description="rounded-lg (default)" />
+<Alert radius="xl" title="Extra Large Radius" description="rounded-xl" />
+<Alert radius="full" title="Full Radius" description="rounded-2xl" />
 ```
 
 ---
 
-### 6. Chế độ Banner (`banner`)
+### 6. Banner Mode (`banner`)
 
-Chế độ Banner giúp thông báo trải rộng toàn bộ chiều ngang (`w-full`), loại bỏ bo góc (`rounded-none`) và viền 2 bên, rất phù hợp gắn cố định trên cùng màn hình:
+Banner mode stretches the notification across the full width (`w-full`), eliminates rounded corners (`rounded-none`) and horizontal borders, making it ideal for fixed placement at the top of the viewport:
 
 ```tsx
 <Alert
   banner
   color="error"
-  title="Sự cố đường truyền"
-  description="Hiện tại một số dịch vụ thanh toán đang bị gián đoạn."
+  title="Network Issue"
+  description="Some payment services are currently experiencing disruptions."
   action={
     <button className="text-xs underline font-medium cursor-pointer">
-      Xem chi tiết
+      View details
     </button>
   }
 />
@@ -180,7 +180,7 @@ Chế độ Banner giúp thông báo trải rộng toàn bộ chiều ngang (`w-
 
 ---
 
-### 7. Icon tùy biến & Action Slot
+### 7. Custom Icons & Action Slot
 
 ```tsx
 import { Alert, Button } from "@openway/ui";
@@ -188,25 +188,25 @@ import { Alert, Button } from "@openway/ui";
 export function AdvancedAlertExample() {
   return (
     <div className="space-y-4">
-      {/* Ẩn Icon */}
-      <Alert icon={false} color="neutral" title="Không có icon" description="Nội dung không kèm icon đầu dòng." />
+      {/* Hide Icon */}
+      <Alert icon={false} color="neutral" title="No Icon" description="Notification content without a leading icon." />
 
-      {/* Custom Icon bằng JSX */}
+      {/* Custom JSX Icon */}
       <Alert
         icon={<span className="text-lg">🚀</span>}
         color="primary"
-        title="Tính năng mới"
-        description="Trải nghiệm phiên bản 2.0 với nhiều cải tiến vượt bậc."
+        title="New Feature"
+        description="Experience version 2.0 with major improvements."
       />
 
-      {/* Action Slot kèm Button */}
+      {/* Action Slot with Button */}
       <Alert
         color="info"
-        title="Bản cập nhật mới sẵn sàng"
-        description="Vui lòng tải lại ứng dụng để áp dụng bản vá mới nhất."
+        title="New Update Available"
+        description="Please reload the application to apply the latest patch."
         action={
           <Button size="xs" variant="filled" color="info">
-            Cập nhật ngay
+            Update Now
           </Button>
         }
       />
@@ -219,28 +219,28 @@ export function AdvancedAlertExample() {
 
 ## 🛠️ API Reference (`AlertProps`)
 
-Component `Alert` nhận các props mở rộng từ thẻ HTML chuẩn `HTMLAttributes<HTMLDivElement>` (ngoại trừ prop `title`):
+The `Alert` component accepts props extending standard HTML `HTMLAttributes<HTMLDivElement>` (except for the `title` prop):
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Kích cỡ của Alert (ảnh hưởng padding, font size, icon size). |
-| `variant` | `"soft" \| "filled" \| "outline" \| "accent-left" \| "ghost" \| "other"` | `"soft"` | Biến thể giao diện và phong cách hiển thị màu sắc. |
-| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"info"` | Chủ đề màu sắc theo Design System. |
-| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"lg"` | Độ bo góc của khung thông báo. |
-| `title` | `ReactNode` | `undefined` | Tiêu đề in đậm của Alert. |
-| `description` | `ReactNode` | `undefined` | Nội dung mô tả ngắn của thông báo. |
-| `children` | `ReactNode` | `undefined` | Nội dung mô tả tùy biến bằng JSX bên trong Alert. |
-| `icon` | `ReactNode \| boolean` | `true` | Icon đầu thông báo: `true` = tự động theo màu, `false` = ẩn, `ReactNode` = custom icon. |
-| `action` | `ReactNode` | `undefined` | Phần tử hành động phụ nằm ở góc phải (Button, Link, Tag). |
-| `closable` | `boolean` | `true` | Hiển thị nút đóng `(X)` và tự động ẩn Alert khi click. |
-| `onClose` | `() => void` | `undefined` | Callback được gọi khi người dùng bấm nút đóng. |
-| `closeAriaLabel` | `string` | `"Close alert"` | Nhãn trợ năng (accessibility) cho nút đóng. |
-| `banner` | `boolean` | `false` | Bật chế độ Banner: Full width (`w-full`), góc vuông (`rounded-none`), không viền 2 bên. |
-| `titleClassName` | `string` | `""` | Tùy biến className riêng cho phần tiêu đề (`title`). |
-| `descriptionClassName` | `string` | `""` | Tùy biến className riêng cho phần nội dung (`description` / `children`). |
-| `actionClassName` | `string` | `""` | Tùy biến className riêng cho vùng `action`. |
-| `iconClassName` | `string` | `""` | Tùy biến className riêng cho vùng chứa icon. |
-| `closeButtonClassName` | `string` | `""` | Tùy biến className riêng cho nút đóng `(X)`. |
-| `className` | `string` | `""` | Class tùy biến cho khung container bao ngoài. |
-| `role` | `string` | Tự động | ARIA role (`"alert"` cho error/warning, `"status"` cho các màu khác). |
-| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref chuyển tiếp đến phần tử thẻ `<div>` bọc ngoài. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Alert size (affects padding, font size, icon size). |
+| `variant` | `"soft" \| "filled" \| "outline" \| "accent-left" \| "ghost" \| "other"` | `"soft"` | Visual variant and color presentation style. |
+| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"info"` | Color theme based on the Design System. |
+| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"lg"` | Border radius of the alert container. |
+| `title` | `ReactNode` | `undefined` | Bold title of the alert. |
+| `description` | `ReactNode` | `undefined` | Short description content of the notification. |
+| `children` | `ReactNode` | `undefined` | Custom JSX description content inside the Alert. |
+| `icon` | `ReactNode \| boolean` | `true` | Leading icon: `true` = automatic based on color, `false` = hidden, `ReactNode` = custom icon. |
+| `action` | `ReactNode` | `undefined` | Action element placed on the right side (Button, Link, Tag). |
+| `closable` | `boolean` | `true` | Shows the close button `(X)` and automatically hides the Alert when clicked. |
+| `onClose` | `() => void` | `undefined` | Callback invoked when the user clicks the close button. |
+| `closeAriaLabel` | `string` | `"Close alert"` | Accessibility label for the close button. |
+| `banner` | `boolean` | `false` | Enables Banner mode: Full width (`w-full`), square corners (`rounded-none`), borderless sides. |
+| `titleClassName` | `string` | `""` | Custom className for the title element (`title`). |
+| `descriptionClassName` | `string` | `""` | Custom className for the description/children container (`description` / `children`). |
+| `actionClassName` | `string` | `""` | Custom className for the `action` slot. |
+| `iconClassName` | `string` | `""` | Custom className for the icon container. |
+| `closeButtonClassName` | `string` | `""` | Custom className for the close button `(X)`. |
+| `className` | `string` | `""` | Custom class for the outer container. |
+| `role` | `string` | Auto | ARIA role (`"alert"` for error/warning, `"status"` for other colors). |
+| `ref` | `Ref<HTMLDivElement>` | `undefined` | Forwarded ref to the outer `<div>` element. |

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { DateRangeDayGridProps } from "./types";
 import { dateRangePickerSizeConfig, dateRangePickerColorConfig, dateRangePickerRadiusConfig } from "./constants";
-import { resolveLocale } from "../datepicker/utils";
+import { useLocale } from "../common/OpenWayProvider";
 import { getSafeConfig } from "@/utils/function";
 
 export default function DateRangeDayGrid({
@@ -11,11 +11,10 @@ export default function DateRangeDayGrid({
   size = "md",
   color = "primary",
   radius,
-  locale,
   firstDayOfWeek = 1,
   showWeekNumbers = false,
 }: DateRangeDayGridProps) {
-  const loc = resolveLocale(locale);
+  const loc = useLocale("datePicker");
   const sizeStyles = getSafeConfig(size, dateRangePickerSizeConfig, "md");
   const colorStyles = getSafeConfig(color, dateRangePickerColorConfig, "primary");
   const radiusClass = getSafeConfig(radius, dateRangePickerRadiusConfig, "lg");

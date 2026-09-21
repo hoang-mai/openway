@@ -1,34 +1,34 @@
 # 🎠 Carousel Component (`@openway/ui`)
 
-Component **Carousel** (băng chuyền / slider) hiện đại, hiệu năng cao, thiết kế chuẩn **Compound Components Pattern** (`<Carousel>`, `<CarouselContent>`, `<CarouselSlide>`, `<CarouselPrevious>`, `<CarouselNext>`, `<CarouselPagination>`), hỗ trợ **Pointer Drag/Touch Gestures**, **Autoplay thông minh**, **Infinite Looping**, **Glassmorphism Design**, **Dynamic Slide Registration**, **Safe Config Fallback** (`getSafeConfig`) và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+A modern, high-performance **Carousel** (slider) component designed following the **Compound Components Pattern** (`<Carousel>`, `<CarouselContent>`, `<CarouselSlide>`, `<CarouselPrevious>`, `<CarouselNext>`, `<CarouselPagination>`), featuring **Pointer Drag/Touch Gestures**, **Smart Autoplay**, **Infinite Looping**, **Glassmorphism Design**, **Dynamic Slide Registration**, **Safe Config Fallback** (`getSafeConfig`), and full compliance with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Key Features
 
-- **Compound Components Pattern chuẩn chỉ**: Tách biệt rõ ràng các thành phần `<Carousel>`, `<CarouselContent>`, `<CarouselSlide>`, `<CarouselPrevious>`, `<CarouselNext>`, `<CarouselPagination>`, mang lại khả năng tùy biến bố cục không giới hạn.
-- **Dynamic Slide Registration (`registerSlide` / `unregisterSlide`)**: Tự động đếm và đồng bộ số lượng slide (`totalSlides`) theo thời gian thực dựa trên vòng đời của từng `<CarouselSlide>`, không phụ thuộc vào thứ tự hay cách thức render children.
-- **Tương tác kéo vuốt mượt mà (Touch & Pointer Gestures)**: Hỗ trợ kéo vuốt cả chuột và màn hình cảm ứng mượt mà qua Pointer Events (`setPointerCapture`), có hiệu ứng lực cản (drag resistance) khi kéo quá mép đầu/cuối.
-- **Autoplay thông minh**: Tự động chuyển slide theo chu kỳ `interval`, tự động tạm dừng khi rê chuột (`pauseOnHover`), khi focus (`pauseOnFocus`), hoặc khi đang kéo chuột/vuốt màn hình.
-- **Vòng lặp vô hạn (Infinite Loop)**: Tự động tính toán chuyển động vòng tròn liền mạch giữa slide đầu và slide cuối.
-- **Hiển thị nhiều slide cùng lúc (Multi-slides)**: Hỗ trợ `slidesToShow`, `slidesToScroll`, và khoảng cách gap `spacing` linh hoạt (nhận `number` theo px hoặc chuỗi CSS).
-- **Thiết kế Kính Mờ (Frosted Glass / Glassmorphism)**: Phong cách nút và thanh phân trang kính mờ hiện đại với `backdrop-blur-md`.
-- **Định vị mặc định thông minh**:
-  - `CarouselPrevious`: Nút lùi kính mờ đặt sát mép trái (`absolute left-2 top-1/2 -translate-y-1/2`).
-  - `CarouselNext`: Nút tiến kính mờ đặt sát mép phải (`absolute right-2 top-1/2 -translate-y-1/2`).
-  - `CarouselPagination`: Thanh phân trang đặt tại đáy giữa (`absolute bottom-2.5 left-1/2 -translate-x-1/2`).
-  - Dễ dàng ghi đè hoặc đặt vào custom toolbar/slot bằng cách truyền `className`.
-- **4 Biến thể nút điều hướng (`variant`)**: `glass` (*mặc định*), `filled`, `outline`, `ghost`.
-- **3 Kiểu dáng phân trang (`type`)**: `dots` (*mặc định*), `line` (thanh ngang co giãn), `fraction` (tỉ lệ dạng `1 / 4`).
-- **3 Kích thước tiêu chuẩn (`size`)**: `sm`, `md` (*mặc định*), `lg`.
-- **6 Kiểu bo góc (`radius`)**: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
-- **Chế độ Controlled & Uncontrolled**: Hỗ trợ đầy đủ `currentIndex` + `onIndexChange` (Controlled) và `defaultIndex` (Uncontrolled).
-- **Điều hướng bàn phím & Trợ năng (A11y)**: Hỗ trợ `role="region"`, `role="tablist"`, `role="tab"`, `role="group"`, `aria-roledescription="carousel"`, phím `ArrowLeft`, `ArrowRight`, `Home`, `End`.
-- **Safe Config Fallback**: Tích hợp `getSafeConfig` từ `@/utils/function` giúp component luôn an toàn, không bị crash kể cả khi truyền prop không hợp lệ.
+- **Standard Compound Components Pattern**: Clean separation of concerns across `<Carousel>`, `<CarouselContent>`, `<CarouselSlide>`, `<CarouselPrevious>`, `<CarouselNext>`, and `<CarouselPagination>`, enabling limitless layout customization.
+- **Dynamic Slide Registration (`registerSlide` / `unregisterSlide`)**: Automatically counts and synchronizes the total slide count (`totalSlides`) in real time based on each `<CarouselSlide>`'s lifecycle, agnostic to child render order or structure.
+- **Smooth Pointer & Touch Gestures**: Supports both mouse drag and touch gestures seamlessly via Pointer Events (`setPointerCapture`), featuring drag resistance when pulled past the start/end boundaries.
+- **Smart Autoplay**: Automatically cycles slides at set `interval` periods, pausing on mouse hover (`pauseOnHover`), on focus (`pauseOnFocus`), or while actively dragging/swiping.
+- **Infinite Loop**: Seamlessly loops between the first and last slides.
+- **Multi-slide Display**: Supports `slidesToShow`, `slidesToScroll`, and flexible `spacing` gap (accepts `number` in px or CSS strings).
+- **Glassmorphism Design**: Modern frosted glass navigation buttons and pagination indicators powered by `backdrop-blur-md`.
+- **Smart Default Positioning**:
+  - `CarouselPrevious`: Frosted glass previous button pinned to the left edge (`absolute left-2 top-1/2 -translate-y-1/2`).
+  - `CarouselNext`: Frosted glass next button pinned to the right edge (`absolute right-2 top-1/2 -translate-y-1/2`).
+  - `CarouselPagination`: Pagination bar centered at the bottom (`absolute bottom-2.5 left-1/2 -translate-x-1/2`).
+  - Easily overridden or placed into custom toolbars/slots by passing `className`.
+- **4 Navigation Button Variants (`variant`)**: `glass` (*default*), `filled`, `outline`, `ghost`.
+- **3 Pagination Types (`type`)**: `dots` (*default*), `line` (expandable horizontal bars), `fraction` (ratio format `1 / 4`).
+- **3 Standard Sizes (`size`)**: `sm`, `md` (*default*), `lg`.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
+- **Controlled & Uncontrolled Modes**: Fully supports `currentIndex` + `onIndexChange` (Controlled) and `defaultIndex` (Uncontrolled).
+- **Keyboard Navigation & A11y**: Supports `role="region"`, `role="tablist"`, `role="tab"`, `role="group"`, `aria-roledescription="carousel"`, as well as `ArrowLeft`, `ArrowRight`, `Home`, and `End` keys.
+- **Safe Config Fallback**: Integrates `getSafeConfig` from `@/utils/function` to ensure the component remains safe and never crashes even with invalid props.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -65,9 +65,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Sử dụng cơ bản (Compound Components)
+### 1. Basic Usage (Compound Components)
 
 ```tsx
 import {
@@ -85,26 +85,26 @@ export function BasicCarousel() {
       <CarouselContent>
         <CarouselSlide>
           <div className="h-56 bg-primary-600 text-white flex items-center justify-center text-xl font-bold">
-            Slide 1: Khám Phá Công Nghệ
+            Slide 1: Explore Technology
           </div>
         </CarouselSlide>
         <CarouselSlide>
           <div className="h-56 bg-primary-700 text-white flex items-center justify-center text-xl font-bold">
-            Slide 2: Trải Nghiệm Tối Ưu
+            Slide 2: Optimal Experience
           </div>
         </CarouselSlide>
         <CarouselSlide>
           <div className="h-56 bg-primary-800 text-white flex items-center justify-center text-xl font-bold">
-            Slide 3: Thiết Kế Hiện Đại
+            Slide 3: Modern Design
           </div>
         </CarouselSlide>
       </CarouselContent>
 
-      {/* Nút điều hướng kính mờ tự động đặt sát 2 mép */}
+      {/* Frosted glass navigation buttons automatically positioned at both edges */}
       <CarouselPrevious />
       <CarouselNext />
 
-      {/* Phân trang tự động đặt ở đáy giữa */}
+      {/* Pagination automatically centered at the bottom */}
       <CarouselPagination type="dots" />
     </Carousel>
   );
@@ -113,7 +113,7 @@ export function BasicCarousel() {
 
 ---
 
-### 2. Tự động chuyển slide (Autoplay) & Vòng lặp vô hạn (Loop)
+### 2. Autoplay & Infinite Loop
 
 ```tsx
 <Carousel
@@ -144,7 +144,7 @@ export function BasicCarousel() {
 
 ---
 
-### 3. Hiển thị nhiều slide cùng lúc (Multi-slides Grid)
+### 3. Multi-slides Grid
 
 ```tsx
 <Carousel slidesToShow={3} slidesToScroll={1} spacing={16} loop className="w-full max-w-4xl">
@@ -166,26 +166,26 @@ export function BasicCarousel() {
 
 ---
 
-### 4. Các kiểu phân trang (Pagination Types)
+### 4. Pagination Types
 
-Hỗ trợ 3 kiểu phân trang:
+Supports 3 pagination styles:
 
 ```tsx
-{/* 1. Dạng chấm tròn tinh gọn (mặc định) */}
+{/* 1. Sleek dots (default) */}
 <CarouselPagination type="dots" />
 
-{/* 2. Dạng thanh gạch ngang co giãn khi active */}
+{/* 2. Expanding line bars on active */}
 <CarouselPagination type="line" />
 
-{/* 3. Dạng phân số tỉ lệ (ví dụ: 1 / 4) */}
+{/* 3. Fraction ratio (e.g., 1 / 4) */}
 <CarouselPagination type="fraction" />
 ```
 
 ---
 
-### 5. Biến thể nút điều hướng (Navigation Variants)
+### 5. Navigation Button Variants
 
-Hỗ trợ 4 biến thể giao diện: `glass` (*mặc định*), `filled`, `outline`, `ghost`:
+Supports 4 visual variants: `glass` (*default*), `filled`, `outline`, `ghost`:
 
 ```tsx
 <Carousel className="w-full max-w-lg shadow">
@@ -200,9 +200,9 @@ Hỗ trợ 4 biến thể giao diện: `glass` (*mặc định*), `filled`, `out
 
 ---
 
-### 6. Tùy biến vị trí tự do (Custom Slot / Bottom Toolbar)
+### 6. Custom Placement (Custom Slot / Bottom Toolbar)
 
-Bạn có thể dễ dàng đặt nút điều hướng và phân trang vào trong một thanh công cụ tùy biến dưới đáy bằng cách thêm `className="static"` hoặc class định vị mong muốn:
+You can easily place navigation buttons and pagination into a custom toolbar at the bottom by adding `className="static"` or custom positioning classes:
 
 ```tsx
 <Carousel defaultIndex={1} className="w-full max-w-md border border-neutral-200 p-2 rounded-xl">
@@ -223,7 +223,7 @@ Bạn có thể dễ dàng đặt nút điều hướng và phân trang vào tro
 
 ---
 
-### 7. Chế độ Controlled Mode (Quản lý State chủ động)
+### 7. Controlled Mode (Manual State Management)
 
 ```tsx
 import { useState } from "react";
@@ -235,13 +235,13 @@ export function ControlledDemo() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <span className="text-sm font-semibold">Slide hiện tại: {index + 1}</span>
+        <span className="text-sm font-semibold">Current slide: {index + 1}</span>
         <button
           type="button"
           onClick={() => setIndex(2)}
           className="px-3 py-1 bg-primary-600 text-white text-xs rounded-md shadow hover:bg-primary-700"
         >
-          Nhảy tới Slide 3
+          Jump to Slide 3
         </button>
       </div>
 
@@ -266,88 +266,88 @@ export function ControlledDemo() {
 
 ---
 
-## 📊 Bảng thuộc tính Props
+## 📊 Props Reference
 
 ### `<Carousel>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `currentIndex` | `number` | - | Chỉ số slide đang active (sử dụng trong Controlled mode) |
-| `defaultIndex` | `number` | `0` | Chỉ số slide mặc định khi khởi tạo (Uncontrolled mode) |
-| `onIndexChange` | `(index: number) => void` | - | Callback kích hoạt khi chỉ số slide thay đổi |
-| `loop` | `boolean` | `false` | Cho phép cuộn vòng tròn vô hạn |
-| `slidesToShow` | `number` | `1` | Số lượng slide hiển thị đồng thời trên một khung nhìn |
-| `slidesToScroll` | `number` | `1` | Số lượng slide di chuyển mỗi lần cuộn |
-| `spacing` | `number \| string` | `0` | Khoảng cách gap giữa các slide (`16` hoặc `"1rem"`) |
-| `autoPlay` | `boolean` | `true` | Tự động chuyển slide định kỳ |
-| `interval` | `number` | `3000` | Thời gian chờ giữa mỗi lần tự động chuyển slide (ms) |
-| `transitionDuration` | `number` | `650` | Thời gian hiệu ứng chuyển đổi giữa các slide (ms) |
-| `pauseOnHover` | `boolean` | `true` | Tạm dừng autoplay khi rê chuột vào carousel |
-| `pauseOnFocus` | `boolean` | `true` | Tạm dừng autoplay khi focus vào carousel |
-| `draggable` | `boolean` | `true` | Cho phép kéo/vuốt bằng chuột hoặc ngón tay cảm ứng |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Kích thước chung của carousel |
-| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Bo góc của container carousel |
-| `children` | `ReactNode` | - | Các component con bên trong Carousel |
+| `currentIndex` | `number` | - | Active slide index (used in Controlled mode) |
+| `defaultIndex` | `number` | `0` | Initial slide index (Uncontrolled mode) |
+| `onIndexChange` | `(index: number) => void` | - | Callback triggered when active slide index changes |
+| `loop` | `boolean` | `false` | Enables infinite loop scrolling |
+| `slidesToShow` | `number` | `1` | Number of slides visible at once in the viewport |
+| `slidesToScroll` | `number` | `1` | Number of slides to advance per scroll |
+| `spacing` | `number \| string` | `0` | Gap spacing between slides (`16` or `"1rem"`) |
+| `autoPlay` | `boolean` | `true` | Automatically cycles through slides periodically |
+| `interval` | `number` | `3000` | Delay between automatic transitions in milliseconds (ms) |
+| `transitionDuration` | `number` | `650` | Slide transition duration in milliseconds (ms) |
+| `pauseOnHover` | `boolean` | `true` | Pauses autoplay when hovering over the carousel |
+| `pauseOnFocus` | `boolean` | `true` | Pauses autoplay when the carousel receives focus |
+| `draggable` | `boolean` | `true` | Enables dragging/swiping via mouse or touch |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Overall carousel size |
+| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Border radius of the carousel container |
+| `children` | `ReactNode` | - | Child components inside the Carousel |
 
 ---
 
 ### `<CarouselContent>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `ref` | `Ref<HTMLDivElement>` | - | Ref đến dải trượt track |
-| `children` | `ReactNode` | - | Danh sách các `<CarouselSlide>` |
-| `className` | `string` | `""` | Tùy biến class cho container track |
+| `ref` | `Ref<HTMLDivElement>` | - | Ref to the sliding track element |
+| `children` | `ReactNode` | - | List of `<CarouselSlide>` components |
+| `className` | `string` | `""` | Custom className for the track container |
 
 ---
 
 ### `<CarouselSlide>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `ref` | `Ref<HTMLDivElement>` | - | Ref đến phần tử DOM của slide |
-| `index` | `number` | - | Chỉ số vị trí của slide |
-| `children` | `ReactNode` | - | Nội dung bên trong slide |
-| `className` | `string` | `""` | Class tùy biến cho slide |
+| `ref` | `Ref<HTMLDivElement>` | - | Ref to the slide DOM element |
+| `index` | `number` | - | Slide position index |
+| `children` | `ReactNode` | - | Content inside the slide |
+| `className` | `string` | `""` | Custom className for the slide |
 
 ---
 
 ### `<CarouselPrevious>` & `<CarouselNext>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `ref` | `Ref<HTMLButtonElement>` | - | Ref đến phần tử button |
-| `variant` | `"glass" \| "filled" \| "outline" \| "ghost"` | `"glass"` | Biến thể hiển thị giao diện nút |
-| `icon` | `ReactNode` | `<ChevronIcon />` | Biểu tượng icon tùy biến |
-| `disabled` | `boolean` | - | Trạng thái vô hiệu hóa (tự động tính nếu không truyền) |
-| `className` | `string` | `""` | Class tùy biến (có thể dùng `static` để gỡ bỏ định vị absolute) |
+| `ref` | `Ref<HTMLButtonElement>` | - | Ref to the button element |
+| `variant` | `"glass" \| "filled" \| "outline" \| "ghost"` | `"glass"` | Button visual variant |
+| `icon` | `ReactNode` | `<ChevronIcon />` | Custom icon element |
+| `disabled` | `boolean` | - | Disabled state (computed automatically if omitted) |
+| `className` | `string` | `""` | Custom className (use `static` to remove absolute positioning) |
 
 ---
 
 ### `<CarouselPagination>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `ref` | `Ref<HTMLDivElement>` | - | Ref đến container phân trang |
-| `type` | `"dots" \| "line" \| "fraction" \| "none"` | `"dots"` | Kiểu dáng hiển thị phân trang |
-| `clickable` | `boolean` | `true` | Cho phép người dùng click vào chấm/thanh để chuyển slide |
-| `className` | `string` | `""` | Class tùy biến |
+| `ref` | `Ref<HTMLDivElement>` | - | Ref to the pagination container |
+| `type` | `"dots" \| "line" \| "fraction" \| "none"` | `"dots"` | Pagination display style |
+| `clickable` | `boolean` | `true` | Allows users to click dots/bars to navigate slides |
+| `className` | `string` | `""` | Custom className |
 
 ---
 
-## ⌨️ Phím tắt & Trợ năng (Accessibility)
+## ⌨️ Keyboard Shortcuts & Accessibility
 
-- **`role="region"` & `aria-roledescription="carousel"`**: Báo hiệu với Screen Reader đây là một vùng băng chuyền nội dung.
-- **`role="tablist"` & `role="tab"`**: Đánh dấu thanh phân trang và từng slide chỉ số chuẩn ngữ nghĩa.
-- **Phím `ArrowLeft` / `ArrowRight`**: Chuyển đổi slide trước / sau.
-- **Phím `Home` / `End`**: Nhảy nhanh về slide đầu tiên hoặc slide cuối cùng.
-- **Tập trung bàn phím (Focus Ring)**: Có viền sáng `focus-visible:ring-2 focus-visible:ring-primary-500/50` rõ ràng khi dùng phím `Tab`.
+- **`role="region"` & `aria-roledescription="carousel"`**: Identifies the element as a carousel region to screen readers.
+- **`role="tablist"` & `role="tab"`**: Provides semantic roles for the pagination bar and individual slide indicators.
+- **`ArrowLeft` / `ArrowRight` Keys**: Navigate to previous / next slide.
+- **`Home` / `End` Keys**: Jump directly to the first or last slide.
+- **Keyboard Focus Ring**: Clear `focus-visible:ring-2 focus-visible:ring-primary-500/50` outline when navigating via `Tab` key.
 
 ---
 
-## 🧪 Kiểm thử Component (Cypress Testing)
+## 🧪 Component Testing (Cypress Testing)
 
-Component được kiểm thử 100% bằng **Cypress Component Testing** tại [`Carousel.cy.tsx`](Carousel.cy.tsx):
+The component has 100% test coverage using **Cypress Component Testing** at [`Carousel.cy.tsx`](Carousel.cy.tsx):
 
 ```bash
 pnpm --filter @openway/ui cypress:run --spec "src/components/carousel/Carousel.cy.tsx"

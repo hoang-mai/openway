@@ -184,7 +184,6 @@ export {
   DayGrid,
   MonthGrid,
   YearGrid,
-  resolveLocale,
   toDate,
   formatDate,
   parseDate,
@@ -436,5 +435,21 @@ export {
   useBreadcrumbContext,
 } from "./components/breadcrumb";
 export type * from "./components/breadcrumb/types";
+
+// Internationalization (i18n) & Provider
+export {
+  OpenWayProvider,
+  OpenWayContext,
+  useOpenWayContext,
+  useLocale,
+} from "./components/common/OpenWayProvider";
+export type { OpenWayProviderProps } from "./components/common/OpenWayProvider";
+
+export {
+  enUS,
+  viVN,
+} from "./locale";
+export type * from "./locale/types";
+
 
 

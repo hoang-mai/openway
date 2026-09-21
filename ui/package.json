@@ -1,6 +1,16 @@
 {
   "name": "@openway/ui",
-  "version": "1.2.2",
+  "version": "2.0.0",
+  "description": "Enterprise-grade React 19 UI component library (OpenWay Design System) with Warm Paper Aesthetics, Tailwind CSS v4, and built-in i18n.",
+  "keywords": [
+    "react19",
+    "nextjs",
+    "tailwindcss-v4",
+    "design-system",
+    "i18n",
+    "enterprise-ui",
+    "components"
+  ],
   "private": false,
   "license": "MIT",
   "publishConfig": {

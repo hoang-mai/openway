@@ -13,6 +13,7 @@ import { formatBytes, normalizeInitialValues } from "../upload-image/utils";
 import { normalizeAccept } from "./utils";
 import { getSafeConfig } from "@/utils/function";
 import { PreviewFile } from "@/components/file-preview/types";
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function UploadFile({
   value,
@@ -42,7 +43,7 @@ export default function UploadFile({
   readOnly = false,
   dropzoneTitle,
   dropzoneDescription,
-  buttonText = "Tải tệp lên",
+  buttonText: buttonTextProp,
   icon,
   renderItem,
   className = "",
@@ -52,6 +53,8 @@ export default function UploadFile({
   helperClassName = "",
   config,
 }: UploadFileProps) {
+  const uploadLocale = useLocale("upload");
+  const buttonText = buttonTextProp ?? uploadLocale.browseButton;
   const {
     isRequired = false,
     isInvalid: isInvalidConfig = false,
@@ -131,7 +134,7 @@ export default function UploadFile({
         } else {
           const remainingSlots = effectiveMaxCount - currentCount;
           if (remainingSlots <= 0) {
-            const err = `Số lượng tệp đã đạt tối đa (${effectiveMaxCount} tệp)`;
+            const err = uploadLocale.maxCountError(effectiveMaxCount);
             setValidationError(err);
             setSrAnnouncement(err);
             return;
@@ -148,12 +151,12 @@ export default function UploadFile({
               const result = await beforeUpload(file);
               if (result === false || typeof result === "string") {
                 const err =
-                  typeof result === "string" ? result : `Tệp ${file.name} đã bị từ chối`;
+                  typeof result === "string" ? result : uploadLocale.processingError(file.name);
                 return { file: null, error: err };
               }
             } catch (err: unknown) {
               const errMsg =
-                err instanceof Error ? err.message : `Không thể xử lý tệp ${file.name}`;
+                err instanceof Error ? err.message : uploadLocale.processingError(file.name);
               return { file: null, error: errMsg };
             }
           }
@@ -165,7 +168,7 @@ export default function UploadFile({
       for (const res of results) {
         if (res.error) {
           setValidationError(res.error);
-          setSrAnnouncement(`Lỗi: ${res.error}`);
+          setSrAnnouncement(res.error);
         } else if (res.file) {
           newValidFiles.push(res.file);
         }
@@ -177,7 +180,7 @@ export default function UploadFile({
           : [...currentItems, ...newValidFiles];
         updateItems(finalItems);
         setSrAnnouncement(
-          `Đã thêm ${newValidFiles.length} tệp tin. Tổng cộng: ${finalItems.length} tệp.`
+          uploadLocale.filesAddedSr(newValidFiles.length, finalItems.length)
         );
       }
     },
@@ -185,21 +188,19 @@ export default function UploadFile({
       const firstError = rejections[0]?.errors[0];
       if (!firstError) return;
 
-      let msg = firstError.message || "Tệp không hợp lệ";
+      let msg = firstError.message || uploadLocale.invalidTypeError;
       if (firstError.code === "file-too-large") {
-        msg = `Kích thước tệp vượt quá giới hạn cho phép (${formatBytes(maxSize || 0)})`;
+        msg = uploadLocale.maxSizeError(formatBytes(maxSize || 0));
       } else if (firstError.code === "file-too-small") {
-        msg = `Kích thước tệp nhỏ hơn giới hạn tối thiểu (${formatBytes(minSize || 0)})`;
+        msg = uploadLocale.maxSizeError(formatBytes(minSize || 0));
       } else if (firstError.code === "file-invalid-type") {
-        const acceptStr =
-          typeof accept === "string" ? accept : Object.keys(accept || {}).join(", ");
-        msg = `Định dạng tệp không được hỗ trợ. Các định dạng cho phép: ${acceptStr}`;
+        msg = uploadLocale.invalidTypeError;
       } else if (firstError.code === "too-many-files") {
-        msg = `Số lượng tệp vượt quá giới hạn cho phép (${effectiveMaxCount} tệp)`;
+        msg = uploadLocale.maxCountError(effectiveMaxCount || 0);
       }
 
       setValidationError(msg);
-      setSrAnnouncement(`Lỗi tệp: ${msg}`);
+      setSrAnnouncement(msg);
     },
   });
 
@@ -208,7 +209,7 @@ export default function UploadFile({
     const newItems = currentItems.filter((_, i) => i !== index);
     updateItems(newItems);
     onRemove?.(item, index);
-    setSrAnnouncement(`Đã xóa tệp tin ${getFileName(item)}`);
+    setSrAnnouncement(uploadLocale.fileRemovedSr(getFileName(item), newItems.length));
   };
 
   const handleOpenPreview = (item: PreviewFile) => {
@@ -344,7 +345,7 @@ export default function UploadFile({
                   height={currentSize.iconSize * 0.5}
                 />
               }
-              aria-label={"Tải tệp lên"}
+              aria-label={typeof buttonText === "string" ? buttonText : uploadLocale.browseButton}
             >
               {buttonText}
             </Button>

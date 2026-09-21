@@ -1,35 +1,35 @@
 # 🔘 Button & IconButton Component (`@openway/ui`)
 
-Bộ component **Button** & **IconButton** tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **trạng thái Loading linh hoạt**, **Safe Config Fallback** và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+The **Button** & **IconButton** component suite offers highly interactive, standardized **Design System** buttons featuring **flexible loading states**, **Safe Config Fallback**, and full compliance with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Key Features
 
-- **Pure Stateless & Hiệu năng cao**: Tối ưu hóa render, không phụ thuộc vào global store, dễ dàng sử dụng và mở rộng.
-- **2 Biến thể Component tiện dụng**:
-  - `<Button>`: Nút bấm tiêu chuẩn kèm văn bản, icon trái/phải, chế độ full width.
-  - `<IconButton>`: Nút bấm chỉ chứa icon hình tròn / vuông, bắt buộc nhãn `aria-label` cho trợ năng (Screen Reader).
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *mặc định*), `lg` (48px), `xl` (56px) với chiều cao, padding, font size và kích cỡ icon được căn chuẩn theo tỷ lệ.
-- **6 Biến thể giao diện (`variant`)**:
-  - `filled` *(mặc định)*: Nền màu đậm, chữ trắng tương phản cao, nổi bật các hành động chính (Primary CTA).
-  - `soft`: Nền pastel nhạt, chữ và viền cùng tông màu, thích hợp cho hành động phụ.
-  - `outline`: Nền trong suốt, viền đôi 2px rõ nét, hover đổi màu nền nhẹ.
-  - `ghost`: Nền và viền trong suốt, hiển thị nền khi hover.
-  - `text`: Nút dạng chữ không viền, padding hẹp, hover đổi màu chữ.
-  - `other`: Bỏ qua các class màu mặc định, tự do áp dụng custom style / gradient qua `className`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
-- **Tùy chỉnh bo góc linh hoạt (`radius`)**: `none` (góc vuông 0px), `sm`, `md`, `lg` (*mặc định trên Button*), `xl`, `full` (*mặc định trên IconButton*).
-- **Trạng thái Loading thông minh (`isLoading` & `showSpinner`)**:
-  - `isLoading={true}`: Tự động khóa tương tác (`disabled`), đặt `aria-busy="true"` và `aria-disabled="true"`.
-  - `showSpinner`: Mặc định là `false` (không hiển thị spinner xoay). Đặt `showSpinner={true}` khi muốn hiển thị icon xoay vòng.
-  - `loadingText`: Cho phép thay thế nội dung hiển thị khi đang tải (ví dụ: *"Đang xử lý..."*).
-- **Trải nghiệm tương tác mượt mà**: Hiệu ứng thu nhỏ nhẹ khi bấm (`active:scale-[0.98]`), focus ring shade 700 nổi bật khi điều hướng bằng bàn phím.
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` đảm bảo component hoạt động ổn định, không bị crash kể cả khi truyền prop kích cỡ/màu sắc không hợp lệ.
+- **Pure Stateless & High Performance**: Optimized rendering, independent of global stores, easy to use and extend.
+- **2 Convenient Component Variants**:
+  - `<Button>`: Standard button with text label, leading/trailing icons, and full-width mode.
+  - `<IconButton>`: Icon-only button with circular/square bounding box, requiring an `aria-label` for screen reader accessibility.
+- **5 Standard Sizes (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *default*), `lg` (48px), `xl` (56px) with proportionately scaled heights, padding, font sizes, and icon dimensions.
+- **6 Visual Variants (`variant`)**:
+  - `filled` *(default)*: Deep solid background, high-contrast white text, highlighting primary calls to action (Primary CTA).
+  - `soft`: Light pastel background, matching text and border color tone, suitable for secondary actions.
+  - `outline`: Transparent background, crisp 2px border, subtle background shift on hover.
+  - `ghost`: Transparent background and border, shows background tint on hover.
+  - `text`: Borderless text-only button, compact padding, text color shifts on hover.
+  - `other`: Bypasses default color classes, allowing custom styles/gradients via `className`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
+- **Flexible Border Radius (`radius`)**: `none` (square 0px), `sm`, `md`, `lg` (*default on Button*), `xl`, `full` (*default on IconButton*).
+- **Smart Loading State (`isLoading` & `showSpinner`)**:
+  - `isLoading={true}`: Automatically disables interactions (`disabled`), setting `aria-busy="true"` and `aria-disabled="true"`.
+  - `showSpinner`: Defaults to `false` (no spinner icon). Set `showSpinner={true}` when a rotating spinner icon is desired.
+  - `loadingText`: Allows replacing the displayed label while loading (e.g., *"Processing..."*).
+- **Smooth Interactive Feedback**: Subtle scale-down effect on press (`active:scale-[0.98]`), prominent shade-700 focus ring for keyboard navigation.
+- **Safe Config Fallback**: Built-in `getSafeConfig` function ensures rock-solid stability without crashes even when invalid size or color props are supplied.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Button, IconButton } from "@openway/ui";
@@ -45,9 +45,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản
+### 1. Basic Usage
 
 ```tsx
 import { Button } from "@openway/ui";
@@ -55,10 +55,10 @@ import { Button } from "@openway/ui";
 export function BasicButtonExample() {
   return (
     <div className="flex gap-3 items-center">
-      <Button>Button Mặc định</Button>
+      <Button>Default Button</Button>
       <Button color="secondary">Secondary</Button>
-      <Button color="success" variant="soft">Lưu thay đổi</Button>
-      <Button color="error" variant="outline">Xóa dữ liệu</Button>
+      <Button color="success" variant="soft">Save changes</Button>
+      <Button color="error" variant="outline">Delete data</Button>
     </div>
   );
 }
@@ -66,39 +66,39 @@ export function BasicButtonExample() {
 
 ---
 
-### 2. Các kích thước (`size`)
+### 2. Sizes (`size`)
 
-Hỗ trợ 5 kích thước từ `xs` đến `xl`:
+Supports 5 sizes from `xs` to `xl`:
 
 ```tsx
 <Button size="xs">Extra Small (24px)</Button>
 <Button size="sm">Small (32px)</Button>
-<Button size="md">Medium (40px - Mặc định)</Button>
+<Button size="md">Medium (40px - Default)</Button>
 <Button size="lg">Large (48px)</Button>
 <Button size="xl">Extra Large (56px)</Button>
 ```
 
 ---
 
-### 3. Các biến thể giao diện (`variant`)
+### 3. Visual Variants (`variant`)
 
 ```tsx
-// 1. Filled (Mặc định): Nền đậm nổi bật
+// 1. Filled (Default): Solid prominent background
 <Button variant="filled" color="primary">Filled Primary</Button>
 
-// 2. Soft: Nền pastel nhạt
+// 2. Soft: Light pastel background
 <Button variant="soft" color="primary">Soft Primary</Button>
 
-// 3. Outline: Viền 2px
+// 3. Outline: 2px border
 <Button variant="outline" color="primary">Outline Primary</Button>
 
-// 4. Ghost: Nền trong suốt
+// 4. Ghost: Transparent background
 <Button variant="ghost" color="primary">Ghost Primary</Button>
 
-// 5. Text: Dạng văn bản tối giản
+// 5. Text: Minimalist text button
 <Button variant="text" color="primary">Text Button</Button>
 
-// 6. Other: Tự do tùy biến 100% qua className
+// 6. Other: 100% customizable via className
 <Button
   variant="other"
   className="bg-linear-to-r from-violet-600 via-purple-600 to-pink-500 text-white shadow-md hover:opacity-90"
@@ -109,9 +109,9 @@ Hỗ trợ 5 kích thước từ `xs` đến `xl`:
 
 ---
 
-### 4. Các chủ đề màu sắc (`color`)
+### 4. Color Themes (`color`)
 
-Cung cấp 7 tông màu theo chuẩn Design System:
+Provides 7 color themes based on Design System standards:
 
 ```tsx
 <Button color="primary">Primary</Button>
@@ -125,7 +125,7 @@ Cung cấp 7 tông màu theo chuẩn Design System:
 
 ---
 
-### 5. Hỗ trợ Icon (`leftIcon`, `rightIcon`) & Component `<IconButton>`
+### 5. Icon Support (`leftIcon`, `rightIcon`) & `<IconButton>` Component
 
 ```tsx
 import { Button, IconButton } from "@openway/ui";
@@ -134,24 +134,24 @@ import { PlusIcon, ArrowRightIcon, TrashIcon, HeartIcon } from "@/components/ico
 export function ButtonIconExample() {
   return (
     <div className="space-y-4">
-      {/* Button có icon đầu hoặc cuối */}
+      {/* Button with leading or trailing icon */}
       <div className="flex gap-3 items-center">
-        <Button leftIcon={<PlusIcon />}>Tạo mới</Button>
+        <Button leftIcon={<PlusIcon />}>Create New</Button>
         <Button variant="outline" color="secondary" rightIcon={<ArrowRightIcon />}>
-          Tiếp tục
+          Continue
         </Button>
         <Button variant="ghost" color="error" leftIcon={<TrashIcon />}>
-          Xóa
+          Delete
         </Button>
       </div>
 
-      {/* IconButton tròn chuyên dụng */}
+      {/* Dedicated circular IconButton */}
       <div className="flex gap-3 items-center">
-        <IconButton icon={<HeartIcon />} aria-label="Yêu thích" color="error" variant="soft" />
-        <IconButton icon={<PlusIcon />} aria-label="Thêm mới" color="primary" variant="filled" />
-        <IconButton icon={<TrashIcon />} aria-label="Xóa mục" color="neutral" variant="ghost" />
-        {/* Tùy chỉnh bo góc cho IconButton */}
-        <IconButton icon={<PlusIcon />} aria-label="Thêm" radius="md" variant="outline" />
+        <IconButton icon={<HeartIcon />} aria-label="Favorites" color="error" variant="soft" />
+        <IconButton icon={<PlusIcon />} aria-label="Add new" color="primary" variant="filled" />
+        <IconButton icon={<TrashIcon />} aria-label="Delete item" color="neutral" variant="ghost" />
+        {/* Custom border radius for IconButton */}
+        <IconButton icon={<PlusIcon />} aria-label="Add" radius="md" variant="outline" />
       </div>
     </div>
   );
@@ -160,26 +160,26 @@ export function ButtonIconExample() {
 
 ---
 
-### 6. Trạng thái Loading & Tùy chọn Spinner (`isLoading`, `showSpinner`, `loadingText`)
+### 6. Loading States & Spinner Options (`isLoading`, `showSpinner`, `loadingText`)
 
-Khi `isLoading={true}`, nút sẽ tự động bị vô hiệu hóa (`disabled`), đặt `aria-busy="true"`. Bạn có thể tùy chọn có hiển thị icon xoay vòng hay không thông qua prop `showSpinner` (mặc định là `false`):
+When `isLoading={true}`, the button is automatically disabled (`disabled`) with `aria-busy="true"`. You can choose whether to display a rotating spinner icon via the `showSpinner` prop (default is `false`):
 
 ```tsx
-// 1. Loading không hiện spinner (mặc định: showSpinner=false)
-<Button isLoading>Đang lưu...</Button>
+// 1. Loading without spinner (default: showSpinner=false)
+<Button isLoading>Saving...</Button>
 
-// 2. Loading có hiện spinner xoay vòng (showSpinner=true)
-<Button isLoading showSpinner>Đang lưu...</Button>
+// 2. Loading with rotating spinner (showSpinner=true)
+<Button isLoading showSpinner>Saving...</Button>
 
-// 3. Loading có spinner kèm theo loadingText thay thế
-<Button isLoading showSpinner loadingText="Đang xử lý dữ liệu...">
-  Gửi yêu cầu
+// 3. Loading with spinner and replacement loadingText
+<Button isLoading showSpinner loadingText="Processing data...">
+  Submit Request
 </Button>
 
-// 4. IconButton ở trạng thái loading
+// 4. IconButton in loading state
 <IconButton
   icon={<TrashIcon />}
-  aria-label="Đang xóa"
+  aria-label="Deleting"
   isLoading
   showSpinner
 />
@@ -187,29 +187,29 @@ Khi `isLoading={true}`, nút sẽ tự động bị vô hiệu hóa (`disabled`)
 
 ---
 
-### 7. Tràn chiều rộng (`isFullWidth`) & Vô hiệu hóa (`disabled`)
+### 7. Full Width (`isFullWidth`) & Disabled State (`disabled`)
 
 ```tsx
-// Chiều rộng 100% của container
+// 100% container width
 <Button isFullWidth color="primary" size="lg">
-  Đăng ký tài khoản ngay
+  Sign up now
 </Button>
 
-// Nút bị vô hiệu hóa
+// Disabled button
 <Button disabled color="primary">
-  Không khả dụng
+  Unavailable
 </Button>
 ```
 
 ---
 
-### 8. Tùy chỉnh bo góc (`radius`)
+### 8. Border Radius (`radius`)
 
 ```tsx
 <Button radius="none">radius="none" (0px)</Button>
 <Button radius="sm">radius="sm" (rounded-sm)</Button>
 <Button radius="md">radius="md" (rounded-md)</Button>
-<Button radius="lg">radius="lg" (rounded-lg - Mặc định)</Button>
+<Button radius="lg">radius="lg" (rounded-lg - Default)</Button>
 <Button radius="xl">radius="xl" (rounded-xl)</Button>
 <Button radius="full">radius="full" (Pill Shape)</Button>
 ```
@@ -220,43 +220,43 @@ Khi `isLoading={true}`, nút sẽ tự động bị vô hiệu hóa (`disabled`)
 
 ### 1. `ButtonProps`
 
-Kế thừa toàn bộ thuộc tính chuẩn của thẻ HTML `<button>` (`ButtonHTMLAttributes<HTMLButtonElement>`):
+Inherits all standard HTML `<button>` attributes (`ButtonHTMLAttributes<HTMLButtonElement>`):
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Kích cỡ của nút (chiều cao, padding, font size, icon size). |
-| `variant` | `"filled" \| "soft" \| "ghost" \| "text" \| "outline" \| "other"` | `"filled"` | Biến thể giao diện và phong cách màu sắc. |
-| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Chủ đề màu sắc theo Design System. |
-| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"lg"` | Độ bo góc của nút bấm. |
-| `leftIcon` | `ReactNode` | `undefined` | Icon hoặc phần tử hiển thị trước nội dung chữ. |
-| `rightIcon` | `ReactNode` | `undefined` | Icon hoặc phần tử hiển thị sau nội dung chữ. |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải (tự động khóa tương tác và đặt aria-busy). |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi đang ở trạng thái loading. |
-| `loadingText` | `ReactNode` | `undefined` | Văn bản hiển thị thay thế khi đang loading. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng chiều rộng chiếm 100% khung chứa (`w-full`). |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa nút bấm. |
-| `children` | `ReactNode` | `undefined` | Nội dung văn bản hoặc phần tử bên trong nút. |
-| `type` | `"button" \| "submit" \| "reset"` | `"button"` | Thuộc tính type chuẩn của HTML button. |
-| `className` | `string` | `""` | Class CSS Tailwind tùy biến bên ngoài. |
-| `ref` | `Ref<HTMLButtonElement>` | `undefined` | Ref chuyển tiếp đến thẻ `<button>`. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Button size (height, padding, font size, icon size). |
+| `variant` | `"filled" \| "soft" \| "ghost" \| "text" \| "outline" \| "other"` | `"filled"` | Visual variant and color style. |
+| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Color theme based on Design System. |
+| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"lg"` | Border radius of the button. |
+| `leftIcon` | `ReactNode` | `undefined` | Icon or element displayed before the text. |
+| `rightIcon` | `ReactNode` | `undefined` | Icon or element displayed after the text. |
+| `isLoading` | `boolean` | `false` | Loading state (automatically disables interaction and sets aria-busy). |
+| `showSpinner` | `boolean` | `false` | Displays a rotating spinner when in loading state. |
+| `loadingText` | `ReactNode` | `undefined` | Replacement text displayed while loading. |
+| `isFullWidth` | `boolean` | `false` | Expands width to occupy 100% of parent container (`w-full`). |
+| `disabled` | `boolean` | `false` | Disables the button. |
+| `children` | `ReactNode` | `undefined` | Text content or elements inside the button. |
+| `type` | `"button" \| "submit" \| "reset"` | `"button"` | Standard HTML button type attribute. |
+| `className` | `string` | `""` | Custom external Tailwind CSS class. |
+| `ref` | `Ref<HTMLButtonElement>` | `undefined` | Forwarded ref to the `<button>` element. |
 
 ---
 
 ### 2. `IconButtonProps`
 
-Kế thừa các thuộc tính của `<button>` ngoại trừ `children`:
+Inherits `<button>` attributes except `children`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `icon` | `ReactNode` | *(Bắt buộc)* | Icon hiển thị chính giữa nút. |
-| `aria-label` | `string` | *(Bắt buộc)* | Nhãn mô tả hành động dành cho Screen Reader / A11y. |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Kích cỡ của nút icon (24px, 32px, 40px, 48px, 56px). |
-| `variant` | `"filled" \| "soft" \| "ghost" \| "text" \| "outline" \| "other"` | `"filled"` | Biến thể giao diện của nút icon. |
-| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Chủ đề màu sắc theo Design System. |
-| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"full"` | Độ bo góc của nút icon (mặc định tròn hoàn toàn). |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải (vô hiệu hóa tương tác). |
-| `showSpinner` | `boolean` | `false` | Hiển thị spinner xoay thay thế cho icon khi đang loading. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa nút icon. |
-| `type` | `"button" \| "submit" \| "reset"` | `"button"` | Thuộc tính type của nút. |
-| `className` | `string` | `""` | Class CSS Tailwind tùy biến bên ngoài. |
-| `ref` | `Ref<HTMLButtonElement>` | `undefined` | Ref chuyển tiếp đến thẻ `<button>`. |
+| `icon` | `ReactNode` | *(Required)* | Icon displayed centered in the button. |
+| `aria-label` | `string` | *(Required)* | Descriptive action label for Screen Readers / A11y. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Icon button size (24px, 32px, 40px, 48px, 56px). |
+| `variant` | `"filled" \| "soft" \| "ghost" \| "text" \| "outline" \| "other"` | `"filled"` | Visual variant of the icon button. |
+| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Color theme based on Design System. |
+| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"full"` | Border radius of the icon button (fully rounded by default). |
+| `isLoading` | `boolean` | `false` | Loading state (disables interaction). |
+| `showSpinner` | `boolean` | `false` | Displays a rotating spinner in place of the icon while loading. |
+| `disabled` | `boolean` | `false` | Disables the icon button. |
+| `type` | `"button" \| "submit" \| "reset"` | `"button"` | Button type attribute. |
+| `className` | `string` | `""` | Custom external Tailwind CSS class. |
+| `ref` | `Ref<HTMLButtonElement>` | `undefined` | Forwarded ref to the `<button>` element. |

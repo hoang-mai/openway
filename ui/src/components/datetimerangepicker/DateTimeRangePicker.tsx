@@ -31,6 +31,7 @@ import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { dateRangeCalendarRadiusConfig, dateRangePickerRadiusConfig, dateRangePickerVariantStyles } from "@/components/daterangepicker/constants";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { useLocale } from "../common/OpenWayProvider";
 
 /**
  * Component DateTimeRangePicker - Ô chọn khoảng Ngày & Giờ (Start - End) chuyên nghiệp theo Design System.
@@ -44,10 +45,9 @@ export default function DateTimeRangePicker({
   format: customFormat,
   displayFormat: customDisplayFormat,
   separator = " - ",
-  startLabel = "Thời gian bắt đầu",
-  endLabel = "Thời gian kết thúc",
+  startLabel: startLabelProp,
+  endLabel: endLabelProp,
   layout = "side-by-side",
-  locale = "vi",
   defaultView = "days",
   firstDayOfWeek = 1,
   minDate,
@@ -91,6 +91,11 @@ export default function DateTimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimeRangePickerProps) {
+  const datePickerLocale = useLocale("datePicker");
+  const timePickerLocale = useLocale("timePicker");
+  const startLabel = startLabelProp ?? timePickerLocale.startTime;
+  const endLabel = endLabelProp ?? timePickerLocale.endTime;
+
   const {
     isRequired = false,
     isInvalid = false,
@@ -132,8 +137,8 @@ export default function DateTimeRangePicker({
   const [activeView, setActiveView] = useState<CalendarView>(defaultView);
   const [isOpen, setIsOpen] = useState(false);
 
-  const startText = selectedRange[0] ? formatDateTime(selectedRange[0], baseDisplayFormat, locale) : "";
-  const endText = selectedRange[1] ? formatDateTime(selectedRange[1], baseDisplayFormat, locale) : "";
+  const startText = selectedRange[0] ? formatDateTime(selectedRange[0], baseDisplayFormat, datePickerLocale) : "";
+  const endText = selectedRange[1] ? formatDateTime(selectedRange[1], baseDisplayFormat, datePickerLocale) : "";
 
   const formattedValue = useMemo(() => {
     if (startText && endText) {
@@ -194,8 +199,8 @@ export default function DateTimeRangePicker({
     if (!isControlled) {
       setInternalRange(newRange);
     }
-    const fStart = newRange[0] ? formatDateTime(newRange[0], resolvedFormat, locale) : "";
-    const fEnd = newRange[1] ? formatDateTime(newRange[1], resolvedFormat, locale) : "";
+    const fStart = newRange[0] ? formatDateTime(newRange[0], resolvedFormat, datePickerLocale) : "";
+    const fEnd = newRange[1] ? formatDateTime(newRange[1], resolvedFormat, datePickerLocale) : "";
     onChange?.(fStart || fEnd ? [fStart, fEnd] : null);
 
     if (closeOnSelect && newRange[0] && newRange[1]) {
@@ -432,7 +437,6 @@ export default function DateTimeRangePicker({
                       minDate={activeStep === "end" ? selectedRange[0] || minDate : minDate}
                       maxDate={activeStep === "start" ? selectedRange[1] || maxDate : maxDate}
                       isDateDisabled={isDateDisabled}
-                      locale={locale}
                       firstDayOfWeek={firstDayOfWeek}
                       showWeekNumbers={showWeekNumbers}
                       size={size}

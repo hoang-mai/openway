@@ -1,17 +1,6 @@
-import { LocaleConfig, CalendarDay, CalendarView } from "./types";
-import { viLocale, enLocale } from "./constants";
-
-/**
- * Phân giải cấu hình ngôn ngữ (locale) thành đối tượng `LocaleConfig` hoàn chỉnh.
- *
- * @param locale - Mã ngôn ngữ ('vi' | 'en') hoặc đối tượng cấu hình `LocaleConfig` tùy biến.
- * @returns Đối tượng `LocaleConfig` tương ứng (mặc định trả về `viLocale` nếu không truyền).
- */
-export function resolveLocale(locale: "vi" | "en" | LocaleConfig | undefined): LocaleConfig {
-  if (!locale || locale === "vi") return viLocale;
-  if (locale === "en") return enLocale;
-  return locale;
-}
+import { CalendarDay, CalendarView } from "./types";
+import type { DatePickerLocale } from "../../locale/types";
+import { enUS } from "../../locale/enUS";
 
 /**
  * Chuyển đổi dữ liệu đầu vào không xác định thành đối tượng `Date` hợp lệ.
@@ -294,17 +283,17 @@ function createCalendarDay(
  *
  * @param date - Đối tượng `Date` cần định dạng.
  * @param formatStr - Chuỗi mẫu định dạng (mặc định 'DD/MM/YYYY').
- * @param locale - Ngôn ngữ hiển thị ('vi' | 'en' hoặc cấu hình `LocaleConfig`).
+ * @param locale - Cấu hình ngôn ngữ hiển thị DatePickerLocale (mặc định enUS.datePicker).
  * @returns Chuỗi ngày đã được định dạng. Trả về chuỗi rỗng nếu `date` không hợp lệ.
  */
 export function formatDate(
   date: Date | null | undefined,
   formatStr: string = "DD/MM/YYYY",
-  locale?: "vi" | "en" | LocaleConfig
+  locale: DatePickerLocale = enUS.datePicker
 ): string {
   if (!date || isNaN(date.getTime())) return "";
 
-  const loc = resolveLocale(locale);
+  const loc = locale;
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();

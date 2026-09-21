@@ -29,6 +29,7 @@ import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { useLocale } from "@/components/common/OpenWayProvider";
 
 export default function TimePicker({
   ref,
@@ -83,6 +84,7 @@ export default function TimePicker({
     closeOnSelect = false,
   } = config ?? {};
 
+  const timePickerLocale = useLocale("timePicker");
   const generatedId = useId();
   const inputId = id || generatedId;
   const errorHelperId = `${inputId}-error-helper`;
@@ -290,7 +292,7 @@ export default function TimePicker({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Clear time"
+                aria-label={timePickerLocale.clearText}
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${

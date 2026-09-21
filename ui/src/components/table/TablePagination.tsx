@@ -8,6 +8,7 @@ import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import DoubleChevronLeftIcon from "../icons/DoubleChevronLeftIcon";
 import DoubleChevronRightIcon from "../icons/DoubleChevronRightIcon";
+import { useLocale } from "../common/OpenWayProvider";
 
 function getPaginationRange(currentPage: number, totalPages: number): (number | string)[] {
   if (totalPages <= 7) {
@@ -47,6 +48,7 @@ export function TablePagination<TData extends RowData = RowData>({
   showPageSizeSelector = true,
   className = "",
 }: TablePaginationProps<TData>) {
+  const tableLocale = useLocale("table");
   const pagination = table.state.pagination;
   const pageIndex = pagination?.pageIndex ?? 0;
   const pageSize = pagination?.pageSize ?? 10;
@@ -79,7 +81,7 @@ export function TablePagination<TData extends RowData = RowData>({
       {/* Tùy chọn kích cỡ trang */}
       {showPageSizeSelector ? (
         <div className="flex items-center gap-2">
-          <span className="whitespace-nowrap text-xs text-neutral-500">Số dòng/trang:</span>
+          <span className="whitespace-nowrap text-xs text-neutral-500">{tableLocale.rowsPerPage}</span>
           <div className="w-20" data-testid="table-page-size-selector">
             <Select
               size="sm"
@@ -91,7 +93,7 @@ export function TablePagination<TData extends RowData = RowData>({
                 }
               }}
               searchable={false}
-              aria-label="Số dòng mỗi trang"
+              aria-label={tableLocale.rowsPerPage}
             />
           </div>
         </div>
@@ -103,7 +105,7 @@ export function TablePagination<TData extends RowData = RowData>({
       <div className="flex items-center gap-1 ml-auto sm:ml-0">
         <IconButton
           icon={<DoubleChevronLeftIcon className="w-3.5 h-3.5" />}
-          aria-label="Trang đầu"
+          aria-label={tableLocale.firstPage}
           size="sm"
           radius="md"
           variant="outline"
@@ -113,7 +115,7 @@ export function TablePagination<TData extends RowData = RowData>({
         />
         <IconButton
           icon={<ChevronLeftIcon className="w-3.5 h-3.5" />}
-          aria-label="Trang trước"
+          aria-label={tableLocale.previousPage}
           size="sm"
           radius="md"
           variant="outline"
@@ -144,7 +146,7 @@ export function TablePagination<TData extends RowData = RowData>({
                 key={pageNum}
                 type="button"
                 onClick={() => table.setPageIndex(pageNum - 1)}
-                aria-label={`Trang ${pageNum}`}
+                aria-label={tableLocale.pageLabel(pageNum)}
                 aria-current={isCurrent ? "page" : undefined}
                 className={`${tablePaginationConfig.pageButton} ${
                   isCurrent
@@ -160,7 +162,7 @@ export function TablePagination<TData extends RowData = RowData>({
 
         <IconButton
           icon={<ChevronRightIcon className="w-3.5 h-3.5" />}
-          aria-label="Trang sau"
+          aria-label={tableLocale.nextPage}
           size="sm"
           radius="md"
           variant="outline"
@@ -170,7 +172,7 @@ export function TablePagination<TData extends RowData = RowData>({
         />
         <IconButton
           icon={<DoubleChevronRightIcon className="w-3.5 h-3.5" />}
-          aria-label="Trang cuối"
+          aria-label={tableLocale.lastPage}
           size="sm"
           radius="md"
           variant="outline"

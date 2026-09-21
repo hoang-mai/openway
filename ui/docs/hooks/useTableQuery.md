@@ -1,17 +1,17 @@
 # 📊 Hook `useTableQuery` (`@openway/ui/query`)
 
-Hook adapter chuyên dụng kết nối **TanStack Query v5** (`useQuery`) với component `<Table />`, tự động hóa toàn bộ quy trình phân trang máy chủ (Server-side pagination), sắp xếp nhiều cột (Sorting), lọc dữ liệu (Filtering), và tối ưu UX qua `keepPreviousData`.
+A specialized adapter hook connecting **TanStack Query v5** (`useQuery`) with the `<Table />` component, fully automating server-side pagination, multi-column sorting, data filtering, and optimizing UX via `keepPreviousData`.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Tự động đồng bộ với Table**: Trả về trọn gói `tableProps` sẵn sàng spread thẳng vào `<Table {...tableProps} />`.
-- **Server Pagination**: Quản lý `page` (1-indexed), `pageSize`, tự động chuyển trang và tính toán tổng số trang (`pageCount`).
-- **Server Sorting**: Đồng bộ `sortBy` và `sortOrder` ("asc" | "desc") từ trạng thái click header của Table gửi lên server.
-- **Server Filtering & Auto-Reset**: Tự động chuyển đổi mảng filter của TanStack Table thành dictionary phẳng `Record<string, unknown>`, tự động đưa trang về trang 1 khi người dùng thay đổi bộ lọc (`autoResetPageIndex`).
-- **Giữ dữ liệu mượt mà (`keepPreviousData`)**: Dữ liệu trang cũ vẫn hiển thị trong lúc trang mới đang tải ngầm, loại bỏ hiện tượng nhấp nháy trắng bảng.
-- **Zero `any`**: Type-safe 100% với Generic type `TData` và `TResponse`.
+- **Automatic Table Synchronization**: Returns a comprehensive `tableProps` bundle ready to spread directly into `<Table {...tableProps} />`.
+- **Server Pagination**: Manages `page` (1-indexed), `pageSize`, automatically handles page transitions, and computes total pages (`pageCount`).
+- **Server Sorting**: Synchronizes `sortBy` and `sortOrder` ("asc" | "desc") from Table header click interactions and sends them to the server.
+- **Server Filtering & Auto-Reset**: Automatically converts the TanStack Table filter array into a flat `Record<string, unknown>` dictionary, automatically resetting to page 1 whenever filters change (`autoResetPageIndex`).
+- **Smooth Page Transitions (`keepPreviousData`)**: Previous page data remains visible while new page data is being fetched in the background, eliminating white flashes and UI jumps.
+- **Zero `any`**: 100% type-safe with generic types `TData` and `TResponse`.
 
 ---
 
@@ -28,9 +28,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### Phân trang, Sắp xếp & Lọc phía Máy chủ
+### Server-side Pagination, Sorting & Filtering
 
 ```tsx
 import { Table, type ColumnDef } from "@openway/ui";
@@ -66,7 +66,7 @@ export function UserManagementTable() {
       const res = await fetch(`/api/users?${searchParams}`);
       return res.json();
     },
-    // Tự động bóc tách mảng dữ liệu và tổng số dòng từ response
+    // Automatically extract data array and total count from response
     selectData: (res) => res.data,
     selectTotal: (res) => res.total,
     initialPageSize: 10,
@@ -88,25 +88,25 @@ export function UserManagementTable() {
 
 ---
 
-## 🎛️ Bảng Options (`UseTableQueryOptions`)
+## 🎛️ Options Table (`UseTableQueryOptions`)
 
-| Tên Option | Kiểu dữ liệu | Mặc định | Mô tả |
+| Option Name | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `queryKey` | `readonly unknown[]` | **Bắt buộc** | Query key gốc của TanStack Query. |
-| `queryFn` | `(params, context) => Promise<TResponse>` | **Bắt buộc** | Hàm fetch dữ liệu từ API nhận `TableQueryParams`. |
-| `selectData` | `(res) => TData[]` | Tự trích xuất `data/items/results/rows` | Hàm lấy mảng dữ liệu từ API response. |
-| `selectTotal` | `(res) => number` | Tự trích xuất `total/totalCount/count` | Hàm lấy tổng số bản ghi từ API response. |
-| `initialPage` | `number` | `1` | Trang bắt đầu (1-indexed). |
-| `initialPageSize` | `number` | `10` | Số dòng hiển thị mỗi trang. |
-| `autoResetPageIndex` | `boolean` | `true` | Tự động quay về trang 1 khi đổi bộ lọc hoặc sắp xếp. |
-| `debounceMs` | `number` | `300` | Thời gian trì hoãn debounce (ms) khi thay đổi bộ lọc ở chế độ server trước khi gọi API. Đặt 0 để tắt. |
-| `queryOptions` | `Omit<UseQueryOptions, ...>` | `undefined` | Các cấu hình nâng cao của TanStack Query (`staleTime`, `refetchInterval`...). |
+| `queryKey` | `readonly unknown[]` | **Required** | Root query key for TanStack Query. |
+| `queryFn` | `(params, context) => Promise<TResponse>` | **Required** | API data fetching function receiving `TableQueryParams`. |
+| `selectData` | `(res) => TData[]` | Auto-extracts `data/items/results/rows` | Function extracting the data array from the API response. |
+| `selectTotal` | `(res) => number` | Auto-extracts `total/totalCount/count` | Function extracting total record count from the API response. |
+| `initialPage` | `number` | `1` | Starting page number (1-indexed). |
+| `initialPageSize` | `number` | `10` | Number of rows displayed per page. |
+| `autoResetPageIndex` | `boolean` | `true` | Automatically resets back to page 1 when filters or sorting change. |
+| `debounceMs` | `number` | `300` | Debounce delay (ms) for server-side filter changes before firing API requests. Set to `0` to disable. |
+| `queryOptions` | `Omit<UseQueryOptions, ...>` | `undefined` | Advanced TanStack Query configurations (`staleTime`, `refetchInterval`...). |
 
 ---
 
-## 📦 Giá trị trả về (`UseTableQueryReturn`)
+## 📦 Return Value (`UseTableQueryReturn`)
 
-- `tableProps`: Gói props truyền thẳng vào `<Table />`:
+- `tableProps`: Props bundle to spread directly into `<Table />`:
   - `data: TData[]`
   - `pageCount: number`
   - `pagination: { pageIndex, pageSize }`
@@ -121,8 +121,8 @@ export function UserManagementTable() {
   - `manualPagination: true`
   - `manualSorting: true`
   - `manualFiltering: true`
-- `query`: Query result từ `useQuery`.
-- `queryParams`: Tham số truy vấn chuẩn hóa gửi lên API máy chủ (`page`, `pageSize`, `sortBy`, `sortOrder`, `filters`).
-- `page`, `setPage`: Xem và thay đổi số trang hiện tại.
-- `pageSize`, `setPageSize`: Xem và thay đổi số dòng/trang.
-- `resetFilters`: Đặt lại toàn bộ bộ lọc.
+- `query`: Query result from `useQuery`.
+- `queryParams`: Normalized query parameters sent to the server API (`page`, `pageSize`, `sortBy`, `sortOrder`, `filters`).
+- `page`, `setPage`: Current page number and its setter.
+- `pageSize`, `setPageSize`: Current page size and its setter.
+- `resetFilters`: Resets all active filters.

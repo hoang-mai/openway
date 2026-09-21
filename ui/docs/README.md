@@ -1,160 +1,190 @@
-# 📚 OpenWay UI — Thư viện Tài liệu Toàn diện (`@openway/ui`)
+# 📚 OpenWay UI — Comprehensive Documentation Hub (`@openway/ui`)
 
-> **Trung tâm tài liệu chính thức của OpenWay UI Design System.**
+> **The official documentation center for OpenWay UI Design System.**
 
-Thư mục này được đóng gói sẵn trong package `node_modules/@openway/ui/docs/` để lập trình viên và các **AI Assistant (Antigravity)** có thể tra cứu và sử dụng nhanh chóng, chuẩn xác.
-
----
-
-## 🚀 Mục lục Nhanh
-
-- [1. Hướng dẫn Tích hợp Antigravity AI](#1-hướng-dẫn-tích-hợp-antigravity-ai)
-- [2. Cài đặt & Cấu hình Theme](#2-cài-đặt--cấu-hình-theme)
-- [3. Danh mục 36 Components](#3-danh-mục-36-components)
-- [4. Danh mục Hooks (`@openway/ui` & `@openway/ui/query`)](#4-danh-mục-hooks)
-- [5. Quy chuẩn Thiết kế (Design Tokens)](#5-quy-chuẩn-thiết-kế-design-tokens)
+This folder is packaged directly inside `node_modules/@openway/ui/docs/` so developers and **AI Assistants (Antigravity)** can quickly reference and utilize components with high precision.
 
 ---
 
-## 1. Hướng dẫn Tích hợp Antigravity AI
+## 🚀 Quick Table of Contents
 
-Thư viện được tối ưu hóa đặc biệt cho **Antigravity AI Agent**. Bạn có thể tận dụng ngay 3 tài liệu cốt lõi:
+- [1. Antigravity AI Integration Guide](#1-antigravity-ai-integration-guide)
+- [2. Installation & Theme Setup](#2-installation--theme-setup)
+- [3. Internationalization (i18n) & OpenWayProvider](#3-internationalization-i18n--openwayprovider)
+- [4. Catalog of 36 Components](#4-catalog-of-36-components)
+- [5. Hooks Catalog (`@openway/ui` & `@openway/ui/query`)](#5-hooks-catalog)
+- [6. Design Tokens & Standards](#6-design-tokens--standards)
 
-- **[`DESIGN.md`](../DESIGN.md)**: Bản kim chỉ nam (Single Source of Truth) về màu sắc Warm Neutrals, Interactive Blue `#2383e2`, bảng màu pastel, bo góc, bóng đổ và animation.
-- **[`AGENTS.md`](./AGENTS.md)**: Bản chỉ dẫn hành vi, sitemap, quy tắc import và checklist cho Antigravity.
-- **[`SKILL.md`](./SKILL.md)**: Antigravity Skill định dạng chuẩn (`openway-ui`), cho phép Antigravity tự động kích hoạt on-demand khi tạo mới hoặc sửa đổi UI.
+---
 
-### Cấu hình cho Dự án con (Consumer Project):
-Thêm khối chỉ dẫn sau vào file `AGENTS.md` ở thư mục gốc dự án của bạn:
+## 1. Antigravity AI Integration Guide
+
+The library is specifically optimized for **Antigravity AI Agent**. You can leverage 3 core documents right away:
+
+- **[`DESIGN.md`](../DESIGN.md)**: The Single Source of Truth for Warm Neutrals, Interactive Blue `#2383e2`, pastel status palette, corner geometry, layered ambient shadows, and micro-interactions.
+- **[`AGENTS.md`](./AGENTS.md)**: Agent behavior guidelines, sitemap, import rules, and checklists.
+- **[`SKILL.md`](./SKILL.md)**: Antigravity Skill standard format (`openway-ui`), enabling Antigravity to activate on-demand when creating or modifying UI.
+
+### Configuration for Consumer Projects:
+Add the following directive block into the `AGENTS.md` file in the root of your project:
 
 ```markdown
 <!-- openway-ui:start -->
 # OpenWay UI Components
-Khi viết giao diện hoặc tạo/sửa component:
-1. Luôn ưu tiên dùng component có sẵn từ `@openway/ui`.
-2. Giao diện tuân thủ triệt để OpenWay Design System: Nền ấm than chì `#f7f6f3` / `#37352f`, nút `#2383e2`, bóng đổ `.shadow-openway-*`.
-3. Tham khảo tài liệu và ví dụ code mẫu tại: `node_modules/@openway/ui/docs/AGENTS.md` và `node_modules/@openway/ui/DESIGN.md`.
-4. Tra cứu từng component cụ thể tại: `node_modules/@openway/ui/docs/components/<component>.md`.
-5. Với phân trang server / infinite scroll: dùng hook từ `@openway/ui/query`.
-6. Tuyệt đối tuân thủ Zero `any` và token màu Tailwind CSS v4.
+When writing UI interfaces or creating/modifying components:
+1. Always prioritize using existing components from `@openway/ui`.
+2. Strictly adhere to the OpenWay Design System: Warm graphite `#f7f6f3` / `#37352f`, primary button `#2383e2`, layered ambient shadows `.shadow-openway-*`.
+3. Refer to documentation and code examples at: `node_modules/@openway/ui/docs/AGENTS.md` and `node_modules/@openway/ui/DESIGN.md`.
+4. Check individual component docs at: `node_modules/@openway/ui/docs/components/<component>.md`.
+5. For server pagination / infinite scroll: use hooks from `@openway/ui/query`.
+6. Strictly enforce Zero `any` and Tailwind CSS v4 color tokens.
 <!-- openway-ui:end -->
 ```
 
 ---
 
-## 2. Cài đặt & Cấu hình Theme
+## 2. Installation & Theme Setup
 
-### Cài đặt Package
+### Install Package
 
 ```bash
 pnpm add @openway/ui
-# hoặc
+# or
 npm install @openway/ui
 ```
 
-### Cấu hình trong `app/globals.css` (Tailwind CSS v4)
+### Setup in `app/globals.css` (Tailwind CSS v4)
 
-Chỉ cần 3 dòng để kích hoạt toàn bộ OpenWay Design System:
+Just 3 lines to activate the entire OpenWay Design System:
 
 ```css
 @import "tailwindcss";
 
-/* 1. Nạp toàn bộ tokens Warm Neutrals, Interactive Blue, Shadows và Animations */
+/* 1. Load all Warm Neutrals, Interactive Blue, Shadows, and Animations tokens */
 @import "@openway/ui/styles.css";
 
-/* 2. Quét các class của thư viện */
+/* 2. Scan component classes from the library */
 @source "../node_modules/@openway/ui";
 ```
 
 ---
 
-## 3. Danh mục 36 Components
+## 3. Internationalization (i18n) & OpenWayProvider
 
-Tất cả tài liệu chi tiết của từng component được lưu trữ tại thư mục [`components/`](./components/):
+Starting in **v2.0.0**, `@openway/ui` features a unified, zero-dependency localization architecture:
+
+- **Default Language**: English (`enUS`) works out of the box without any setup.
+- **Switch to Vietnamese (`viVN`)**: Wrap your application root with `<OpenWayProvider locale={viVN}>`.
+- **Extensible**: Fully customizable locale dictionaries via the typed `OpenWayLocale` interface.
+
+```tsx
+import "@openway/ui/styles.css";
+import { OpenWayProvider, viVN } from "@openway/ui";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="vi">
+      <body>
+        <OpenWayProvider locale={viVN}>
+          {children}
+        </OpenWayProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+> 📖 **Full i18n Guide**: Refer to [`docs/i18n.md`](./i18n.md) for detailed overriding hierarchies, custom locales, and TypeScript types.
+
+---
+
+## 4. Catalog of 36 Components
+
+All detailed documentation for each component is organized under [`components/`](./components/):
 
 ### Typography & Content
-- **[`typography.md`](./components/typography.md)**: Hệ thống Typography `<Typography>` và `<Text>` chuẩn 100% Notion Design System (h1–h6, p, callout, code đỏ `#eb5757`, quote viền 3px, 10 màu Notion, copyable, ellipsis, tabular nums).
+- **[`typography.md`](./components/typography.md)**: Complete Typography `<Typography>` and `<Text>` system following Notion Design System specifications (h1–h6, p, callouts, red inline code `#eb5757`, 3px-bordered quotes, 10 Notion colors, copyable, ellipsis, tabular nums).
 
 ### Buttons & Actions
-- **[`button.md`](./components/button.md)**: Nút bấm `<Button>` và nút icon `<IconButton>`, 5 kích cỡ, 6 biến thể (`filled`, `soft`, `outline`, `ghost`, `text`, `other`), bo góc 4px–8px, spinner loading mượt mà.
+- **[`button.md`](./components/button.md)**: Push buttons `<Button>` and icon buttons `<IconButton>`, 5 sizes, 6 variants (`filled`, `soft`, `outline`, `ghost`, `text`, `other`), 4px–8px radii, smooth loading spinner.
 
 ### Form Inputs & Controls
-- **[`input.md`](./components/input.md)**: Trường nhập văn bản `<Input>`, viền `#e3e2e0`, focus ring `#2383e2/25`, mắt mật khẩu ẩn/hiện, start/end content.
-- **[`textarea.md`](./components/textarea.md)**: Vùng văn bản nhiều dòng `<Textarea>`, tự động co giãn độ cao (`autosize`), thanh cuộn siêu mỏng `.ui-scrollbar`.
-- **[`select.md`](./components/select.md)**: Chọn đơn `<Select>` và chọn nhiều `<MultiSelect>`, tìm kiếm client/server, menu filters, skeleton infinite scroll.
-- **[`checkbox.md`](./components/checkbox.md)**: Hộp kiểm `<Checkbox>` bo góc 3px (`rounded-xs`), nhóm `<CheckboxGroup>`, trạng thái indeterminate, bố cục flex.
-- **[`radio.md`](./components/radio.md)**: Nút chọn 1 phương án `<Radio>` và nhóm `<RadioGroup>`, hỗ trợ giao diện dạng thẻ card.
-- **[`toggle.md`](./components/toggle.md)**: Công tắc gạt `<Toggle>` (Switch), di chuyển mượt mà 150ms, hỗ trợ icon bật/tắt và nhãn mô tả.
-- **[`slider.md`](./components/slider.md)**: Thanh trượt `<Slider>` chọn số hoặc dải giá trị (Radix UI Slider).
+- **[`input.md`](./components/input.md)**: Text input field `<Input>`, subtle `#e3e2e0` border, `#2383e2/25` focus ring, password visibility toggle, start/end adornment slots.
+- **[`textarea.md`](./components/textarea.md)**: Multi-line text field `<Textarea>`, automatic height expansion (`autosize`), ultra-thin scrollbar `.ui-scrollbar`.
+- **[`select.md`](./components/select.md)**: Single select `<Select>` and multi select `<MultiSelect>`, client/server search, filter menus, skeleton infinite scrolling.
+- **[`checkbox.md`](./components/checkbox.md)**: Checkbox `<Checkbox>` with 3px radius (`rounded-xs`), group `<CheckboxGroup>`, indeterminate state, flexible layouts.
+- **[`radio.md`](./components/radio.md)**: Single-choice `<Radio>` and `<RadioGroup>`, with card-style layout support.
+- **[`toggle.md`](./components/toggle.md)**: Switch toggle `<Toggle>`, smooth 150ms transition, supporting on/off icons and descriptive labels.
+- **[`slider.md`](./components/slider.md)**: Numeric and range slider `<Slider>` built on Radix UI Slider.
 
 ### Data Display
-- **[`table.md`](./components/table.md)**: Bảng dữ liệu TanStack Table v9 `<Table>` & `<DataTable>`, header nền giấy ấm `#f7f6f3`, divider mỏng `#ebeae8`, tự động kích hoạt `font-variant-numeric: tabular-nums`.
-- **[`badge.md`](./components/badge.md)**: Huy hiệu `<Badge>` 6 màu Pastel (Success, Warning, Error, Info, Secondary, Neutral), đếm số, chấm trạng thái (dot).
-- **[`empty.md`](./components/empty.md)**: Màn hình trống `<Empty>` hiển thị khi không có dữ liệu kèm nút hành động CTA.
-- **[`carousel.md`](./components/carousel.md)**: Trình chiếu slide `<Carousel>`, điều hướng nút bấm, autoplay, pagination dots.
-- **[`collapse.md`](./components/collapse.md)**: Khối thu gọn `<Collapse>` (Accordion), hỗ trợ mở đơn mục hoặc đa mục.
+- **[`table.md`](./components/table.md)**: TanStack Table v9 data tables `<Table>` & `<DataTable>`, warm paper header `#f7f6f3`, hairline divider `#ebeae8`, auto `font-variant-numeric: tabular-nums`.
+- **[`badge.md`](./components/badge.md)**: Badges `<Badge>` in 6 pastel status shades (Success, Warning, Error, Info, Secondary, Neutral), count badges, and dot indicators.
+- **[`empty.md`](./components/empty.md)**: Empty state display `<Empty>` when no data is available with CTA actions.
+- **[`carousel.md`](./components/carousel.md)**: Slide carousel `<Carousel>`, button navigation, autoplay, pagination indicator dots.
+- **[`collapse.md`](./components/collapse.md)**: Accordion container `<Collapse>`, supporting single or multiple expanded panels.
 
 ### Feedback & Status
-- **[`alert.md`](./components/alert.md)**: Khung Callout cảnh báo `<Alert>` (success, error, warning, info pastel), nút đóng dismiss.
-- **[`skeleton.md`](./components/skeleton.md)**: Khung placeholder nhấp nháy `<Skeleton>` shimmer 1.5s mô phỏng layout đang tải.
-- **[`toast.md`](./components/toast.md)**: Thông báo góc màn hình `<Toast>` (Sonner), đổ bóng `.shadow-openway-modal`.
+- **[`alert.md`](./components/alert.md)**: Alert callouts `<Alert>` (success, error, warning, info pastel tints), dismiss button.
+- **[`skeleton.md`](./components/skeleton.md)**: Shimmer placeholder `<Skeleton>` with 1.5s wave animation mimicking loaded layouts.
+- **[`toast.md`](./components/toast.md)**: Corner notifications `<Toast>` (Sonner), layered ambient shadow `.shadow-openway-modal`.
 
 ### Navigation & Overlays
-- **[`tabs.md`](./components/tabs.md)**: Chuyển đổi thẻ `<Tabs>`, thanh chỉ thị underline xanh `#2383e2` trượt mượt mà.
-- **[`dropdown.md`](./components/dropdown.md)**: Menu thả xuống `<Dropdown>` đổ bóng `.shadow-openway-dropdown`, bo góc 8px.
-- **[`modal.md`](./components/modal.md)**: Hộp thoại `<Modal>`, đổ bóng `.shadow-openway-modal`, bo góc 10px, ModalBody chống cắt cụt focus ring.
-- **[`confirm.md`](./components/confirm.md)**: Hộp thoại xác nhận nguy hiểm `<Confirm>` (Xóa, Hủy) kèm loading state.
-- **[`popover.md`](./components/popover.md)**: Khung nổi `<Popover>` neo theo phần tử (Floating UI).
-- **[`tooltip.md`](./components/tooltip.md)**: Chú thích nhanh `<Tooltip>` nền đen than chì ấm `#37352f`.
+- **[`tabs.md`](./components/tabs.md)**: Tab switcher `<Tabs>`, animated blue `#2383e2` active indicator underline.
+- **[`dropdown.md`](./components/dropdown.md)**: Dropdown action menu `<Dropdown>` with `.shadow-openway-dropdown` and 8px corners.
+- **[`modal.md`](./components/modal.md)**: Dialog `<Modal>`, `.shadow-openway-modal`, 10px corners, non-clipping ModalBody for focus rings.
+- **[`confirm.md`](./components/confirm.md)**: Destructive action confirmation dialog `<Confirm>` (Delete, Cancel) with loading state.
+- **[`popover.md`](./components/popover.md)**: Floating anchor panel `<Popover>` (Floating UI).
+- **[`tooltip.md`](./components/tooltip.md)**: Quick descriptive tooltip `<Tooltip>` with warm charcoal background `#37352f`.
 
 ### Date & Time Pickers
-- **[`datepicker.md`](./components/datepicker.md)**: Bộ chọn ngày `<DatePicker>`, hỗ trợ các preset (Hôm nay, Hôm qua).
-- **[`daterangepicker.md`](./components/daterangepicker.md)**: Bộ chọn khoảng ngày `<DateRangePicker>`.
-- **[`timepicker.md`](./components/timepicker.md)**: Bộ chọn giờ phút giây `<TimePicker>` cột cuộn trực quan.
-- **[`timerangepicker.md`](./components/timerangepicker.md)**: Bộ chọn khoảng thời gian `<TimeRangePicker>`.
-- **[`datetimepicker.md`](./components/datetimepicker.md)**: Bộ chọn ngày và giờ kết hợp `<DateTimePicker>`.
-- **[`datetimerangepicker.md`](./components/datetimerangepicker.md)**: Bộ chọn khoảng ngày và giờ `<DateTimeRangePicker>`.
+- **[`datepicker.md`](./components/datepicker.md)**: Date picker `<DatePicker>`, quick presets (Today, Yesterday).
+- **[`daterangepicker.md`](./components/daterangepicker.md)**: Date range picker `<DateRangePicker>`.
+- **[`timepicker.md`](./components/timepicker.md)**: Time picker `<TimePicker>` with intuitive scrollable hour/minute/second columns.
+- **[`timerangepicker.md`](./components/timerangepicker.md)**: Time range picker `<TimeRangePicker>`.
+- **[`datetimepicker.md`](./components/datetimepicker.md)**: Combined date and time picker `<DateTimePicker>`.
+- **[`datetimerangepicker.md`](./components/datetimerangepicker.md)**: Combined date and time range picker `<DateTimeRangePicker>`.
 
 ### File & Media Upload
-- **[`upload-file.md`](./components/upload-file.md)**: Tải tệp tin đa năng `<UploadFile>`, thanh tiến trình, kéo thả.
-- **[`upload-avatar.md`](./components/upload-avatar.md)**: Tải ảnh đại diện `<UploadAvatar>` hình tròn kèm xem trước.
-- **[`upload-image.md`](./components/upload-image.md)**: Tải nhiều ảnh `<UploadImage>` (Dropzone / Picture Wall), tích hợp modal crop ảnh.
-- **[`file-preview.md`](./components/file-preview.md)**: Xem trước tệp tin `<FilePreview>` (ảnh, tài liệu, video).
+- **[`upload-file.md`](./components/upload-file.md)**: Versatile file uploader `<UploadFile>`, progress bar, drag-and-drop.
+- **[`upload-avatar.md`](./components/upload-avatar.md)**: Circular avatar uploader `<UploadAvatar>` with live preview and cropping.
+- **[`upload-image.md`](./components/upload-image.md)**: Multi-image uploader `<UploadImage>` (Dropzone / Picture Wall), integrated image crop modal.
+- **[`file-preview.md`](./components/file-preview.md)**: File previewer `<FilePreview>` (images, documents, video).
 
 ---
 
-## 4. Danh mục Hooks
+## 5. Hooks Catalog
 
-Tài liệu chi tiết của các hooks được lưu trữ tại thư mục [`hooks/`](./hooks/):
+Detailed documentation for hooks is available under [`hooks/`](./hooks/):
 
 ### Core Hooks (`@openway/ui`)
-- **[`useInfiniteScroll`](./hooks/useInfiniteScroll.md)**: Cơ chế tải vô tận thuần React 19 qua native `IntersectionObserver`, zero scroll event listener, an toàn với mutex lock.
-- **[`useDebounce` & `useDebouncedCallback`](./hooks/useDebounce.md)**: Tối ưu hiệu năng, chống spam API cho giá trị tìm kiếm hoặc hàm callback.
+- **[`useInfiniteScroll`](./hooks/useInfiniteScroll.md)**: Pure React 19 infinite scroll mechanism via native `IntersectionObserver`, zero scroll event listeners, mutex locked for concurrency safety.
+- **[`useDebounce` & `useDebouncedCallback`](./hooks/useDebounce.md)**: Performance optimization and API debounce protection for search values or callback functions.
 
 ### TanStack Query v5 Adapters (`@openway/ui/query`)
-- **[`useTableQuery`](./hooks/useTableQuery.md)**: Kết nối TanStack Query v5 với `<Table />`, quản lý phân trang, sorting, column filtering và `keepPreviousData`.
-- **[`useSelectInfiniteQuery`](./hooks/useSelectInfiniteQuery.md)**: Kết nối TanStack Query v5 với `<Select />` và `<MultiSelect />`, tự động cuộn tải trang tiếp, debounce từ khóa và Skeleton loading.
+- **[`useTableQuery`](./hooks/useTableQuery.md)**: TanStack Query v5 adapter for `<Table />`, managing server pagination, sorting, column filtering, and `keepPreviousData`.
+- **[`useSelectInfiniteQuery`](./hooks/useSelectInfiniteQuery.md)**: TanStack Query v5 adapter for `<Select />` and `<MultiSelect />`, automated next-page scrolling, debounced keyword search, and skeleton loading.
 
 ---
 
-## 5. Quy chuẩn Thiết kế (Design Tokens)
+## 6. Design Tokens & Standards
 
-1. **Warm Paper Aesthetics**: Tuyệt đối không dùng chữ đen tuyền `#000000` ở Light Mode; chữ chính là than chì `#37352f`, nền giấy `#f7f6f3`, viền `#e3e2e0`.
-2. **Interactive Blue**: Nút bấm chính, checkbox checked, tab active dùng màu `#2383e2` (hover `#1b6ec2`).
-3. **Bảng màu Pastel Trạng Thái (Status Palette)**:
-   - Thành công (Success): Nền `#dbeddb` / Chữ `#1c3829`
-   - Cảnh báo (Warning): Nền `#fdecc8` / Chữ `#402c1b`
-   - Lỗi (Error): Nền `#ffe2dd` / Chữ `#5d1715`
-   - Thông tin (Info): Nền `#e8f4fc` / Chữ `#0b6e99`
-   - Tím (Secondary): Nền `#e8deee` / Chữ `#412454`
-4. **Hệ Thống Bo Góc (@theme Geometry)**:
+1. **Warm Paper Aesthetics**: Pure black `#000000` is strictly avoided in Light Mode; primary text is graphite charcoal `#37352f`, paper background `#f7f6f3`, borders `#e3e2e0`.
+2. **Interactive Blue**: Primary buttons, checked checkboxes, and active tabs use `#2383e2` (hover `#1b6ec2`).
+3. **Pastel Status Palette**:
+   - Success: Background `#dbeddb` / Text `#1c3829`
+   - Warning: Background `#fdecc8` / Text `#402c1b`
+   - Error: Background `#ffe2dd` / Text `#5d1715`
+   - Info: Background `#e8f4fc` / Text `#0b6e99`
+   - Purple (Secondary): Background `#e8deee` / Text `#412454`
+4. **Corner Geometry (@theme Geometry)**:
    - `2xs`: 2px
    - `xs`: 3px (Checkbox)
-   - `sm`: 4px (Nút nhỏ, ô ngày)
-   - `md`: 5px (Nút chuẩn, Input, Select, TextArea)
+   - `sm`: 4px (Small button, calendar cell)
+   - `md`: 5px (Standard button, Input, Select, Textarea)
    - `lg`: 6px (Card, Table)
-   - `xl`: 8px (Dropdown, Popover, Calendar)
+   - `xl`: 8px (Dropdown, Popover, Calendar container)
    - `2xl`: 10px (Modal, Confirm)
-5. **Layered Ambient Shadows**: Luôn dùng `.shadow-openway-dropdown`, `.shadow-openway-modal`, `.shadow-openway-card` kết hợp viền hairline siêu mảnh.
-6. **Tabular Numbers**: Mọi bảng dữ liệu và đồng hồ đếm đều sử dụng `.tabular-nums` (`font-variant-numeric: tabular-nums`).
-7. **Zero `any`**: 100% component và hook được định kiểu TypeScript nghiêm ngặt.
+5. **Layered Ambient Shadows**: Always pair `.shadow-openway-dropdown`, `.shadow-openway-modal`, and `.shadow-openway-card` with subtle hairline borders.
+6. **Tabular Numbers**: All data tables, numeric inputs, and timers use `.tabular-nums` (`font-variant-numeric: tabular-nums`).
+7. **Zero `any`**: 100% of components and hooks are strictly typed in TypeScript.

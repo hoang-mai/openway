@@ -99,28 +99,32 @@ export function getVisibleTags<TData = unknown>(
 export function formatFilterBadgeValue(
   field: SelectFilterField<unknown>,
   val: unknown,
-  historicalOptionLabels?: Map<string | number, ReactNode>
+  historicalOptionLabels?: Map<string | number, ReactNode>,
+  locale?: { notEntered?: string; notSelected?: string }
 ): string {
+  const notEntered = locale?.notEntered ?? "Chưa nhập";
+  const notSelected = locale?.notSelected ?? "Chưa chọn";
+
   if (val === undefined || val === null || val === "") {
-    return "Chưa nhập";
+    return notEntered;
   }
 
   if (val instanceof Date) {
-    return val.toLocaleDateString("vi-VN");
+    return val.toLocaleDateString();
   }
 
   if (Array.isArray(val)) {
-    if (val.length === 0) return "Chưa chọn";
+    if (val.length === 0) return notSelected;
     // Date range
     if (field.type === "date-range" || val[0] instanceof Date || val[1] instanceof Date) {
       const formatPart = (d: unknown) => {
         if (!d) return "";
-        if (d instanceof Date) return d.toLocaleDateString("vi-VN");
+        if (d instanceof Date) return d.toLocaleDateString();
         return String(d);
       };
       const start = formatPart(val[0]);
       const end = formatPart(val[1]);
-      return start && end ? `${start} - ${end}` : start || end || "Chưa chọn";
+      return start && end ? `${start} - ${end}` : start || end || notSelected;
     }
     // Checkbox group / Options (multi-select / select)
     const getOptionLabel = (item: unknown) => {

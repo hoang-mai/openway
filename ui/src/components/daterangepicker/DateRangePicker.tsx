@@ -30,6 +30,7 @@ import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function DateRangePicker({
   ref,
@@ -40,7 +41,6 @@ export default function DateRangePicker({
   format = "DD/MM/YYYY",
   displayFormat: customDisplayFormat,
   defaultView = "days",
-  locale = "vi",
   firstDayOfWeek = 1,
   minDate,
   maxDate,
@@ -74,6 +74,7 @@ export default function DateRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateRangePickerProps) {
+  const datePickerLocale = useLocale("datePicker");
   const {
     isRequired = false,
     isInvalid = false,
@@ -119,13 +120,13 @@ export default function DateRangePicker({
 
   const formattedValue =
     selectedRange[0] && selectedRange[1]
-      ? `${formatDate(selectedRange[0], currentDisplayFormat, locale)}${separator}${formatDate(
+      ? `${formatDate(selectedRange[0], currentDisplayFormat, datePickerLocale)}${separator}${formatDate(
           selectedRange[1],
           currentDisplayFormat,
-          locale
+          datePickerLocale
         )}`
       : selectedRange[0]
-        ? `${formatDate(selectedRange[0], currentDisplayFormat, locale)}${separator}`
+        ? `${formatDate(selectedRange[0], currentDisplayFormat, datePickerLocale)}${separator}`
         : "";
 
   const [isOpen, setIsOpen] = useState(false);
@@ -186,8 +187,8 @@ export default function DateRangePicker({
 
     if (start && end) {
       const outputFormatted: [string, string] = [
-        formatDate(start, format, locale),
-        formatDate(end, format, locale),
+        formatDate(start, format, datePickerLocale),
+        formatDate(end, format, datePickerLocale),
       ];
       onChange?.(outputFormatted);
 
@@ -291,7 +292,6 @@ export default function DateRangePicker({
           minDate={minDate}
           maxDate={maxDate}
           isDateDisabled={isDateDisabled}
-          locale={locale}
           firstDayOfWeek={firstDayOfWeek}
           showWeekNumbers={showWeekNumbers}
           size={size}
@@ -403,7 +403,6 @@ export default function DateRangePicker({
                   minDate={minDate}
                   maxDate={maxDate}
                   isDateDisabled={isDateDisabled}
-                  locale={locale}
                   firstDayOfWeek={firstDayOfWeek}
                   showWeekNumbers={showWeekNumbers}
                   size={size}

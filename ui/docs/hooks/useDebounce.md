@@ -1,13 +1,13 @@
 # ⏱️ Hooks `useDebounce` & `useDebouncedCallback` (`@openway/ui`)
 
-Bộ đôi hook tối ưu hiệu năng giúp hoãn thực thi và chống spam request khi người dùng nhập dữ liệu hoặc thao tác liên tục.
+A performance optimization hook duo designed to delay execution and prevent request spamming during continuous user input or frequent actions.
 
 ---
 
-## 🌟 Phân biệt 2 Hook
+## 🌟 Differentiating the Two Hooks
 
-- **`useDebounce<T>(value, delay)`**: Dùng để debounce một **giá trị (value)** (ví dụ: chuỗi tìm kiếm text input, giá trị thanh trượt slider). Khi người dùng ngừng thay đổi sau khoảng thời gian `delay`, giá trị mới được cập nhật.
-- **`useDebouncedCallback(callback, delay)`**: Dùng để debounce một **hàm callback** (ví dụ: hàm gọi API, resize window, autosave form). Trả về hàm `{ debounced, cancel }`. Luôn giữ tham chiếu callback mới nhất mà không gây re-render dư thừa.
+- **`useDebounce<T>(value, delay)`**: Used to debounce a **value** (e.g., text search input query, slider value). The updated value is only emitted after the user stops making changes for the specified `delay` duration.
+- **`useDebouncedCallback(callback, delay)`**: Used to debounce a **callback function** (e.g., API call handler, window resize listener, form autosave). Returns `{ debounced, cancel }`. Always maintains the latest callback reference without triggering redundant re-renders.
 
 ---
 
@@ -19,9 +19,9 @@ import { useDebounce, useDebouncedCallback } from "@openway/ui";
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Sử dụng `useDebounce` với giá trị
+### 1. Using `useDebounce` with a Value
 
 ```tsx
 import { useState, useEffect } from "react";
@@ -29,12 +29,12 @@ import { Input, useDebounce } from "@openway/ui";
 
 export function SearchFilter() {
   const [keyword, setKeyword] = useState("");
-  // debouncedKeyword chỉ thay đổi sau khi ngừng gõ 400ms
+  // debouncedKeyword only updates after typing stops for 400ms
   const debouncedKeyword = useDebounce(keyword, 400);
 
   useEffect(() => {
     if (debouncedKeyword) {
-      console.log("Tìm kiếm với từ khóa:", debouncedKeyword);
+      console.log("Searching with keyword:", debouncedKeyword);
     }
   }, [debouncedKeyword]);
 
@@ -51,14 +51,14 @@ export function SearchFilter() {
 
 ---
 
-### 2. Sử dụng `useDebouncedCallback` với hàm xử lý
+### 2. Using `useDebouncedCallback` with a Handler Function
 
 ```tsx
 import { useDebouncedCallback, Button } from "@openway/ui";
 
 export function AutoSaveForm() {
   const { debounced: handleAutoSave, cancel } = useDebouncedCallback((formData: Record<string, unknown>) => {
-    console.log("Tự động lưu dữ liệu lên server:", formData);
+    console.log("Autosaving data to server:", formData);
   }, 500);
 
   return (
@@ -76,17 +76,17 @@ export function AutoSaveForm() {
 
 ---
 
-## 🎛️ Bảng Tham số
+## 🎛️ Parameters
 
 ### `useDebounce<T>(value: T, delay?: number): T`
-| Tham số | Kiểu dữ liệu | Mặc định | Mô tả |
+| Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `value` | `T` | **Bắt buộc** | Giá trị cần debounce. |
-| `delay` | `number` | `300` | Thời gian hoãn tính theo mili-giây (ms). |
+| `value` | `T` | **Required** | The value to debounce. |
+| `delay` | `number` | `300` | Delay duration in milliseconds (ms). |
 
 ### `useDebouncedCallback(callback, delay?: number)`
-| Tham số | Kiểu dữ liệu | Mặc định | Mô tả |
+| Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `callback` | `(...args: Args) => R` | **Bắt buộc** | Hàm cần debounce. |
-| `delay` | `number` | `300` | Thời gian hoãn tính theo mili-giây (ms). |
-- Trả về object: `{ debounced: (...args) => void, cancel: () => void }`.
+| `callback` | `(...args: Args) => R` | **Required** | The function to debounce. |
+| `delay` | `number` | `300` | Delay duration in milliseconds (ms). |
+- Returns an object: `{ debounced: (...args) => void, cancel: () => void }`.

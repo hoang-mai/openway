@@ -1,22 +1,22 @@
 # 📦 Modal Component (`@openway/ui`)
 
-Bộ component **Modal** hiệu năng cao, chuẩn **HTML5 Native `<dialog>`** và thiết kế theo mô hình **Pure Compound Pattern** linh hoạt.
+High-performance **Modal** component suite built on the **HTML5 Native `<dialog>`** element and designed using the flexible **Pure Compound Pattern**.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Native Top Layer**: Sử dụng thẻ `<dialog>` kết hợp phương thức `dialog.showModal()` của trình duyệt. Modal tự động nổi lên tầng cao nhất (`#top-layer`), không bao giờ bị cắt xén bởi phần tử cha có `overflow: hidden`, `overflow: auto` hay xung đột `z-index`.
-- **Zero Global Store**: Loại bỏ hoàn toàn Zustand / Redux / React Portal. Bạn có thể render Modal ở bất kỳ đâu trong cây JSX.
-- **Mượt mà với Exit Animation**: Tích hợp sẵn hiệu ứng mở và thoát (**Exit Animation 250ms**) cho cả hộp thoại lẫn nền mờ backdrop.
-- **Pure Compound Architecture**: Tách rời hoàn toàn giữa tầng Container (`<ModalContainer>`) và tầng giao diện (`<Modal>`, `<ModalHeader>`, `<ModalBody>`, `<ModalFooter>`, `<ModalClose>`).
-- **Tự động liên kết Context**: Nút đóng `(X)` trong `<ModalHeader>` và component `<ModalClose>` tự động kích hoạt đóng kèm Exit Animation mà không cần truyền lặp lại state `open/onClose`.
-- **Hỗ trợ Loading an toàn (`isLoading`)**: Tự động khóa đóng modal (chặn click backdrop, chặn ESC, tự động disable nút đóng và nút bọc `<ModalClose>`) khi đang trong tiến trình xử lý API/tải dữ liệu.
-- **Hỗ trợ đầy đủ Accessibility (a11y)**: Tự động khóa cuộn trang (`body scroll lock`), bắt phím `ESC`, focus trap của trình duyệt, liên kết `aria-labelledby` và `aria-describedby`.
+- **Native Top Layer**: Built with the `<dialog>` element and the browser's native `dialog.showModal()` method. The modal is automatically rendered in the browser's top layer (`#top-layer`), preventing clipping issues caused by parent containers with `overflow: hidden`, `overflow: auto`, or `z-index` conflicts.
+- **Zero Global Store**: Completely eliminates the need for Zustand / Redux / React Portal. You can render the Modal anywhere within your JSX tree.
+- **Smooth Exit Animation**: Features built-in entry and exit transitions (**250ms Exit Animation**) for both the dialog window and the backdrop overlay.
+- **Pure Compound Architecture**: Clean separation of concerns between the container layer (`<ModalContainer>`) and the presentation layers (`<Modal>`, `<ModalHeader>`, `<ModalBody>`, `<ModalFooter>`, `<ModalClose>`).
+- **Automatic Context Linking**: The close button `(X)` in `<ModalHeader>` and the `<ModalClose>` component trigger modal dismissal with exit animations without manually passing down `open/onClose` state.
+- **Safe Loading Support (`isLoading`)**: Automatically locks the modal against dismissal (disables backdrop clicks, suppresses the ESC key, and disables close buttons and `<ModalClose>` triggers) during asynchronous API calls and background operations.
+- **Comprehensive Accessibility (a11y)**: Automatic body scroll locking (`body scroll lock`), `ESC` key listening, native browser focus trap, and integrated `aria-labelledby` and `aria-describedby` associations.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -32,9 +32,9 @@ import {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản (Basic Modal)
+### 1. Basic Usage (Basic Modal)
 
 ```tsx
 import { useState } from "react";
@@ -53,25 +53,25 @@ export function BasicModalExample() {
 
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>Mở Modal</Button>
+      <Button onClick={() => setOpen(true)}>Open Modal</Button>
 
       <ModalContainer open={open} onClose={() => setOpen(false)}>
         <Modal size="md" radius="xl">
           <ModalHeader
-            title="Xác nhận cập nhật"
-            description="Vui lòng kiểm tra lại thông tin trước khi tiếp tục."
+            title="Confirm Update"
+            description="Please review your information before proceeding."
           />
           <ModalBody>
             <p className="text-sm text-neutral-600">
-              Hệ thống sẽ lưu các thay đổi của bạn vào cơ sở dữ liệu.
+              The system will save your changes to the database.
             </p>
           </ModalBody>
           <ModalFooter>
             <ModalClose>
-              <Button variant="outline">Hủy bỏ</Button>
+              <Button variant="outline">Cancel</Button>
             </ModalClose>
             <ModalClose>
-              <Button color="primary">Đồng ý</Button>
+              <Button color="primary">Confirm</Button>
             </ModalClose>
           </ModalFooter>
         </Modal>
@@ -83,11 +83,11 @@ export function BasicModalExample() {
 
 ---
 
-### 2. Form nhập liệu phức tạp & Xử lý Loading (`isLoading`)
+### 2. Complex Forms & Loading States (`isLoading`)
 
-Khi submit form và gọi API bất đồng bộ, chỉ cần truyền prop `isLoading={loading}` vào `<ModalContainer>`. Hệ thống sẽ tự động:
-- Chặn người dùng đóng Modal khi bấm phím `ESC` hoặc click ra ngoài vùng nền mờ `backdrop`.
-- Tự động `disabled` nút đóng `(X)` ở Header và nút bọc bên trong `<ModalClose>`.
+When submitting forms and invoking asynchronous APIs, pass the `isLoading={loading}` prop to `<ModalContainer>`. The system automatically:
+- Prevents users from closing the modal via the `ESC` key or clicking on the backdrop overlay.
+- Automatically disables the header close button `(X)` and elements wrapped inside `<ModalClose>`.
 
 ```tsx
 export function CreateUserModal({ open, onClose, onSuccess }) {
@@ -97,10 +97,10 @@ export function CreateUserModal({ open, onClose, onSuccess }) {
     e.preventDefault();
     setLoading(true);
     try {
-      // 1. Gọi API lưu dữ liệu
+      // 1. Call API to save data
       await apiCreateUser();
       onSuccess?.();
-      // 2. Đóng modal sau khi hoàn thành
+      // 2. Close modal upon completion
       onClose();
     } finally {
       setLoading(false);
@@ -111,13 +111,13 @@ export function CreateUserModal({ open, onClose, onSuccess }) {
     <ModalContainer open={open} isLoading={loading} onClose={onClose}>
       <Modal size="lg">
         <ModalHeader
-          title="Tạo người dùng mới"
-          description="Điền thông tin chi tiết của thành viên mới"
+          title="Create New User"
+          description="Enter details for the new member"
         />
         <form onSubmit={handleSubmit}>
           <ModalBody className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Họ và tên</label>
+              <label className="block text-sm font-medium mb-1">Full Name</label>
               <input required className="w-full border rounded-md px-3 py-2 text-sm" />
             </div>
             <div>
@@ -126,12 +126,12 @@ export function CreateUserModal({ open, onClose, onSuccess }) {
             </div>
           </ModalBody>
           <ModalFooter>
-            {/* Tự động disabled khi isLoading = true */}
+            {/* Automatically disabled when isLoading = true */}
             <ModalClose>
-              <Button variant="outline" type="button">Hủy</Button>
+              <Button variant="outline" type="button">Cancel</Button>
             </ModalClose>
             <Button color="primary" type="submit" loading={loading}>
-              Lưu thành viên
+              Save Member
             </Button>
           </ModalFooter>
         </form>
@@ -143,9 +143,9 @@ export function CreateUserModal({ open, onClose, onSuccess }) {
 
 ---
 
-### 3. Đóng Modal lập trình qua Hook (`useModalContext`)
+### 3. Programmatic Dismissal via Hook (`useModalContext`)
 
-Nếu cần thực hiện logic bất đồng bộ (validate, fetch) trong các component con nằm sâu bên trong Modal:
+If you need to execute asynchronous logic (e.g. validation, fetching) inside deeply nested children within the Modal:
 
 ```tsx
 import { useModalContext, Button } from "@openway/ui";
@@ -155,12 +155,12 @@ function CustomAction() {
 
   const handleSaveAndClose = async () => {
     await saveApi();
-    onClose?.(); // Kích hoạt animation thoát 250ms của ModalContainer
+    onClose?.(); // Triggers the 250ms exit animation of ModalContainer
   };
 
   return (
     <Button onClick={handleSaveAndClose} disabled={isLoading}>
-      Lưu và Đóng
+      Save and Close
     </Button>
   );
 }
@@ -168,126 +168,126 @@ function CustomAction() {
 
 ---
 
-### 4. Tùy biến kích thước (`size`) & Bo góc (`radius`)
+### 4. Customizing Sizes (`size`) & Border Radius (`radius`)
 
-Modal hỗ trợ 6 kích thước chiều rộng và 6 mức độ bo góc. Bạn có thể truyền `size` trực tiếp vào `<ModalContainer size="lg">` để tự động đồng bộ kích thước xuống toàn bộ các component con (`Modal`, `ModalHeader`, `ModalBody`, `ModalFooter`):
+Modal supports 6 width sizes and 6 border radius levels. You can pass `size` directly to `<ModalContainer size="lg">` to automatically synchronize the size across all child components (`Modal`, `ModalHeader`, `ModalBody`, `ModalFooter`):
 
-> **Độ ưu tiên kích thước:** `Prop truyền trực tiếp vào component con` > `Prop size từ ModalContainer qua Context` > `Mặc định ("md")`.
+> **Size Precedence:** `Prop passed directly to child component` > `size prop from ModalContainer via Context` > `Default ("md")`.
 
 ```tsx
-// Đồng bộ toàn bộ Modal, Header, Body, Footer thành kích thước "lg"
+// Synchronizes the entire Modal, Header, Body, and Footer to "lg"
 <ModalContainer open={open} size="lg" onClose={() => setOpen(false)}>
   <Modal radius="full">
-    <ModalHeader title="Modal Kích Thước Lớn (LG)" />
+    <ModalHeader title="Large Modal (LG)" />
     <ModalBody>...</ModalBody>
     <ModalFooter>...</ModalFooter>
   </Modal>
 </ModalContainer>
 ```
 
-| Kích thước (`size`) | Chiều rộng (`max-w`) | Mục đích sử dụng |
+| Size (`size`) | Width (`max-w`) | Intended Use |
 | :--- | :--- | :--- |
-| `xs` | `320px` | Thông báo ngắn gọn, prompt đơn giản |
-| `sm` | `400px` | Hộp thoại xác nhận, form 1-2 trường nhập |
-| `md` *(mặc định)* | `540px` | Form nhập liệu tiêu chuẩn |
-| `lg` | `720px` | Form nhiều cột, cắt ảnh (avatar crop) |
-| `xl` | `960px` | Xem tài liệu, bảng dữ liệu biểu mẫu |
-| `full` | `100vw` | Trải nghiệm toàn màn hình |
+| `xs` | `320px` | Short alerts, simple prompts |
+| `sm` | `400px` | Confirmation dialogs, 1-2 input fields |
+| `md` *(default)* | `540px` | Standard input forms |
+| `lg` | `720px` | Multi-column forms, avatar cropping |
+| `xl` | `960px` | Document viewing, data tables, sheets |
+| `full` | `100vw` | Fullscreen modal experience |
 
 ---
 
-## 📚 Bảng tra cứu Props (API Reference)
+## 📚 Props Reference (API Reference)
 
 ### `<ModalContainer>`
 
-Tầng Wrapper quản lý Overlay Backdrop, Native Dialog, Animation thoát và phím ESC.
+Wrapper layer managing the Overlay Backdrop, Native Dialog, exit animation, and ESC key handling.
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `open` | `boolean` | `false` | Trạng thái hiển thị mở/đóng Modal |
-| `onClose` | `() => void` | `undefined` | Callback khi Modal đóng (click backdrop, bấm ESC, bấm nút X) |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Kích thước tổng thể đồng bộ xuống Context cho `Modal`, `ModalHeader`, `ModalBody`, `ModalFooter` |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải/xử lý. Khi `true`, sẽ chặn đóng Modal (qua click backdrop, phím ESC, nút X, `<ModalClose>`) và tự động `disabled` các nút đóng |
-| `closeOnOverlayClick` | `boolean` | `true` | Cho phép đóng Modal khi click vào lớp nền backdrop bên ngoài (bị chặn khi `isLoading = true`) |
-| `closeOnEsc` | `boolean` | `true` | Cho phép đóng Modal khi nhấn phím `ESC` trên bàn phím (bị chặn khi `isLoading = true`) |
-| `lockScroll` | `boolean` | `true` | Tự động khóa cuộn trang (`body overflow: hidden`) khi mở Modal |
-| `overlayClassName` | `string` | `""` | Class CSS tùy biến cho lớp nền backdrop mờ toàn màn hình |
-| `className` | `string` | `""` | Class CSS cho container bao ngoài dialog |
-| `children` | `ReactNode` | — | Nội dung bên trong container (thường là `<Modal>`) |
+| `open` | `boolean` | `false` | Whether the modal is open or closed |
+| `onClose` | `() => void` | `undefined` | Callback fired when the modal closes (backdrop click, ESC key, or close button) |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Global size synchronized via Context to `Modal`, `ModalHeader`, `ModalBody`, and `ModalFooter` |
+| `isLoading` | `boolean` | `false` | Loading/processing state. When `true`, prevents closing the modal (via backdrop click, ESC key, X button, or `<ModalClose>`) and automatically disables close buttons |
+| `closeOnOverlayClick` | `boolean` | `true` | Allows closing the modal by clicking the backdrop overlay (blocked when `isLoading = true`) |
+| `closeOnEsc` | `boolean` | `true` | Allows closing the modal by pressing the `ESC` key (blocked when `isLoading = true`) |
+| `lockScroll` | `boolean` | `true` | Automatically locks body scroll (`body overflow: hidden`) when the modal is open |
+| `overlayClassName` | `string` | `""` | Custom CSS class for the full-screen backdrop overlay |
+| `className` | `string` | `""` | CSS class for the outer dialog container |
+| `children` | `ReactNode` | — | Content inside the container (typically `<Modal>`) |
 
 ---
 
 ### `<Modal>`
 
-Khung giao diện hộp thoại (Dialog Box).
+The dialog box interface container.
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Kích thước chiều rộng của hộp thoại |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'rounded-lg'` | Mức độ bo góc của hộp thoại |
-| `className` | `string` | `""` | Class CSS tùy biến cho hộp thoại |
-| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref trỏ trực tiếp đến thẻ div hộp thoại |
-| `children` | `ReactNode` | — | Các component con (`<ModalHeader>`, `<ModalBody>`, `<ModalFooter>`) |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Width size of the dialog box |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'rounded-lg'` | Border radius level of the dialog box |
+| `className` | `string` | `""` | Custom CSS class for the dialog box |
+| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref directly referencing the dialog div element |
+| `children` | `ReactNode` | — | Child components (`<ModalHeader>`, `<ModalBody>`, `<ModalFooter>`) |
 
 ---
 
 ### `<ModalHeader>`
 
-Phần đầu của hộp thoại Modal.
+Header section of the modal dialog.
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `title` | `ReactNode` | `undefined` | Tiêu đề chính của Modal |
-| `description` | `ReactNode` | `undefined` | Đoạn văn bản mô tả phụ bên dưới tiêu đề |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Kích thước áp dụng cho tiêu đề và padding |
-| `showCloseButton` | `boolean` | `true` | Hiển thị nút đóng `(X)` ở góc trên bên phải (tự động `disabled` khi `isLoading = true`) |
-| `onClose` | `() => void` | `undefined` | Callback tùy biến khi click nút `(X)` (vẫn luôn chạy kèm animation thoát của ModalContainer) |
-| `titleClassName` | `string` | `""` | Class CSS riêng cho text tiêu đề |
-| `descriptionClassName`| `string` | `""` | Class CSS riêng cho text mô tả |
-| `closeButtonClassName`| `string` | `""` | Class CSS tùy biến nút đóng `(X)` |
-| `className` | `string` | `""` | Class CSS cho toàn bộ khối header |
+| `title` | `ReactNode` | `undefined` | Primary title of the Modal |
+| `description` | `ReactNode` | `undefined` | Subtitle or description text below the title |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Size applied to title and padding |
+| `showCloseButton` | `boolean` | `true` | Whether to display the close `(X)` button at the top right (automatically disabled when `isLoading = true`) |
+| `onClose` | `() => void` | `undefined` | Custom callback when clicking the `(X)` button (always executes alongside ModalContainer's exit animation) |
+| `titleClassName` | `string` | `""` | Custom CSS class for the title text |
+| `descriptionClassName`| `string` | `""` | Custom CSS class for the description text |
+| `closeButtonClassName`| `string` | `""` | Custom CSS class for the close `(X)` button |
+| `className` | `string` | `""` | CSS class for the entire header section |
 
 ---
 
 ### `<ModalBody>`
 
-Phần thân chứa nội dung chính (tự động bật thanh cuộn dọc khi nội dung dài).
+Body section containing the main modal content (automatically enables vertical scrolling when content overflows).
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Kích thước padding và font size (tự động kế thừa từ ModalContainer) |
-| `className` | `string` | `""` | Class CSS tùy biến cho khối body |
-| `children` | `ReactNode` | — | Nội dung form, bảng biểu, danh sách... |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Padding size and font size (automatically inherited from ModalContainer) |
+| `className` | `string` | `""` | Custom CSS class for the body section |
+| `children` | `ReactNode` | — | Form content, tables, lists, etc. |
 
 ---
 
 ### `<ModalFooter>`
 
-Phần chân trang chứa các nút hành động xác nhận hoặc hủy.
+Footer section containing action buttons for confirmation or cancellation.
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Kích thước padding và khoảng cách gap giữa các nút |
-| `className` | `string` | `""` | Class CSS cho toàn bộ khối footer |
-| `children` | `ReactNode` | — | Các nút bấm (`<Button>`, `<ModalClose>`) |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Padding size and gap spacing between action buttons |
+| `className` | `string` | `""` | CSS class for the entire footer container |
+| `children` | `ReactNode` | — | Buttons (`<Button>`, `<ModalClose>`) |
 
 ---
 
 ### `<ModalClose>`
 
-Wrapper bọc quanh bất kỳ nút bấm hoặc phần tử nào bên trong Modal (ví dụ: nút Hủy bỏ trong Footer). Khi click, `<ModalClose>` sẽ tự động kích hoạt hiệu ứng đóng mượt mà (**Exit Animation 250ms**) trước khi unmount (tự động `disabled` khi `isLoading = true`).
+Wrapper around any button or element inside the Modal (such as a Cancel button in the Footer). When clicked, `<ModalClose>` automatically triggers a smooth exit transition (**250ms Exit Animation**) prior to unmounting (automatically disabled when `isLoading = true`).
 
 ```tsx
 <ModalFooter>
-  {/* asChild=true (mặc định) sẽ ghép thẳng sự kiện vào Button mà không sinh thêm thẻ div thừa */}
+  {/* asChild=true (default) forwards the click event directly to Button without creating an extra div wrapper */}
   <ModalClose>
-    <Button variant="outline">Hủy bỏ</Button>
+    <Button variant="outline">Cancel</Button>
   </ModalClose>
-  <Button color="primary" onClick={handleSave}>Lưu thay đổi</Button>
+  <Button color="primary" onClick={handleSave}>Save changes</Button>
 </ModalFooter>
 ```
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Nút bấm hoặc phần tử con cần kích hoạt sự kiện đóng |
-| `asChild` | `boolean` | `true` | Truyền thẳng sự kiện `onClick` và prop `disabled` vào phần tử con thay vì bọc ngoài bằng thẻ `div` |
+| `children` | `ReactNode` | — | Button or child element that triggers modal dismissal |
+| `asChild` | `boolean` | `true` | Forwards the `onClick` handler and `disabled` prop directly to the child element instead of wrapping in an outer `div` |

@@ -3,14 +3,15 @@ import { sizeConfig } from "./constants";
 import Button from "../button/Button";
 import { useConfirmContext } from "./ConfirmContext";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "../common/OpenWayProvider";
 
 /**
  * Phần chân của hộp thoại Confirm (Chứa các nút hành động Xác nhận, Hủy, hoặc các nút tùy chỉnh)
  */
 export default function ConfirmFooter({
   size,
-  confirmText = "Xác nhận",
-  cancelText = "Hủy",
+  confirmText: confirmTextProp,
+  cancelText: cancelTextProp,
   confirmVariant = "filled",
   cancelVariant = "outline",
   confirmColor,
@@ -24,6 +25,9 @@ export default function ConfirmFooter({
   children,
   ...props
 }: ConfirmFooterProps) {
+  const confirmLocale = useLocale("confirm");
+  const confirmText = confirmTextProp ?? confirmLocale.confirmText;
+  const cancelText = cancelTextProp ?? confirmLocale.cancelText;
   const confirmContext = useConfirmContext();
   const currentSize = getSafeConfig(size ?? confirmContext?.size, sizeConfig, "md");
   const currentConfirmColor = confirmColor ?? confirmContext?.color ?? "warning";

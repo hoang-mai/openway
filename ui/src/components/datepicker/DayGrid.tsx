@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { DayGridProps } from "./types";
 import { datePickerSizeConfig, datePickerColorConfig, datePickerRadiusConfig } from "./constants";
-import { resolveLocale } from "./utils";
+import { useLocale } from "../common/OpenWayProvider";
 import { getSafeConfig } from "@/utils/function";
 
 export default function DayGrid({
@@ -10,11 +10,10 @@ export default function DayGrid({
   size = "md",
   color = "primary",
   radius,
-  locale,
   firstDayOfWeek = 1,
   showWeekNumbers = false,
 }: DayGridProps) {
-  const loc = resolveLocale(locale);
+  const loc = useLocale("datePicker");
   const sizeStyles = getSafeConfig(size, datePickerSizeConfig, "md");
   const colorStyles = getSafeConfig(color, datePickerColorConfig, "primary");
   const radiusClass = getSafeConfig(radius, datePickerRadiusConfig, "lg");

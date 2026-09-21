@@ -15,8 +15,7 @@ import {
 } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { getFileName } from "@/components/file-preview";
-
-
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function UploadImageDropzone({
   size = "md",
@@ -25,11 +24,11 @@ export default function UploadImageDropzone({
   radius,
   shape = "rectangle",
   objectFit = "contain",
-  disabled,
-  readOnly,
-  isLoading,
+  disabled = false,
+  readOnly = false,
+  isLoading = false,
   dragStatus = "idle",
-  isInvalid,
+  isInvalid = false,
   dropzoneTitle,
   dropzoneDescription,
   icon,
@@ -41,6 +40,7 @@ export default function UploadImageDropzone({
   className = "",
   describedById,
 }: UploadImageDropzoneProps) {
+  const uploadLocale = useLocale("upload");
   const currentSize = getSafeConfig(size, uploadImageSizeConfig, "md");
   const effectiveRadius = getSafeConfig(radius, uploadImageRadiusConfig, "md");
 
@@ -50,8 +50,8 @@ export default function UploadImageDropzone({
   const variantConfig = variant !== "other" ? getSafeConfig(variant, uploadImageVariantColorConfig, "outline") : null;
   const colorStyles = variantConfig ? getSafeConfig(effectiveColor, variantConfig, "primary") : null;
 
-  const defaultTitle = "Kéo thả hình ảnh vào đây, hoặc nhấn để duyệt file";
-  const defaultDesc = "Hỗ trợ định dạng PNG, JPG, WEBP, GIF";
+  const defaultTitle = uploadLocale.dragDropText;
+  const defaultDesc = uploadLocale.imageDropzoneDescription;
 
   const isDragActive = dragStatus === "active";
   const isDragReject = dragStatus === "reject";

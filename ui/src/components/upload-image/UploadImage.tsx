@@ -13,6 +13,7 @@ import HelperErrorText from "@/components/common/HelperErrorText";
 import UploadImageDropzone from "./UploadImageDropzone";
 import UploadImageList from "./UploadImageList";
 import { PreviewFile } from "@/components/file-preview/types";
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function UploadImage({
   value,
@@ -44,13 +45,15 @@ export default function UploadImage({
   dropzoneTitle,
   dropzoneDescription,
   icon,
-  buttonText = "Tải ảnh lên",
+  buttonText: buttonTextProp,
   renderItem,
   className = "",
   dropzoneClassName = "",
   previewClassName = "",
   helperClassName = "",
 }: UploadImageProps) {
+  const uploadLocale = useLocale("upload");
+  const buttonText = buttonTextProp ?? uploadLocale.browseButton;
   const generatedId = useId();
   const inputId = `${generatedId}-input`;
   const errorHelperId = `${generatedId}-error-helper`;
@@ -121,7 +124,7 @@ export default function UploadImage({
         } else {
           const remainingSlots = effectiveMaxCount - currentCount;
           if (remainingSlots <= 0) {
-            const err = `Maximum allowed image count reached (${effectiveMaxCount} images)`;
+            const err = uploadLocale.imageMaxCountError(effectiveMaxCount);
             setValidationError(err);
             setSrAnnouncement(err);
             return;
@@ -136,11 +139,13 @@ export default function UploadImage({
             try {
               const result = await beforeUpload(file);
               if (result === false || typeof result === "string") {
-                const err = typeof result === "string" ? result : `File ${file.name} was rejected`;
+                const err =
+                  typeof result === "string" ? result : uploadLocale.processingError(file.name);
                 return { file: null, error: err };
               }
             } catch (err: unknown) {
-              const errMsg = err instanceof Error ? err.message : `Không thể xử lý tệp ${file.name}`;
+              const errMsg =
+                err instanceof Error ? err.message : uploadLocale.processingError(file.name);
               return { file: null, error: errMsg };
             }
           }
@@ -152,7 +157,7 @@ export default function UploadImage({
       for (const res of results) {
         if (res.error) {
           setValidationError(res.error);
-          setSrAnnouncement(`Lỗi: ${res.error}`);
+          setSrAnnouncement(res.error);
         } else if (res.file) {
           newValidFiles.push(res.file);
         }
@@ -161,25 +166,24 @@ export default function UploadImage({
       if (newValidFiles.length > 0) {
         const finalItems: PreviewFile[] = !multiple ? newValidFiles : [...currentItems, ...newValidFiles];
         updateItems(finalItems);
-        setSrAnnouncement(`Tải lên thành công ${newValidFiles.length} hình ảnh. Tổng cộng: ${finalItems.length}.`);
+        setSrAnnouncement(uploadLocale.imagesAddedSr(newValidFiles.length, finalItems.length));
       }
     },
     onDropRejected: (rejections) => {
       const firstError = rejections[0]?.errors[0];
       if (!firstError) return;
 
-      let msg = firstError.message || "Tệp không hợp lệ";
+      let msg = firstError.message || uploadLocale.invalidTypeError;
       if (firstError.code === "file-too-large") {
-        msg = `Kích thước tệp vượt quá giới hạn tối đa (${formatBytes(maxSize || 0)})`;
+        msg = uploadLocale.maxSizeError(formatBytes(maxSize || 0));
       } else if (firstError.code === "file-invalid-type") {
-        const acceptStr = typeof accept === "string" ? accept : Object.keys(accept || {}).join(", ");
-        msg = `Định dạng tệp không hợp lệ. Các định dạng được hỗ trợ: ${acceptStr}`;
+        msg = uploadLocale.invalidTypeError;
       } else if (firstError.code === "too-many-files") {
-        msg = `Số lượng hình ảnh vượt quá giới hạn cho phép (${effectiveMaxCount} hình ảnh)`;
+        msg = uploadLocale.imageMaxCountError(effectiveMaxCount || 0);
       }
 
       setValidationError(msg);
-      setSrAnnouncement(`Lỗi tệp: ${msg}`);
+      setSrAnnouncement(msg);
     },
   });
 
@@ -188,7 +192,7 @@ export default function UploadImage({
     const newItems = currentItems.filter((_, i) => i !== index);
     updateItems(newItems);
     onRemove?.(item, index);
-    setSrAnnouncement(`Đã xóa hình ảnh ${getFileName(item)}`);
+    setSrAnnouncement(uploadLocale.imageRemovedSr(getFileName(item), newItems.length));
   };
 
   const handleOpenPreview = (item: PreviewFile) => {
@@ -316,7 +320,7 @@ export default function UploadImage({
                 }
                 onClick={open}
                 leftIcon={<UploadIcon width={currentSize.iconSize * 0.5} height={currentSize.iconSize * 0.5} />}
-                aria-label={"Tải ảnh lên"}
+                aria-label={typeof buttonText === "string" ? buttonText : uploadLocale.browseButton}
               >
                 {buttonText}
               </Button>

@@ -7,7 +7,6 @@ export { default as YearGrid } from "./YearGrid";
 
 export type * from "./types";
 export {
-  resolveLocale,
   toDate,
   formatDate,
   parseDate,

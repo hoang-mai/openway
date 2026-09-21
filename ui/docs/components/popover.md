@@ -1,29 +1,29 @@
 # 💬 Popover Component (`@openway/ui`)
 
-Bộ component **Popover** (hộp thoại nổi tương tác) xây dựng theo mô hình **Compound Component** trên nền tảng **`@floating-ui/react`**, hỗ trợ **chuẩn WAI-ARIA Dialog**, **quản lý tiêu điểm thông minh (FloatingFocusManager)**, **tự động căn vị trí thông minh (flip/shift/offset)**, và tương thích hoàn toàn với **React 19 / React Compiler**.
+The **Popover** component suite is built on top of **`@floating-ui/react`** following the **Compound Component** pattern. It provides full support for the **WAI-ARIA Dialog specification**, **smart focus management (`FloatingFocusManager`)**, **intelligent positioning (flip/shift/offset)**, and full compatibility with **React 19 / React Compiler**.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Compound Component Pattern**: Cấu trúc module rõ ràng gồm `<Popover>`, `<PopoverTrigger>`, `<PopoverContent>`, `<PopoverHeader>`, `<PopoverBody>`, `<PopoverFooter>`, `<PopoverClose>`.
-- **Hỗ trợ React 19 & React Compiler**: Áp dụng mô hình `Slot` component trên cả `PopoverTrigger` và `PopoverClose`, đảm bảo xử lý `ref` sạch sẽ và an toàn tuyệt đối khi render.
-- **Quản lý tiêu điểm (Focus Management)**: Tích hợp `FloatingFocusManager`, tự động bẫy/khóa focus bên trong popover khi ở chế độ `modal={true}` và khôi phục focus về trigger khi đóng.
-- **Hệ thống z-index đồng bộ**: Sử dụng `DEFAULT_Z_INDEX.POPOVER` (mặc định `50`) từ hệ thống constants của `@openway/ui`.
-- **Luôn nổi trên cùng (Floating Portal)**: Nội dung popover luôn được gắn vào `<FloatingPortal>`, không bị ảnh hưởng bởi layout cha hay `overflow: hidden`.
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` giúp các subcomponents (`PopoverContent`, `PopoverHeader`, `PopoverBody`, `PopoverFooter`) lấy an toàn cấu hình `sizeConfig` và `radiusConfig`.
+- **Compound Component Pattern**: Clean modular structure consisting of `<Popover>`, `<PopoverTrigger>`, `<PopoverContent>`, `<PopoverHeader>`, `<PopoverBody>`, `<PopoverFooter>`, and `<PopoverClose>`.
+- **React 19 & React Compiler Ready**: Utilizes the `Slot` component pattern on both `PopoverTrigger` and `PopoverClose`, ensuring clean `ref` forwarding and reliable rendering.
+- **Focus Management**: Integrates `FloatingFocusManager`, automatically trapping focus inside the popover when in `modal={true}` mode and restoring focus to the trigger upon dismissal.
+- **Unified z-index System**: Defaults to `DEFAULT_Z_INDEX.POPOVER` (default `50`) from the `@openway/ui` constant system.
+- **Always Floats on Top (Floating Portal)**: Popover content renders within a `<FloatingPortal>`, ensuring it is never clipped or constrained by parent layouts or `overflow: hidden`.
+- **Safe Config Fallback**: Uses `getSafeConfig` internally so subcomponents (`PopoverContent`, `PopoverHeader`, `PopoverBody`, `PopoverFooter`) safely retrieve `sizeConfig` and `radiusConfig`.
 - **WAI-ARIA Accessibility**:
-  - `role="dialog"` cho popover container.
-  - `aria-expanded`, `aria-haspopup="dialog"`.
-  - Tự động đóng khi nhấn phím `Escape` (`closeOnEsc`) hoặc click ra ngoài (`closeOnClickOutside`).
-- **Tùy biến linh hoạt**:
-  - 5 kích cỡ: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`.
-  - 6 cấp độ bo góc: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
-  - 2 cơ chế kích hoạt: `click` (*mặc định*) hoặc `hover` (hỗ trợ `safePolygon` giúp di chuột mượt mà sang popover).
+  - `role="dialog"` on the popover container.
+  - `aria-expanded` and `aria-haspopup="dialog"`.
+  - Automatic dismissal on `Escape` key press (`closeOnEsc`) or clicking outside (`closeOnClickOutside`).
+- **Flexible Customization**:
+  - 5 sizes: `xs`, `sm`, `md` (*default*), `lg`, `xl`.
+  - 6 border radius variants: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
+  - 2 trigger mechanisms: `click` (*default*) or `hover` (supports `safePolygon` for smooth pointer traversal into the popover).
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -53,9 +53,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Popover cơ bản (Form nhập liệu / Bộ lọc)
+### 1. Basic Popover (Input Forms / Filter Panels)
 
 ```tsx
 import {
@@ -73,35 +73,35 @@ export function BasicPopover() {
   return (
     <Popover placement="bottom-start" size="md">
       <PopoverTrigger>
-        <Button variant="outline">Mở bộ lọc</Button>
+        <Button variant="outline">Open Filter</Button>
       </PopoverTrigger>
       <PopoverContent minWidth={280}>
-        <PopoverHeader>Bộ lọc nâng cao</PopoverHeader>
+        <PopoverHeader>Advanced Filters</PopoverHeader>
         <PopoverBody>
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-1">Từ khóa</label>
+              <label className="block text-xs font-medium text-neutral-600 mb-1">Keywords</label>
               <input
                 type="text"
-                placeholder="Nhập từ khóa..."
+                placeholder="Enter keywords..."
                 className="w-full px-2.5 py-1.5 border border-neutral-300 rounded text-sm outline-none focus:border-primary-500"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-1">Trạng thái</label>
+              <label className="block text-xs font-medium text-neutral-600 mb-1">Status</label>
               <select className="w-full px-2.5 py-1.5 border border-neutral-300 rounded text-sm outline-none focus:border-primary-500">
-                <option value="all">Tất cả</option>
-                <option value="active">Đang hoạt động</option>
-                <option value="inactive">Đã tạm dừng</option>
+                <option value="all">All</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
               </select>
             </div>
           </div>
         </PopoverBody>
         <PopoverFooter className="flex justify-end gap-2">
           <PopoverClose asChild>
-            <Button variant="ghost" size="sm">Hủy</Button>
+            <Button variant="ghost" size="sm">Cancel</Button>
           </PopoverClose>
-          <Button size="sm">Áp dụng</Button>
+          <Button size="sm">Apply</Button>
         </PopoverFooter>
       </PopoverContent>
     </Popover>
@@ -111,7 +111,7 @@ export function BasicPopover() {
 
 ---
 
-### 2. Tùy biến Trigger với `asChild`
+### 2. Customizing Trigger with `asChild`
 
 ```tsx
 import { Popover, PopoverTrigger, PopoverContent, PopoverBody, IconButton } from "@openway/ui";
@@ -121,12 +121,12 @@ export function InfoPopover() {
   return (
     <Popover trigger="hover" placement="top">
       <PopoverTrigger asChild>
-        <IconButton icon={<InfoIcon />} aria-label="Xem giải thích" variant="ghost" size="sm" />
+        <IconButton icon={<InfoIcon />} aria-label="View explanation" variant="ghost" size="sm" />
       </PopoverTrigger>
       <PopoverContent maxWidth={320}>
         <PopoverBody>
           <p className="text-xs text-neutral-600 leading-relaxed">
-            Dữ liệu này được tự động đồng bộ từ máy chủ mỗi 5 phút một lần.
+            This data is synchronized automatically from the server every 5 minutes.
           </p>
         </PopoverBody>
       </PopoverContent>
@@ -137,18 +137,18 @@ export function InfoPopover() {
 
 ---
 
-### 3. Kích hoạt bằng Hover (`trigger="hover"`)
+### 3. Hover Trigger (`trigger="hover"`)
 
-Với chế độ `hover`, Popover tích hợp thuật toán `safePolygon()` của Floating UI, cho phép người dùng di chuyển con trỏ chuột theo đường chéo từ trigger sang khung popover mà không bị tắt đột ngột:
+When set to `hover`, Popover integrates Floating UI's `safePolygon()` algorithm, enabling users to move their cursor diagonally across from the trigger to the popover panel without accidental closing:
 
 ```tsx
 <Popover trigger="hover" placement="bottom">
   <PopoverTrigger>
-    <Button variant="soft">Rê chuột xem chi tiết</Button>
+    <Button variant="soft">Hover to view details</Button>
   </PopoverTrigger>
   <PopoverContent>
     <PopoverBody>
-      <p className="text-sm">Nội dung chi tiết được hiển thị khi hover!</p>
+      <p className="text-sm">Detailed content displayed upon hovering!</p>
     </PopoverBody>
   </PopoverContent>
 </Popover>
@@ -156,27 +156,27 @@ Với chế độ `hover`, Popover tích hợp thuật toán `safePolygon()` c�
 
 ---
 
-### 4. Chế độ Modal Popover (`modal={true}`)
+### 4. Modal Mode (`modal={true}`)
 
-Khi bật `modal={true}`, Popover sẽ khóa toàn bộ tương tác bên ngoài và bẫy phím `Tab` chỉ tuần hoàn bên trong nội dung của Popover:
+Enabling `modal={true}` locks background interactions and traps keyboard `Tab` navigation strictly within the Popover:
 
 ```tsx
 <Popover modal={true} placement="bottom-start">
   <PopoverTrigger>
-    <Button color="error">Xóa dữ liệu quan trọng</Button>
+    <Button color="error">Delete critical data</Button>
   </PopoverTrigger>
   <PopoverContent minWidth={300}>
-    <PopoverHeader>Xác nhận xóa</PopoverHeader>
+    <PopoverHeader>Confirm Deletion</PopoverHeader>
     <PopoverBody>
       <p className="text-sm text-neutral-700">
-        Bạn có chắc chắn muốn xóa bản ghi này? Hành động này không thể hoàn tác.
+        Are you sure you want to delete this record? This action cannot be undone.
       </p>
     </PopoverBody>
     <PopoverFooter className="flex justify-end gap-2">
       <PopoverClose asChild>
-        <Button variant="outline" size="sm">Hủy</Button>
+        <Button variant="outline" size="sm">Cancel</Button>
       </PopoverClose>
-      <Button color="error" size="sm">Đồng ý xóa</Button>
+      <Button color="error" size="sm">Confirm Delete</Button>
     </PopoverFooter>
   </PopoverContent>
 </Popover>
@@ -184,14 +184,14 @@ Khi bật `modal={true}`, Popover sẽ khóa toàn bộ tương tác bên ngoài
 
 ---
 
-## ♿ Khả năng truy cập & Điều hướng bàn phím
+## ♿ Accessibility & Keyboard Navigation
 
-| Phím bấm | Hành vi |
+| Key | Behavior |
 | :--- | :--- |
-| `Enter` / `Space` | Kích hoạt mở hoặc đóng popover khi đang focus tại trigger. |
-| `Tab` | Di chuyển focus tuần tự qua các phần tử tương tác (inputs, buttons) bên trong popover. |
-| `Shift + Tab` | Di chuyển ngược lại phần tử tương tác trước đó trong popover. |
-| `Escape` | Đóng popover và tự động khôi phục focus về lại trigger element. |
+| `Enter` / `Space` | Toggles the popover open or closed when the trigger is focused. |
+| `Tab` | Cycles focus sequentially through interactive elements (inputs, buttons) inside the popover. |
+| `Shift + Tab` | Cycles focus in reverse through interactive elements inside the popover. |
+| `Escape` | Closes the popover and automatically restores focus to the trigger element. |
 
 ---
 
@@ -199,57 +199,57 @@ Khi bật `modal={true}`, Popover sẽ khóa toàn bộ tương tác bên ngoài
 
 ### `<Popover>` (Root Component)
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Các subcomponents (`PopoverTrigger`, `PopoverContent`). |
-| `open` | `boolean` | — | Trạng thái mở popover (chế độ Controlled). |
-| `defaultOpen` | `boolean` | `false` | Trạng thái mở ban đầu (chế độ Uncontrolled). |
-| `onOpenChange` | `(open: boolean) => void` | — | Callback khi trạng thái mở/đóng thay đổi. |
-| `trigger` | `'click' \| 'hover'` | `'click'` | Kiểu kích hoạt mở popover. |
-| `placement` | `PopoverPlacement` | `'bottom'` | Hướng hiển thị của popover so với trigger. |
-| `offset` | `number` | `8` | Khoảng cách (px) giữa trigger và popover. |
-| `flip` | `boolean` | `true` | Tự động đảo hướng khi popover bị tràn mép màn hình. |
-| `shift` | `boolean` | `true` | Tự động dịch chuyển popover để không bị che khuất. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích thước áp dụng cho padding/font của popover. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Độ bo góc của khung popover. |
-| `color` | `PopoverColor` | `'neutral'` | Tông màu chủ đề của popover. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ Popover. |
-| `animated` | `boolean` | `true` | Bật/tắt hiệu ứng chuyển động khi mở/đóng. |
-| `animationDuration` | `number` | `150` | Thời lượng hiệu ứng (ms). |
-| `modal` | `boolean` | `false` | Khóa tiêu điểm bên trong popover và ngăn tương tác nền ngoài. |
-| `closeOnEsc` | `boolean` | `true` | Đóng popover khi nhấn phím `Escape`. |
-| `closeOnClickOutside` | `boolean` | `true` | Đóng popover khi click ra ngoài. |
+| `children` | `ReactNode` | — | Subcomponents (`PopoverTrigger`, `PopoverContent`). |
+| `open` | `boolean` | — | Open state for controlled mode. |
+| `defaultOpen` | `boolean` | `false` | Initial open state for uncontrolled mode. |
+| `onOpenChange` | `(open: boolean) => void` | — | Callback fired when the open/closed state changes. |
+| `trigger` | `'click' \| 'hover'` | `'click'` | Trigger event to open the popover. |
+| `placement` | `PopoverPlacement` | `'bottom'` | Position and alignment of the popover relative to the trigger. |
+| `offset` | `number` | `8` | Distance (px) between the trigger and the popover. |
+| `flip` | `boolean` | `true` | Automatically flips placement if the popover overflows the viewport. |
+| `shift` | `boolean` | `true` | Automatically shifts the popover along the axis to remain within the viewport. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size applied to padding and font size of the popover. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Border radius of the popover container. |
+| `color` | `PopoverColor` | `'neutral'` | Theme color styling of the popover. |
+| `disabled` | `boolean` | `false` | Disables the entire Popover. |
+| `animated` | `boolean` | `true` | Enables or disables open/close transition animations. |
+| `animationDuration` | `number` | `150` | Transition animation duration in milliseconds. |
+| `modal` | `boolean` | `false` | Traps focus within the popover and blocks background interactions. |
+| `closeOnEsc` | `boolean` | `true` | Closes the popover when pressing the `Escape` key. |
+| `closeOnClickOutside` | `boolean` | `true` | Closes the popover when clicking outside of it. |
 
 ---
 
 ### `<PopoverTrigger>`
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Phần tử con làm trigger. |
-| `asChild` | `boolean` | `false` | Truyền trực tiếp props/events vào phần tử con thay vì bọc button mặc định. |
-| `className` | `string` | `""` | Class CSS tùy biến bổ sung. |
-| `ref` | `Ref<HTMLElement>` | — | React 19 Ref trực tiếp vào trigger element. |
+| `children` | `ReactNode` | — | Child element acting as the trigger. |
+| `asChild` | `boolean` | `false` | Forwards props/events directly to the child element instead of rendering a default button wrapper. |
+| `className` | `string` | `""` | Additional custom CSS class. |
+| `ref` | `Ref<HTMLElement>` | — | React 19 Ref directly attached to the trigger element. |
 
 ---
 
 ### `<PopoverContent>`
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Nội dung bên trong popover. |
-| `minWidth` | `string \| number` | — | Độ rộng tối thiểu của popover. |
-| `maxWidth` | `string \| number` | — | Độ rộng tối đa của popover. |
-| `zIndex` | `number` | `DEFAULT_Z_INDEX.POPOVER` (50) | Thứ tự z-index của popover nổi. |
-| `className` | `string` | `""` | Class CSS tùy biến bổ sung. |
-| `style` | `CSSProperties` | — | Style inline tùy biến bổ sung. |
-| `ref` | `Ref<HTMLDivElement>` | — | React 19 Ref trực tiếp vào content container. |
+| `children` | `ReactNode` | — | Content displayed inside the popover. |
+| `minWidth` | `string \| number` | — | Minimum width of the popover panel. |
+| `maxWidth` | `string \| number` | — | Maximum width of the popover panel. |
+| `zIndex` | `number` | `DEFAULT_Z_INDEX.POPOVER` (50) | Z-index stack order for the floating popover. |
+| `className` | `string` | `""` | Additional custom CSS class. |
+| `style` | `CSSProperties` | — | Additional inline styles. |
+| `ref` | `Ref<HTMLDivElement>` | — | React 19 Ref directly attached to the content container. |
 
 ---
 
 ### `<PopoverHeader>`, `<PopoverBody>`, `<PopoverFooter>`, `<PopoverClose>`
 
-- `<PopoverHeader>`: Tiêu đề của popover (chuẩn WAI-ARIA `<h2>` ngữ nghĩa dialog).
-- `<PopoverBody>`: Phần thân chính chứa văn bản, inputs hoặc controls.
-- `<PopoverFooter>`: Chân trang chứa các nút hành động (Cancel, Submit).
-- `<PopoverClose>`: Nút kích hoạt đóng popover (hỗ trợ `asChild` để gắn vào bất kỳ component Button tùy ý).
+- `<PopoverHeader>`: Header title of the popover (conforms to WAI-ARIA `<h2>` semantic dialog specification).
+- `<PopoverBody>`: Main body section containing text, inputs, or interactive controls.
+- `<PopoverFooter>`: Footer section containing action buttons (Cancel, Submit).
+- `<PopoverClose>`: Component to dismiss the popover (supports `asChild` to wrap custom Button components).

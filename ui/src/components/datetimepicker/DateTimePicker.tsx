@@ -32,6 +32,7 @@ import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { useLocale } from "../common/OpenWayProvider";
 
 /**
  * Component DateTimePicker - Ô chọn Ngày & Giờ tích hợp theo Design System.
@@ -45,7 +46,6 @@ export default function DateTimePicker({
   format: customFormat,
   displayFormat: customDisplayFormat,
   layout = "side-by-side",
-  locale = "vi",
   defaultView = "days",
   firstDayOfWeek = 1,
   minDate,
@@ -88,6 +88,7 @@ export default function DateTimePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimePickerProps) {
+  const datePickerLocale = useLocale("datePicker");
   const {
     isRequired = false,
     isInvalid = false,
@@ -112,7 +113,7 @@ export default function DateTimePicker({
   const isControlled = controlledValue !== undefined;
   const [internalDate, setInternalDate] = useState<Date | null>(() => toDateTime(defaultValue, resolvedFormat));
   const selectedDate = isControlled ? toDateTime(controlledValue, resolvedFormat) : internalDate;
-  const formattedValue = selectedDate ? formatDateTime(selectedDate, baseDisplayFormat, locale) : "";
+  const formattedValue = selectedDate ? formatDateTime(selectedDate, baseDisplayFormat, datePickerLocale) : "";
 
   const [activeView, setActiveView] = useState<CalendarView>(defaultView);
   const [isOpen, setIsOpen] = useState(false);
@@ -167,7 +168,7 @@ export default function DateTimePicker({
     if (!isControlled) {
       setInternalDate(combined);
     }
-    const formattedOutput = combined ? formatDateTime(combined, resolvedFormat, locale) : "";
+    const formattedOutput = combined ? formatDateTime(combined, resolvedFormat, datePickerLocale) : "";
     onChange?.(formattedOutput);
 
     if (closeOnSelect) {
@@ -182,7 +183,7 @@ export default function DateTimePicker({
     if (!isControlled) {
       setInternalDate(combined);
     }
-    const formattedOutput = combined ? formatDateTime(combined, resolvedFormat, locale) : "";
+    const formattedOutput = combined ? formatDateTime(combined, resolvedFormat, datePickerLocale) : "";
     onChange?.(formattedOutput);
 
     if (closeOnSelect) {
@@ -376,7 +377,6 @@ export default function DateTimePicker({
                     minDate={minDate}
                     maxDate={maxDate}
                     isDateDisabled={isDateDisabled}
-                    locale={locale}
                     firstDayOfWeek={firstDayOfWeek}
                     showWeekNumbers={showWeekNumbers}
                     size={size}

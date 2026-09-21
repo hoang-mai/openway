@@ -25,6 +25,7 @@ import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { filterSizeConfig } from "./constants";
+import { useLocale } from "@/components/common/OpenWayProvider";
 
 export interface SelectMenuFilterProps<TFilters extends Record<string, unknown> = Record<string, unknown>> {
   filters: SelectFilterField<unknown>[];
@@ -139,7 +140,8 @@ function FilterBadgeChip({
     currentValue !== "" &&
     (!Array.isArray(currentValue) || currentValue.length > 0);
 
-  const displayVal = formatFilterBadgeValue(field, currentValue, historicalOptionLabels);
+  const selectLocale = useLocale("select");
+  const displayVal = formatFilterBadgeValue(field, currentValue, historicalOptionLabels, selectLocale);
 
   const renderEditor = () => {
     if (field.type === "custom") {
@@ -409,6 +411,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
   color = "primary",
   radius = "md",
 }: SelectMenuFilterProps<TFilters>) {
+  const selectLocale = useLocale("select");
   // Active fields list (fields that user selected to filter)
   const [activeFieldNames, setActiveFieldNames] = useState<string[]>(() => {
     const initial: string[] = [];
@@ -522,7 +525,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
             })}
           >
             <PlusIcon className={`${sizeStyles.buttonIcon} text-neutral-400`} />
-            <span className="font-normal">Bộ lọc</span>
+            <span className="font-normal">{selectLocale.filter}</span>
             <ChevronDownIcon
               className={`${sizeStyles.chevronIcon} text-neutral-400 transition-transform duration-150 ${
                 isAddMenuOpen ? "rotate-180" : ""
@@ -547,7 +550,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                 })}
               >
                 <div className="px-2 py-1 text-[11px] font-medium text-neutral-400 uppercase tracking-wider select-none">
-                  Chọn trường cần lọc
+                  {selectLocale.selectFilterField}
                 </div>
                 <div className="space-y-0.5 mt-0.5">
                   {filters.map((field) => {
@@ -569,7 +572,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                         }`}
                       >
                         <span>{field.label}</span>
-                        {isAlreadyActive && <span className="text-[10px] text-neutral-400">Đang lọc</span>}
+                        {isAlreadyActive && <span className="text-[10px] text-neutral-400">{selectLocale.filtering}</span>}
                       </button>
                     );
                   })}
@@ -614,10 +617,10 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
             type="button"
             onClick={handleResetAll}
             className={`inline-flex items-center gap-1 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors ml-auto cursor-pointer select-none ${sizeStyles.resetButton}`}
-            title="Đặt lại toàn bộ bộ lọc"
+            title={selectLocale.resetAllFilters}
           >
             <ResetIcon className="size-3" />
-            <span>{resetText}</span>
+            <span>{resetText ?? selectLocale.resetFilter}</span>
           </button>
         )}
       </div>

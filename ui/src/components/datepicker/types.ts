@@ -40,34 +40,6 @@ export type CalendarView = "days" | "months" | "years";
 export type DateValue = Date | string | null;
 
 /**
- * Cấu hình quốc tế hóa (i18n) cho DatePicker & Calendar
- */
-export interface LocaleConfig {
-  /** Danh sách tên đầy đủ của 12 tháng */
-  months: string[];
-  /** Danh sách tên viết tắt của 12 tháng */
-  monthsShort: string[];
-  /** Danh sách tên đầy đủ của 7 ngày trong tuần */
-  weekdays: string[];
-  /** Danh sách tên viết tắt của 7 ngày trong tuần */
-  weekdaysShort: string[];
-  /** Danh sách ký hiệu tối giản của 7 ngày trong tuần */
-  weekdaysMin: string[];
-  /** Nhãn nút 'Hôm nay' */
-  todayText: string;
-  /** Nhãn nút 'Xóa' */
-  clearText: string;
-  /** Nhãn cột số tuần */
-  weekText: string;
-  /** Tên hiển thị các tab chế độ xem */
-  viewTabs: {
-    days: string;
-    months: string;
-    years: string;
-  };
-}
-
-/**
  * Cấu trúc thông tin của một ô ngày trong lưới lịch (`DayGrid`)
  */
 export interface CalendarDay {
@@ -117,8 +89,6 @@ export interface CalendarHeaderProps {
   size?: DatePickerSize;
   /** Màu sắc chủ đề */
   color?: DatePickerColor;
-  /** Cấu hình ngôn ngữ ('vi' | 'en' hoặc object LocaleConfig) */
-  locale?: "vi" | "en" | LocaleConfig;
   /** Hiển thị nút điều hướng tháng kế bên */
   showMonthButtons?: boolean;
 }
@@ -137,8 +107,6 @@ export interface DayGridProps {
   color?: DatePickerColor;
   /** Độ bo góc của ô ngày */
   radius?: DatePickerRadius;
-  /** Cấu hình ngôn ngữ */
-  locale?: "vi" | "en" | LocaleConfig;
   /** Ngày đầu tuần (0: Chủ Nhật, 1: Thứ Hai) */
   firstDayOfWeek?: 0 | 1;
   /** Hiển thị cột số thứ tự tuần (ISO week) */
@@ -161,8 +129,6 @@ export interface MonthGridProps {
   color?: DatePickerColor;
   /** Độ bo góc của ô tháng */
   radius?: DatePickerRadius;
-  /** Cấu hình ngôn ngữ */
-  locale?: "vi" | "en" | LocaleConfig;
 }
 
 /**
@@ -227,12 +193,6 @@ export interface CalendarProps {
    * Hàm kiểm tra ngày có bị vô hiệu hóa không
    */
   isDateDisabled?: (date: Date) => boolean;
-
-  /**
-   * Ngôn ngữ lịch ('vi' | 'en' hoặc cấu hình LocaleConfig)
-   * @default 'vi'
-   */
-  locale?: "vi" | "en" | LocaleConfig;
 
   /**
    * Ngày bắt đầu tuần (0: Chủ Nhật, 1: Thứ Hai)
@@ -385,12 +345,6 @@ export interface DatePickerProps {
    * @default 'days'
    */
   defaultView?: CalendarView;
-
-  /**
-   * Ngôn ngữ lịch
-   * @default 'vi'
-   */
-  locale?: "vi" | "en" | LocaleConfig;
 
   /**
    * Ngày bắt đầu tuần: 0 (Chủ Nhật) hoặc 1 (Thứ Hai)

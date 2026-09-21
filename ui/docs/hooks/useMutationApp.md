@@ -1,25 +1,25 @@
 # ⚡ Hook `useMutationApp` (`@openway/ui/query`)
 
-Hook adapter chuyên dụng bọc quanh `useMutation` của **TanStack Query v5**, được thiết kế tối ưu cho các ứng dụng sử dụng hệ sinh thái **`@openway/ui`**. Hook giúp loại bỏ boilerplate code khi thao tác tạo, sửa, xóa (CUD), tự động hóa toàn diện quy trình hiển thị Toast thông báo trạng thái và làm mới cache dữ liệu (Query Invalidation).
+A specialized adapter hook wrapping **TanStack Query v5**'s `useMutation`, tailored specifically for applications utilizing the **`@openway/ui`** ecosystem. The hook eliminates boilerplate code during create, update, and delete (CUD) operations by fully automating status Toast notifications and cache refetching (Query Invalidation).
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Tự động hóa Toast Thông minh**:
-  - Tự động hiển thị `toast.loading` khi bắt đầu thực thi mutation.
-  - Tự động chuyển đổi mượt mà sang `toast.success` hoặc `toast.error` khi hoàn tất mà không bị nhảy popup thừa.
-- **Trích xuất Lỗi Tự động (`extractErrorMessage`)**:
-  - Tự động bóc tách thông điệp lỗi từ cấu trúc `error.response?.data?.message`, `error.response?.data?.error`, NestJS/Laravel validation array, HTTP status codes hoặc standard `Error.message`.
-  - Không cần phải thủ công `catch (err) { toast.error(err.response.data.message) }` ở từng component.
-- **Tự động Invalidate Cache Query**:
-  - Hỗ trợ option `invalidateQueries` nhận vào một hoặc nhiều `QueryKey` (ví dụ `["teachers"]`, `["classes"]`) hoặc hàm tính toán động theo `(data, variables)`.
-  - Khi mutation thành công, tự động gọi `queryClient.invalidateQueries` để các bảng `<Table />` (`useTableQuery`) hoặc `<Select />` (`useSelectInfiniteQuery`) lập tức hiển thị dữ liệu mới nhất.
-- **Bổ sung `isLoading` (alias `isPending`)**:
-  - Cung cấp `isLoading: boolean` tương thích với thói quen sử dụng của TanStack Query v4 và code giao diện thân thuộc.
-- **Zero `any` & Chuẩn Generic Type**:
-  - Hỗ trợ đầy đủ 4 tham số generic type chuẩn của TanStack Query: `<TData, TError, TVariables, TContext>`.
-  - Giữ nguyên toàn bộ options và callback lifecycle (`onMutate`, `onSuccess`, `onError`, `onSettled`).
+- **Intelligent Automated Toast**:
+  - Automatically displays `toast.loading` when the mutation begins execution.
+  - Smoothly transitions to `toast.success` or `toast.error` upon completion without redundant popup flashes.
+- **Automatic Error Extraction (`extractErrorMessage`)**:
+  - Automatically parses error messages from structures like `error.response?.data?.message`, `error.response?.data?.error`, NestJS/Laravel validation arrays, HTTP status codes, or standard `Error.message`.
+  - Eliminates the need to manually write `catch (err) { toast.error(err.response.data.message) }` in every component.
+- **Automatic Query Cache Invalidation**:
+  - Supports the `invalidateQueries` option accepting one or more `QueryKey`s (e.g., `["teachers"]`, `["classes"]`) or a dynamic function computed from `(data, variables)`.
+  - When the mutation succeeds, automatically calls `queryClient.invalidateQueries` so that `<Table />` (`useTableQuery`) or `<Select />` (`useSelectInfiniteQuery`) components immediately reflect the latest data.
+- **Added `isLoading` (alias for `isPending`)**:
+  - Provides `isLoading: boolean` for backwards compatibility with TanStack Query v4 habits and familiar UI code conventions.
+- **Zero `any` & Generic Type Standards**:
+  - Fully supports all 4 standard TanStack Query generic type parameters: `<TData, TError, TVariables, TContext>`.
+  - Preserves all native options and lifecycle callbacks (`onMutate`, `onSuccess`, `onError`, `onSettled`).
 
 ---
 
@@ -37,11 +37,11 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Thêm mới bản ghi (Create) với Shortcut Message
+### 1. Creating a Record (Create) with Shortcut Messages
 
-Cách đơn giản nhất để tạo một mutation có thông báo thành công và tự động refresh dữ liệu bảng:
+The simplest way to create a mutation with success notification and automatic table data refresh:
 
 ```tsx
 import { Button, Input, Modal } from "@openway/ui";
@@ -68,10 +68,10 @@ export function CreateTeacherModal({ open, onClose }: { open: boolean; onClose: 
       if (!res.ok) throw await res.json();
       return res.json();
     },
-    // Hiển thị toast thành công & tự động báo lỗi nếu server trả về mã lỗi
-    loadingMessage: "Đang lưu thông tin giáo viên...",
-    successMessage: "Thêm mới giáo viên thành công!",
-    // Tự động làm mới cache của bảng danh sách giáo viên
+    // Shows success toast & automatically reports error if server returns error response
+    loadingMessage: "Saving teacher information...",
+    successMessage: "Teacher created successfully!",
+    // Automatically invalidates teacher list table cache
     invalidateQueries: [["teachers"]],
     onSuccess: () => {
       onClose();
@@ -106,9 +106,9 @@ export function CreateTeacherModal({ open, onClose }: { open: boolean; onClose: 
 
 ---
 
-### 2. Cập nhật bản ghi với Toast động (`(data, variables)`)
+### 2. Updating a Record with Dynamic Toast Messages (`(data, variables)`)
 
-Có thể truyền function để tạo thông điệp Toast chứa tên hoặc thông tin động từ dữ liệu:
+You can pass functions to generate dynamic Toast messages containing names or details from the data:
 
 ```tsx
 import { useMutationApp } from "@openway/ui/query";
@@ -128,11 +128,11 @@ export function useUpdateUser() {
       return res.json();
     },
     toast: {
-      loading: (vars) => `Đang cập nhật thông tin người dùng #${vars.id}...`,
-      success: (data, vars) => `Cập nhật người dùng "${vars.name}" thành công!`,
-      error: (err) => `Không thể cập nhật: ${extractErrorMessage(err)}`,
+      loading: (vars) => `Updating user #${vars.id}...`,
+      success: (data, vars) => `User "${vars.name}" updated successfully!`,
+      error: (err) => `Failed to update: ${extractErrorMessage(err)}`,
     },
-    // Làm mới cả danh sách chung và chi tiết user
+    // Invalidate both the list and the user detail
     invalidateQueries: (data, vars) => [
       ["users"],
       ["user-detail", vars.id],
@@ -143,7 +143,7 @@ export function useUpdateUser() {
 
 ---
 
-### 3. Xóa dữ liệu (Delete) & Invalidate nhiều Query
+### 3. Deleting Data (Delete) & Invalidating Multiple Queries
 
 ```tsx
 import { Button } from "@openway/ui";
@@ -154,8 +154,8 @@ export function DeleteClassButton({ classId, className }: { classId: string; cla
     mutationFn: async (id: string) => {
       await fetch(`/api/classes/${id}`, { method: "DELETE" });
     },
-    successMessage: `Đã xóa lớp ${className} khỏi hệ thống!`,
-    // Invalidate cả bảng lớp học và số liệu thống kê ở dashboard
+    successMessage: `Class ${className} has been deleted!`,
+    // Invalidate both the classes table and dashboard statistics
     invalidateQueries: [
       ["classes"],
       ["dashboard-stats"],
@@ -168,7 +168,7 @@ export function DeleteClassButton({ classId, className }: { classId: string; cla
       color="error"
       loading={isLoading}
       onClick={() => {
-        if (confirm(`Bạn có chắc chắn muốn xóa lớp ${className}?`)) {
+        if (confirm(`Are you sure you want to delete class ${className}?`)) {
           mutate(classId);
         }
       }}
@@ -181,21 +181,21 @@ export function DeleteClassButton({ classId, className }: { classId: string; cla
 
 ---
 
-### 4. Tắt Toast hoặc Tùy biến Giao diện Toast
+### 4. Disabling Toasts or Customizing Toast Appearance
 
 ```tsx
-// Tắt hoàn toàn toast (nếu muốn tự xử lý UI riêng)
+// Disable toasts entirely (if custom UI handling is preferred)
 const mutation1 = useMutationApp({
   mutationFn: trackUserActivity,
   toast: false,
 });
 
-// Tùy biến vị trí và kiểu hiển thị của Toast
+// Customize Toast position and variant styling
 const mutation2 = useMutationApp({
   mutationFn: updateSettings,
   toast: {
     variant: "solid",
-    success: "Đã lưu cài đặt!",
+    success: "Settings saved!",
     options: {
       position: "bottom-center",
       duration: 3000,
@@ -206,37 +206,37 @@ const mutation2 = useMutationApp({
 
 ---
 
-## 🎛️ Bảng Options (`UseMutationAppOptions`)
+## 🎛️ Options Table (`UseMutationAppOptions`)
 
-Kế thừa toàn bộ options chuẩn của `UseMutationOptions` từ TanStack Query v5, bổ sung thêm:
+Inherits all standard options from TanStack Query v5's `UseMutationOptions`, with the following additions:
 
-| Tên Option | Kiểu dữ liệu | Mặc định | Mô tả |
+| Option Name | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `mutationFn` | `(variables: TVariables) => Promise<TData>` | `undefined` | Hàm bất đồng bộ gọi API thực thi tác vụ mutation. |
-| `invalidateQueries` | `QueryKey \| QueryKey[] \| InvalidateQueryFilters \| InvalidateQueryFilters[] \| ((data, vars) => ...)` | `undefined` | Khóa truy vấn hoặc danh sách khóa truy vấn cần tự động làm mới khi mutation thành công. |
-| `invalidateOptions` | `InvalidateOptions` | `undefined` | Tùy chọn nâng cao khi invalidate (ví dụ: `throwOnError`, `cancelRefetch`). |
-| `toast` | `boolean \| UseMutationAppToastOptions` | `true` | Cấu hình Toast thông báo. Truyền `false` để tắt toàn bộ toast. |
-| `loadingMessage` | `ReactNode \| ((vars) => ReactNode)` | `undefined` | Shortcut đặt thông báo loading khi đang chạy. |
-| `successMessage` | `ReactNode \| ((data, vars) => ReactNode)` | `undefined` | Shortcut đặt thông báo khi thành công. |
-| `errorMessage` | `ReactNode \| ((err, vars) => ReactNode)` | `undefined` | Shortcut đặt tiêu đề lỗi tùy biến (chi tiết lỗi bên dưới vẫn tự động bóc tách từ API qua `extractErrorMessage`). |
-| `onSuccess` | `(data, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback chạy sau khi mutation thành công và sau khi đã refresh cache. |
-| `onError` | `(error, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback chạy khi mutation gặp lỗi. |
-| `onSettled` | `(data, error, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback chạy khi mutation kết thúc (dù thành công hay thất bại). |
+| `mutationFn` | `(variables: TVariables) => Promise<TData>` | `undefined` | Asynchronous API function executing the mutation operation. |
+| `invalidateQueries` | `QueryKey \| QueryKey[] \| InvalidateQueryFilters \| InvalidateQueryFilters[] \| ((data, vars) => ...)` | `undefined` | Query key or list of query keys to automatically invalidate upon mutation success. |
+| `invalidateOptions` | `InvalidateOptions` | `undefined` | Advanced options for cache invalidation (e.g., `throwOnError`, `cancelRefetch`). |
+| `toast` | `boolean \| UseMutationAppToastOptions` | `true` | Toast notification configuration. Pass `false` to disable all toasts. |
+| `loadingMessage` | `ReactNode \| ((vars) => ReactNode)` | `undefined` | Shortcut for displaying a loading notification during execution. |
+| `successMessage` | `ReactNode \| ((data, vars) => ReactNode)` | `undefined` | Shortcut for displaying a notification upon success. |
+| `errorMessage` | `ReactNode \| ((err, vars) => ReactNode)` | `undefined` | Shortcut for a custom error title (detailed API error messages are still extracted via `extractErrorMessage`). |
+| `onSuccess` | `(data, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback executed after mutation succeeds and after cache invalidation has completed. |
+| `onError` | `(error, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback executed when the mutation encounters an error. |
+| `onSettled` | `(data, error, variables, context) => Promise<unknown> \| unknown` | `undefined` | Callback executed when the mutation finishes (either successfully or with an error). |
 
 ---
 
-## 📦 Bảng Return (`UseMutationAppReturn`)
+## 📦 Return Value (`UseMutationAppReturn`)
 
-Kế thừa toàn bộ kết quả trả về của `UseMutationResult` từ TanStack Query v5:
+Inherits all return properties from TanStack Query v5's `UseMutationResult`:
 
-| Thuộc tính | Kiểu dữ liệu | Mô tả |
+| Property | Type | Description |
 | :--- | :--- | :--- |
-| `mutate` | `(variables: TVariables, options?) => void` | Kích hoạt mutation theo cơ chế fire-and-forget. |
-| `mutateAsync` | `(variables: TVariables, options?) => Promise<TData>` | Kích hoạt mutation và trả về Promise để có thể `await`. |
-| `isLoading` | `boolean` | **Alias tiện ích của `isPending`**, là `true` khi mutation đang chạy. |
-| `isPending` | `boolean` | Trạng thái đang chạy của TanStack Query v5. |
-| `isSuccess` | `boolean` | Là `true` khi mutation đã hoàn tất thành công. |
-| `isError` | `boolean` | Là `true` khi mutation thất bại. |
-| `data` | `TData \| undefined` | Dữ liệu trả về từ `mutationFn` khi thành công. |
-| `error` | `TError \| null` | Đối tượng lỗi trả về từ `mutationFn` khi thất bại. |
-| `reset` | `() => void` | Đặt lại trạng thái mutation về ban đầu (`idle`). |
+| `mutate` | `(variables: TVariables, options?) => void` | Triggers the mutation via fire-and-forget execution. |
+| `mutateAsync` | `(variables: TVariables, options?) => Promise<TData>` | Triggers the mutation and returns a Promise that can be `await`ed. |
+| `isLoading` | `boolean` | **Convenience alias for `isPending`**, `true` while the mutation is running. |
+| `isPending` | `boolean` | TanStack Query v5 active running state. |
+| `isSuccess` | `boolean` | `true` when the mutation has completed successfully. |
+| `isError` | `boolean` | `true` when the mutation has failed. |
+| `data` | `TData \| undefined` | Data returned from `mutationFn` on success. |
+| `error` | `TError \| null` | Error object returned from `mutationFn` on failure. |
+| `reset` | `() => void` | Resets the mutation state back to its initial (`idle`) state. |

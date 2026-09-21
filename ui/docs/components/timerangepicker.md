@@ -1,30 +1,30 @@
 # ⏳ TimeRangePicker Component Suite (`@openway/ui`)
 
-Component **TimeRangePicker** toàn diện, trực quan và linh hoạt, được thiết kế theo chuẩn **Design System**, hỗ trợ **Chọn khoảng thời gian (Start Time - End Time) trên 2 bảng chọn song song**, **Tách bạch Định dạng Dữ liệu (`format`) & Hiển thị (`displayFormat`)**, **Tùy biến ký tự phân cách (`separator`)**, **Chế độ 12h (AM/PM) & 24h**, **Tùy chọn hiển thị giây (`showSeconds`)**, **Bước nhảy tùy biến (`hourStep`, `minuteStep`, `secondStep`)**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility** với hỗ trợ bàn phím thông minh.
+A comprehensive, intuitive, and flexible **TimeRangePicker** component suite designed to strict **Design System** standards, featuring **dual parallel time panels for selecting time ranges (Start Time – End Time)**, **Separation of Data Format (`format`) & Visual Display (`displayFormat`)**, **Customizable Separator (`separator`)**, **12-Hour (AM/PM) & 24-Hour Modes**, **Optional Seconds Display (`showSeconds`)**, **Customizable Steps (`hourStep`, `minuteStep`, `secondStep`)**, and full **WAI-ARIA Accessibility** compliance with intelligent keyboard navigation.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Features
 
-- **Giao diện 2 Bảng chọn thời gian song song (Start Time & End Time)**:
-  - Bố cục 2 cột nằm ngang (`flex-row divide-x`) giúp người dùng chọn thời gian bắt đầu và kết thúc một cách tự nhiên và liền mạch.
-  - Tự động ràng buộc `minTime` của End Time theo Start Time đã chọn và ngược lại.
-- **Tùy biến nhãn tiêu đề từng cột (`startLabel` & `endLabel`)**:
-  - Mặc định là `"Start time"` và `"End time"`, có thể tùy biến thành `"Giờ bắt đầu"`, `"Giờ kết thúc"`...
-- **Tùy biến ký tự phân cách (`separator`)**:
-  - Mặc định là `' - '`, có thể tùy biến thành `' to '`, `' ~ '`...
-- **Tách bạch giữa Dữ liệu (`format`) và Hiển thị (`displayFormat`)**:
-  - `format` *(mặc định `'HH:mm:ss'`)*: Dữ liệu mảng phát ra qua `onChange` là `[string, string]` (ví dụ: `["08:00:00", "17:30:00"]`).
-  - `displayFormat` *(tùy chọn)*: Định dạng hiển thị trong ô input (ví dụ: `08:00 AM - 05:30 PM`).
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *mặc định*), `lg` (48px), `xl` (56px).
-- **3 Biến thể giao diện (`variant`)**: `outline` *(mặc định)*, `filled`, `ghost`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`. Màu `warning` sử dụng chữ `text-neutral-950` tối ưu tương phản chuẩn **WCAG AA**.
-- **6 Mức độ bo góc (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
-- **3 Vị trí đặt nhãn (`labelPlacement`)**: `top` *(mặc định)*, `left`, `floating`.
+- **Dual Parallel Time Selection Panels (Start Time & End Time)**:
+  - Horizontal side-by-side layout (`flex-row divide-x`) enables users to pick start and end times naturally and seamlessly.
+  - Automatically constrains End Time `minTime` based on the chosen Start Time and vice versa.
+- **Customizable Column Header Labels (`startLabel` & `endLabel`)**:
+  - Defaults to `"Start time"` and `"End time"`, customizable to any string.
+- **Customizable Separator (`separator`)**:
+  - Defaults to `' - '`, customizable to `' to '`, `' ~ '`, etc.
+- **Separation of Data Format (`format`) and Visual Display (`displayFormat`)**:
+  - `format` (*default `'HH:mm:ss'`*): Array data emitted via `onChange` formatted as `[string, string]` (e.g., `["08:00:00", "17:30:00"]`).
+  - `displayFormat` (*optional*): Visual display string format inside the input (e.g., `08:00 AM - 05:30 PM`).
+- **5 Standard Sizes (`size`)**: `xs` (24px), `sm` (32px), `md` (40px – *default*), `lg` (48px), `xl` (56px).
+- **3 Visual Variants (`variant`)**: `outline` (*default*), `filled`, `ghost`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`. The `warning` color uses `text-neutral-950` text for optimal contrast meeting **WCAG AA** standards.
+- **6 Border Radii (`radius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full`.
+- **3 Label Placements (`labelPlacement`)**: `top` (*default*), `left`, `floating`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { TimeRangePicker } from "@openway/ui";
@@ -43,9 +43,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản
+### 1. Basic Usage
 
 ```tsx
 import { useState } from "react";
@@ -56,7 +56,7 @@ export function BasicTimeRangePickerExample() {
 
   return (
     <TimeRangePicker
-      label="Khung giờ làm việc"
+      label="Working Hours"
       value={range}
       onChange={(formattedRange) => setRange(formattedRange)}
       placeholder="HH:mm:ss - HH:mm:ss"
@@ -67,27 +67,27 @@ export function BasicTimeRangePickerExample() {
 
 ---
 
-### 2. Định dạng 12 giờ kèm AM / PM & Tùy biến nhãn
+### 2. 12-Hour Format with AM / PM & Custom Labels
 
 ```tsx
 <TimeRangePicker
-  label="Khung giờ hoạt động"
+  label="Operating Hours"
   use12Hours={true}
   format="hh:mm A"
-  startLabel="Giờ mở cửa"
-  endLabel="Giờ đóng cửa"
-  separator=" đến "
+  startLabel="Opening Time"
+  endLabel="Closing Time"
+  separator=" to "
   defaultValue={["08:00 AM", "10:00 PM"]}
 />
 ```
 
 ---
 
-### 3. Tắt giây & Bước nhảy 15 phút
+### 3. Hide Seconds & 15-Minute Step
 
 ```tsx
 <TimeRangePicker
-  label="Ca làm việc"
+  label="Shift Window"
   showSeconds={false}
   minuteStep={15}
   format="HH:mm"
@@ -97,114 +97,114 @@ export function BasicTimeRangePickerExample() {
 
 ---
 
-### 4. Vị trí đặt nhãn (`labelPlacement`)
+### 4. Label Placement (`labelPlacement`)
 
 ```tsx
-// 1. Top (Phía trên - Mặc định)
-<TimeRangePicker label="Khoảng thời gian" labelPlacement="top" />
+// 1. Top (Above - Default)
+<TimeRangePicker label="Time Range" labelPlacement="top" />
 
-// 2. Left (Ngang bên trái)
-<TimeRangePicker label="Khoảng thời gian" labelPlacement="left" />
+// 2. Left (Horizontally aligned)
+<TimeRangePicker label="Time Range" labelPlacement="left" />
 
-// 3. Floating (Lơ lửng trên viền)
-<TimeRangePicker label="Khoảng thời gian" labelPlacement="floating" />
+// 3. Floating (Overlapping border)
+<TimeRangePicker label="Time Range" labelPlacement="floating" />
 ```
 
 ---
 
-### 5. Trạng thái Form & Loading
+### 5. Form & Loading States
 
 ```tsx
-// Bắt buộc nhập (Required)
-<TimeRangePicker label="Thời gian diễn ra" config={{ isRequired: true }} />
+// Required field
+<TimeRangePicker label="Event Time" config={{ isRequired: true }} />
 
-// Báo lỗi (Invalid)
+// Invalid error state
 <TimeRangePicker
-  label="Khoảng thời gian"
-  errorMessage="Thời gian bắt đầu không được lớn hơn thời gian kết thúc."
+  label="Time Range"
+  errorMessage="Start time cannot be later than end time."
   config={{ isInvalid: true }}
 />
 
-// Đang tải dữ liệu (Loading)
+// Loading state
 <TimeRangePicker
-  label="Đang tải dữ liệu"
+  label="Synchronizing Data"
   config={{ isLoading: true, showSpinner: true }}
 />
 
-// Vô hiệu hóa (Disabled) hoặc Chỉ đọc (ReadOnly)
-<TimeRangePicker label="Không khả dụng" disabled={true} />
-<TimeRangePicker label="Chỉ xem" readOnly={true} />
+// Disabled or ReadOnly
+<TimeRangePicker label="Unavailable" disabled={true} />
+<TimeRangePicker label="View Only" readOnly={true} />
 ```
 
 ---
 
-## ⌨️ Phím tắt điều hướng bàn phím (WAI-ARIA Keyboard Navigation)
+## ⌨️ Keyboard Navigation (WAI-ARIA Keyboard Navigation)
 
-| Vị trí | Phím bấm | Hành động |
+| Location | Key | Action |
 | :--- | :--- | :--- |
-| **Ô Input** | `ArrowDown` / `Enter` / `Space` | Mở popover và tự động chuyển tiêu điểm vào cột Start Time. |
-| **Ô Input** | `Escape` | Đóng popover và giữ tiêu điểm tại ô Input. |
-| **Bảng chọn (Popup)** | `ArrowDown` | Di chuyển xuống và chọn mốc thời gian tiếp theo. |
-| **Bảng chọn (Popup)** | `ArrowUp` | Di chuyển lên và chọn mốc thời gian phía trước. |
-| **Bảng chọn (Popup)** | `ArrowRight` | Chuyển tiêu điểm sang cột kế tiếp (Giờ $\rightarrow$ Phút $\rightarrow$ Giây $\rightarrow$ Bảng End Time). |
-| **Bảng chọn (Popup)** | `ArrowLeft` | Chuyển tiêu điểm sang cột liền trước. |
-| **Bảng chọn (Popup)** | `Home` | Nhảy nhanh về mốc đầu tiên. |
-| **Bảng chọn (Popup)** | `End` | Nhảy nhanh về mốc cuối cùng. |
-| **Bảng chọn (Popup)** | `Enter` / `Space` | Xác nhận chọn mốc thời gian đang focus. |
-| **Bảng chọn (Popup)** | `Escape` | Đóng popover và trả lại tiêu điểm về ô Input. |
+| **Input Field** | `ArrowDown` / `Enter` / `Space` | Opens popover and shifts focus into the Start Time column. |
+| **Input Field** | `Escape` | Closes popover and retains focus on the input field. |
+| **Popup Panel** | `ArrowDown` | Moves down to select the next time slot. |
+| **Popup Panel** | `ArrowUp` | Moves up to select the previous time slot. |
+| **Popup Panel** | `ArrowRight` | Moves focus to the next column (Hours $\rightarrow$ Minutes $\rightarrow$ Seconds $\rightarrow$ End Time panel). |
+| **Popup Panel** | `ArrowLeft` | Moves focus to the preceding column. |
+| **Popup Panel** | `Home` | Jumps to the first time option. |
+| **Popup Panel** | `End` | Jumps to the last time option. |
+| **Popup Panel** | `Enter` / `Space` | Confirms selection of the currently focused time option. |
+| **Popup Panel** | `Escape` | Closes popover and returns focus to the input field. |
 
 ---
 
-## 🛠 Bảng thông số Props
+## 🛠 Props Reference
 
 ### `TimeRangePickerProps`
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `value` | `[TimeValue, TimeValue]` | — | Mảng khoảng thời gian đang chọn (Controlled). |
-| `defaultValue` | `[TimeValue, TimeValue]` | — | Mảng khoảng thời gian mặc định ban đầu (Uncontrolled). |
-| `onChange` | `(range: [string, string] \| null) => void` | — | Callback khi thay đổi khoảng thời gian (trả về `[start, end]` hoặc `null` khi xóa). |
-| `format` | `string` | `'HH:mm:ss'` | Định dạng dữ liệu chính dùng cho input và đầu ra `onChange`. |
-| `displayFormat` | `string` | Tự động | Định dạng chuỗi hiển thị trực quan trong ô input. |
-| `separator` | `string` | `' - '` | Chuỗi ký tự phân cách giữa Start Time và End Time. |
-| `startLabel` | `string` | `'Start time'` | Nhãn tiêu đề cột giờ bắt đầu. |
-| `endLabel` | `string` | `'End time'` | Nhãn tiêu đề cột giờ kết thúc. |
-| `use12Hours` | `boolean` | `false` | Bật chế độ 12 giờ kèm cột chọn AM / PM. |
-| `showSeconds` | `boolean` | `true` | Hiển thị cột chọn giây. |
-| `hourStep` | `number` | `1` | Bước nhảy cho cột Giờ. |
-| `minuteStep` | `number` | `1` | Bước nhảy cho cột Phút. |
-| `secondStep` | `number` | `1` | Bước nhảy cho cột Giây. |
-| `minTime` | `TimeValue` | — | Thời gian nhỏ nhất cho phép chọn. |
-| `maxTime` | `TimeValue` | — | Thời gian lớn nhất cho phép chọn. |
-| `disabledHours` | `() => number[]` | — | Hàm trả về danh sách giờ bị vô hiệu hóa. |
-| `disabledMinutes` | `(hour: number) => number[]` | — | Hàm trả về danh sách phút bị vô hiệu hóa. |
-| `disabledSeconds` | `(h: number, m: number) => number[]` | — | Hàm trả về danh sách giây bị vô hiệu hóa. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ ô nhập liệu. |
-| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Biến thể viền/nền của ô nhập. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc theo Design System. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Độ bo góc của ô nhập và popover. |
-| `label` | `ReactNode` | — | Nhãn tiêu đề hiển thị cho ô nhập liệu. |
-| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Vị trí hiển thị của nhãn. |
-| `placeholder` | `string` | Tự động | Văn bản giữ chỗ khi ô input rỗng. |
-| `placeholders` | `[string, string]` | — | Văn bản giữ chỗ riêng cho Start và End. |
-| `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn/trợ giúp bên dưới ô. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi (tự động bật viền đỏ và animation). |
-| `disabled` | `boolean` | `false` | Khóa toàn bộ tương tác của ô nhập. |
-| `readOnly` | `boolean` | `false` | Chỉ cho phép xem, không mở popover chọn giờ. |
-| `config` | `TimeRangePickerConfig` | — | Nhóm cấu hình tập trung các cờ tính năng (xem bảng dưới). |
-| `placement` | `Placement` | `'bottom-start'` | Vị trí mở popover chọn giờ (Floating UI). |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp tới thẻ `<input>` HTML bên dưới. |
+| `value` | `[TimeValue, TimeValue]` | — | Currently selected time range array (Controlled mode). |
+| `defaultValue` | `[TimeValue, TimeValue]` | — | Initial default time range array (Uncontrolled mode). |
+| `onChange` | `(range: [string, string] \| null) => void` | — | Callback invoked when time range changes (returns `[start, end]` or `null` when cleared). |
+| `format` | `string` | `'HH:mm:ss'` | Primary data format used for input parsing and `onChange` output. |
+| `displayFormat` | `string` | Automatic | Visual presentation format string displayed inside the input. |
+| `separator` | `string` | `' - '` | Separator string between Start Time and End Time. |
+| `startLabel` | `string` | `'Start time'` | Header label for the start time column. |
+| `endLabel` | `string` | `'End time'` | Header label for the end time column. |
+| `use12Hours` | `boolean` | `false` | Enables 12-hour mode with AM / PM selection column. |
+| `showSeconds` | `boolean` | `true` | Displays the seconds selection column. |
+| `hourStep` | `number` | `1` | Increment step for the Hours column. |
+| `minuteStep` | `number` | `1` | Increment step for the Minutes column. |
+| `secondStep` | `number` | `1` | Increment step for the Seconds column. |
+| `minTime` | `TimeValue` | — | Minimum selectable time boundary. |
+| `maxTime` | `TimeValue` | — | Maximum selectable time boundary. |
+| `disabledHours` | `() => number[]` | — | Function returning an array of disabled hour numbers. |
+| `disabledMinutes` | `(hour: number) => number[]` | — | Function returning an array of disabled minute numbers for a given hour. |
+| `disabledSeconds` | `(h: number, m: number) => number[]` | — | Function returning an array of disabled second numbers for a given hour and minute. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the input field. |
+| `variant` | `'outline' \| 'filled' \| 'ghost'` | `'outline'` | Visual style variant for border and background. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color per Design System. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Border radius of the input and popover. |
+| `label` | `ReactNode` | — | Label rendered above or beside the input field. |
+| `labelPlacement` | `'top' \| 'left' \| 'floating'` | `'top'` | Placement of the label. |
+| `placeholder` | `string` | Automatic | Combined placeholder text when the input is empty. |
+| `placeholders` | `[string, string]` | — | Separate placeholder text array for Start and End inputs. |
+| `helperText` | `ReactNode` | — | Helper or instructional text rendered beneath the field. |
+| `errorMessage` | `ReactNode` | — | Error message displayed on validation failure (triggers error styling). |
+| `disabled` | `boolean` | `false` | Disables all user interactions on the input. |
+| `readOnly` | `boolean` | `false` | Read-only mode, prevents opening the popover or altering values. |
+| `config` | `TimeRangePickerConfig` | — | Consolidated configuration object for feature flags (see table below). |
+| `placement` | `Placement` | `'bottom-start'` | Floating UI placement for the time selection popover. |
+| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying native `<input>` HTML element. |
 
 ---
 
 ### `TimeRangePickerConfig`
 
-| Cờ thuộc tính | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu sao đỏ `*` và đánh dấu `aria-required="true"`. |
-| `isInvalid` | `boolean` | `false` | Bật trạng thái viền đỏ báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Khóa tương tác, bật `aria-busy="true"` và `aria-disabled="true"`. |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi `isLoading={true}`. |
-| `isClearable` | `boolean` | `true` | Hiển thị nút xóa nhanh khoảng thời gian đã chọn. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng chiếm toàn bộ 100% chiều ngang container cha. |
-| `closeOnSelect` | `boolean` | `false` | Tự động đóng popover sau khi chọn xong cả 2 mốc. |
+| `isRequired` | `boolean` | `false` | Displays a red asterisk `*` and sets `aria-required="true"`. |
+| `isInvalid` | `boolean` | `false` | Enables invalid error styling and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Locks interactions, setting `aria-busy="true"` and `aria-disabled="true"`. |
+| `showSpinner` | `boolean` | `false` | Displays a rotating spinner icon when `isLoading={true}`. |
+| `isClearable` | `boolean` | `true` | Displays a quick clear button when a time range is selected. |
+| `isFullWidth` | `boolean` | `false` | Expands the component to 100% width of the parent container. |
+| `closeOnSelect` | `boolean` | `false` | Automatically closes the popover after both start and end times are chosen. |

@@ -1,7 +1,7 @@
 import { ReactNode, Ref } from "react";
 import type { Placement } from "@floating-ui/react";
 import type { LabelPlacement } from "../input/types";
-import type { CalendarView, DateValue, LocaleConfig } from "../datepicker/types";
+import type { CalendarView, DateValue } from "../datepicker/types";
 
 /**
  * Các kích thước khả dụng cho DateRangePicker & DateRangeCalendar
@@ -97,8 +97,6 @@ export interface DateRangeHeaderProps {
   size?: DateRangePickerSize;
   /** Màu sắc chủ đề */
   color?: DateRangePickerColor;
-  /** Cấu hình ngôn ngữ */
-  locale?: "vi" | "en" | LocaleConfig;
 }
 
 /**
@@ -117,8 +115,6 @@ export interface DateRangeDayGridProps {
   color?: DateRangePickerColor;
   /** Độ bo góc của ô ngày */
   radius?: DateRangePickerRadius;
-  /** Cấu hình ngôn ngữ */
-  locale?: "vi" | "en" | LocaleConfig;
   /** Ngày đầu tuần (0: Chủ Nhật, 1: Thứ Hai) */
   firstDayOfWeek?: 0 | 1;
   /** Hiển thị cột số thứ tự tuần */
@@ -139,8 +135,6 @@ export interface DateRangeMonthGridProps {
   color?: DateRangePickerColor;
   /** Độ bo góc của nút tháng */
   radius?: DateRangePickerRadius;
-  /** Cấu hình ngôn ngữ */
-  locale?: "vi" | "en" | LocaleConfig;
   /** Ngày bắt đầu khoảng (nếu có) */
   rangeStart?: Date | null;
   /** Ngày kết thúc khoảng (nếu có) */
@@ -195,8 +189,6 @@ export interface DateRangeCalendarProps {
   maxDate?: Date | string;
   /** Hàm callback tùy biến kiểm tra ngày cụ thể có bị vô hiệu hóa không */
   isDateDisabled?: (date: Date) => boolean;
-  /** Ngôn ngữ hiển thị ('vi' | 'en' hoặc cấu hình LocaleConfig) */
-  locale?: "vi" | "en" | LocaleConfig;
   /** Ngày bắt đầu tuần: 0 (Chủ Nhật) hoặc 1 (Thứ Hai) */
   firstDayOfWeek?: 0 | 1;
   /** Hiển thị cột số thứ tự tuần trong năm (ISO 8601) */
@@ -329,12 +321,6 @@ export interface DateRangePickerProps {
    * @default "days"
    */
   defaultView?: CalendarView;
-
-  /**
-   * Ngôn ngữ hiển thị cho các bảng lịch ('vi' | 'en' hoặc cấu hình LocaleConfig tùy biến)
-   * @default "en"
-   */
-  locale?: "vi" | "en" | LocaleConfig;
 
   /**
    * Ngày bắt đầu tuần: 0 (Chủ Nhật) hoặc 1 (Thứ Hai)

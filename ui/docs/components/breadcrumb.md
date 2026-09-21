@@ -1,35 +1,35 @@
 # 🧭 Breadcrumb Component (`@openway/ui`)
 
-Bộ component **Breadcrumb** (Thanh điều hướng phân cấp) chuẩn **OpenWay Design System (Notion Warm Paper Aesthetics)**, hỗ trợ song song **Compound Components Pattern** và **Data-driven `items` API**, tích hợp trực tiếp thẻ `Link` của **Next.js 16**, tự động rút gọn thông minh **(Collapsible Ellipsis với Dropdown Menu)** và tuân thủ tuyệt đối tiêu chuẩn **WAI-ARIA Accessibility**.
+The **Breadcrumb** component suite (Hierarchical Navigation Bar) adheres to the **OpenWay Design System (Notion Warm Paper Aesthetics)**, supporting both the **Compound Components Pattern** and the **Data-driven `items` API**, seamlessly integrating with the **Next.js 16** `Link` component, smart auto-truncation **(Collapsible Ellipsis with Dropdown Menu)**, and strict compliance with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Key Features
 
-- **Tích hợp Next.js Link**: Component `<BreadcrumbLink>` và mảng dữ liệu `items` mặc định sử dụng thẻ `Link` từ `next/link`, hỗ trợ đầy đủ `href`, `replace`, `scroll`, `prefetch`, `target`, `rel` và cờ `external` (tự động gắn icon và `target="_blank"`).
-- **Dual API linh hoạt**:
-  - **Compound Components**: `<Breadcrumb>`, `<BreadcrumbList>`, `<BreadcrumbItem>`, `<BreadcrumbLink>`, `<BreadcrumbPage>`, `<BreadcrumbSeparator>`, `<BreadcrumbEllipsis>` cho khả năng tùy biến sâu cấu trúc DOM và giao diện.
-  - **Data-driven (`items` prop)**: `<Breadcrumb items={[...]} />` giúp render nhanh chóng từ mảng cấu hình route.
-- **Tự động thu gọn thông minh (`maxItems`)**:
-  - Khi số lượng mục vượt quá `maxItems`, các trang ở giữa sẽ được gộp vào nút ba chấm `...` (`BreadcrumbEllipsis`).
-  - Hỗ trợ 2 chế độ: `collapseMode="dropdown"` (mở menu Dropdown chứa các liên kết bị ẩn) hoặc `collapseMode="expand"` (mở rộng toàn bộ khi click).
-- **Phân định rõ ràng giữa Item, Link và Page**:
-  - `<BreadcrumbItem>`: Phần tử `<li>` bao bọc một nấc đường dẫn.
-  - `<BreadcrumbLink>`: Đường dẫn có thể tương tác (chuyển trang Next.js hoặc click button).
-  - `<BreadcrumbPage>`: Văn bản trang hiện tại đang đứng, mang thuộc tính `aria-current="page"` và phong cách chữ than chì đậm.
-- **3 Kích thước tiêu chuẩn (`size`)**: `sm` (12px), `md` (14px - *mặc định*), `lg` (16px).
-- **3 Biến thể giao diện (`variant`)**:
-  - `standard` *(mặc định)*: Tối giản chuẩn Notion, chỉ đổi màu chữ và gạch chân khi hover (`hover:underline underline-offset-4`), không đổi màu nền.
-  - `solid`: Dạng thẻ pill nền mềm ấm (`bg-neutral-100`).
-  - `bordered`: Dạng thẻ viền hairline siêu mảnh (`border border-neutral-200`).
-- **7 Chủ đề màu sắc (`color`)**: `neutral` (*mặc định - Notion Charcoal*), `primary`, `secondary`, `error`, `success`, `warning`, `info`.
-- **6 Tùy chỉnh bo góc (`radius`)**: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
-- **Tùy biến phân cách (`separator`)**: Mặc định sử dụng `<ChevronRightIcon />`, dễ dàng thay đổi thành `/`, `\`, `>` hoặc icon SVG tùy chỉnh.
-- **WAI-ARIA Accessibility**: Thẻ `<nav aria-label="Breadcrumb">`, `<ol>`, `<li>`, `role="presentation" aria-hidden="true"` cho separator, `aria-current="page"` cho trang hiện tại.
+- **Next.js Link Integration**: The `<BreadcrumbLink>` component and `items` data array use `next/link` by default, fully supporting `href`, `replace`, `scroll`, `prefetch`, `target`, `rel`, and the `external` flag (automatically attaches an external link icon and `target="_blank"`).
+- **Flexible Dual API**:
+  - **Compound Components**: `<Breadcrumb>`, `<BreadcrumbList>`, `<BreadcrumbItem>`, `<BreadcrumbLink>`, `<BreadcrumbPage>`, `<BreadcrumbSeparator>`, `<BreadcrumbEllipsis>` provide deep customization for DOM structure and appearance.
+  - **Data-driven (`items` prop)**: `<Breadcrumb items={[...]} />` allows quick rendering from route configuration arrays.
+- **Smart Auto-collapsing (`maxItems`)**:
+  - When the item count exceeds `maxItems`, intermediate pages are collapsed into an ellipsis `...` button (`BreadcrumbEllipsis`).
+  - Supports 2 modes: `collapseMode="dropdown"` (opens a Dropdown menu containing hidden links) or `collapseMode="expand"` (expands all items on click).
+- **Clear Distinction Between Item, Link, and Page**:
+  - `<BreadcrumbItem>`: An `<li>` element wrapping a single path segment.
+  - `<BreadcrumbLink>`: Interactive navigable link (Next.js navigation or button click).
+  - `<BreadcrumbPage>`: Text element for the current page, marked with `aria-current="page"` and bold charcoal styling.
+- **3 Standard Sizes (`size`)**: `sm` (12px), `md` (14px - *default*), `lg` (16px).
+- **3 Visual Variants (`variant`)**:
+  - `standard` *(default)*: Minimalist Notion standard, changing only text color and underline on hover (`hover:underline underline-offset-4`), without background color change.
+  - `solid`: Warm soft pill background (`bg-neutral-100`).
+  - `bordered`: Ultra-thin hairline border (`border border-neutral-200`).
+- **7 Color Themes (`color`)**: `neutral` (*default - Notion Charcoal*), `primary`, `secondary`, `error`, `success`, `warning`, `info`.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
+- **Customizable Separator (`separator`)**: Defaults to `<ChevronRightIcon />`, easily customizable to `/`, `\`, `>`, or any custom SVG icon.
+- **WAI-ARIA Accessibility**: `<nav aria-label="Breadcrumb">` wrapper, `<ol>`, `<li>`, `role="presentation" aria-hidden="true"` for separators, `aria-current="page"` for the current page.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -62,9 +62,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Dạng Compound Components (Cơ bản)
+### 1. Compound Components Pattern (Basic)
 
 ```tsx
 import {
@@ -78,20 +78,20 @@ import {
 
 export function BasicCompoundBreadcrumb() {
   return (
-    <Breadcrumb ariaLabel="Đường dẫn trang">
+    <Breadcrumb ariaLabel="Breadcrumb navigation">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         
         <BreadcrumbItem>
-          <BreadcrumbLink href="/settings">Cài đặt</BreadcrumbLink>
+          <BreadcrumbLink href="/settings">Settings</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
 
         <BreadcrumbItem>
-          <BreadcrumbPage>Hồ sơ cá nhân</BreadcrumbPage>
+          <BreadcrumbPage>Profile</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
@@ -101,9 +101,9 @@ export function BasicCompoundBreadcrumb() {
 
 ---
 
-### 2. Dạng Data-driven (`items` prop)
+### 2. Data-driven Pattern (`items` prop)
 
-Khi dữ liệu breadcrumb đến từ danh sách route hoặc menu động:
+When breadcrumb data comes from a dynamic route or menu list:
 
 ```tsx
 import { Breadcrumb } from "@openway/ui";
@@ -112,10 +112,10 @@ export function DataDrivenBreadcrumb() {
   return (
     <Breadcrumb
       items={[
-        { label: "Trang chủ", href: "/" },
-        { label: "Dự án", href: "/projects" },
-        { label: "Quản lý nhân sự", href: "/projects/hr" },
-        { label: "Bảng lương tháng 9" }, // Tự động là trang hiện tại
+        { label: "Home", href: "/" },
+        { label: "Projects", href: "/projects" },
+        { label: "Human Resources", href: "/projects/hr" },
+        { label: "September Payroll" }, // Automatically treated as current page
       ]}
     />
   );
@@ -124,9 +124,9 @@ export function DataDrivenBreadcrumb() {
 
 ---
 
-### 3. Tự động thu gọn thông minh (`maxItems` & `collapseMode`)
+### 3. Smart Auto-collapsing (`maxItems` & `collapseMode`)
 
-#### a) Mở Menu Dropdown chứa các trang bị ẩn (`collapseMode="dropdown"`)
+#### a) Open Dropdown Menu for Hidden Pages (`collapseMode="dropdown"`)
 
 ```tsx
 <Breadcrumb
@@ -135,25 +135,25 @@ export function DataDrivenBreadcrumb() {
   itemsAfterCollapse={1}
   collapseMode="dropdown"
   items={[
-    { label: "Trang chủ", href: "/" },
-    { label: "Sản phẩm", href: "/products" },
-    { label: "Thiết bị điện tử", href: "/products/electronics" },
-    { label: "Điện thoại thông minh", href: "/products/phones" },
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products" },
+    { label: "Electronics", href: "/products/electronics" },
+    { label: "Smartphones", href: "/products/phones" },
     { label: "iPhone 16 Pro Max" },
   ]}
 />
 ```
 
-#### b) Mở rộng toàn bộ đường dẫn khi click (`collapseMode="expand"`)
+#### b) Expand All Items on Click (`collapseMode="expand"`)
 
 ```tsx
 <Breadcrumb
   maxItems={3}
   collapseMode="expand"
   items={[
-    { label: "Trang chủ", href: "/" },
-    { label: "Kho tài liệu", href: "/docs" },
-    { label: "Kỹ thuật", href: "/docs/engineering" },
+    { label: "Home", href: "/" },
+    { label: "Documentation", href: "/docs" },
+    { label: "Engineering", href: "/docs/engineering" },
     { label: "Frontend", href: "/docs/engineering/frontend" },
     { label: "OpenWay UI Guidelines" },
   ]}
@@ -162,9 +162,9 @@ export function DataDrivenBreadcrumb() {
 
 ---
 
-### 4. Kích thước (`size`)
+### 4. Sizes (`size`)
 
-Hỗ trợ 3 kích thước: `sm` (12px), `md` (14px - mặc định), `lg` (16px).
+Supports 3 sizes: `sm` (12px), `md` (14px - default), `lg` (16px).
 
 ```tsx
 <Breadcrumb size="sm" items={sampleItems} />
@@ -174,11 +174,11 @@ Hỗ trợ 3 kích thước: `sm` (12px), `md` (14px - mặc định), `lg` (16p
 
 ---
 
-### 5. Biến thể giao diện (`variant`)
+### 5. Visual Variants (`variant`)
 
-- `standard`: Phong cách Notion Warm Paper tối giản, liên kết thanh mảnh.
-- `solid`: Khối pill màu mềm ấm, phù hợp cho thanh điều hướng trên thanh công cụ/header.
-- `bordered`: Có đường viền mảnh `1px border-neutral-200`.
+- `standard`: Minimalist Notion Warm Paper style with sleek links.
+- `solid`: Warm soft pill blocks, ideal for toolbars and headers.
+- `bordered`: Clean border lines with `1px border-neutral-200`.
 
 ```tsx
 <Breadcrumb variant="standard" items={sampleItems} />
@@ -188,94 +188,94 @@ Hỗ trợ 3 kích thước: `sm` (12px), `md` (14px - mặc định), `lg` (16p
 
 ---
 
-### 6. Tùy biến dấu phân cách (`separator`)
+### 6. Custom Separators (`separator`)
 
-Có thể truyền ký tự chuỗi hoặc icon SVG bất kỳ:
+Supports any string character or custom SVG icon:
 
 ```tsx
-// Phân cách bằng dấu gạch chéo
+// Slash separator
 <Breadcrumb separator="/" items={sampleItems} />
 
-// Phân cách bằng dấu lớn hơn
+// Greater-than separator
 <Breadcrumb separator=">" items={sampleItems} />
 
-// Phân cách bằng icon tùy biến
+// Custom icon separator
 <Breadcrumb separator={<CustomDividerIcon className="size-3 text-neutral-400" />} items={sampleItems} />
 ```
 
 ---
 
-### 7. Tích hợp Icon & Huy hiệu (Badges)
+### 7. Icons & Badges Integration
 
 ```tsx
 import { Breadcrumb, Badge, HomeIcon } from "@openway/ui";
 
 <Breadcrumb
   items={[
-    { label: "Trang chủ", href: "/", icon: <HomeIcon /> },
-    { label: "Thông báo", href: "/notifications", badge: <Badge size="xs" color="error">3</Badge> },
-    { label: "Chi tiết thông báo" },
+    { label: "Home", href: "/", icon: <HomeIcon /> },
+    { label: "Notifications", href: "/notifications", badge: <Badge size="xs" color="error">3</Badge> },
+    { label: "Notification Details" },
   ]}
 />
 ```
 
 ---
 
-### 8. Liên kết ngoài (`external`)
+### 8. External Links (`external`)
 
-Khi truyền `external: true`, component tự động gắn `target="_blank"`, `rel="noopener noreferrer"` và bổ sung icon liên kết ngoài:
+When passing `external: true`, the component automatically adds `target="_blank"`, `rel="noopener noreferrer"`, and an external link icon:
 
 ```tsx
 <BreadcrumbLink href="https://notion.so" external>
-  Tài liệu Notion
+  Notion Docs
 </BreadcrumbLink>
 ```
 
 ---
 
-## 📊 Bảng Tham Số Props (API Reference)
+## 📊 API Reference
 
 ### `<Breadcrumb>` (Container)
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `items` | `BreadcrumbItemData[]` | — | Mảng dữ liệu các mục (Data-driven mode) |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Kích thước hiển thị |
-| `variant` | `'standard' \| 'solid' \| 'bordered' \| 'other'` | `'standard'` | Biến thể kiểu dáng giao diện |
-| `color` | `'neutral' \| 'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'neutral'` | Chủ đề màu sắc |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Độ bo góc các mục |
-| `underline` | `'none' \| 'hover' \| 'always'` | `'hover'` | Kiểu gạch chân liên kết |
-| `separator` | `ReactNode` | `<ChevronRightIcon />` | Ký hiệu / icon phân cách |
-| `maxItems` | `number` | — | Số lượng mục tối đa trước khi thu gọn |
-| `itemsBeforeCollapse`| `number` | `1` | Số mục giữ lại ở đầu trước dấu `...` |
-| `itemsAfterCollapse` | `number` | `1` | Số mục giữ lại ở cuối sau dấu `...` |
-| `collapseMode` | `'dropdown' \| 'expand' \| 'none'` | `'dropdown'` | Hành vi khi click nút thu gọn |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ liên kết |
-| `ariaLabel` | `string` | `'Breadcrumb'` | Nhãn trợ năng cho thẻ `<nav>` |
+| `items` | `BreadcrumbItemData[]` | — | Item data array (Data-driven mode) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Display size |
+| `variant` | `'standard' \| 'solid' \| 'bordered' \| 'other'` | `'standard'` | Visual styling variant |
+| `color` | `'neutral' \| 'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'neutral'` | Color theme |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Border radius of items |
+| `underline` | `'none' \| 'hover' \| 'always'` | `'hover'` | Link underline style |
+| `separator` | `ReactNode` | `<ChevronRightIcon />` | Separator symbol or icon |
+| `maxItems` | `number` | — | Maximum number of items before collapsing |
+| `itemsBeforeCollapse`| `number` | `1` | Number of items retained before the `...` ellipsis |
+| `itemsAfterCollapse` | `number` | `1` | Number of items retained after the `...` ellipsis |
+| `collapseMode` | `'dropdown' \| 'expand' \| 'none'` | `'dropdown'` | Behavior when clicking the collapse button |
+| `disabled` | `boolean` | `false` | Disables all links |
+| `ariaLabel` | `string` | `'Breadcrumb'` | Accessibility label for the `<nav>` element |
 
-### `BreadcrumbItemData` (Từng mục trong mảng `items`)
+### `BreadcrumbItemData` (Item in `items` Array)
 
-| Thuộc tính | Kiểu dữ liệu | Mô tả |
+| Property | Type | Description |
 | :--- | :--- | :--- |
-| `label` | `ReactNode` | Tiêu đề hiển thị (**Bắt buộc**) |
-| `href` | `string` | Đường dẫn chuyển trang Next.js |
-| `icon` | `ReactNode` | Icon hiển thị phía trước tiêu đề |
-| `endIcon` | `ReactNode` | Icon hiển thị phía sau tiêu đề |
-| `badge` | `ReactNode` | Huy hiệu / nhãn đi kèm |
-| `current` | `boolean` | Đánh dấu là trang hiện tại (`aria-current="page"`) |
-| `disabled` | `boolean` | Vô hiệu hóa mục này |
-| `external` | `boolean` | Mở liên kết ở tab mới kèm icon ngoài |
-| `onClick` | `(e: MouseEvent) => void` | Callback khi click vào mục |
+| `label` | `ReactNode` | Display label (**Required**) |
+| `href` | `string` | Navigation URL for Next.js |
+| `icon` | `ReactNode` | Icon displayed before the label |
+| `endIcon` | `ReactNode` | Icon displayed after the label |
+| `badge` | `ReactNode` | Attached badge or tag |
+| `current` | `boolean` | Marks as the current page (`aria-current="page"`) |
+| `disabled` | `boolean` | Disables this item |
+| `external` | `boolean` | Opens link in a new tab with an external icon |
+| `onClick` | `(e: MouseEvent) => void` | Callback when clicking the item |
 
 ### `<BreadcrumbLink>`
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `href` | `string` | — | Đường dẫn điều hướng `next/link` |
-| `asChild` | `boolean` | `false` | Truyền quyền render cho component con (Slot) |
-| `as` | `ElementType` | — | Tùy biến thẻ render (ví dụ `button`) |
-| `external` | `boolean` | `false` | Mở liên kết ở tab mới |
-| `startIcon` | `ReactNode` | — | Icon hiển thị phía trước |
-| `endIcon` | `ReactNode` | — | Icon hiển thị phía sau |
-| `badge` | `ReactNode` | — | Huy hiệu gắn kèm |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa liên kết |
+| `href` | `string` | — | `next/link` navigation URL |
+| `asChild` | `boolean` | `false` | Delegates rendering to child component (Slot) |
+| `as` | `ElementType` | — | Custom rendering element (e.g., `button`) |
+| `external` | `boolean` | `false` | Opens link in a new tab |
+| `startIcon` | `ReactNode` | — | Icon displayed before the label |
+| `endIcon` | `ReactNode` | — | Icon displayed after the label |
+| `badge` | `ReactNode` | — | Attached badge |
+| `disabled` | `boolean` | `false` | Disables the link |

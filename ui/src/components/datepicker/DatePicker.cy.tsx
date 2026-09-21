@@ -78,7 +78,6 @@ const DatePickerShowcase = ({ onDateChange, onIOChange, onMonthOnlyChange }: Har
               onChange={setViewTabDate}
               defaultView="months"
               config={{ showViewTabs: true, isClearable: true }}
-              locale="vi"
               helperText="Hỗ trợ chọn Ngày, Tháng (MM/YYYY) hoặc Năm (YYYY)"
             />
           </div>
@@ -305,14 +304,13 @@ const DatePickerShowcase = ({ onDateChange, onIOChange, onMonthOnlyChange }: Har
 
           <div id="dp-format-locale-en" className="space-y-2">
             <DatePicker
-              label="English Locale (en)"
+              label="Default Locale (enUS)"
               defaultValue="25/08/2026"
-              locale="en"
               config={{ showWeekNumbers: true }}
             />
             <div className="text-xs font-mono bg-neutral-100 p-2 rounded-md border border-neutral-200">
               <span className="text-neutral-500">Locale: </span>
-              <span className="font-semibold text-neutral-800">&quot;en&quot; (English)</span>
+              <span className="font-semibold text-neutral-800">&quot;enUS&quot; (Default via OpenWayProvider)</span>
             </div>
           </div>
 

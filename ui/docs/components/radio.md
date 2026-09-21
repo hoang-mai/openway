@@ -1,37 +1,37 @@
 # 🔘 Radio & RadioGroup Component (`@openway/ui`)
 
-Bộ đôi component **Radio** và **RadioGroup** chuyên nghiệp, thiết kế theo kiến trúc **Data-driven thuần túy (Pure Data-driven)**, không sử dụng React Context, loại bỏ hoàn toàn `useEffect` gây cascading render, tích hợp **Live Search (Client & Server modes)** thông qua component `Input` variant `outline`, hỗ trợ **bảo lưu mục đã chọn (Preserve Selected)** và tuân thủ chặt chẽ tiêu chuẩn **WAI-ARIA Accessibility**.
+Professional **Radio** and **RadioGroup** component pair designed with a **Pure Data-driven** architecture. Completely free of React Context and eliminating cascading renders caused by `useEffect`, it integrates **Live Search (Client & Server modes)** via the `outline` variant of the `Input` component, supports **Preserve Selected** items, and strictly complies with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
 ### 1. Radio
-- **Độc lập & Tối ưu**: Không phụ thuộc vào Context, nhận props trực tiếp, hỗ trợ chuyển tiếp `ref` chuẩn React 19 mà không cần wrapper trung gian.
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl` đồng bộ tỉ lệ ô tròn, dot indicator bên trong, nhãn và văn bản chú thích.
-- **4 Biến thể giao diện (`variant`)**:
-  - `filled` (*mặc định*): Nền màu đặc tương phản cao khi được chọn.
-  - `outline`: Nền trong suốt, viền và dot mang màu chủ đề.
-  - `soft`: Nền pastel dịu mắt (`bg-{color}-100`).
-  - `other`: Tự do tùy biến style qua `boxClassName`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
-- **2 Vị trí đặt nhãn (`labelPlacement`)**: `right` (*mặc định*) và `left` (căn đều hai bên).
-- **Safe Config Fallback**: Sử dụng `getSafeConfig` đảm bảo component luôn an toàn, không bao giờ bị lỗi hiển thị khi nhận giá trị không hợp lệ.
+- **Independent & Optimized**: Zero Context dependency, receives props directly, and supports standard React 19 `ref` forwarding without intermediate wrappers.
+- **5 Standard Sizes (`size`)**: `xs`, `sm`, `md` (*default*), `lg`, `xl` with proportional sizing across the radio circle, internal dot indicator, label, and helper text.
+- **4 Visual Variants (`variant`)**:
+  - `filled` (*default*): Solid high-contrast background when selected.
+  - `outline`: Transparent background with border and dot matching theme color.
+  - `soft`: Soft pastel background tint (`bg-{color}-100`).
+  - `other`: Free-form styling via `boxClassName`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
+- **2 Label Placements (`labelPlacement`)**: `right` (*default*) and `left` (justified layout).
+- **Safe Config Fallback**: Uses `getSafeConfig` to ensure the component degrades gracefully and never errors on invalid values.
 
 ### 2. RadioGroup
-- **Kiến trúc Data-driven thuần túy**: Nhận danh sách lựa chọn qua prop `options: RadioOptionItem<TData>[]`. Không còn cấu trúc compound component cồng kềnh, không tốn chi phí Context Provider.
-- **Tích hợp tìm kiếm trực quan (`searchable`)**:
-  - Sử dụng component `Input` variant `outline` với icon tìm kiếm (`SearchIcon`) và nút xóa nhanh (`isClearable`).
-  - **Không làm mất focus**: Trạng thái tải ngầm hiển thị spinner ở góc phải qua `rightIcon`, không disable input trong khi người dùng đang gõ phím.
-- **2 Chế độ tìm kiếm linh hoạt (`searchMode`)**:
-  - `client` (*mặc định*): Tìm kiếm thông minh bằng thuật toán fuzzy ranking của `@tanstack/match-sorter-utils`. Hỗ trợ tìm theo đa trường dữ liệu (`searchField`) hoặc custom function (`filterFn`).
-  - `server`: Tìm kiếm qua API máy chủ với `onSearch` và bộ đệm thời gian `debounceMs`.
-- **Bảo lưu mục đã chọn (`preserveSelected`)**: Tự động ghim lại mục đã chọn lên đầu danh sách khi chuyển đổi từ khóa tìm kiếm mới, quản lý bộ nhớ thông minh (chỉ lưu mục thực sự được chọn).
-- **2 Bố cục sắp xếp (`orientation`)**: `vertical` (*mặc định*) và `horizontal`.
+- **Pure Data-driven Architecture**: Accepts options via the `options: RadioOptionItem<TData>[]` prop. Eliminates bulky compound component nesting and Context Provider overhead.
+- **Integrated Live Search (`searchable`)**:
+  - Employs the `Input` component (`outline` variant) with a search icon (`SearchIcon`) and quick clear button (`isClearable`).
+  - **Focus-Preserving**: Shows a background loading spinner in the right accessory slot via `rightIcon`, never disabling the input while the user is actively typing.
+- **2 Flexible Search Modes (`searchMode`)**:
+  - `client` (*default*): Smart client-side search powered by `@tanstack/match-sorter-utils` fuzzy ranking algorithm. Supports multi-field searching (`searchField`) or custom filter logic (`filterFn`).
+  - `server`: Server-side API searching using `onSearch` with configurable `debounceMs` buffering.
+- **Preserve Selected (`preserveSelected`)**: Automatically pins previously selected options to the top when the search query changes, with intelligent memory management (only retaining actively selected items).
+- **2 Layout Orientations (`orientation`)**: `vertical` (*default*) and `horizontal`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Radio, RadioGroup } from "@openway/ui";
@@ -49,9 +49,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Sử dụng Radio đơn lẻ
+### 1. Standalone Radio Usage
 
 ```tsx
 import { useState } from "react";
@@ -64,8 +64,8 @@ export function SingleRadioExample() {
     <Radio
       checked={selected}
       onChange={(e) => setSelected(e.target.checked)}
-      label="Nhận thông báo qua email"
-      helperText="Bạn có thể hủy đăng ký bất cứ lúc nào"
+      label="Receive email notifications"
+      helperText="You can unsubscribe at any time"
     />
   );
 }
@@ -73,7 +73,7 @@ export function SingleRadioExample() {
 
 ---
 
-### 2. RadioGroup cơ bản (Data-driven)
+### 2. Basic RadioGroup (Data-driven)
 
 ```tsx
 import { useState } from "react";
@@ -84,16 +84,16 @@ export function BasicGroupExample() {
 
   return (
     <RadioGroup
-      label="Phương thức giao hàng"
-      helperText="Chọn hình thức vận chuyển phù hợp"
+      label="Shipping Method"
+      helperText="Choose your preferred shipping option"
       value={delivery}
       onChange={setDelivery}
       color="primary"
       orientation="vertical"
       options={[
-        { value: "standard", label: "Giao hàng tiêu chuẩn (2-3 ngày)" },
-        { value: "express", label: "Giao hàng hỏa tốc (1 ngày)" },
-        { value: "same_day", label: "Giao hàng trong ngày" },
+        { value: "standard", label: "Standard Delivery (2-3 days)" },
+        { value: "express", label: "Express Delivery (1 day)" },
+        { value: "same_day", label: "Same-Day Delivery" },
       ]}
     />
   );
@@ -102,7 +102,7 @@ export function BasicGroupExample() {
 
 ---
 
-### 3. Tìm kiếm Client Mode (Fuzzy Search & Đa trường)
+### 3. Client Mode Search (Fuzzy Search & Multi-field)
 
 ```tsx
 import { useState } from "react";
@@ -120,10 +120,10 @@ export function ClientSearchExample() {
 
   return (
     <RadioGroup
-      label="Chọn Framework chính"
+      label="Select Primary Framework"
       searchable
       searchField={["label", "code", "description"]}
-      searchPlaceholder="Tìm theo tên, mã code hoặc mô tả..."
+      searchPlaceholder="Search by name, code, or description..."
       preserveSelected
       value={selected}
       onChange={setSelected}
@@ -135,7 +135,7 @@ export function ClientSearchExample() {
 
 ---
 
-### 4. Tìm kiếm Server Mode (Gọi API với Debounce & Bảo lưu mục đã chọn)
+### 4. Server Mode Search (Debounced API Search & Preserve Selected)
 
 ```tsx
 import { useState } from "react";
@@ -160,11 +160,11 @@ export function ServerSearchExample() {
 
   return (
     <RadioGroup
-      label="Chọn sản phẩm yêu thích"
+      label="Choose your favorite product"
       searchable
       searchMode="server"
       onSearch={handleSearchProducts}
-      searchPlaceholder="Tìm kiếm sản phẩm từ máy chủ..."
+      searchPlaceholder="Search products from server..."
       preserveSelected
       value={selectedProduct}
       onChange={setSelectedProduct}
@@ -176,72 +176,72 @@ export function ServerSearchExample() {
 
 ---
 
-## 🎛️ Bảng Props & API Reference
+## 🎛️ Props & API Reference
 
 ### `RadioProps`
 
-Kế thừa `Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "type">`:
+Inherits `Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "type">`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ ô chọn tròn, dot và nhãn |
-| `variant` | `'filled' \| 'outline' \| 'soft' \| 'other'` | `'filled'` | Kiểu dáng hiển thị của box khi checked |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa tương tác |
-| `readOnly` | `boolean` | `false` | Chế độ chỉ đọc |
-| `config` | `RadioConfig` | `undefined` | Cấu hình cờ trạng thái (`isLoading` - spinner thay dot, `isRequired`, `isInvalid`) |
-| `labelPlacement` | `'right' \| 'left'` | `'right'` | Vị trí hiển thị nhãn |
-| `label` | `ReactNode` | `undefined` | Nhãn văn bản cạnh ô radio |
-| `helperText` | `ReactNode` | `undefined` | Chú thích bên dưới |
-| `errorMessage` | `ReactNode` | `undefined` | Thông báo lỗi |
-| `dotIcon` | `ReactNode` | `RadioDotIcon` | Icon tùy biến thay thế dot bên trong |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Sizing for the radio circle, dot indicator, and label |
+| `variant` | `'filled' \| 'outline' \| 'soft' \| 'other'` | `'filled'` | Visual styling of the box when checked |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Color theme |
+| `disabled` | `boolean` | `false` | Disables user interaction |
+| `readOnly` | `boolean` | `false` | Read-only mode |
+| `config` | `RadioConfig` | `undefined` | Status flags configuration (`isLoading` - spinner replaces dot, `isRequired`, `isInvalid`) |
+| `labelPlacement` | `'right' \| 'left'` | `'right'` | Placement position of the label |
+| `label` | `ReactNode` | `undefined` | Label text next to the radio circle |
+| `helperText` | `ReactNode` | `undefined` | Helper text displayed below |
+| `errorMessage` | `ReactNode` | `undefined` | Error message displayed below |
+| `dotIcon` | `ReactNode` | `RadioDotIcon` | Custom icon replacing the inner dot indicator |
 
 ---
 
 ### `RadioGroupProps<TData = unknown, TValue extends string | number = string>`
 
-Kế thừa `Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "children">`:
+Inherits `Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue" | "children">`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `options` | `RadioOptionItem<TData, TValue>[]` | `[]` | Mảng dữ liệu các lựa chọn (Data-driven) |
-| `value` | `TValue \| null` | `undefined` | Giá trị đang chọn (Controlled) |
-| `defaultValue` | `TValue \| null` | `null` | Giá trị mặc định (Uncontrolled) |
-| `onChange` | `(value: TValue \| null) => void` | `undefined` | Callback khi lựa chọn thay đổi |
-| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Bố cục sắp xếp các mục |
-| `searchable` | `boolean` | `false` | Bật/tắt thanh tìm kiếm |
-| `searchMode` | `'client' \| 'server'` | `'client'` | Chế độ tìm kiếm phía client hoặc gọi API server |
-| `searchField` | `string \| string[]` | `'label'` | Các trường dữ liệu dùng để tìm kiếm |
-| `filterFn` | `(item: RadioOptionItem<TData, TValue>, query: string) => boolean` | `undefined` | Hàm lọc tùy biến phía client |
-| `onSearch` | `(query: string, ...args: unknown[]) => void \| Promise<void>` | `undefined` | Callback khi người dùng gõ tìm kiếm (Server mode) |
-| `listFooter` | `ReactNode` | `undefined` | Nội dung ở đáy danh sách (Sentinel / Skeleton loading) |
-| `maxHeight` | `number \| string` | `undefined` | Giới hạn chiều cao và bật thanh cuộn dọc cho danh sách |
-| `preserveSelected` | `boolean` | `true` | Bảo lưu mục đã chọn khi từ khóa tìm kiếm thay đổi |
-| `emptyText` | `ReactNode` | `'Không tìm thấy kết quả'` | Thông báo khi không có kết quả |
-| `emptyProps` | `Partial<EmptyProps>` | `undefined` | Tùy biến props cho component `Empty` khi danh sách trống |
-| `size` | `RadioSize` | `'md'` | Kích cỡ truyền xuống toàn bộ radio con |
-| `color` | `RadioColor` | `'primary'` | Màu sắc truyền xuống toàn bộ radio con |
-| `variant` | `RadioVariant` | `'filled'` | Biến thể truyền xuống toàn bộ radio con |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ nhóm |
-| `isReadOnly` | `boolean` | `false` | Chế độ chỉ đọc cho toàn bộ nhóm |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải dữ liệu (Data Loading từ API/query) |
-| `skeletonCount` | `number` | `3` | Số lượng dòng Skeleton hiển thị khi đang tải dữ liệu |
-| `renderSkeleton` | `() => ReactNode` | `undefined` | Tùy biến render giao diện Skeleton khi tải dữ liệu |
-| `config` | `RadioGroupConfig` | `undefined` | Cấu hình cờ trạng thái (`isLoading` - trạng thái bận khóa tương tác, `isRequired`, `isInvalid`,...) |
-| `label` | `ReactNode` | `undefined` | Tiêu đề của nhóm |
-| `helperText` | `ReactNode` | `undefined` | Chú thích của nhóm |
-| `errorMessage` | `ReactNode` | `undefined` | Thông báo lỗi của nhóm |
+| `options` | `RadioOptionItem<TData, TValue>[]` | `[]` | Data-driven array of options |
+| `value` | `TValue \| null` | `undefined` | Currently selected value (Controlled mode) |
+| `defaultValue` | `TValue \| null` | `null` | Default initial value (Uncontrolled mode) |
+| `onChange` | `(value: TValue \| null) => void` | `undefined` | Callback fired when the selected value changes |
+| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Layout orientation of options |
+| `searchable` | `boolean` | `false` | Toggles the search input bar |
+| `searchMode` | `'client' \| 'server'` | `'client'` | Client-side search or server-side API call mode |
+| `searchField` | `string \| string[]` | `'label'` | Data fields to match against when searching |
+| `filterFn` | `(item: RadioOptionItem<TData, TValue>, query: string) => boolean` | `undefined` | Custom client-side filter function |
+| `onSearch` | `(query: string, ...args: unknown[]) => void \| Promise<void>` | `undefined` | Search callback fired on input change (Server mode) |
+| `listFooter` | `ReactNode` | `undefined` | Content rendered at bottom of list (Sentinel / Skeleton loading) |
+| `maxHeight` | `number \| string` | `undefined` | Constrains height and enables vertical scrolling |
+| `preserveSelected` | `boolean` | `true` | Retains previously selected item when the search query changes |
+| `emptyText` | `ReactNode` | `'No results found'` | Message displayed when no results match |
+| `emptyProps` | `Partial<EmptyProps>` | `undefined` | Custom props forwarded to the `Empty` component when list is empty |
+| `size` | `RadioSize` | `'md'` | Size propagated to all child radio buttons |
+| `color` | `RadioColor` | `'primary'` | Color theme propagated to all child radio buttons |
+| `variant` | `RadioVariant` | `'filled'` | Variant propagated to all child radio buttons |
+| `disabled` | `boolean` | `false` | Disables the entire radio group |
+| `isReadOnly` | `boolean` | `false` | Read-only mode for the entire group |
+| `isLoading` | `boolean` | `false` | Data loading state (loading data from API/query) |
+| `skeletonCount` | `number` | `3` | Number of skeleton items displayed while loading |
+| `renderSkeleton` | `() => ReactNode` | `undefined` | Custom render function for skeleton loading state |
+| `config` | `RadioGroupConfig` | `undefined` | Status flags configuration (`isLoading` - locks interaction, `isRequired`, `isInvalid`, etc.) |
+| `label` | `ReactNode` | `undefined` | Group label heading |
+| `helperText` | `ReactNode` | `undefined` | Group helper description text |
+| `errorMessage` | `ReactNode` | `undefined` | Group error message text |
 
 ---
 
 ### `RadioOptionItem<TData = unknown, TValue extends string | number = string | number>`
 
-| Trường | Kiểu dữ liệu | Mô tả |
+| Field | Type | Description |
 | :--- | :--- | :--- |
-| `value` | `TValue` | Giá trị định danh duy nhất của ô chọn (string hoặc number) |
-| `label` | `ReactNode` | Nhãn hiển thị chính |
-| `description` | `ReactNode` | Đoạn chú thích/mô tả phụ bên dưới nhãn |
-| `disabled` | `boolean` | Vô hiệu hóa ô chọn này |
-| `isReadOnly` | `boolean` | Chế độ chỉ đọc cho ô chọn này |
-| `data` | `TData` | Đối tượng dữ liệu gốc đính kèm |
-| `[key: string]` | `unknown` | Mở rộng các trường tùy ý (phục vụ lọc theo `searchField`) |
+| `value` | `TValue` | Unique identifier value of the option (string or number) |
+| `label` | `ReactNode` | Primary display label |
+| `description` | `ReactNode` | Subtitle or secondary description below the label |
+| `disabled` | `boolean` | Disables this individual option |
+| `isReadOnly` | `boolean` | Read-only mode for this individual option |
+| `data` | `TData` | Raw original data object payload |
+| `[key: string]` | `unknown` | Additional custom properties (used for filtering via `searchField`) |

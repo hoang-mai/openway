@@ -1,35 +1,35 @@
 # 📭 Empty Component (`@openway/ui`)
 
-Component **Empty** (Trạng thái rỗng) hiển thị khi một danh sách, bảng dữ liệu, tìm kiếm hoặc trang web không có dữ liệu để hiển thị. Được thiết kế chuẩn **Design System**, hỗ trợ đa dạng **Preset Illustrations**, tùy biến **Hình ảnh/Icon/URL**, căn chỉnh bố cục **Vertical / Horizontal**, tích hợp **Safe Config Fallback** (`getSafeConfig`) và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+The **Empty** state component is used when a list, data table, search query, or page has no data to display. Built to strict **Design System** specifications, it features diverse **Preset Illustrations**, support for custom **Images / Icons / URLs**, flexible **Vertical / Horizontal** layouts, integrated **Safe Config Fallback** (`getSafeConfig`), and full **WAI-ARIA Accessibility** compliance.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **5 Preset Illustrations tích hợp sẵn**:
-  - `default`: Minh họa hộp dữ liệu rỗng tiêu chuẩn.
-  - `search`: Kính lúp không tìm thấy kết quả.
-  - `error`: Lỗi tải dữ liệu hoặc mất kết nối mạng.
-  - `folder`: Thư mục rỗng.
-  - `simple`: Minh họa tối giản, gọn nhẹ.
-- **Hỗ trợ đa dạng nguồn ảnh (`image`)**:
-  - Tên preset (`default`, `search`, `error`, `folder`, `simple`).
-  - Đường dẫn URL ảnh (tự động render qua `next/image` với tối ưu hóa hình ảnh).
-  - Custom JSX (`ReactNode`) như SVG Icon, Emoji hoặc component tùy biến.
-- **3 Kích thước tiêu chuẩn (`size`)**:
-  - `sm`: Gọn nhẹ, thích hợp cho dropdown, popover, select menu, bảng nhỏ.
-  - `md` *(mặc định)*: Tiêu chuẩn, thích hợp cho section, thẻ card, modal dialog.
-  - `lg`: Kích thước lớn, thích hợp cho trang dashboard hoặc toàn màn hình.
-- **2 Bố cục hiển thị (`layout`)**:
-  - `vertical` *(mặc định)*: Xếp dọc từ trên xuống (Ảnh -> Tiêu đề -> Mô tả -> Actions).
-  - `horizontal`: Bố cục hàng ngang (Ảnh bên trái, nội dung & actions bên phải), tối ưu khi diện tích theo chiều ngang rộng rãi.
-- **Khu vực hành động linh hoạt (`actions`)**: Cung cấp slot chuyên biệt để chèn Button (Tạo mới, Thử lại, Tải lại...).
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` từ `@/utils/function` đảm bảo an toàn tuyệt đối, không crash giao diện khi nhận giá trị `size` hoặc `layout` không hợp lệ.
-- **Trợ năng (Accessibility)**: Tự động gắn `role="status"` và `aria-live="polite"` giúp các trình đọc màn hình (Screen Reader) thông báo trạng thái rỗng một cách rõ ràng.
+- **5 Built-in Preset Illustrations**:
+  - `default`: Standard empty data box illustration.
+  - `search`: Magnifying glass indicating no search results found.
+  - `error`: Failed data load or network disconnect.
+  - `folder`: Empty folder illustration.
+  - `simple`: Minimal, lightweight graphic.
+- **Multiple Image Sources (`image`)**:
+  - Preset names (`default`, `search`, `error`, `folder`, `simple`).
+  - Image URLs (automatically rendered via `next/image` with image optimizations).
+  - Custom JSX (`ReactNode`) such as SVG icons, emojis, or custom components.
+- **3 Standard Sizes (`size`)**:
+  - `sm`: Compact, ideal for dropdowns, popovers, select menus, and small tables.
+  - `md` *(default)*: Standard, ideal for content sections, cards, and modal dialogs.
+  - `lg`: Large, ideal for full-page dashboards or major viewports.
+- **2 Display Layouts (`layout`)**:
+  - `vertical` *(default)*: Vertical top-to-bottom layout (Image -> Title -> Description -> Actions).
+  - `horizontal`: Horizontal side-by-side layout (Image on the left, text content & actions on the right), optimized for wide viewports.
+- **Flexible Action Area (`actions`)**: Dedicated slot for call-to-action buttons (Create, Retry, Refresh...).
+- **Safe Config Fallback**: Built-in `getSafeConfig` utility guarantees resilient operation, falling back gracefully without crashing when receiving invalid `size` or `layout` values.
+- **Accessibility**: Automatically adds `role="status"` and `aria-live="polite"` so screen readers accurately announce empty states.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Empty, EmptyIllustration } from "@openway/ui";
@@ -38,9 +38,9 @@ import type { EmptyProps, EmptySize, EmptyLayout, EmptyPresetImage } from "@open
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Trạng thái rỗng cơ bản
+### 1. Basic Empty State
 
 ```tsx
 import { Empty } from "@openway/ui";
@@ -48,8 +48,8 @@ import { Empty } from "@openway/ui";
 export function BasicEmptyExample() {
   return (
     <Empty
-      title="Không có dữ liệu"
-      description="Hiện tại chưa có dữ liệu nào trong danh sách này."
+      title="No Data Available"
+      description="There are currently no items in this list."
     />
   );
 }
@@ -57,7 +57,7 @@ export function BasicEmptyExample() {
 
 ---
 
-### 2. Các Presets minh họa (`image`)
+### 2. Illustration Presets (`image`)
 
 ```tsx
 import { Empty } from "@openway/ui";
@@ -65,25 +65,25 @@ import { Empty } from "@openway/ui";
 export function PresetExamples() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Tìm kiếm không thấy */}
+      {/* Search not found */}
       <Empty
         image="search"
-        title="Không tìm thấy kết quả"
-        description="Vui lòng thử lại với từ khóa khác."
+        title="No Results Found"
+        description="Please try again with a different search keyword."
       />
 
-      {/* Lỗi kết nối */}
+      {/* Network / load error */}
       <Empty
         image="error"
-        title="Tải thất bại"
-        description="Không thể kết nối đến máy chủ. Vui lòng thử lại."
+        title="Loading Failed"
+        description="Unable to connect to the server. Please try again."
       />
 
-      {/* Thư mục rỗng */}
+      {/* Empty folder */}
       <Empty
         image="folder"
-        title="Thư mục trống"
-        description="Chưa có tệp tin nào được tải lên thư mục này."
+        title="Empty Folder"
+        description="No files have been uploaded to this directory yet."
       />
     </div>
   );
@@ -92,7 +92,7 @@ export function PresetExamples() {
 
 ---
 
-### 3. Tùy chỉnh kích thước (`size`) & Kèm nút hành động (`actions`)
+### 3. Custom Size (`size`) & Action Buttons (`actions`)
 
 ```tsx
 import { Empty, Button } from "@openway/ui";
@@ -102,11 +102,11 @@ export function ActionsExample() {
     <Empty
       size="md"
       image="default"
-      title="Chưa có dự án nào"
-      description="Hãy bắt đầu khởi tạo dự án đầu tiên của bạn để quản lý công việc hiệu quả."
+      title="No Projects Yet"
+      description="Create your first project to start tracking your workflow effectively."
       actions={
-        <Button variant="filled" color="primary" onClick={() => console.log("Tạo mới")}>
-          Tạo dự án mới
+        <Button variant="filled" color="primary" onClick={() => console.log("Create")}>
+          Create New Project
         </Button>
       }
     />
@@ -116,7 +116,7 @@ export function ActionsExample() {
 
 ---
 
-### 4. Bố cục ngang (`layout="horizontal"`)
+### 4. Horizontal Layout (`layout="horizontal"`)
 
 ```tsx
 import { Empty, Button } from "@openway/ui";
@@ -128,11 +128,11 @@ export function HorizontalEmptyExample() {
         layout="horizontal"
         size="sm"
         image="folder"
-        title="Không tìm thấy tệp tin"
-        description="Thư mục hiện đang trống hoặc bạn không có quyền truy cập."
+        title="File Not Found"
+        description="The directory is currently empty or you do not have permission to view it."
         actions={
           <Button size="xs" variant="outline" color="primary">
-            Tải tệp lên
+            Upload File
           </Button>
         }
       />
@@ -143,7 +143,7 @@ export function HorizontalEmptyExample() {
 
 ---
 
-### 5. Dùng URL ảnh ngoài hoặc Custom ReactNode
+### 5. External Image URL or Custom ReactNode
 
 ```tsx
 import { Empty } from "@openway/ui";
@@ -154,8 +154,8 @@ export function CustomImageExample() {
       image="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=160&auto=format&fit=crop&q=60"
       imageSize={120}
       imageAlt="Custom Image"
-      title="Bộ sưu tập ảnh trống"
-      description="Hãy thêm các bức ảnh yêu thích của bạn."
+      title="Empty Photo Gallery"
+      description="Start adding your favorite photographs."
     />
   );
 }
@@ -165,7 +165,7 @@ export function CustomImageExample() {
 
 ## 🛡️ Safe Config Fallback
 
-Component `Empty` tích hợp hàm tiện ích `getSafeConfig` từ `@/utils/function`:
+The `Empty` component incorporates the `getSafeConfig` utility from `@/utils/function`:
 
 ```tsx
 import { getSafeConfig } from "@/utils/function";
@@ -174,27 +174,27 @@ const currentSize = getSafeConfig(size, emptySizeConfig, "md");
 const currentLayout = getSafeConfig(layout, emptyLayoutConfig, "vertical");
 ```
 
-- Nếu `size` truyền vào không thuộc `"sm" | "md" | "lg"`, component tự động fallback về kích cỡ chuẩn `"md"`.
-- Nếu `layout` truyền vào không hợp lệ, component tự động fallback về bố cục chuẩn `"vertical"`.
-- Giúp ứng dụng hoạt động ổn định, loại bỏ hoàn toàn nguy cơ runtime error / crash giao diện khi nhận dữ liệu không mong muốn từ bên ngoài.
+- If `size` is not one of `"sm" | "md" | "lg"`, the component automatically falls back to the standard `"md"` size.
+- If `layout` is invalid, it safely falls back to the default `"vertical"` layout.
+- Ensures application resilience and prevents runtime errors or UI crashes when untrusted inputs are provided.
 
 ---
 
-## 📋 Danh sách Props (`EmptyProps`)
+## 📋 Props Reference (`EmptyProps`)
 
-| Tên Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Kích cỡ tổng thể của component |
-| `layout` | `'vertical' \| 'horizontal'` | `'vertical'` | Bố cục xếp dọc hoặc dàn ngang |
-| `image` | `EmptyPresetImage \| string \| ReactNode` | `'default'` | Preset minh họa, URL ảnh hoặc JSX node tùy biến |
-| `imageSize` | `number \| string` | Theo `size` | Chiều rộng & chiều cao tùy chỉnh cho phần ảnh |
-| `imageClassName`| `string` | `""` | Class CSS cho thẻ bao ngoài ảnh |
-| `imageAlt` | `string` | `'Trống'` | Thuộc tính alt cho hình ảnh |
-| `title` | `ReactNode` | `undefined` | Tiêu đề trạng thái rỗng |
-| `titleClassName`| `string` | `""` | Class CSS tùy chỉnh tiêu đề |
-| `description` | `ReactNode` | `'Không có dữ liệu'` | Nội dung mô tả chi tiết |
-| `descriptionClassName` | `string` | `""` | Class CSS tùy chỉnh mô tả |
-| `actions` | `ReactNode` | `undefined` | Khu vực chứa nút bấm hành động (CTA) |
-| `actionsClassName` | `string` | `""` | Class CSS tùy chỉnh khu vực actions |
-| `children` | `ReactNode` | `undefined` | Nội dung bổ sung tùy biến |
-| `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref chuyển tiếp đến container chính |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Overall size of the component |
+| `layout` | `'vertical' \| 'horizontal'` | `'vertical'` | Vertical stacked or horizontal side-by-side layout |
+| `image` | `EmptyPresetImage \| string \| ReactNode` | `'default'` | Preset illustration name, image URL, or custom JSX node |
+| `imageSize` | `number \| string` | Based on `size` | Custom width & height for the image area |
+| `imageClassName`| `string` | `""` | Additional CSS class for the image wrapper element |
+| `imageAlt` | `string` | `'Empty'` | Alt text attribute for the image |
+| `title` | `ReactNode` | `undefined` | Empty state title |
+| `titleClassName`| `string` | `""` | Additional CSS class for the title |
+| `description` | `ReactNode` | `'No data'` | Detailed description text |
+| `descriptionClassName` | `string` | `""` | Additional CSS class for the description |
+| `actions` | `ReactNode` | `undefined` | Action button / CTA area |
+| `actionsClassName` | `string` | `""` | Additional CSS class for the actions container |
+| `children` | `ReactNode` | `undefined` | Custom supplementary content |
+| `ref` | `Ref<HTMLDivElement>` | `undefined` | Forwarded ref to the root container |

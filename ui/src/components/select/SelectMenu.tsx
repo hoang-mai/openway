@@ -18,6 +18,7 @@ import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { menuRadiusConfig, sizeConfig, radiusConfig } from "./constants";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { useLocale } from "@/components/common/OpenWayProvider";
 
 export interface SelectMenuProps<TData = unknown, TFilters extends Record<string, unknown> = Record<string, unknown>> {
   isOpen: boolean;
@@ -102,6 +103,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
   listElementsRef,
   className = "",
 }: SelectMenuProps<TData, TFilters>) {
+  const selectLocale = useLocale("select");
   const effectivePortalRoot = useFloatingPortalRoot({
     portalRoot,
     reference,
@@ -192,7 +194,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
               <Empty
                 size="sm"
                 image="search"
-                description={emptyText || "No data found"}
+                description={emptyText || selectLocale.emptyText}
                 className="py-2"
                 {...emptyProps}
               />

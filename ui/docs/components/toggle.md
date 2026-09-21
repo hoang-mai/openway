@@ -1,40 +1,40 @@
 # 🎚️ Toggle Component (`@openway/ui`)
 
-Component **Toggle** (Switch công tắc) hiện đại, linh hoạt, tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **Safe Config Fallback**, **Start/End Content & Thumb Icons**, **Loading & Spinners**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility** (`role="switch"`).
+A modern, flexible, and interactive **Toggle** (switch) component designed to strict **Design System** standards, featuring **Safe Config Fallback**, **Start/End Content & Thumb Icons**, **Loading & Spinners**, and full compliance with **WAI-ARIA Accessibility** (`role="switch"`).
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Features
 
-- **5 Kích thước tiêu chuẩn (`size`)**:
+- **5 Standard Sizes (`size`)**:
   - `xs`: Track 28x16px, thumb 12px, text 12px.
   - `sm`: Track 36x20px, thumb 14px, text 14px.
-  - `md` *(mặc định)*: Track 44x24px, thumb 20px, text 14px.
+  - `md` *(default)*: Track 44x24px, thumb 20px, text 14px.
   - `lg`: Track 52x28px, thumb 24px, text 16px.
   - `xl`: Track 64x36px, thumb 28px, text 18px.
-- **4 Biến thể giao diện (`variant`)**:
-  - `filled` *(mặc định)*: Nền track màu đặc tương phản cao khi bật.
-  - `outline`: Nền track trong suốt/trắng, viền và thumb mang màu chủ đề.
-  - `soft`: Nền track pastel dịu nhẹ theo tone màu chủ đề.
-  - `other`: Bỏ qua style mặc định, tự do tùy biến hoàn toàn qua `trackClassName` và `thumbClassName`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
-- **6 Mức độ bo góc (`radius` & `thumbRadius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full` *(mặc định: `full`)*.
-- **2 Vị trí đặt nhãn (`labelPlacement`)**:
-  - `right` *(mặc định)*: Toggle bên trái, nhãn bên phải.
-  - `left`: Nhãn bên trái, toggle bên phải.
-- **Tùy biến Icon & Nội dung linh hoạt**:
-  - `thumbIcon`: Icon tùy biến bên trong nút trượt (hỗ trợ cả ReactNode tĩnh hoặc function `({ isChecked, className }) => ReactNode`).
-  - `startContent` & `endContent`: Icon / nội dung hiển thị trực tiếp trong lòng thanh trượt (track).
-- **Trạng thái Loading & Spinners (`isLoading`)**:
-  - Tự động hiển thị spinner xoay tròn bên trong nút trượt (thumb) và khóa tương tác (`disabled`).
-- **Trạng thái Báo lỗi & Hướng dẫn (`isInvalid`, `errorMessage`, `helperText`)**:
-  - Tự động chuyển đổi màu viền báo lỗi và hiển thị animation mở rộng mượt mà.
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` đảm bảo an toàn tuyệt đối khi truyền props sai hoặc không tồn tại.
-- **React 19 Ref Forwarding**: Tích hợp `useMergeRefs` chuyển tiếp ref trực tiếp đến thẻ `<input type="checkbox" role="switch">`.
+- **4 Visual Variants (`variant`)**:
+  - `filled` *(default)*: High-contrast solid track background when active.
+  - `outline`: Transparent/white track background with themed border and thumb.
+  - `soft`: Gentle pastel track background matching the theme color.
+  - `other`: Bypasses default styles for complete custom styling via `trackClassName` and `thumbClassName`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
+- **6 Border Radii (`radius` & `thumbRadius`)**: `none`, `sm`, `md`, `lg`, `xl`, `full` *(default: `full`)*.
+- **2 Label Placements (`labelPlacement`)**:
+  - `right` *(default)*: Toggle on the left, label on the right.
+  - `left`: Label on the left, toggle on the right.
+- **Flexible Icon & Content Customization**:
+  - `thumbIcon`: Custom icon inside the thumb (supports static ReactNode or dynamic function `({ isChecked, className }) => ReactNode`).
+  - `startContent` & `endContent`: Icon / content rendered directly inside the track.
+- **Loading State & Spinners (`isLoading`)**:
+  - Automatically displays an inline spinner inside the thumb and disables user interactions (`disabled`).
+- **Error State & Helper Text (`isInvalid`, `errorMessage`, `helperText`)**:
+  - Automatically applies invalid error styling and renders smooth expandable error messages.
+- **Safe Config Fallback**: Built-in `getSafeConfig` utility guarantees crash-proof runtime stability when invalid props are provided.
+- **React 19 Ref Forwarding**: Integrates `useMergeRefs` to forward refs directly to the underlying `<input type="checkbox" role="switch">`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Toggle } from "@openway/ui";
@@ -51,9 +51,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản
+### 1. Basic Usage
 
 ```tsx
 import { useState } from "react";
@@ -66,7 +66,7 @@ export function BasicToggleExample() {
     <Toggle
       checked={enabled}
       onChange={(e) => setEnabled(e.target.checked)}
-      label="Bật tính năng thông báo"
+      label="Enable notifications"
     />
   );
 }
@@ -74,22 +74,22 @@ export function BasicToggleExample() {
 
 ---
 
-### 2. Vị trí đặt nhãn (`labelPlacement`)
+### 2. Label Placement (`labelPlacement`)
 
 ```tsx
-// 1. Label bên phải (Mặc định)
-<Toggle label="Label bên phải" labelPlacement="right" />
+// 1. Label on the right (Default)
+<Toggle label="Label on right" labelPlacement="right" />
 
-// 2. Label bên trái
-<Toggle label="Label bên trái" labelPlacement="left" />
+// 2. Label on the left
+<Toggle label="Label on left" labelPlacement="left" />
 ```
 
 ---
 
-### 3. Biến thể (`variant`) & Màu sắc (`color`)
+### 3. Variants (`variant`) & Colors (`color`)
 
 ```tsx
-// Filled (mặc định)
+// Filled (default)
 <Toggle variant="filled" color="primary" label="Primary Filled" defaultChecked />
 <Toggle variant="filled" color="success" label="Success Filled" defaultChecked />
 
@@ -111,58 +111,58 @@ export function BasicToggleExample() {
 
 ---
 
-### 4. Icon bên trong Thumb & Start/End Content
+### 4. Icons inside Thumb & Start/End Content
 
 ```tsx
-// Static icon trong Thumb
-<Toggle thumbIcon={<span>🔒</span>} label="Bảo mật" />
+// Static icon inside Thumb
+<Toggle thumbIcon={<span>🔒</span>} label="Security" />
 
-// Dynamic icon thay đổi theo trạng thái checked
+// Dynamic icon changing based on checked state
 <Toggle
   thumbIcon={({ isChecked }) => (
     <span>{isChecked ? "🌙" : "☀️"}</span>
   )}
-  label="Chế độ giao diện"
+  label="Appearance Mode"
 />
 
-// Start / End Content nằm trong Track
+// Start / End Content inside Track
 <Toggle
   startContent="☀️"
   endContent="🌙"
   size="lg"
-  label="Ngày & Đêm"
+  label="Day & Night"
 />
 ```
 
 ---
 
-### 5. Trạng thái Loading, Error & Helper Text
+### 5. Loading, Error & Helper Text States
 
 ```tsx
-// Trạng thái Loading (qua config)
-<Toggle config={{ isLoading: true }} label="Đang đồng bộ dữ liệu..." />
+// Loading state (via config)
+<Toggle config={{ isLoading: true }} label="Synchronizing data..." />
 
-// Trạng thái Báo lỗi & Bắt buộc
+// Error and Required state
 <Toggle
   config={{ isRequired: true }}
-  errorMessage="Bạn phải đồng ý với điều khoản dịch vụ!"
-  label="Tôi đồng ý với điều khoản"
+  errorMessage="You must agree to the terms of service!"
+  label="I agree to the terms"
 />
 
-// Helper text hướng dẫn
+// Helper text
 <Toggle
-  label="Xác thực 2 bước"
-  helperText="Nhận mã OTP qua số điện thoại đã đăng ký."
+  label="Two-factor Authentication"
+  helperText="Receive OTP codes via your registered phone number."
 />
 ```
 
 ---
 
-### 6. Cấu hình tập trung qua prop `config` (`ToggleConfig`)
+### 6. Centralized Configuration via `config` Prop (`ToggleConfig`)
 
 ```tsx
 <Toggle
-  label="Tự động sao lưu"
+  label="Automatic Backup"
   config={{
     isRequired: true,
     isLoading: false,
@@ -173,39 +173,41 @@ export function BasicToggleExample() {
 
 ---
 
-## 🛠 Bảng thông số Props (`ToggleProps`)
+## 🛠 Props Reference (`ToggleProps`)
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ toggle (track, thumb, font label, khoảng cách). |
-| `variant` | `'filled' \| 'outline' \| 'soft' \| 'other'` | `'filled'` | Biến thể hiển thị giao diện khi toggle ở trạng thái bật. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc theo Design System. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'full'` | Độ bo góc của thanh trượt (track). |
-| `thumbRadius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'full'` | Độ bo góc của nút trượt (thumb). |
-| `config` | `ToggleConfig` | — | Cấu hình tập trung các cờ trạng thái (`isRequired`, `isInvalid`, `isLoading`). |
-| `label` | `ReactNode` | — | Nhãn văn bản hiển thị cạnh toggle. |
-| `labelPlacement` | `'right' \| 'left'` | `'right'` | Vị trí hiển thị của nhãn so với toggle. |
-| `checked` | `boolean` | — | Trạng thái bật/tắt (Controlled). |
-| `defaultChecked` | `boolean` | `false` | Trạng thái mặc định ban đầu (Uncontrolled). |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa tương tác của toggle. |
-| `readOnly` | `boolean` | `false` | Chế độ chỉ đọc, không cho phép đổi trạng thái. |
-| `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn/trợ giúp bên dưới. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi (tự động kích hoạt trạng thái báo lỗi). |
-| `thumbIcon` | `ReactNode \| (({ isChecked, className }) => ReactNode)` | — | Icon hiển thị bên trong nút trượt (thumb). |
-| `startContent` | `ReactNode` | — | Nội dung/icon hiển thị bên trong track (phía bên trái khi bật). |
-| `endContent` | `ReactNode` | — | Nội dung/icon hiển thị bên trong track (phía bên phải khi tắt). |
-| `wrapperClassName` | `string` | — | ClassName tùy biến cho container bao bọc (toggle + label). |
-| `trackClassName` | `string` | — | ClassName tùy biến cho thanh trượt (track). |
-| `thumbClassName` | `string` | — | ClassName tùy biến cho nút trượt (thumb). |
-| `labelClassName` | `string` | — | ClassName tùy biến cho nhãn `<label>`. |
-| `helperClassName` | `string` | — | ClassName tùy biến cho đoạn văn bản helperText / errorMessage. |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp đến thẻ `<input>` bên dưới. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Toggle size (track, thumb, label font, spacing). |
+| `variant` | `'filled' \| 'outline' \| 'soft' \| 'other'` | `'filled'` | Visual variant when toggle is in the active (checked) state. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color per Design System. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'full'` | Border radius of the track. |
+| `thumbRadius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'full'` | Border radius of the sliding thumb. |
+| `config` | `ToggleConfig` | — | Consolidated configuration object for state flags (`isRequired`, `isInvalid`, `isLoading`). |
+| `label` | `ReactNode` | — | Text or element label rendered beside the toggle. |
+| `labelPlacement` | `'right' \| 'left'` | `'right'` | Position of the label relative to the toggle. |
+| `checked` | `boolean` | — | Active state (Controlled mode). |
+| `defaultChecked` | `boolean` | `false` | Initial default active state (Uncontrolled mode). |
+| `disabled` | `boolean` | `false` | Disables interaction with the toggle. |
+| `readOnly` | `boolean` | `false` | Read-only mode, prevents changing state. |
+| `helperText` | `ReactNode` | — | Helper or instructional text rendered beneath. |
+| `errorMessage` | `ReactNode` | — | Error message displayed on validation failure (triggers invalid visual state). |
+| `thumbIcon` | `ReactNode \| (({ isChecked, className }) => ReactNode)` | — | Icon rendered inside the sliding thumb. |
+| `startContent` | `ReactNode` | — | Content or icon inside the track (left side when checked). |
+| `endContent` | `ReactNode` | — | Content or icon inside the track (right side when unchecked). |
+| `wrapperClassName` | `string` | — | Custom className for the outer container (toggle + label). |
+| `trackClassName` | `string` | — | Custom className for the track element. |
+| `thumbClassName` | `string` | — | Custom className for the thumb element. |
+| `labelClassName` | `string` | — | Custom className for the `<label>` element. |
+| `helperClassName` | `string` | — | Custom className for helperText / errorMessage container. |
+| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying `<input>` element. |
 
-### Cấu hình `ToggleConfig`
+---
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+### `ToggleConfig` Reference
+
+| Property | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu `*` đỏ và đánh dấu `aria-required="true"`. |
-| `isInvalid` | `boolean` | `false` | Kích hoạt giao diện báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Khóa tương tác (`aria-busy="true"`). |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner bên trong nút trượt (thumb) khi `isLoading = true`. |
+| `isRequired` | `boolean` | `false` | Displays a red `*` and sets `aria-required="true"`. |
+| `isInvalid` | `boolean` | `false` | Activates invalid error styling and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Locks interaction and sets `aria-busy="true"`. |
+| `showSpinner` | `boolean` | `false` | Displays a rotating spinner inside the thumb when `isLoading = true`. |

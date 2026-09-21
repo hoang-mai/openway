@@ -1,36 +1,36 @@
 # 🔽 Select & MultiSelect Component (`@openway/ui`)
 
-Bộ đôi component **Select** (Chọn đơn) và **MultiSelect** (Chọn nhiều) cao cấp, thiết kế theo chuẩn **Design System**, tuân thủ nghiêm ngặt **WAI-ARIA 1.2 Combobox/Listbox**, hỗ trợ **Zero `any`**, tìm kiếm **Client & Server**, phân trang vô tận với **TanStack Query v5** và hiệu ứng **Skeleton Loading**.
+Premium **Select** (Single select) and **MultiSelect** (Multiple select) component suite designed according to **Design System** standards, strictly conforming to **WAI-ARIA 1.2 Combobox/Listbox**, featuring **Zero `any`**, **Client & Server** search modes, infinite scrolling with **TanStack Query v5**, and **Skeleton Loading** effects.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **2 Component chuyên biệt**:
-  - `<Select>`: Chọn 1 giá trị duy nhất, hỗ trợ placeholder, clearable, render custom value/option.
-  - `<MultiSelect>`: Chọn nhiều giá trị dưới dạng tags/chips, hỗ trợ xóa nhanh từng tag, nút clear all, giới hạn số lượng tag hiển thị (`maxTags`).
-- **2 Chế độ Tìm kiếm (`searchMode`)**:
-  - `client`: Tìm kiếm và sắp xếp kết quả ngay trên client với thuật toán xếp hạng từ khóa thông minh (`searchField`, `filterFn`).
-  - `server`: Tìm kiếm phía máy chủ với `searchValue` và `onSearchChange(value)`. Tự động debounce khi kết hợp với `useSelectInfiniteQuery`.
-- **Tích hợp TanStack Query v5 & Infinite Scroll (`@openway/ui/query`)**:
-  - Hook chuyên dụng `useSelectInfiniteQuery` kết hợp `useInfiniteQuery` với `useInfiniteScroll`.
-  - Tự động gộp options từ tất cả các trang, khử trùng lặp theo `value`.
-  - Hiệu ứng **Skeleton** nhấp nháy ở đáy danh sách khi đang tải thêm trang (`isFetchingNextPage`).
-  - Không bị double-debounce, tải mượt mà qua native `IntersectionObserver`.
-- **Đầy đủ tính năng UI nâng cao**:
-  - `menuFilters`: Bộ lọc đa điều kiện tích hợp ngay trên thanh đầu của menu dropdown.
-  - `renderOption` & `renderValue`: Tùy biến hiển thị từng hàng option (avatar, description, badge...) và giá trị được chọn.
-  - `startContent` & `endContent`: Bổ sung icon hoặc nội dung phụ ở hai đầu trigger box.
-  - `portal={true}`: Render menu ra ngoài DOM qua `@floating-ui/react`, không bị tràn hoặc che khuất bởi `overflow: hidden`.
-- **Trợ năng WAI-ARIA & Điều hướng bàn phím**:
-  - Hỗ trợ đầy đủ phím mũi tên `ArrowUp`, `ArrowDown`, `Home`, `End`, `Enter` để chọn, `Escape` để đóng dropdown.
+- **2 Specialized Components**:
+  - `<Select>`: Selects a single value; supports placeholder, clearable, and custom value/option rendering.
+  - `<MultiSelect>`: Selects multiple values rendered as tags/chips; supports individual tag deletion, clear-all button, and tag count limits (`maxTags`).
+- **2 Search Modes (`searchMode`)**:
+  - `client`: Searches and ranks results directly on the client using an intelligent fuzzy keyword ranking algorithm (`searchField`, `filterFn`).
+  - `server`: Server-side search via `searchValue` and `onSearchChange(value)`. Automatically debounced when paired with `useSelectInfiniteQuery`.
+- **TanStack Query v5 & Infinite Scroll Integration (`@openway/ui/query`)**:
+  - Dedicated `useSelectInfiniteQuery` hook combining `useInfiniteQuery` with `useInfiniteScroll`.
+  - Automatically merges options across all pages and deduplicates by `value`.
+  - Shimmering **Skeleton** loading indicators rendered at the bottom of the list when loading subsequent pages (`isFetchingNextPage`).
+  - Zero double-debouncing, smooth loading powered by native `IntersectionObserver`.
+- **Comprehensive Advanced UI Features**:
+  - `menuFilters`: Multi-criteria filters integrated directly into the header of the dropdown menu.
+  - `renderOption` & `renderValue`: Customizable rendering for individual option rows (avatars, descriptions, badges, etc.) and selected trigger values.
+  - `startContent` & `endContent`: Prepend or append custom icons and content to the trigger box.
+  - `portal={true}`: Renders the menu outside the local DOM via `@floating-ui/react`, preventing clipping or positioning issues caused by `overflow: hidden`.
+- **WAI-ARIA Accessibility & Keyboard Navigation**:
+  - Full keyboard navigation support: `ArrowUp`, `ArrowDown`, `Home`, `End`, `Enter` to select, and `Escape` to close the dropdown.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
-// 1. Components & Types cơ bản
+// 1. Basic Components & Types
 import { Select, MultiSelect } from "@openway/ui";
 import type {
   SelectProps,
@@ -39,25 +39,25 @@ import type {
   SelectFilterField,
 } from "@openway/ui";
 
-// 2. Query Hook cho Server Infinite Scroll (Tùy chọn, cần @tanstack/react-query v5)
+// 2. Query Hook for Server Infinite Scroll (Optional, requires @tanstack/react-query v5)
 import { useSelectInfiniteQuery } from "@openway/ui/query";
 ```
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Select cơ bản (Client Mode)
+### 1. Basic Select (Client Mode)
 
 ```tsx
 import { useState } from "react";
 import { Select, SelectOptionItem } from "@openway/ui";
 
 const departments: SelectOptionItem<string>[] = [
-  { value: "hr", label: "Phòng Nhân sự" },
-  { value: "it", label: "Phòng Công nghệ Thông tin" },
-  { value: "sales", label: "Phòng Kinh doanh" },
-  { value: "mkt", label: "Phòng Marketing" },
+  { value: "hr", label: "Human Resources" },
+  { value: "it", label: "Information Technology" },
+  { value: "sales", label: "Sales Department" },
+  { value: "mkt", label: "Marketing Department" },
 ];
 
 export function BasicSelectExample() {
@@ -66,8 +66,8 @@ export function BasicSelectExample() {
   return (
     <div className="max-w-sm">
       <Select
-        label="Phòng ban"
-        placeholder="Chọn phòng ban..."
+        label="Department"
+        placeholder="Select department..."
         options={departments}
         value={value}
         onChange={(val) => setValue(val)}
@@ -80,17 +80,17 @@ export function BasicSelectExample() {
 
 ---
 
-### 2. MultiSelect với Tags
+### 2. MultiSelect with Tags
 
 ```tsx
 import { useState } from "react";
 import { MultiSelect, SelectOptionItem } from "@openway/ui";
 
 const roles: SelectOptionItem[] = [
-  { value: "admin", label: "Quản trị viên" },
-  { value: "editor", label: "Biên tập viên" },
-  { value: "moderator", label: "Điều hành viên" },
-  { value: "viewer", label: "Người xem" },
+  { value: "admin", label: "Administrator" },
+  { value: "editor", label: "Editor" },
+  { value: "moderator", label: "Moderator" },
+  { value: "viewer", label: "Viewer" },
 ];
 
 export function MultiSelectExample() {
@@ -99,8 +99,8 @@ export function MultiSelectExample() {
   return (
     <div className="max-w-md">
       <MultiSelect
-        label="Vai trò người dùng"
-        placeholder="Chọn các vai trò..."
+        label="User Roles"
+        placeholder="Select roles..."
         options={roles}
         value={selectedRoles}
         onChange={(vals) => setSelectedRoles(vals)}
@@ -116,7 +116,7 @@ export function MultiSelectExample() {
 
 ### 3. Server Pagination & Infinite Scroll (`useSelectInfiniteQuery`)
 
-Đây là phương thức khuyên dùng khi dữ liệu từ máy chủ có số lượng lớn hoặc trả về theo từng trang:
+This is the recommended approach when handling large datasets or paginated server responses:
 
 ```tsx
 import { Select } from "@openway/ui";
@@ -143,7 +143,7 @@ export function ServerInfiniteSelectExample() {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
-    // Biến đổi entity trả về thành định dạng SelectOptionItem chuẩn
+    // Map raw entity to standard SelectOptionItem format
     mapOption: (item) => {
       const user = item as UserItem;
       return {
@@ -154,15 +154,15 @@ export function ServerInfiniteSelectExample() {
       };
     },
     debounceMs: 300,
-    endMessage: "Đã hiển thị toàn bộ người dùng",
+    endMessage: "All users loaded",
   });
 
   return (
     <div className="max-w-md">
       <Select
         {...selectProps}
-        label="Chọn thành viên"
-        placeholder="Tìm kiếm thành viên..."
+        label="Select Member"
+        placeholder="Search members..."
         searchable
         clearable
       />
@@ -173,11 +173,11 @@ export function ServerInfiniteSelectExample() {
 
 ---
 
-### 4. Tùy biến Option (`renderOption`) & Rich Layout
+### 4. Custom Option Rendering (`renderOption`) & Rich Layout
 
 ```tsx
 <Select
-  label="Chọn người dùng"
+  label="Select User"
   options={userOptions}
   renderOption={(option, { isSelected, isFocused }) => (
     <div className="flex items-center gap-2.5 py-1">
@@ -201,14 +201,14 @@ export function ServerInfiniteSelectExample() {
 
 ---
 
-### 5. Bộ lọc tích hợp trong Menu (`menuFilters`)
+### 5. Menu-Integrated Filters (`menuFilters`)
 
 ```tsx
 const filterFields: SelectFilterField[] = [
-  // 1. CheckboxGroup với Server Mode & ô tìm kiếm riêng
+  // 1. CheckboxGroup with Server Mode & dedicated search input
   {
     name: "categories",
-    label: "Danh mục",
+    label: "Categories",
     type: "checkbox-group",
     options: categoryOptions,
     searchable: true,
@@ -217,50 +217,53 @@ const filterFields: SelectFilterField[] = [
     onSearchChange: (keyword) => setCategoryKeyword(keyword),
     preserveSelected: true,
   },
-  // 2. DateRangePicker tách thành 2 key độc lập (startDate, endDate)
+  // 2. DateRangePicker split into 2 independent keys (startDate, endDate)
   {
     name: "startDate",
     endName: "endDate",
-    label: "Thời gian tạo",
+    label: "Created Date",
     type: "date-range",
-    placeholder: "Chọn khoảng ngày...",
+    placeholder: "Select date range...",
   },
 ];
 
 <Select
-  label="Khách hàng"
+  label="Customer"
   options={customerOptions}
   menuFilters={filterFields}
   onMenuFilterChange={(filters) => {
     // filters: { categories: string[], startDate: Date | null, endDate: Date | null }
-    console.log("Filter áp dụng:", filters);
+    console.log("Applied filters:", filters);
   }}
 />
 ```
 
+> [!NOTE]
+> For date-based filters like `date-range` (`DateRangePicker`) or `date` (`DatePicker`), note that locale is configured centrally via `OpenWayProvider` (since v2.0.0).
+
 ---
 
-## 🎛️ Bảng Props Chi tiết
+## 🎛️ Detailed Props Reference
 
-### Props dùng chung (`BaseSelectProps`)
+### Shared Props (`BaseSelectProps`)
 
-| Tên Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `options` | `SelectOptionItem<TData>[]` | `[]` | Mảng danh sách các lựa chọn. |
-| `label` | `ReactNode` | `undefined` | Nhãn hiển thị phía trên trigger. |
-| `placeholder` | `string` | `"Select..."` | Văn bản gợi ý khi chưa chọn giá trị. |
-| `searchable` | `boolean` | `false` | Bật ô nhập tìm kiếm trong menu. |
-| `searchMode` | `"client" \| "server"` | `"client"` | Chế độ tìm kiếm nội bộ hay gọi server. |
-| `searchValue` | `string` | `undefined` | Giá trị từ khóa tìm kiếm (Controlled). |
-| `onSearchChange` | `(value: string) => void` | `undefined` | Callback khi giá trị ô tìm kiếm thay đổi. |
-| `listFooter` | `ReactNode` | `undefined` | Phần tử hiển thị dưới đáy danh sách (dùng cho Sentinel / Skeleton). |
-| `clearable` | `boolean` | `false` | Hiển thị nút xóa nhanh giá trị đã chọn. |
-| `disabled` | `boolean` | `false` | Khóa không cho phép tương tác. |
-| `isLoading` | `boolean` | `false` | Hiển thị trạng thái đang tải dữ liệu. |
-| `portal` | `boolean` | `true` | Render menu qua portal chống tràn khung nhìn. |
-| `maxMenuHeight` | `number` | `280` | Chiều cao tối đa của khung menu cuộn (px). |
-| `renderOption` | `(option, state) => ReactNode` | `undefined` | Hàm custom render từng option trong listbox. |
-| `renderValue` | `(selected) => ReactNode` | `undefined` | Hàm custom hiển thị giá trị trên trigger. |
-| `menuFilters` | `SelectFilterField[]` | `undefined` | Danh sách bộ lọc bổ sung gắn ở đầu dropdown. |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Kích thước trigger box. |
-| `variant` | `"outline" \| "filled" \| "soft"`| `"outline"` | Biến thể giao diện đường viền / nền. |
+| `options` | `SelectOptionItem<TData>[]` | `[]` | Array of selectable option items. |
+| `label` | `ReactNode` | `undefined` | Label displayed above the trigger. |
+| `placeholder` | `string` | `"Select..."` | Placeholder text when no value is selected. |
+| `searchable` | `boolean` | `false` | Enables search input field within the menu. |
+| `searchMode` | `"client" \| "server"` | `"client"` | Client-side search or server-side API query mode. |
+| `searchValue` | `string` | `undefined` | Search input query string (Controlled mode). |
+| `onSearchChange` | `(value: string) => void` | `undefined` | Callback fired when the search query changes. |
+| `listFooter` | `ReactNode` | `undefined` | Element rendered at the bottom of the list (used for Sentinel / Skeleton loading). |
+| `clearable` | `boolean` | `false` | Displays quick clear button for selected value(s). |
+| `disabled` | `boolean` | `false` | Disables user interaction. |
+| `isLoading` | `boolean` | `false` | Displays loading state indicator. |
+| `portal` | `boolean` | `true` | Renders menu through a portal to prevent container overflow clipping. |
+| `maxMenuHeight` | `number` | `280` | Maximum height of the scrollable menu in pixels. |
+| `renderOption` | `(option, state) => ReactNode` | `undefined` | Custom render function for each listbox option. |
+| `renderValue` | `(selected) => ReactNode` | `undefined` | Custom render function for selected value on the trigger. |
+| `menuFilters` | `SelectFilterField[]` | `undefined` | Array of filter fields integrated into dropdown header. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Sizing of the trigger box. |
+| `variant` | `"outline" \| "filled" \| "soft"`| `"outline"` | Border and background visual style variant. |

@@ -7,7 +7,8 @@ import YearGrid from "./YearGrid";
 import Tabs from "../tabs/Tabs";
 import TabList from "../tabs/TabList";
 import Tab from "../tabs/Tab";
-import { generateCalendarGrid, resolveLocale, toDate } from "./utils";
+import { generateCalendarGrid, toDate } from "./utils";
+import { useLocale } from "../common/OpenWayProvider";
 import { calendarRadiusConfig, datePickerSizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 
@@ -19,7 +20,6 @@ export default function Calendar({
   minDate,
   maxDate,
   isDateDisabled,
-  locale = "vi",
   firstDayOfWeek = 1,
   showWeekNumbers = false,
   showViewTabs = false,
@@ -49,7 +49,7 @@ export default function Calendar({
   });
 
   // Tabs
-  const loc = resolveLocale(locale);
+  const loc = useLocale("datePicker");
 
   const tabItems = useMemo(() => {
     const tabLabels = loc.viewTabs || {
@@ -184,7 +184,6 @@ export default function Calendar({
           onNextDecade={handleNextDecade}
           size={size}
           color={color}
-          locale={locale}
           showMonthButtons={true}
         />
 
@@ -195,7 +194,6 @@ export default function Calendar({
             size={size}
             color={color}
             radius={radius}
-            locale={locale}
             firstDayOfWeek={firstDayOfWeek}
             showWeekNumbers={showWeekNumbers}
           />
@@ -209,7 +207,6 @@ export default function Calendar({
             size={size}
             color={color}
             radius={radius}
-            locale={locale}
           />
         )}
 

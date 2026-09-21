@@ -1,30 +1,30 @@
 # 📁 File Preview Components (`@openway/ui`)
 
-Bộ component xem trước tệp tin hiệu năng cao, xây dựng trên nền tảng **HTML5 Native `<dialog>`** và kiến trúc **React Context + Compound Component**:
+A high-performance file preview component suite built on top of the **HTML5 Native `<dialog>`** element and a **React Context + Compound Component** architecture:
 
-- **`<FileContainer>`**: Hộp thoại bọc ngoài Modal dialog quản lý Backdrop, Top layer breakout, ESC, Lock scroll và Header. Nhận prop `file` và chia sẻ `file` cùng `headerTitle` xuống dưới thông qua `FileContext`.
-- **`<FilePreview>`**: Component xác định loại tệp (`image`, `pdf`, `video`, `audio`, `document`, `other`) và chuyển tiếp tới component hiển thị tương ứng. Tự động tiêu thụ `file` và `headerTitle` từ `useFileContext()`.
-- **`<ImagePreview>`**: Khối hiển thị hình ảnh với đầy đủ tính năng Zoom, Rotate, Flip, Drag-to-pan, Reset và Tải ảnh.
+- **`<FileContainer>`**: Modal dialog wrapper handling the Backdrop, Top-layer breakout, ESC key dismiss, Scroll locking, and Header. Accepts a `file` prop and provides `file` and `headerTitle` downstream via `FileContext`.
+- **`<FilePreview>`**: Component that detects file types (`image`, `pdf`, `video`, `audio`, `document`, `other`) and delegates rendering to the appropriate viewer. Automatically consumes `file` and `headerTitle` from `useFileContext()`.
+- **`<ImagePreview>`**: Rich image viewer featuring Zoom, Rotate, Flip, Drag-to-pan, Reset, and Download capabilities.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Zero Global Store**: Hoàn toàn không phụ thuộc Zustand / Redux.
+- **Zero Global Store**: Completely independent of Zustand or Redux.
 - **Context-driven Compound Architecture**:
-  - `FileContainer` nhận `file` (và tùy chọn `title`) rồi cung cấp qua `FileContext`.
-  - `FilePreview` tự động nhận `file` và `headerTitle` từ `useFileContext()`.
-- **Lồng ghép linh hoạt**:
+  - `FileContainer` accepts `file` (and optional `title`) and provides them via `FileContext`.
+  - `FilePreview` automatically consumes `file` and `headerTitle` from `useFileContext()`.
+- **Flexible Nesting**:
   ```tsx
   <FileContainer open={open} onClose={handleClose} file={selectedFile}>
     <FilePreview imageProps={{ minZoom: 0.5, maxZoom: 3 }} />
   </FileContainer>
   ```
-- **Tự động quản lý bộ nhớ**: Tự động giải phóng `ObjectURL` (`URL.revokeObjectURL`) khi truyền `File` object để tránh memory leak.
+- **Automatic Memory Management**: Automatically revokes Object URLs (`URL.revokeObjectURL`) when handling `File` objects to prevent memory leaks.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -44,9 +44,9 @@ import {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Sử dụng kết hợp qua Context (Khuyên dùng)
+### 1. Context-Driven Composition (Recommended)
 
 ```tsx
 import { useState } from "react";
@@ -58,7 +58,7 @@ export function Example() {
 
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>Xem file</Button>
+      <Button onClick={() => setOpen(true)}>View file</Button>
 
       <FileContainer
         open={open}
@@ -82,7 +82,7 @@ export function Example() {
 
 ---
 
-### 2. Sử dụng gọn nhẹ (Tự động render `<FilePreview />`)
+### 2. Concise Usage (Automatic `<FilePreview />` rendering)
 
 ```tsx
 <FileContainer
@@ -94,87 +94,87 @@ export function Example() {
 
 ---
 
-### 3. Sử dụng bọc trực tiếp `<ImagePreview>`
+### 3. Direct `<ImagePreview>` Usage
 
 ```tsx
-<FileContainer open={open} onClose={() => setOpen(false)} title="Xem ảnh">
+<FileContainer open={open} onClose={() => setOpen(false)} title="View image">
   <ImagePreview src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675" name="artwork.jpg" />
 </FileContainer>
 ```
 
 ---
 
-## 📚 Bảng tra cứu Props (API Reference)
+## 📚 API Reference
 
-### `<FileContainer>` (Hộp thoại Modal)
+### `<FileContainer>` (Modal Dialog)
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `open` | `boolean` | `false` | Trạng thái hiển thị mở/đóng FileContainer |
-| `onClose` | `() => void` | `undefined` | Callback khi đóng hộp thoại |
-| `file` | `File \| ServerFile` | `undefined` | Dữ liệu file truyền vào để chia sẻ qua Context |
-| `title` | `ReactNode` | `undefined` | Tiêu đề tùy chỉnh cho phần header (mặc định lấy tên file) |
-| `description` | `ReactNode` | `undefined` | Đoạn văn bản mô tả phụ bên dưới tiêu đề header |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'lg'` | Kích thước chiều rộng của hộp thoại Modal |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'xl'` | Mức độ bo góc của hộp thoại Modal |
-| `showCloseButton` | `boolean` | `true` | Hiển thị nút đóng (X) ở header |
-| `closeOnOverlayClick` | `boolean` | `true` | Cho phép đóng khi click ra ngoài backdrop |
-| `closeOnEsc` | `boolean` | `true` | Cho phép đóng khi nhấn phím ESC |
-| `lockScroll` | `boolean` | `true` | Khóa cuộn trang khi đang hiển thị |
-| `className` | `string` | `""` | Class CSS tùy biến cho hộp thoại |
-| `overlayClassName`| `string` | `""` | Class CSS tùy biến cho backdrop |
-| `children` | `ReactNode` | `undefined` | Nội dung bên trong (mặc định tự động render `<FilePreview />`) |
+| `open` | `boolean` | `false` | Visibility state of the FileContainer dialog |
+| `onClose` | `() => void` | `undefined` | Callback invoked when closing the dialog |
+| `file` | `File \| ServerFile` | `undefined` | File data shared downstream via Context |
+| `title` | `ReactNode` | `undefined` | Custom title for the header (defaults to the file name) |
+| `description` | `ReactNode` | `undefined` | Subtitle description displayed beneath the header title |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'lg'` | Width size preset of the modal dialog |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'xl'` | Border radius of the modal dialog |
+| `showCloseButton` | `boolean` | `true` | Displays close button (X) in the header |
+| `closeOnOverlayClick` | `boolean` | `true` | Allows closing when clicking on the backdrop overlay |
+| `closeOnEsc` | `boolean` | `true` | Allows closing when pressing the ESC key |
+| `lockScroll` | `boolean` | `true` | Locks body scrolling while dialog is active |
+| `className` | `string` | `""` | Custom CSS class for the dialog container |
+| `overlayClassName`| `string` | `""` | Custom CSS class for the backdrop overlay |
+| `children` | `ReactNode` | `undefined` | Inner content (defaults to rendering `<FilePreview />` automatically) |
 
 ---
 
-### `<FilePreview>` (Xác định loại file & Điều hướng Viewer)
+### `<FilePreview>` (File Type Detection & Viewer Delegation)
 
-> **Lưu ý**: `<FilePreview>` tự động lấy `file` và `headerTitle` từ `FileContainer` thông qua `useFileContext()`.
+> **Note**: `<FilePreview>` automatically consumes `file` and `headerTitle` from `FileContainer` via `useFileContext()`.
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `onDownload` | `(file: PreviewFile) => void` | `undefined` | Callback tùy biến khi bấm nút tải file xuống |
-| `imageProps` | `Partial<ImagePreviewProps>` | `undefined` | Cấu hình chi tiết cho phần hiển thị ảnh (`minZoom`, `maxZoom`, `toolbarProps`, ...) |
-| `className` | `string` | `""` | Class CSS tùy biến cho container nội dung |
+| `onDownload` | `(file: PreviewFile) => void` | `undefined` | Custom callback when the download button is clicked |
+| `imageProps` | `Partial<ImagePreviewProps>` | `undefined` | Configuration passed down to image preview (`minZoom`, `maxZoom`, `toolbarProps`, ...) |
+| `className` | `string` | `""` | Custom CSS class for the content container |
 
 ---
 
-### `<ImagePreview>` (Hiển thị và tương tác ảnh)
+### `<ImagePreview>` (Image Viewer & Interaction)
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `src` | `string` | **Bắt buộc** | Đường dẫn ảnh hoặc data URL |
-| `name` | `string` | `undefined` | Tên file ảnh hiển thị khi tải xuống |
-| `alt` | `string` | `undefined` | Thẻ alt mô tả cho ảnh |
-| `minZoom` | `number` | `0.2` | Mức độ thu nhỏ tối thiểu (20%) |
-| `maxZoom` | `number` | `5` | Mức độ phóng to tối đa (500%) |
-| `showToolbar` | `boolean` | `true` | Hiển thị thanh công cụ điều khiển phía dưới |
-| `toolbarProps` | `Partial<ImagePreviewToolbarProps>` | `undefined` | Cấu hình chi tiết các nút bấm trên toolbar (`tools`) |
-| `className` | `string` | `""` | Class CSS tùy biến cho container bao ngoài |
-| `children` | `ReactNode` | `undefined` | Phần tử React con bổ sung |
+| `src` | `string` | **Required** | Image URL or data URL |
+| `name` | `string` | `undefined` | File name used when downloading the image |
+| `alt` | `string` | `undefined` | Alt description attribute for the image |
+| `minZoom` | `number` | `0.2` | Minimum zoom level (20%) |
+| `maxZoom` | `number` | `5` | Maximum zoom level (500%) |
+| `showToolbar` | `boolean` | `true` | Displays the control toolbar at the bottom |
+| `toolbarProps` | `Partial<ImagePreviewToolbarProps>` | `undefined` | Configuration for toolbar actions and tools (`tools`) |
+| `className` | `string` | `""` | Custom CSS class for the outer wrapper |
+| `children` | `ReactNode` | `undefined` | Supplementary React children |
 
-### `<ImagePreviewToolbar>` (Thanh công cụ điều khiển ảnh)
+### `<ImagePreviewToolbar>` (Image Viewer Controls)
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `zoom` | `number` | `1` | Mức độ phóng to hiện tại |
-| `minZoom` | `number` | `0.2` | Mức thu nhỏ tối thiểu |
-| `maxZoom` | `number` | `5` | Mức phóng to tối đa |
-| `step` | `number` | `0.05` | Bước nhảy zoom khi kéo thanh trượt Slider |
-| `onZoomChange` | `(zoom: number) => void` | `undefined` | Callback khi zoom thay đổi qua Slider |
-| `sliderProps` | `Partial<SliderProps>` | `undefined` | Tùy biến props cho component Slider bên trong |
-| `tools` | `ToolbarToolsConfig` | `{}` | Cấu hình bật/tắt các nút và công cụ |
+| `zoom` | `number` | `1` | Current zoom factor |
+| `minZoom` | `number` | `0.2` | Minimum allowed zoom level |
+| `maxZoom` | `number` | `5` | Maximum allowed zoom level |
+| `step` | `number` | `0.05` | Zoom step increment when using the slider |
+| `onZoomChange` | `(zoom: number) => void` | `undefined` | Callback invoked when zoom changes via the slider |
+| `sliderProps` | `Partial<SliderProps>` | `undefined` | Custom props for the embedded Slider component |
+| `tools` | `ToolbarToolsConfig` | `{}` | Toggle flags for individual toolbar buttons and tools |
 
 ---
 
-### `ToolbarToolsConfig` (Cấu hình nút trên thanh công cụ)
+### `ToolbarToolsConfig` (Toolbar Action Flags)
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `zoomIn` | `boolean` | `true` | Nút phóng to (+) |
-| `zoomOut` | `boolean` | `true` | Nút thu nhỏ (-) |
-| `zoomSlider` | `boolean` | `true` | Thanh trượt Slider điều chỉnh zoom trực tiếp |
-| `reset` | `boolean` | `true` | Nút hiển thị % và reset tỉ lệ (1:1) |
-| `rotate` | `boolean` | `true` | Cặp nút xoay ảnh theo & ngược chiều kim đồng hồ |
-| `flip` | `boolean` | `true` | Nút lật ảnh theo chiều ngang |
-| `download` | `boolean` | `true` | Nút tải ảnh xuống máy tính |
+| `zoomIn` | `boolean` | `true` | Zoom in button (+) |
+| `zoomOut` | `boolean` | `true` | Zoom out button (-) |
+| `zoomSlider` | `boolean` | `true` | Interactive zoom adjustment slider |
+| `reset` | `boolean` | `true` | Zoom percentage indicator and reset button (1:1) |
+| `rotate` | `boolean` | `true` | Clockwise and counterclockwise rotation buttons |
+| `flip` | `boolean` | `true` | Horizontal flip toggle button |
+| `download` | `boolean` | `true` | Download image button |

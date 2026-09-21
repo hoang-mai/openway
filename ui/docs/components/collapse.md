@@ -1,40 +1,40 @@
 # 🗂️ Collapse Component (`@openway/ui`)
 
-Component **Collapse** (Accordion / Collapsible panel) hiện đại, hiệu năng cao, thiết kế chuẩn **Declarative Compound Components Pattern** (`<Collapse>`, `<CollapsePanel>`, `<CollapseHeader>`, `<CollapseContent>`, `<Collapsible>`), tích hợp **CSS Grid Height Transition**, **Accordion Mode**, **Custom Slots & Subcomponents**, **Safe Config Fallback** (`getSafeConfig`) và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+A modern, high-performance **Collapse** (Accordion / Collapsible panel) component designed following the **Declarative Compound Components Pattern** (`<Collapse>`, `<CollapsePanel>`, `<CollapseHeader>`, `<CollapseContent>`, `<Collapsible>`), featuring **CSS Grid Height Transition**, **Accordion Mode**, **Custom Slots & Subcomponents**, **Safe Config Fallback** (`getSafeConfig`), and full compliance with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Key Features
 
-- **Compound Components Pattern chuẩn chỉ**: Tách biệt rõ ràng `<Collapse>`, `<CollapsePanel>`, `<CollapseHeader>`, `<CollapseContent>`, hỗ trợ 2 phong cách viết linh hoạt (khai báo nhanh qua Props hoặc tùy biến sâu qua Subcomponents).
-- **Hiệu ứng gập mở siêu mượt (CSS Grid Transition)**: Sử dụng kỹ thuật chuyển đổi `transition-[grid-template-rows]` (`grid-rows-[1fr]` khi mở và `grid-rows-[0fr]` khi đóng), tự động tính toán chiều cao nội dung động mà không cần đo đạc DOM bằng JavaScript.
-- **Chế độ Accordion & Multiple Open**:
-  - `accordion={true}`: Tự động đóng các panel khác khi mở một panel mới.
-  - `accordion={false}`: Cho phép mở nhiều panel đồng thời.
-- **Chế độ Controlled & Uncontrolled**:
-  - **Controlled**: Quản lý bằng `activeKey` + callback `onChange`.
-  - **Uncontrolled**: Tự quản lý nội bộ với `defaultActiveKey`.
-- **5 Biến thể giao diện (`variant`)**:
-  - `outlined` (*mặc định*): Khung viền ngoài và các đường kẻ phân cách mang màu sắc chủ đề.
-  - `filled`: Khối nền mang màu sắc chủ đề nhẹ tạo cảm giác liền mạch.
-  - `ghost`: Trong suốt, không viền ngoài tối giản.
-  - `separated`: Mỗi panel là một thẻ card riêng biệt cách nhau bởi khoảng trống `space-y-3`.
-  - `other`: Không áp dụng style mặc định, tự do tùy biến qua `className`.
-- **3 Kích thước tiêu chuẩn (`size`)**: `sm`, `md` (*mặc định*), `lg`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
-- **6 Kiểu bo góc (`radius`)**: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
-- **Tùy biến icon & vị trí mũi tên (`expandIconPosition`)**:
-  - `expandIconPosition`: `"right"` (*mặc định*), `"left"`, hoặc `"none"`.
-  - `expandIcon`: Tùy biến icon hoặc render function `({ isActive, disabled }) => ReactNode`.
-- **Extra Slot & Hành động phụ**: Hỗ trợ truyền badge, nút bấm, icon action (`extra`) vào header mà không kích hoạt sự kiện toggle của header.
-- **Giải phóng bộ nhớ (`destroyInactivePanel`)**: Tự động unmount nội dung khỏi DOM khi panel bị đóng.
-- **Component độc lập `<Collapsible>`**: Cung cấp khung gập mở độc lập nhẹ nhàng cho bất kỳ nội dung nào.
-- **WAI-ARIA Accessibility & Bàn phím**: Tự động gắn `role="region"`, `aria-expanded`, `aria-controls`, `aria-labelledby`, hỗ trợ đầy đủ phím `Enter` và `Space`.
-- **Safe Config Fallback**: Tích hợp `getSafeConfig` từ `@/utils/function` đảm bảo an toàn tuyệt đối, không crash ứng dụng khi truyền prop không hợp lệ.
+- **Standard Compound Components Pattern**: Clean separation across `<Collapse>`, `<CollapsePanel>`, `<CollapseHeader>`, and `<CollapseContent>`, supporting 2 flexible writing styles (rapid declaration via Props or deep customization via Subcomponents).
+- **Ultra-smooth Height Animation (CSS Grid Transition)**: Leverages `transition-[grid-template-rows]` (`grid-rows-[1fr]` when open and `grid-rows-[0fr]` when closed), automatically computing dynamic content heights without JavaScript DOM measurements.
+- **Accordion & Multiple Open Modes**:
+  - `accordion={true}`: Automatically closes other panels when opening a new one.
+  - `accordion={false}`: Allows multiple panels to be open simultaneously.
+- **Controlled & Uncontrolled Modes**:
+  - **Controlled**: Managed via `activeKey` + `onChange` callback.
+  - **Uncontrolled**: Internally managed with `defaultActiveKey`.
+- **5 Visual Variants (`variant`)**:
+  - `outlined` (*default*): Outer border and dividers matching theme colors.
+  - `filled`: Subtle theme color background fill creating a seamless aesthetic.
+  - `ghost`: Transparent, minimalist borderless look.
+  - `separated`: Each panel rendered as a detached card separated by `space-y-3`.
+  - `other`: Skips default styles, allowing complete customization via `className`.
+- **3 Standard Sizes (`size`)**: `sm`, `md` (*default*), `lg`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
+- **Custom Arrow Icons & Positions (`expandIconPosition`)**:
+  - `expandIconPosition`: `"right"` (*default*), `"left"`, or `"none"`.
+  - `expandIcon`: Custom icon or render function `({ isActive, disabled }) => ReactNode`.
+- **Extra Slot & Secondary Actions**: Supports passing badges, buttons, or action icons (`extra`) into the header without triggering the header toggle event.
+- **DOM Cleanup (`destroyInactivePanel`)**: Automatically unmounts content from the DOM when a panel is collapsed.
+- **Standalone `<Collapsible>` Component**: Provides a lightweight, standalone collapsible container for any content.
+- **WAI-ARIA Accessibility & Keyboard**: Automatically assigns `role="region"`, `aria-expanded`, `aria-controls`, `aria-labelledby`, with full support for `Enter` and `Space` keys.
+- **Safe Config Fallback**: Integrates `getSafeConfig` from `@/utils/function` to guarantee zero crashes even when invalid prop values are supplied.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -70,11 +70,11 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách 1: Khai báo nhanh qua Props (Declarative Panel Props)
+### 1. Approach 1: Rapid Declaration via Props (Declarative Panel Props)
 
-Phù hợp cho hầu hết các trường hợp thông dụng:
+Ideal for most standard use cases:
 
 ```tsx
 import { Collapse, CollapsePanel } from "@openway/ui";
@@ -84,23 +84,23 @@ export function BasicCollapse() {
     <Collapse defaultActiveKey={["1"]} variant="outlined" color="primary">
       <CollapsePanel
         value="1"
-        label="1. Giới thiệu tổng quan"
-        description="Thông tin nền tảng và kiến trúc hệ thống"
+        label="1. Overview Introduction"
+        description="Platform details and system architecture"
       >
         <p className="text-neutral-600">
-          Đây là nội dung chi tiết của panel đầu tiên.
+          This is the detailed content of the first panel.
         </p>
       </CollapsePanel>
 
-      <CollapsePanel value="2" label="2. Hướng dẫn cài đặt nhanh">
+      <CollapsePanel value="2" label="2. Quick Start Guide">
         <p className="text-neutral-600">
-          Chạy lệnh <code>pnpm add @openway/ui</code> để bắt đầu sử dụng.
+          Run <code>pnpm add @openway/ui</code> to get started.
         </p>
       </CollapsePanel>
 
-      <CollapsePanel value="3" label="3. Câu hỏi thường gặp" disabled>
+      <CollapsePanel value="3" label="3. Frequently Asked Questions" disabled>
         <p className="text-neutral-600">
-          Panel này đang bị vô hiệu hóa.
+          This panel is disabled.
         </p>
       </CollapsePanel>
     </Collapse>
@@ -110,9 +110,9 @@ export function BasicCollapse() {
 
 ---
 
-### 2. Cách 2: Tùy biến sâu qua Subcomponents (`<CollapseHeader>` & `<CollapseContent>`)
+### 2. Approach 2: Deep Customization via Subcomponents (`<CollapseHeader>` & `<CollapseContent>`)
 
-Cho phép bạn tự do composition cấu trúc giao diện phức tạp:
+Allows free composition of complex UI structures:
 
 ```tsx
 import { Collapse, CollapsePanel, CollapseHeader, CollapseContent } from "@openway/ui";
@@ -125,19 +125,19 @@ export function CustomSlotCollapse() {
         <CollapseHeader
           extra={
             <div className="flex items-center gap-2">
-              <Badge color="success">Đã thanh toán</Badge>
-              <Button size="sm" variant="ghost">In hóa đơn</Button>
+              <Badge color="success">Paid</Badge>
+              <Button size="sm" variant="ghost">Print Invoice</Button>
             </div>
           }
         >
           <span className="font-bold text-neutral-900">
-            Đơn hàng #101 - $149.00
+            Order #101 - $149.00
           </span>
         </CollapseHeader>
         <CollapseContent>
           <div className="space-y-2">
-            <p>Khách hàng: Nguyễn Văn A</p>
-            <p>Địa chỉ: 123 Đường Lê Lợi, Q.1, TP.HCM</p>
+            <p>Customer: John Doe</p>
+            <p>Address: 123 Main Street, Suite 100</p>
           </div>
         </CollapseContent>
       </CollapsePanel>
@@ -148,40 +148,40 @@ export function CustomSlotCollapse() {
 
 ---
 
-### 3. Chế độ Accordion (Chỉ mở 1 panel tại một thời điểm)
+### 3. Accordion Mode (Only 1 panel open at a time)
 
 ```tsx
 <Collapse accordion defaultActiveKey="faq-1" color="primary">
-  <CollapsePanel value="faq-1" label="Làm sao để đổi mật khẩu?">
-    <p>Truy cập mục Cài đặt tài khoản và chọn Đổi mật khẩu.</p>
+  <CollapsePanel value="faq-1" label="How do I change my password?">
+    <p>Go to Account Settings and select Change Password.</p>
   </CollapsePanel>
-  <CollapsePanel value="faq-2" label="Chính sách hoàn tiền như thế nào?">
-    <p>Chúng tôi hoàn tiền 100% trong vòng 30 ngày đầu tiên.</p>
+  <CollapsePanel value="faq-2" label="What is the refund policy?">
+    <p>We offer a 100% money-back guarantee within the first 30 days.</p>
   </CollapsePanel>
 </Collapse>
 ```
 
 ---
 
-### 4. Các biến thể giao diện (`variant`)
+### 4. Visual Variants (`variant`)
 
 ```tsx
-{/* 1. Outlined (Mặc định) */}
+{/* 1. Outlined (Default) */}
 <Collapse variant="outlined">...</Collapse>
 
 {/* 2. Filled */}
 <Collapse variant="filled">...</Collapse>
 
-{/* 3. Ghost (Tối giản) */}
+{/* 3. Ghost (Minimalist) */}
 <Collapse variant="ghost">...</Collapse>
 
-{/* 4. Separated (Thẻ card rời rạc) */}
+{/* 4. Separated (Detached cards) */}
 <Collapse variant="separated">...</Collapse>
 ```
 
 ---
 
-### 5. Chế độ điều khiển chủ động (Controlled Mode)
+### 5. Controlled Mode (Active State Control)
 
 ```tsx
 import { useState } from "react";
@@ -194,19 +194,19 @@ export function ControlledCollapse() {
     <div>
       <div className="flex gap-2 mb-3">
         <button onClick={() => setActiveKeys(["1"])} className="px-3 py-1 bg-primary-600 text-white rounded">
-          Mở Panel 1
+          Open Panel 1
         </button>
         <button onClick={() => setActiveKeys(["1", "2"])} className="px-3 py-1 bg-primary-600 text-white rounded">
-          Mở cả 1 và 2
+          Open both 1 and 2
         </button>
         <button onClick={() => setActiveKeys([])} className="px-3 py-1 bg-neutral-600 text-white rounded">
-          Đóng tất cả
+          Close all
         </button>
       </div>
 
       <Collapse activeKey={activeKeys} onChange={setActiveKeys}>
-        <CollapsePanel value="1" label="Panel 1">Nội dung 1</CollapsePanel>
-        <CollapsePanel value="2" label="Panel 2">Nội dung 2</CollapsePanel>
+        <CollapsePanel value="1" label="Panel 1">Content 1</CollapsePanel>
+        <CollapsePanel value="2" label="Panel 2">Content 2</CollapsePanel>
       </Collapse>
     </div>
   );
@@ -215,7 +215,7 @@ export function ControlledCollapse() {
 
 ---
 
-### 6. Sử dụng component gập mở độc lập `<Collapsible>`
+### 6. Standalone Collapsible Component (`<Collapsible>`)
 
 ```tsx
 import { useState } from "react";
@@ -227,12 +227,12 @@ export function CollapsibleDemo() {
   return (
     <div className="border p-4 rounded-xl">
       <Button onClick={() => setOpen(!open)}>
-        {open ? "Thu gọn chi tiết" : "Xem thêm chi tiết"}
+        {open ? "Hide details" : "Show more details"}
       </Button>
 
       <Collapsible open={open} className="mt-3">
         <div className="p-3 bg-neutral-50 rounded-lg">
-          Nội dung mở rộng linh hoạt không cần nằm trong Collapse list.
+          Flexible expandable content without needing to reside inside a Collapse list.
         </div>
       </Collapsible>
     </div>
@@ -242,76 +242,76 @@ export function CollapsibleDemo() {
 
 ---
 
-## 📊 Bảng thuộc tính Props
+## 📊 Props Reference
 
 ### `<Collapse>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `activeKey` | `string \| number \| (string \| number)[]` | - | Khóa các panel đang mở (Controlled mode) |
-| `defaultActiveKey` | `string \| number \| (string \| number)[]` | - | Khóa các panel mở ban đầu (Uncontrolled mode) |
-| `onChange` | `(activeKey) => void` | - | Callback kích hoạt khi trạng thái mở/đóng thay đổi |
-| `accordion` | `boolean` | `false` | Chế độ chỉ mở tối đa 1 panel |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Kích thước hiển thị |
-| `variant` | `"outlined" \| "filled" \| "ghost" \| "separated" \| "other"` | `"outlined"` | Biến thể kiểu dáng giao diện |
-| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Chủ đề màu sắc |
-| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Tùy chỉnh bo góc |
-| `expandIconPosition` | `"left" \| "right" \| "none"` | `"right"` | Vị trí icon mũi tên |
-| `expandIcon` | `ReactNode \| ((props) => ReactNode)` | - | Custom icon mũi tên |
-| `destroyInactivePanel`| `boolean` | `false` | Tự động unmount nội dung DOM khi panel đóng |
-| `children` | `ReactNode` | - | Danh sách các `<CollapsePanel>` |
+| `activeKey` | `string \| number \| (string \| number)[]` | - | Active panel keys (Controlled mode) |
+| `defaultActiveKey` | `string \| number \| (string \| number)[]` | - | Initially active panel keys (Uncontrolled mode) |
+| `onChange` | `(activeKey) => void` | - | Callback triggered when active state changes |
+| `accordion` | `boolean` | `false` | Accordion mode allowing at most 1 active panel |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Display size |
+| `variant` | `"outlined" \| "filled" \| "ghost" \| "separated" \| "other"` | `"outlined"` | Visual style variant |
+| `color` | `"primary" \| "secondary" \| "neutral" \| "error" \| "success" \| "warning" \| "info"` | `"primary"` | Color theme |
+| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Border radius |
+| `expandIconPosition` | `"left" \| "right" \| "none"` | `"right"` | Arrow icon position |
+| `expandIcon` | `ReactNode \| ((props) => ReactNode)` | - | Custom arrow icon |
+| `destroyInactivePanel`| `boolean` | `false` | Automatically unmounts DOM content when panel collapses |
+| `children` | `ReactNode` | - | List of `<CollapsePanel>` components |
 
 ---
 
 ### `<CollapsePanel>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `value` | `string \| number` | **Bắt buộc** | Khóa định danh duy nhất của panel |
-| `label` | `ReactNode` | - | Tiêu đề panel (khi dùng cách khai báo nhanh) |
-| `description` | `ReactNode` | - | Phụ đề mô tả ngắn |
-| `startIcon` | `ReactNode` | - | Icon đặt phía trước tiêu đề |
-| `extra` | `ReactNode` | - | Nội dung phụ bên phải (badge, action) |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa panel |
-| `showArrow` | `boolean` | `true` | Hiển thị icon mũi tên |
-| `destroyInactivePanel`| `boolean` | - | Ghi đè cấu hình unmount cho riêng panel này |
-| `children` | `ReactNode` | - | Nội dung body hoặc `<CollapseHeader>` & `<CollapseContent>` |
+| `value` | `string \| number` | **Required** | Unique identifier key of the panel |
+| `label` | `ReactNode` | - | Panel title (for declarative prop usage) |
+| `description` | `ReactNode` | - | Short subtitle description |
+| `startIcon` | `ReactNode` | - | Leading icon placed before the title |
+| `extra` | `ReactNode` | - | Secondary content on the right (badge, action) |
+| `disabled` | `boolean` | `false` | Disables the panel |
+| `showArrow` | `boolean` | `true` | Shows expand arrow icon |
+| `destroyInactivePanel`| `boolean` | - | Overrides unmount behavior for this specific panel |
+| `children` | `ReactNode` | - | Body content or `<CollapseHeader>` & `<CollapseContent>` |
 
 ---
 
 ### `<CollapseHeader>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `startIcon` | `ReactNode` | - | Icon đặt phía trước tiêu đề |
-| `description` | `ReactNode` | - | Phụ đề mô tả |
-| `extra` | `ReactNode` | - | Vùng hành động phụ bên phải |
-| `showArrow` | `boolean` | `true` | Hiển thị mũi tên mở rộng |
-| `children` | `ReactNode` | - | Nội dung tiêu đề JSX |
+| `startIcon` | `ReactNode` | - | Leading icon placed before the title |
+| `description` | `ReactNode` | - | Subtitle description |
+| `extra` | `ReactNode` | - | Secondary action slot on the right |
+| `showArrow` | `boolean` | `true` | Shows expand arrow icon |
+| `children` | `ReactNode` | - | JSX title content |
 
 ---
 
 ### `<CollapseContent>`
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `destroyInactivePanel`| `boolean` | - | Tự động gỡ nội dung khỏi DOM khi đóng |
-| `children` | `ReactNode` | - | Nội dung chi tiết bên trong panel |
+| `destroyInactivePanel`| `boolean` | - | Automatically unmounts content from DOM when collapsed |
+| `children` | `ReactNode` | - | Detailed content inside the panel |
 
 ---
 
-## ⌨️ Phím tắt & Trợ năng (Accessibility)
+## ⌨️ Keyboard Shortcuts & Accessibility
 
-- **`role="region"`**: Thẻ nội dung được đánh dấu là vùng nội dung bổ sung.
-- **`aria-expanded` & `aria-controls`**: Nút Header tự động đồng bộ trạng thái đóng/mở với ID của Content panel.
-- **Phím `Enter` / `Space`**: Nhấn để đóng hoặc mở panel khi đang focus vào tiêu đề.
-- **Ngăn chặn xung đột sự kiện**: Vùng `extra` được tách biệt bên ngoài thẻ `<button>` trigger để tránh lỗi nested interactive element.
+- **`role="region"`**: Content area is marked as a complementary content region.
+- **`aria-expanded` & `aria-controls`**: Header button automatically synchronizes its open/closed state with the Content panel ID.
+- **`Enter` / `Space` Keys**: Press to toggle the panel when focus is on the header.
+- **Event Conflict Prevention**: The `extra` slot is decoupled outside the `<button>` trigger to avoid nested interactive element violations.
 
 ---
 
-## 🧪 Kiểm thử Component (Cypress Testing)
+## 🧪 Component Testing (Cypress Testing)
 
-Component được kiểm thử 100% bằng **Cypress Component Testing** tại [`Collapse.cy.tsx`](Collapse.cy.tsx):
+The component has 100% test coverage using **Cypress Component Testing** at [`Collapse.cy.tsx`](Collapse.cy.tsx):
 
 ```bash
 pnpm --filter @openway/ui cypress:run --spec "src/components/collapse/Collapse.cy.tsx"

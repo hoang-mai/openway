@@ -1,28 +1,28 @@
 # ✍️ Typography Component (`@openway/ui`)
 
-Component **Typography** (Hệ thống Văn bản & Khối nội dung) duy nhất, toàn diện, chuẩn hóa 100% theo phong cách thiết kế **Notion Design System** (*Warm Paper Aesthetics*, bảng 10 màu đặc trưng của Notion, inline code chữ đỏ san hô `#eb5757`, Quote viền 3px, và tương tác Zen Canvas).
+A unified, comprehensive **Typography** component faithfully adhering to the **Notion Design System** aesthetic (*Warm Paper Aesthetics*, Notion's signature 10-color palette, coral red `#eb5757` inline code, 3px bordered blockquotes, and Zen Canvas interactive elements).
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Features
 
-- **Một Component Duy Nhất (`Typography`)**: Không cần băn khoăn lựa chọn giữa hàng chục component rời rạc. Chỉ cần truyền prop `type="h1"` đến `type="h6"`, `type="p"`, `type="code"`, `type="blockquote"`, `type="kbd"`, `type="a"`.
-- **Hỗ trợ Alias `Text`**: Xuất kèm alias `Text = Typography` để sử dụng theo thói quen ngắn gọn.
-- **Bảng 10 Màu Chữ & Highlight Chuẩn Notion**:
-  - 10 màu chữ: `default`, `gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`, `pink`, `red`.
-  - 10 màu highlight nền: `mark="yellow"`, `mark="blue"`, `mark="green"`...
-- **Inline Code Chuẩn Nhận Diện Notion**: Chữ đỏ san hô `#eb5757` trên nền xám ấm nhẹ `rgba(135, 131, 120, 0.15)`.
-- **Khối Trích Dẫn Notion Quote**: Viền hairline dày 3px bên trái mang màu chữ than chì, font chữ nghiêng mềm mại.
-- **Tương Tác Tiện Lợi (Zen Canvas)**:
-  - `copyable`: Nút sao chép văn bản vào Clipboard mượt mà kèm icon check xác nhận.
-  - `ellipsis`: Rút gọn chuỗi dài theo 1 hoặc nhiều dòng kèm nút "Xem thêm / Thu gọn".
-  - Chế độ `hoverOnly`: Mặc định nút copy ẩn mờ và chỉ hiện khi rê chuột, giữ mặt trang luôn sạch sẽ.
-- **Tabular Numbers (`tabular`)**: Kích hoạt `font-variant-numeric: tabular-nums` cho số liệu không nhảy giật khung hình.
-- **Zero External Dependencies**: Tích hợp trực tiếp với Tailwind CSS v4 và stylesheet duy nhất `styles.css`.
+- **Single Unified Component (`Typography`)**: Eliminates confusion across separate text components. Simply pass `type="h1"` through `type="h6"`, `type="p"`, `type="code"`, `type="blockquote"`, `type="kbd"`, or `type="a"`.
+- **`Text` Alias Support**: Ships with the convenient shorthand alias `Text = Typography`.
+- **10 Notion Text & Highlight Colors**:
+  - 10 text colors: `default`, `gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`, `pink`, `red`.
+  - 10 background highlight colors: `mark="yellow"`, `mark="blue"`, `mark="green"`, etc.
+- **Signature Notion Inline Code**: Coral red text `#eb5757` against a subtle warm grey background `rgba(135, 131, 120, 0.15)`.
+- **Notion Blockquote Block**: 3px hairline left border matching graphite text with elegant italic styling.
+- **Ergonomic Interactions (Zen Canvas)**:
+  - `copyable`: Smooth copy-to-clipboard button with checkmark confirmation icon.
+  - `ellipsis`: Multi-line text clamping with optional expandable "Show more / Show less" controls.
+  - `hoverOnly` Mode: Copy button remains discreetly hidden until hover, keeping page canvases clean.
+- **Tabular Numbers (`tabular`)**: Enables `font-variant-numeric: tabular-nums` to prevent layout shifts when numerical values update.
+- **Zero External Dependencies**: Directly integrated with Tailwind CSS v4 and the core unified `styles.css`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Typography, Text } from "@openway/ui";
@@ -31,110 +31,110 @@ import type { TypographyProps, NotionColor, NotionMarkColor } from "@openway/ui"
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Tiêu đề các cấp độ (`type="h1"` đến `type="h6"`)
+### 1. Heading Levels (`type="h1"` to `type="h6"`)
 
-Tự động sinh ra thẻ HTML tương ứng và áp dụng typography scale chuẩn Notion:
+Automatically generates semantic HTML elements and applies Notion typography scales:
 
 ```tsx
-<Typography type="h1">Tiêu đề trang lớn nhất H1</Typography>
-<Typography type="h2" color="blue">Mục tiêu quý 3 H2</Typography>
-<Typography type="h3">Tiểu mục H3</Typography>
-<Typography type="h4">Tiêu đề nhỏ H4</Typography>
-<Typography type="h5">Tiêu đề nhóm H5</Typography>
-<Typography type="h6">Chú thích tiêu đề H6</Typography>
+<Typography type="h1">Top-level Page Title H1</Typography>
+<Typography type="h2" color="blue">Q3 Objectives H2</Typography>
+<Typography type="h3">Sub-section H3</Typography>
+<Typography type="h4">Minor Heading H4</Typography>
+<Typography type="h5">Group Heading H5</Typography>
+<Typography type="h6">Caption Heading H6</Typography>
 ```
 
 ---
 
-### 2. Đoạn văn bản (`type="p"`) & Chữ thường (Mặc định `<span>`)
+### 2. Paragraphs (`type="p"`) & Standard Inline Text (Default `<span>`)
 
 ```tsx
-// Đoạn văn bản có line-height và margin-bottom thoáng đãng
+// Paragraph block with comfortable line-height and bottom margin
 <Typography type="p">
-  OpenWay Design System áp dụng triết lý thiết kế giao diện làm việc quản trị hiện đại.
+  OpenWay Design System embodies modern, focused administrative UI workflows.
 </Typography>
 
-// Chữ nội dòng thông thường (mặc định render span)
-<Typography>Văn bản mặc định</Typography>
-<Typography strong color="orange">Chữ cam in đậm</Typography>
-<Typography italic color="gray">Chữ xám in nghiêng</Typography>
-<Typography tabular>1,234,567.89 ₫</Typography>
+// Standard inline text (renders span by default)
+<Typography>Default inline text</Typography>
+<Typography strong color="orange">Bold orange text</Typography>
+<Typography italic color="gray">Italic gray text</Typography>
+<Typography tabular>$1,234,567.89</Typography>
 ```
 
 ---
 
-### 3. Tùy chỉnh kích cỡ linh hoạt (`size`)
+### 3. Flexible Sizing (`size`)
 
-Bạn có thể kết hợp `type` tiêu đề với prop `size` để tinh chỉnh kích thước chữ phù hợp layout:
+Combine heading types with the `size` prop to fine-tune font sizing to your layout:
 
 ```tsx
 <Typography type="h2" size="3xl">
-  Thẻ H2 với kích thước chữ 3xl
+  H2 tag with 3xl font size
 </Typography>
 ```
 
 ---
 
-### 4. Các Khối Nội Dung Đặc Trưng Chuẩn Notion
+### 4. Notion Content Blocks
 
-#### A. Khối Ghi Chú Callout (`type="callout"`)
+#### A. Callout Box (`type="callout"`)
 ```tsx
-// Callout mặc định (icon bóng đèn 💡)
+// Default Callout (Lightbulb icon 💡)
 <Typography type="callout" color="yellow">
-  Lưu ý: Dữ liệu này sẽ tự động được lưu sau mỗi 30 giây.
+  Note: This data is automatically saved every 30 seconds.
 </Typography>
 
-// Tùy biến icon qua prop hoặc qua object props
+// Custom icon via prop or props object
 <Typography type="callout" icon="⚠️" color="orange">
-  Cảnh báo: Bạn đang thay đổi quyền truy cập của quản trị viên cấp cao.
+  Warning: You are modifying senior administrator access permissions.
 </Typography>
 
 <Typography type="callout" props={{ icon: "🚀" }} color="blue">
-  Tính năng mới: Trợ lý AI đã được kích hoạt.
+  New Feature: AI Assistant is now activated.
 </Typography>
 ```
 
-#### B. Khối Trích Dẫn Quote (`type="blockquote"`)
+#### B. Blockquote (`type="blockquote"`)
 ```tsx
 <Typography type="blockquote">
-  "Thiết kế tốt là làm cho sản phẩm trở nên dễ hiểu." — Dieter Rams
+  "Good design makes a product understandable." — Dieter Rams
 </Typography>
 ```
 
-#### C. Mã Lệnh Nội Dòng (`type="code"` hoặc `code={true}`)
-Chữ đỏ san hô `#eb5757` chuẩn Notion:
+#### C. Inline Code (`type="code"` or `code={true}`)
+Coral red text `#eb5757` matching Notion styling:
 ```tsx
-Cài đặt thư viện bằng lệnh <Typography type="code">pnpm add @openway/ui</Typography>.
-Hoặc dùng modifier: <Typography code>const x = 10;</Typography>.
+Install the package using <Typography type="code">pnpm add @openway/ui</Typography>.
+Or via modifier: <Typography code>const x = 10;</Typography>.
 ```
 
-#### D. Phím Tắt Bàn Phím (`type="kbd"`)
+#### D. Keyboard Shortcuts (`type="kbd"`)
 ```tsx
-Nhấn <Typography type="kbd">⌘</Typography> + <Typography type="kbd">K</Typography> để tìm kiếm.
+Press <Typography type="kbd">⌘</Typography> + <Typography type="kbd">K</Typography> to search.
 ```
 
-#### E. Thẻ Liên Kết Siêu Văn Bản (`type="a"`)
-Typography tích hợp sẵn thẻ `Link` của **Next.js** (`next/link`) giúp điều hướng client-side SPA tối ưu. Toàn bộ các props đặc thù của liên kết được truyền qua thuộc tính `props` (đồng nhất với quy chuẩn `SelectFilterField`):
+#### E. Hyperlink Anchor (`type="a"`)
+Typography integrates **Next.js** (`next/link`) `<Link>` for optimal client-side SPA routing. All specific link attributes are passed via the `props` attribute (matching the `SelectFilterField` standard):
 ```tsx
-// Render Next.js <Link> khi chỉ định type="a"
+// Renders Next.js <Link> when specifying type="a"
 <Typography type="a" props={{ href: "/dashboard" }}>
-  Trang chủ Dashboard
+  Dashboard Home
 </Typography>
 
-// Kèm liên kết ngoài (mở tab mới và hiển thị icon ExternalLink)
+// External link (opens in new tab with ExternalLink icon)
 <Typography type="a" props={{ href: "https://openway.dev", external: true }}>
-  Tài liệu OpenWay
+  OpenWay Documentation
 </Typography>
 ```
 
 ---
 
-### 5. Bảng 10 Màu Chữ & Highlight Chuẩn Notion
+### 5. Notion 10-Color Text & Highlight Palette
 
 ```tsx
-// 10 Màu Chữ Notion:
+// 10 Notion Text Colors:
 <Typography color="default">Default</Typography>
 <Typography color="gray">Gray</Typography>
 <Typography color="brown">Brown</Typography>
@@ -146,75 +146,75 @@ Typography tích hợp sẵn thẻ `Link` của **Next.js** (`next/link`) giúp 
 <Typography color="pink">Pink</Typography>
 <Typography color="red">Red</Typography>
 
-// Highlight Nền Chuẩn Notion:
-<Typography mark="yellow">Highlight vàng</Typography>
-<Typography mark="blue">Highlight xanh dương</Typography>
-<Typography mark="green">Highlight xanh lá</Typography>
-<Typography mark="orange">Highlight cam</Typography>
-<Typography mark="red">Highlight đỏ</Typography>
+// Notion Pastel Highlights:
+<Typography mark="yellow">Yellow highlight</Typography>
+<Typography mark="blue">Blue highlight</Typography>
+<Typography mark="green">Green highlight</Typography>
+<Typography mark="orange">Orange highlight</Typography>
+<Typography mark="red">Red highlight</Typography>
 ```
 
 ---
 
-### 6. Tính Năng Tương Tác Nâng Cao
+### 6. Advanced Interactive Features
 
-#### A. Sao Chép Vào Clipboard (`copyable`)
+#### A. Copy to Clipboard (`copyable`)
 ```tsx
-// Cơ bản: Tự động copy nội dung khi bấm nút (nút hiện khi hover)
+// Basic: Click to copy content (button reveals on hover)
 <Typography copyable>0987654321</Typography>
 
-// Cấu hình nâng cao: Custom chuỗi copy, callback, và tooltip
+// Advanced: Custom copy string, callback, and tooltips
 <Typography
   copyable={{
     text: "RAW_API_KEY_SECRET",
     onCopy: () => console.log("Copied!"),
-    tooltips: ["Sao chép mã bí mật", "Đã sao chép vào bộ nhớ tạm!"],
-    hoverOnly: false, // Luôn hiển thị nút copy
+    tooltips: ["Copy secret key", "Copied to clipboard!"],
+    hoverOnly: false, // Keep copy button visible
   }}
 >
-  Mã bảo mật: ••••••••
+  Security Key: ••••••••
 </Typography>
 ```
 
-#### B. Cắt Ngắn Dòng (`ellipsis`)
+#### B. Line Clamping (`ellipsis`)
 ```tsx
-// Cắt ngắn 1 dòng (truncate)
+// Single line truncation
 <Typography ellipsis>
-  Đoạn văn bản cực kỳ dài sẽ tự động được cắt ngắn bằng dấu 3 chấm...
+  An exceptionally long line of text that automatically truncates with an ellipsis...
 </Typography>
 
-// Cắt ngắn 2 dòng kèm nút mở rộng / thu gọn
+// 2-line clamp with expandable / collapsible toggle
 <Typography ellipsis={{ rows: 2, expandable: true }}>
-  Nội dung bài viết chi tiết kéo dài nhiều dòng...
+  Detailed article content spanning across multiple lines of text...
 </Typography>
 ```
 
 ---
 
-## 🎛️ Bảng Props API
+## 🎛️ API Props Reference
 
-### 1. Props Cơ Sở (Chung cho mọi loại)
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+### 1. Base Props (Common to all types)
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `color` | `NotionColor` | `"default"` | 10 màu chữ Notion (`gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`, `pink`, `red`) hoặc alias |
-| `size` | `TypographySize` | `undefined` | Kích thước chữ: `"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"`, `"2xl"`, `"3xl"`, `"4xl"` |
-| `weight` | `TypographyWeight` | `undefined` | Độ đậm font: `"normal"`, `"medium"`, `"semibold"`, `"bold"` |
-| `align` | `TypographyAlign` | `undefined` | Căn lề: `"left"`, `"center"`, `"right"`, `"justify"` |
-| `mark` | `NotionMarkColor` | `undefined` | Đánh dấu highlight nền pastel theo 10 màu Notion (truyền `true` mặc định là vàng) |
-| `code` | `boolean` | `false` | Bật định dạng inline code đỏ san hô `#eb5757` |
-| `keyboard` | `boolean` | `false` | Bật định dạng phím bấm bàn phím `<kbd>` |
-| `strong` | `boolean` | `false` | In đậm chữ (`font-semibold`) |
-| `italic` | `boolean` | `false` | In nghiêng chữ (`italic`) |
-| `underline`| `boolean` | `false` | Gạch chân chữ |
-| `delete` | `boolean` | `false` | Gạch ngang chữ |
-| `tabular` | `boolean` | `false` | Bật số đều đặn không nhảy khung (`font-variant-numeric: tabular-nums`) |
-| `disabled`| `boolean` | `false` | Làm mờ và vô hiệu hóa tương tác |
-| `copyable`| `boolean \| CopyConfig` | `undefined` | Bật tính năng sao chép vào Clipboard kèm icon phản hồi |
-| `ellipsis`| `boolean \| EllipsisConfig` | `undefined` | Cắt ngắn văn bản khi vượt quá số dòng |
+| `color` | `NotionColor` | `"default"` | 10 Notion text colors (`gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`, `pink`, `red`) or alias |
+| `size` | `TypographySize` | `undefined` | Typography scale size: `"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"`, `"2xl"`, `"3xl"`, `"4xl"` |
+| `weight` | `TypographyWeight` | `undefined` | Font weight: `"normal"`, `"medium"`, `"semibold"`, `"bold"` |
+| `align` | `TypographyAlign` | `undefined` | Text alignment: `"left"`, `"center"`, `"right"`, `"justify"` |
+| `mark` | `NotionMarkColor` | `undefined` | Pastel background highlight across 10 Notion colors (passing `true` defaults to yellow) |
+| `code` | `boolean` | `false` | Enables coral red `#eb5757` inline code formatting |
+| `keyboard` | `boolean` | `false` | Enables keyboard shortcut `<kbd>` styling |
+| `strong` | `boolean` | `false` | Bold font weight (`font-semibold`) |
+| `italic` | `boolean` | `false` | Italic font style (`italic`) |
+| `underline`| `boolean` | `false` | Underline text decoration |
+| `delete` | `boolean` | `false` | Strikethrough text decoration |
+| `tabular` | `boolean` | `false` | Enables monospaced digits (`font-variant-numeric: tabular-nums`) |
+| `disabled`| `boolean` | `false` | Dimmed appearance and disables interaction |
+| `copyable`| `boolean \| CopyConfig` | `undefined` | Enables copy-to-clipboard button with visual feedback |
+| `ellipsis`| `boolean \| EllipsisConfig` | `undefined` | Multi-line text clamping and truncation |
 
-### 2. Biến Thể Quyết Định Theo `type` (Discriminated Union)
-| `type` | Props đặc thù trong `props` | Mô tả |
+### 2. Discriminated Union Props by `type`
+| `type` | Specific props within `props` | Description |
 | :--- | :--- | :--- |
-| `"h1"` – `"h6"`, `"p"`, `"span"`, `"blockquote"`, `"code"`, `"kbd"` | `props?: HTMLAttributes<HTMLElement>` | Các thẻ HTML ngữ nghĩa tiêu chuẩn (mặc định là `"span"` nếu không truyền) |
-| `"callout"` | `icon?: ReactNode`<br>`props?: HTMLAttributes<HTMLDivElement> & { icon?: ReactNode }` | Khối Callout Box ghi chú nổi bật với icon biểu tượng và nền pastel |
-| `"a"` | `props?: Partial<LinkProps> & { external?: boolean; target?: string; rel?: string }` | Tích hợp Next.js `<Link>` cho điều hướng SPA nội bộ và liên kết ngoài |
+| `"h1"` – `"h6"`, `"p"`, `"span"`, `"blockquote"`, `"code"`, `"kbd"` | `props?: HTMLAttributes<HTMLElement>` | Standard semantic HTML elements (defaults to `"span"` when omitted) |
+| `"callout"` | `icon?: ReactNode`<br>`props?: HTMLAttributes<HTMLDivElement> & { icon?: ReactNode }` | Highlighted Callout Box with leading icon and pastel background |
+| `"a"` | `props?: Partial<LinkProps> & { external?: boolean; target?: string; rel?: string }` | Integrates Next.js `<Link>` for internal SPA navigation and external links |

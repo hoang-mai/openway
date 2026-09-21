@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { DateRangeMonthGridProps } from "./types";
 import { dateRangePickerSizeConfig, dateRangePickerColorConfig, dateRangePickerRadiusConfig } from "./constants";
-import { resolveLocale } from "../datepicker/utils";
+import { useLocale } from "../common/OpenWayProvider";
 import { getSafeConfig } from "@/utils/function";
 
 export default function DateRangeMonthGrid({
@@ -10,13 +10,12 @@ export default function DateRangeMonthGrid({
   size = "md",
   color = "primary",
   radius,
-  locale,
   rangeStart,
   rangeEnd,
   hoveredDate,
   onHoverMonth,
 }: DateRangeMonthGridProps) {
-  const loc = resolveLocale(locale);
+  const loc = useLocale("datePicker");
   const sizeStyles = getSafeConfig(size, dateRangePickerSizeConfig, "md");
   const colorStyles = getSafeConfig(color, dateRangePickerColorConfig, "primary");
   const radiusClass = getSafeConfig(radius, dateRangePickerRadiusConfig, "lg");

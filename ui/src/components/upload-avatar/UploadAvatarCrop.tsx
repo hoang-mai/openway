@@ -15,6 +15,7 @@ import UploadIcon from "../icons/UploadIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import Spinner from "../icons/Spinner";
+import { useLocale } from "../common/OpenWayProvider";
 
 export interface UploadAvatarCropContentProps {
   imageSrc?: string;
@@ -49,6 +50,7 @@ export function UploadAvatarCropContent({
   onApply,
   onCancel,
 }: UploadAvatarCropContentProps) {
+  const uploadLocale = useLocale("upload");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(file ?? null);
   const [imageSrc, setImageSrc] = useState(initialImageSrc);
@@ -249,8 +251,8 @@ export function UploadAvatarCropContent({
           <button
             type="button"
             onClick={handleReset}
-            title="Đặt lại"
-            aria-label="Đặt lại"
+            title={uploadLocale.reset}
+            aria-label={uploadLocale.reset}
             className={toolbarBtnClass}
           >
             <ResetIcon width={16} height={16} />
@@ -262,8 +264,8 @@ export function UploadAvatarCropContent({
           <button
             type="button"
             onClick={handleClose}
-            aria-label="Hủy cắt ảnh"
-            title="Hủy (Esc)"
+            aria-label={uploadLocale.cropCancel}
+            title={uploadLocale.cropCancel}
             className={`${toolbarBtnClass} text-neutral-500 hover:text-error-600`}
             data-testid="avatar-crop-cancel-button"
           >
@@ -275,8 +277,8 @@ export function UploadAvatarCropContent({
             type="button"
             onClick={handleSave}
             disabled={isProcessing}
-            aria-label="Áp dụng và lưu ảnh đã cắt"
-            title="Áp dụng"
+            aria-label={uploadLocale.cropConfirm}
+            title={uploadLocale.cropConfirm}
             className="p-1.5 rounded-full bg-primary-600 hover:bg-primary-500 text-white shadow-xs transition-colors active:scale-95 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden shrink-0"
             data-testid="avatar-crop-apply-button"
           >
@@ -290,12 +292,14 @@ export function UploadAvatarCropContent({
 
 export function UploadAvatarCropModal({
   open = true,
-  modalTitle = "Cắt ảnh đại diện",
+  modalTitle: modalTitleProp,
   onClose,
   onCancel,
   onApply,
   ...restProps
 }: UploadAvatarCropModalProps) {
+  const uploadLocale = useLocale("upload");
+  const modalTitle = modalTitleProp ?? uploadLocale.cropTitle;
   const handleClose = () => {
     onCancel?.();
     onClose?.();

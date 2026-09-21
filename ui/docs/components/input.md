@@ -1,38 +1,38 @@
 # 🔤 Input Component Suite (`@openway/ui`)
 
-Bộ component **Input** toàn diện, linh hoạt và tương tác cao, thiết kế chuẩn **Design System**, hỗ trợ **Safe Config Fallback**, **Floating Labels**, **Loading & Spinners**, và tuân thủ đầy đủ tiêu chuẩn **WAI-ARIA Accessibility**.
+A comprehensive, flexible, and interactive **Input** component suite designed to strict **Design System** standards, featuring **Safe Config Fallback**, **Floating Labels**, **Loading & Spinners**, and full compliance with **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Đa dạng biến thể Input chuyên dụng**:
-  - `<Input>`: Ô nhập liệu văn bản tiêu chuẩn (text, email, url, tel, search...).
-  - `<PasswordInput>`: Ô nhập mật khẩu tích hợp nút ẩn/hiện mật khẩu bảo mật.
-  - `<NumberInput>`: Ô nhập số hỗ trợ định dạng số, phân tách hàng nghìn, tiền tệ và giới hạn min/max.
-  - `<OtpInput>`: Ô nhập mã OTP chia từng ô (slot) hỗ trợ dán tự động (paste) và chuyển focus thông minh.
-  - `<MultiInput>`: Ô nhập nhiều giá trị (tags / chip list) hỗ trợ xóa nhanh, badge preview.
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *mặc định*), `lg` (48px), `xl` (56px) với font chữ, padding, kích thước icon và label được tính toán theo tỷ lệ chuẩn.
-- **3 Biến thể giao diện (`variant`)**:
-  - `outline` *(mặc định)*: Viền nét rõ ràng quanh khung nhập liệu, hover/focus đổi màu viền chủ đề.
-  - `filled`: Nền pastel nhạt (`bg-{color}-50/60`), viền đồng điệu.
-  - `ghost`: Nền trong suốt, tinh giản, chỉ nổi bật khi hover/focus.
-  - `other`: Bỏ qua các class màu mặc định, tự do áp dụng custom style qua `inputWrapperClassName`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
-- **6 Mức độ bo góc (`radius`)**: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
-- **3 Vị trí đặt nhãn (`labelPlacement`)**:
-  - `floating` *(mặc định)*: Nhãn lơ lửng, nằm cố định chính giữa viền trên khung input.
-  - `top`: Nhãn nằm phía trên ô input.
-  - `left`: Nhãn nằm ngang bên trái ô input.
-- **Trạng thái Loading & Xoay Spinner (`isLoading` & `showSpinner`)**:
-  - `isLoading={true}`: Tự động vô hiệu hóa tương tác (`disabled`), kích hoạt `aria-busy="true"` và `aria-disabled="true"`.
-  - `showSpinner`: Mặc định là `false`. Đặt `showSpinner={true}` khi muốn hiển thị spinner xoay vòng ở bên phải.
-- **Slots linh hoạt**: Hỗ trợ `leftIcon`, `rightIcon`, `leftAddon`, `rightAddon` và nút xóa nhanh `isClearable`.
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` đảm bảo component hoạt động an toàn, không bị crash kể cả khi truyền prop không hợp lệ.
+- **Diverse Specialized Input Variants**:
+  - `<Input>`: Standard text input (text, email, url, tel, search...).
+  - `<PasswordInput>`: Password input with an integrated visibility toggle button.
+  - `<NumberInput>`: Number input supporting real-time thousand/decimal separators, currency formatting, and intelligent min/max limits.
+  - `<OtpInput>`: Discrete slotted OTP input supporting mobile SMS autofill, smart paste, and intelligent focus switching.
+  - `<MultiInput>`: Multi-value tag/chip input supporting rapid deletion, badge preview, and truncation.
+- **5 Standard Sizes (`size`)**: `xs` (24px), `sm` (32px), `md` (40px - *default*), `lg` (48px), `xl` (56px) with proportional typography, padding, icon, and label sizing.
+- **3 Visual Variants (`variant`)**:
+  - `outline` *(default)*: Crisp border around the input container; changes to theme color on hover/focus.
+  - `filled`: Subtle pastel background (`bg-{color}-50/60`) with harmonized borders.
+  - `ghost`: Transparent, clean background that highlights only on hover/focus.
+  - `other`: Skips default color classes to allow unrestricted custom styling via `inputWrapperClassName`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
+- **3 Label Placements (`labelPlacement`)**:
+  - `floating` *(default)*: Floating label pinned cleanly over the top border of the input container.
+  - `top`: Label placed above the input field.
+  - `left`: Label aligned horizontally to the left of the input field.
+- **Loading & Spinner States (`isLoading` & `showSpinner`)**:
+  - `isLoading={true}`: Automatically disables interactions (`disabled`), triggering `aria-busy="true"` and `aria-disabled="true"`.
+  - `showSpinner`: Defaults to `false`. Set `showSpinner={true}` to display a rotating spinner on the right.
+- **Flexible Slots**: Supports `leftIcon`, `rightIcon`, `leftAddon`, `rightAddon`, and quick clear button `isClearable`.
+- **Safe Config Fallback**: Built-in `getSafeConfig` utility guarantees resilient operation, preventing runtime crashes even with invalid prop values.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -66,9 +66,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Cách sử dụng cơ bản
+### 1. Basic Usage
 
 ```tsx
 import { Input } from "@openway/ui";
@@ -76,7 +76,7 @@ import { Input } from "@openway/ui";
 export function BasicInputExample() {
   return (
     <div className="flex flex-col gap-4 max-w-sm">
-      <Input label="Họ và tên" placeholder="Nguyễn Văn A" />
+      <Input label="Full Name" placeholder="John Doe" />
       <Input label="Email" type="email" placeholder="example@domain.com" />
     </div>
   );
@@ -85,22 +85,22 @@ export function BasicInputExample() {
 
 ---
 
-### 2. Vị trí đặt nhãn (`labelPlacement`)
+### 2. Label Placement (`labelPlacement`)
 
 ```tsx
-// 1. Floating (Mặc định)
-<Input label="Nhãn lơ lửng" labelPlacement="floating" placeholder="Nhập văn bản..." />
+// 1. Floating (Default)
+<Input label="Floating Label" labelPlacement="floating" placeholder="Enter text..." />
 
-// 2. Top (Phía trên)
-<Input label="Nhãn phía trên" labelPlacement="top" placeholder="Nhập văn bản..." />
+// 2. Top (Above)
+<Input label="Top Label" labelPlacement="top" placeholder="Enter text..." />
 
-// 3. Left (Ngang bên trái)
-<Input label="Nhãn bên trái" labelPlacement="left" placeholder="Nhập văn bản..." />
+// 3. Left (Aligned horizontally)
+<Input label="Left Label" labelPlacement="left" placeholder="Enter text..." />
 ```
 
 ---
 
-### 3. Icon & Addons
+### 3. Icons & Addons
 
 ```tsx
 <Input
@@ -111,83 +111,83 @@ export function BasicInputExample() {
 />
 
 <Input
-  label="Tìm kiếm"
+  label="Search"
   leftIcon={<SearchIcon />}
   isClearable={true}
-  placeholder="Nhập từ khóa tìm kiếm..."
+  placeholder="Search keywords..."
 />
 ```
 
 ---
 
-### 4. Trạng thái Loading & Xóa nhanh
+### 4. Loading & Quick Clear States
 
 ```tsx
 <Input
-  label="Đang tải dữ liệu"
+  label="Loading Data"
   isLoading={true}
   showSpinner={true}
-  defaultValue="Đang đồng bộ..."
+  defaultValue="Synchronizing..."
 />
 ```
 
 ---
 
-### 5. Trạng thái Báo lỗi & Hướng dẫn
+### 5. Validation Errors & Helper Text
 
 ```tsx
 <Input
-  label="Mật khẩu"
+  label="Password"
   isRequired={true}
-  errorMessage="Mật khẩu tối thiểu 8 ký tự!"
+  errorMessage="Password must be at least 8 characters!"
   isInvalid={true}
 />
 
 <Input
-  label="Tên đăng nhập"
-  helperText="Chỉ bao gồm chữ cái viết thường và số."
+  label="Username"
+  helperText="Lowercase letters and numbers only."
 />
 ```
 
 ---
 
-## 🛠 Bảng thông số Props (`InputProps`)
+## 🛠 Props Specification (`InputProps`)
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ giao diện (font chữ, chiều cao, padding, kích thước icon/label). |
-| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Biến thể hiển thị giao diện. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc theo Design System. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Độ bo góc của khung viền input (mặc định theo từng size). |
-| `label` | `ReactNode` | — | Nhãn tiêu đề hiển thị cho ô nhập liệu. |
-| `labelPlacement` | `'floating' \| 'top' \| 'left'` | `'floating'` | Vị trí hiển thị của nhãn. |
-| `config` | `InputConfig` | — | Cấu hình tập trung các cờ trạng thái / tính năng (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`). |
-| `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn/trợ giúp bên dưới ô. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi khi nhập sai (tự kích hoạt trạng thái báo lỗi). |
-| `leftIcon` | `ReactNode` | — | Icon hiển thị ở đầu ô input. |
-| `rightIcon` | `ReactNode` | — | Icon hiển thị ở cuối ô input. |
-| `leftAddon` | `ReactNode` | — | Addon / prefix cố định ở đầu ô input (vd: `'https://'`). |
-| `rightAddon` | `ReactNode` | — | Addon / suffix cố định ở cuối ô input (vd: `'.com'`). |
-| `onClear` | `() => void` | — | Callback được gọi khi bấm nút xóa nhanh. |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp đến thẻ `<input>` HTML bên dưới. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Visual size preset (font size, height, padding, icon and label sizing). |
+| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Visual appearance variant. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color per Design System. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Corner radius of the input container (defaults per size). |
+| `label` | `ReactNode` | — | Label displayed for the input field. |
+| `labelPlacement` | `'floating' \| 'top' \| 'left'` | `'floating'` | Position of the label. |
+| `config` | `InputConfig` | — | Consolidated configuration flags object (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`). |
+| `helperText` | `ReactNode` | — | Helper text displayed beneath the input. |
+| `errorMessage` | `ReactNode` | — | Error message displayed on validation failure (activates error border). |
+| `leftIcon` | `ReactNode` | — | Leading icon displayed at the start of the input. |
+| `rightIcon` | `ReactNode` | — | Trailing icon displayed at the end of the input. |
+| `leftAddon` | `ReactNode` | — | Fixed addon / prefix prepended to the input (e.g., `'https://'`). |
+| `rightAddon` | `ReactNode` | — | Fixed addon / suffix appended to the input (e.g., `'.com'`). |
+| `onClear` | `() => void` | — | Callback invoked when clicking the quick clear button. |
+| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying HTML `<input>` element. |
 
 ---
 
 ## 💵 NumberInput Component
 
-Component **`NumberInput`** chuyên dụng cho việc nhập số, tiền tệ, khối lượng, tỷ giá với khả năng **tự động phân cách hàng nghìn/thập phân trong thời gian thực**, **giữ vị trí con trỏ chuột không bị nhảy**, **tối ưu bàn phím di động (`inputMode`)**, và **giới hạn min/max thông minh**.
+The **`NumberInput`** component is specialized for numeric values, currency, weight, and exchange rates with **real-time thousand and decimal formatting**, **cursor position preservation without jumping**, **mobile keyboard optimization (`inputMode`)**, and **intelligent min/max limits**.
 
-### 🌟 Điểm nổi bật của NumberInput
-- **Định dạng số theo thời gian thực**: Tự động chèn dấu phân cách khi gõ (ví dụ `1000000` -> `1.000.000`).
-- **Giữ vị trí con trỏ chuẩn xác**: Tính toán vị trí con trỏ chuột khi chèn/xóa dấu phân cách, người dùng thoải mái sửa số ở giữa mà không bị nhảy con trỏ về cuối.
-- **Tối ưu Bàn phím Mobile**: Tự động bật bàn phím số `inputMode="numeric"` hoặc `inputMode="decimal"` khi có số thập phân.
-- **Hỗ trợ đa định dạng quốc tế**: Dễ dàng tùy biến `thousandSeparator` và `decimalSeparator` (chuẩn VN `.` / `,` hoặc chuẩn US `,` / `.`).
-- **Giới hạn Min / Max thông minh**: Clamp `max` tức thì để chặn nhập vượt ngưỡng, đồng thời cho phép gõ từng chữ số với `min` dương và tự động clamp về `min` khi `onBlur`.
-- **Hỗ trợ `value` linh hoạt**: Nhận cả số nguyên (`value={1000000}`) hoặc chuỗi (`value="1.000.000"`).
+### 🌟 Highlights of NumberInput
+- **Real-Time Numeric Formatting**: Automatically formats delimiters as the user types (e.g., `1000000` -> `1,000,000` or `1.000.000`).
+- **Precise Cursor Tracking**: Accurately tracks cursor position through formatting insertions/deletions so users can edit in the middle of digits without cursor jumping to the end.
+- **Mobile Keyboard Optimization**: Automatically engages `inputMode="numeric"` or `inputMode="decimal"` when decimal inputs are allowed.
+- **International Formatting Support**: Easily configure `thousandSeparator` and `decimalSeparator` (Vietnamese `.` / `,` or US `,` / `.`).
+- **Intelligent Min / Max Limits**: Clamps `max` in real-time to prevent exceeding thresholds, while allowing digit-by-digit entry for positive `min` and auto-clamping on `onBlur`.
+- **Flexible `value` Types**: Accepts either numeric values (`value={1000000}`) or formatted strings (`value="1,000,000"`).
 
-### 📖 Ví dụ sử dụng `NumberInput`
+### 📖 Usage Examples for `NumberInput`
 
-#### 1. Nhập số tiền cơ bản (Chuẩn Việt Nam)
+#### 1. Basic Currency Input (Vietnamese Standard)
 ```tsx
 import { NumberInput } from "@openway/ui";
 
@@ -196,8 +196,8 @@ export function CurrencyExample() {
 
   return (
     <NumberInput
-      label="Số tiền thanh toán"
-      rightAddon="VNĐ"
+      label="Payment Amount"
+      rightAddon="VND"
       value={amount}
       onChange={(e) => setAmount(e.target.value)}
       placeholder="0"
@@ -206,10 +206,10 @@ export function CurrencyExample() {
 }
 ```
 
-#### 2. Nhập số thập phân (Ví dụ: Khối lượng kg hoặc USD)
+#### 2. Decimal Number Input (Weight or USD Currency)
 ```tsx
 <NumberInput
-  label="Trọng lượng"
+  label="Weight"
   rightAddon="kg"
   maxDecimalDigits={2}
   decimalSeparator=","
@@ -218,7 +218,7 @@ export function CurrencyExample() {
 />
 
 <NumberInput
-  label="Số tiền USD"
+  label="USD Amount"
   leftAddon="$"
   maxDecimalDigits={2}
   decimalSeparator="."
@@ -227,52 +227,52 @@ export function CurrencyExample() {
 />
 ```
 
-#### 3. Giới hạn Min & Max
+#### 3. Min & Max Limits
 ```tsx
 <NumberInput
-  label="Số lượng vé"
+  label="Ticket Quantity"
   min={1}
   max={10}
-  helperText="Tối thiểu 1 vé, tối đa 10 vé mỗi lượt mua."
+  helperText="Minimum 1 ticket, maximum 10 tickets per purchase."
 />
 ```
 
 ---
 
-### 🛠 Bảng thông số Props (`NumberInputProps`)
+### 🛠 Props Specification (`NumberInputProps`)
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `value` | `string \| number \| null` | — | Giá trị số hoặc chuỗi đã format (Controlled mode). |
-| `defaultValue` | `string \| number \| null` | — | Giá trị mặc định ban đầu (Uncontrolled mode). |
-| `min` | `number` | — | Giá trị nhỏ nhất cho phép (clamp khi onBlur hoặc số âm vượt ngưỡng). |
-| `max` | `number` | — | Giá trị lớn nhất cho phép (clamp thời gian thực khi gõ). |
-| `thousandSeparator` | `string` | `'.'` | Ký tự phân cách hàng nghìn. |
-| `decimalSeparator` | `string` | `','` | Ký tự phân cách phần thập phân. |
-| `maxDecimalDigits` | `number` | `0` | Số chữ số thập phân tối đa (`0` là số nguyên). |
-| `allowNegative` | `boolean` | — | Cho phép nhập số âm (mặc định `true` nếu `min < 0` hoặc chưa đặt `min`). |
-| `onChange` | `(e: ChangeEvent<HTMLInputElement>) => void` | — | Callback khi giá trị input thay đổi. |
-| `onBlur` | `(e: FocusEvent<HTMLInputElement>) => void` | — | Callback khi blur ra ngoài (tự động clamp `min`). |
-| `...props` | `InputProps` | — | Thừa hưởng toàn bộ props của component `Input` (`size`, `variant`, `color`, `radius`, `label`, `config`, `leftIcon`, `rightAddon`,...). |
+| `value` | `string \| number \| null` | — | Current numeric or formatted string value (Controlled mode). |
+| `defaultValue` | `string \| number \| null` | — | Initial default value (Uncontrolled mode). |
+| `min` | `number` | — | Minimum allowed value (clamped on `onBlur` or when negative numbers exceed bounds). |
+| `max` | `number` | — | Maximum allowed value (clamped in real-time during typing). |
+| `thousandSeparator` | `string` | `'.'` | Character used as the thousands separator. |
+| `decimalSeparator` | `string` | `','` | Character used as the decimal separator. |
+| `maxDecimalDigits` | `number` | `0` | Maximum number of decimal places (`0` denotes integers only). |
+| `allowNegative` | `boolean` | — | Allows negative numbers (defaults to `true` if `min < 0` or `min` is unset). |
+| `onChange` | `(e: ChangeEvent<HTMLInputElement>) => void` | — | Callback invoked when the input value changes. |
+| `onBlur` | `(e: FocusEvent<HTMLInputElement>) => void` | — | Callback invoked when focus leaves the input (auto-clamps `min`). |
+| `...props` | `InputProps` | — | Inherits all props from `Input` (`size`, `variant`, `color`, `radius`, `label`, `config`, `leftIcon`, `rightAddon`, ...). |
 
 ---
 
 ## 🔢 OtpInput Component
 
-Component **`OtpInput`** chuyên dụng cho việc nhập mã xác thực OTP (One-Time Password) hoặc mã PIN với từng ô ký tự riêng biệt, hỗ trợ **Mobile SMS Autofill**, **Smart Paste**, **Keyboard Navigation**, **Tự động bôi đen để gõ đè**, và **Tích hợp HTML Form**.
+The **`OtpInput`** component is specialized for one-time passwords (OTP) or PIN code entry across discrete character slots, featuring **Mobile SMS Autofill**, **Smart Paste**, **Keyboard Navigation**, **Auto-selection on focus for seamless overwriting**, and **HTML Form Integration**.
 
-### 🌟 Điểm nổi bật của OtpInput
-- **Tự động chuyển Focus**: Tự động chuyển con trỏ sang ô tiếp theo khi gõ, lùi lại ô trước khi bấm `Backspace`.
-- **Hỗ trợ Mobile SMS Autofill & Smart Paste**: Bắt cả sự kiện `onPaste` trực tiếp và `onChange` khi iOS/Android tự động điền mã OTP từ tin nhắn SMS.
-- **Tự động bôi đen khi Focus (`onFocus select`)**: Cho phép người dùng click vào bất kỳ ô nào và gõ số mới để đè lên số cũ mà không cần xóa thủ công.
-- **Điều khiển trực tiếp qua Ref (`OtpInputRef`)**: Hỗ trợ gọi `ref.current.getValue()`, `ref.current.clear()`, và `ref.current.focus(index)`.
-- **Tích hợp Form HTML chuẩn**: Tự động render `<input type="hidden" name={name} value={...}>` giúp gửi toàn bộ chuỗi OTP khi submit `<form>` hoặc dùng `FormData`.
-- **Phân nhóm linh hoạt**: Hỗ trợ `groupSize` và `separator` (ví dụ chia cụm `3-3`: `123 - 456`).
-- **Bảo mật & Che giấu mã**: Hỗ trợ `mask={true}` hoặc `type="password"`.
+### 🌟 Highlights of OtpInput
+- **Automatic Focus Traversal**: Automatically moves focus to the next slot on input, moves back to the previous slot on `Backspace`.
+- **Mobile SMS Autofill & Smart Paste**: Intercepts direct `onPaste` events as well as iOS/Android SMS one-time-code autofill `onChange` events.
+- **Auto-Selection on Focus (`onFocus select`)**: Selects existing slot contents on click or focus, allowing immediate overwriting without manual deletion.
+- **Direct Ref Controls (`OtpInputRef`)**: Supports `ref.current.getValue()`, `ref.current.clear()`, and `ref.current.focus(index)`.
+- **Native HTML Form Integration**: Automatically renders `<input type="hidden" name={name} value={...}>` to submit the full joined OTP string in standard `<form>` or `FormData` submissions.
+- **Flexible Grouping**: Supports `groupSize` and `separator` (e.g., grouped `3-3`: `123 - 456`).
+- **Masking & Security**: Supports `mask={true}` or `type="password"`.
 
-### 📖 Ví dụ sử dụng `OtpInput`
+### 📖 Usage Examples for `OtpInput`
 
-#### 1. Sử dụng cơ bản & Lắng nghe hoàn thành
+#### 1. Basic Usage & Completion Listener
 ```tsx
 import { OtpInput } from "@openway/ui";
 
@@ -280,16 +280,16 @@ export function OtpBasicExample() {
   return (
     <OtpInput
       length={6}
-      label="Mã xác thực OTP"
-      helperText="Nhập 6 chữ số được gửi tới số điện thoại của bạn."
-      onChange={(val) => console.log("Đang nhập:", val)}
-      onComplete={(val) => console.log("Đã điền đủ 6 số:", val)}
+      label="OTP Verification Code"
+      helperText="Enter the 6-digit code sent to your phone number."
+      onChange={(val) => console.log("Entering:", val)}
+      onComplete={(val) => console.log("Filled all 6 digits:", val)}
     />
   );
 }
 ```
 
-#### 2. Điều khiển bằng `ref` (`OtpInputRef`)
+#### 2. Controlled via Ref (`OtpInputRef`)
 ```tsx
 import { useRef } from "react";
 import { OtpInput, type OtpInputRef } from "@openway/ui";
@@ -298,39 +298,39 @@ export function OtpRefExample() {
   const otpRef = useRef<OtpInputRef>(null);
 
   const handleResend = () => {
-    // Xóa trắng toàn bộ các ô và tự động focus lại ô đầu tiên
+    // Clears all slots and automatically refocuses the first slot
     otpRef.current?.clear();
   };
 
   const handleCheck = () => {
     const code = otpRef.current?.getValue();
-    alert(`Mã hiện tại: ${code}`);
+    alert(`Current code: ${code}`);
   };
 
   return (
     <div className="flex flex-col gap-3">
       <OtpInput ref={otpRef} length={4} />
       <div className="flex gap-2">
-        <button onClick={handleResend}>Gửi lại mã</button>
-        <button onClick={handleCheck}>Kiểm tra mã</button>
+        <button onClick={handleResend}>Resend Code</button>
+        <button onClick={handleCheck}>Verify Code</button>
       </div>
     </div>
   );
 }
 ```
 
-#### 3. Phân nhóm & Che giấu mã (Masked)
+#### 3. Grouping & Masked Display (PIN)
 ```tsx
 <OtpInput
   length={6}
   groupSize={3}
   separator="-"
   mask={true}
-  label="Mã PIN giao dịch"
+  label="Transaction PIN"
 />
 ```
 
-#### 4. Cấu hình trạng thái qua `config` (`OtpInputConfig`)
+#### 4. State Configuration via `config` (`OtpInputConfig`)
 ```tsx
 <OtpInput
   length={6}
@@ -341,124 +341,124 @@ export function OtpRefExample() {
     showSpinner: true,
     isInvalid: hasError,
   }}
-  errorMessage={hasError ? "Mã OTP không chính xác hoặc đã hết hạn!" : undefined}
+  errorMessage={hasError ? "OTP code is incorrect or has expired!" : undefined}
 />
 ```
 
 ---
 
-### 🛠 Bảng thông số Props (`OtpInputProps`)
+### 🛠 Props Specification (`OtpInputProps`)
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `length` | `number` | `6` | Số lượng ô ký tự OTP cần nhập. |
-| `value` | `string` | — | Giá trị chuỗi OTP (Controlled mode). |
-| `defaultValue` | `string` | `""` | Giá trị mặc định ban đầu (Uncontrolled mode). |
-| `onChange` | `(value: string) => void` | — | Callback kích hoạt mỗi khi chuỗi OTP thay đổi. |
-| `onComplete` | `(value: string) => void` | — | Callback kích hoạt khi người dùng đã điền đủ tất cả các ô. |
-| `type` | `'numeric' \| 'alphanumeric' \| 'password'` | `'numeric'` | Kiểu ký tự cho phép nhập. |
-| `mask` | `boolean \| string` | `false` | Ẩn ký tự đã nhập (dạng chấm tròn mật khẩu). |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích thước từng ô slot (`xs`: 24px, `sm`: 32px, `md`: 40px, `lg`: 48px, `xl`: 56px). |
-| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Biến thể hiển thị giao diện của từng ô slot. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc viền/nền khi focus. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Độ bo góc của từng ô slot. |
-| `config` | `OtpInputConfig` | — | Cấu hình tập trung các cờ trạng thái (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`). |
-| `id` | `string` | — | ID tùy biến (tự sinh `${id}-slot-${index}`). |
-| `name` | `string` | — | Tên trường form (tự render hidden input chứa toàn bộ chuỗi OTP gộp lại). |
-| `autoFocus` | `boolean` | `false` | Tự động focus vào ô trống đầu tiên khi mount. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa tương tác toàn bộ các ô. |
-| `readOnly` | `boolean` | `false` | Chế độ chỉ đọc, không cho phép chỉnh sửa. |
-| `groupSize` | `number` | — | Số lượng ô trong mỗi nhóm (ví dụ `3` cho cụm `3-3`). |
-| `separator` | `ReactNode` | `'-'` | Ký tự hoặc icon phân cách giữa các nhóm. |
-| `label` | `ReactNode` | — | Nhãn mô tả cho trường nhập OTP. |
-| `labelPlacement` | `'top' \| 'left'` | `'top'` | Vị trí đặt nhãn. |
-| `helperText` | `ReactNode` | — | Văn bản hướng dẫn hiển thị bên dưới. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi (tự chuyển trạng thái sang error). |
-| `allowOneTimeCode` | `boolean` | `true` | Cho phép hệ điều hành tự động điền mã OTP từ tin nhắn SMS (`autoComplete="one-time-code"`). |
-| `getSlotAriaLabel` | `(index: number, length: number) => string` | — | Tùy biến `aria-label` cho từng ô slot (hỗ trợ đa ngôn ngữ i18n). |
-| `ref` | `Ref<OtpInputRef>` | — | Ref cung cấp các phương thức điều khiển: `getValue()`, `clear()`, `focus(index)`. |
+| `length` | `number` | `6` | Total number of OTP character slots. |
+| `value` | `string` | — | Current OTP string value (Controlled mode). |
+| `defaultValue` | `string` | `""` | Initial default OTP string (Uncontrolled mode). |
+| `onChange` | `(value: string) => void` | — | Callback invoked whenever the OTP string changes. |
+| `onComplete` | `(value: string) => void` | — | Callback invoked when all slots are completely filled. |
+| `type` | `'numeric' \| 'alphanumeric' \| 'password'` | `'numeric'` | Character type allowed for input. |
+| `mask` | `boolean \| string` | `false` | Masks entered characters (password bullet style). |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Dimensions of each slot (`xs`: 24px, `sm`: 32px, `md`: 40px, `lg`: 48px, `xl`: 56px). |
+| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Visual appearance variant for each slot. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color applied on focus. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Corner radius of each slot. |
+| `config` | `OtpInputConfig` | — | Consolidated configuration flags (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`). |
+| `id` | `string` | — | Custom ID prefix (generates `${id}-slot-${index}`). |
+| `name` | `string` | — | Form field name (renders hidden input with full combined OTP string). |
+| `autoFocus` | `boolean` | `false` | Automatically focuses the first empty slot on mount. |
+| `disabled` | `boolean` | `false` | Disables interaction across all slots. |
+| `readOnly` | `boolean` | `false` | Read-only mode; prevents modifications. |
+| `groupSize` | `number` | — | Number of slots per visual group (e.g. `3` for `3-3` grouping). |
+| `separator` | `ReactNode` | `'-'` | Separator character or icon between slot groups. |
+| `label` | `ReactNode` | — | Label describing the OTP field. |
+| `labelPlacement` | `'top' \| 'left'` | `'top'` | Position of the label. |
+| `helperText` | `ReactNode` | — | Helper guidance text displayed beneath the slots. |
+| `errorMessage` | `ReactNode` | — | Error message displayed on validation error. |
+| `allowOneTimeCode` | `boolean` | `true` | Allows mobile OS autofill from incoming SMS (`autoComplete="one-time-code"`). |
+| `getSlotAriaLabel` | `(index: number, length: number) => string` | — | Custom `aria-label` generator for each slot (for i18n support). |
+| `ref` | `Ref<OtpInputRef>` | — | Ref exposing programmatic methods: `getValue()`, `clear()`, `focus(index)`. |
 
 ---
 
-### ⚙️ Cấu hình `OtpInputConfig`
+### ⚙️ `OtpInputConfig` Options
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu `*` đỏ và đánh dấu `aria-required="true"`. |
-| `isInvalid` | `boolean` | `false` | Kích hoạt giao diện báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Khóa tương tác (`aria-busy="true"`). |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner cạnh nhóm ô OTP khi `isLoading = true`. |
+| `isRequired` | `boolean` | `false` | Displays red asterisk `*` and sets `aria-required="true"`. |
+| `isInvalid` | `boolean` | `false` | Activates error state and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Disables interactions and sets `aria-busy="true"`. |
+| `showSpinner` | `boolean` | `false` | Displays a loading spinner next to OTP slots when `isLoading={true}`. |
 
 ---
 
-### 🎛️ Phương thức `OtpInputRef`
+### 🎛️ `OtpInputRef` Methods
 
-| Phương thức | Tham số | Giá trị trả về | Mô tả |
+| Method | Parameters | Return Type | Description |
 | :--- | :--- | :--- | :--- |
-| `getValue()` | — | `string` | Lấy chuỗi OTP hoàn chỉnh hiện tại (ví dụ: `"123456"`). |
-| `clear()` | — | `void` | Xóa sạch toàn bộ các ô về rỗng, trigger `onChange("")` và tự động focus về ô đầu tiên. |
-| `focus(index?)` | `index?: number` | `void` | Focus vào ô chỉ định (mặc định là ô đầu tiên `index = 0`). |
+| `getValue()` | — | `string` | Retrieves the full current OTP string (e.g., `"123456"`). |
+| `clear()` | — | `void` | Clears all slots, triggers `onChange("")`, and refocuses the first slot. |
+| `focus(index?)` | `index?: number` | `void` | Moves focus to the specified slot (defaults to first slot `index = 0`). |
 
 ---
 
 ## 🏷️ MultiInput Component
 
-Component **`MultiInput`** chuyên dụng cho việc nhập nhiều giá trị (tags, keywords, chips, danh sách email...) với khả năng **phân tách tự động khi gõ hoặc Paste**, **ngăn chặn trùng lặp**, **giới hạn số lượng tag**, **thu gọn hiển thị `+N`**, và **tích hợp HTML Form Submission dạng mảng (`name[]`)**.
+The **`MultiInput`** component is specialized for multiple values (tags, keywords, chips, email lists...) with **automatic delimiter splitting on typing or pasting**, **duplicate prevention**, **tag count limits**, **compact `+N` truncation**, and **HTML Form submission as array inputs (`name[]`)**.
 
-### 🌟 Điểm nổi bật của MultiInput
-- **Tạo tag linh hoạt**: Nhấn `Enter`, `Comma (,)`, `Tab`, `Space` (hoặc tùy biến qua prop `delimiters`).
-- **Phân tách thông minh khi Paste**: Tự động nhận diện chuỗi copy nhiều giá trị (ví dụ: `"React, Vue; Angular\nSvelte"`) và phân tách thành từng tag độc lập.
-- **Quản lý giới hạn & Xác thực**: Hỗ trợ chặn tag trùng (`allowDuplicates={false}`), giới hạn tổng tag (`maxTags`), độ dài tối đa (`maxTagLength`), và hàm validate tùy biến (`validateTag`).
-- **Thu gọn tag hiển thị (`+N`)**: Giữ giao diện gọn gàng với `maxTagCount` (ví dụ hiển thị 3 tag đầu, tag còn lại gom thành badge `+5`).
-- **Tích hợp Form HTML chuẩn**: Khi có prop `name="tags"`, tự động render các thẻ hidden `<input type="hidden" name="tags[]" value="..." />` tương thích hoàn hảo với `FormData` và backend server.
-- **Tùy biến giao diện toàn diện**: Hỗ trợ `leftIcon`, `leftAddon`, `rightAddon`, nút thêm nhanh `showAddButton` (`+`), và tùy biến từng tag qua `renderTag`.
+### 🌟 Highlights of MultiInput
+- **Flexible Tag Creation**: Press `Enter`, `Comma (,)`, `Tab`, `Space` (or customize via `delimiters`).
+- **Intelligent Paste Parsing**: Automatically detects multi-value paste strings (e.g., `"React, Vue; Angular\nSvelte"`) and splits them into distinct tags.
+- **Limit Management & Validation**: Supports duplicate prevention (`allowDuplicates={false}`), tag limit (`maxTags`), max tag length (`maxTagLength`), and custom validation (`validateTag`).
+- **Tag Count Truncation (`+N`)**: Keeps UI tidy with `maxTagCount` (e.g., display 3 tags and collapse remainder into `+5` badge).
+- **Native HTML Form Integration**: When `name="tags"` is provided, automatically generates hidden `<input type="hidden" name="tags[]" value="..." />` inputs compatible with `FormData` and backend endpoints.
+- **Full UI Customizability**: Supports `leftIcon`, `leftAddon`, `rightAddon`, quick add button `showAddButton` (`+`), and full custom tag rendering via `renderTag`.
 
-### 📖 Ví dụ sử dụng `MultiInput`
+### 📖 Usage Examples for `MultiInput`
 
-#### 1. Sử dụng cơ bản với phím Enter & Dấu phẩy
+#### 1. Basic Usage with Enter & Comma
 ```tsx
 import { MultiInput } from "@openway/ui";
 
 export function BasicTagsExample() {
   return (
     <MultiInput
-      label="Kỹ năng chuyên môn"
-      placeholder="Nhập kỹ năng và bấm Enter..."
+      label="Professional Skills"
+      placeholder="Type a skill and press Enter..."
       delimiters={["Enter", ","]}
       defaultValue={["React", "TypeScript"]}
-      onChange={(tags) => console.log("Danh sách tags:", tags)}
+      onChange={(tags) => console.log("Tag list:", tags)}
     />
   );
 }
 ```
 
-#### 2. Nút Thêm nhanh & Giới hạn số lượng
+#### 2. Quick Add Button & Tag Limits
 ```tsx
 <MultiInput
-  label="Từ khóa tìm kiếm"
+  label="Search Keywords"
   showAddButton={true}
   maxTags={5}
-  onMaxTagsReached={(tag) => alert(`Đã đạt tối đa 5 tags!`)}
-  placeholder="Nhập từ khóa..."
+  onMaxTagsReached={(tag) => alert(`Maximum of 5 tags reached!`)}
+  placeholder="Enter keywords..."
 />
 ```
 
-#### 3. Thu gọn hiển thị (`maxTagCount`) & Kiểm tra trùng lặp
+#### 3. Display Truncation (`maxTagCount`) & Duplicate Detection
 ```tsx
 <MultiInput
-  label="Danh mục sản phẩm"
+  label="Product Categories"
   maxTagCount={3}
   allowDuplicates={false}
-  onDuplicate={(tag) => alert(`Tag "${tag}" đã tồn tại!`)}
-  defaultValue={["Điện tử", "Gia dụng", "Thời trang", "Mỹ phẩm", "Sách"]}
+  onDuplicate={(tag) => alert(`Tag "${tag}" already exists!`)}
+  defaultValue={["Electronics", "Home & Kitchen", "Fashion", "Beauty", "Books"]}
 />
 ```
 
-#### 4. Cấu hình trạng thái qua `config` (`MultiInputConfig`)
+#### 4. State Configuration via `config` (`MultiInputConfig`)
 ```tsx
 <MultiInput
   name="user_skills"
-  label="Kỹ năng bắt buộc"
+  label="Required Skills"
   config={{
     isRequired: true,
     isClearable: true,
@@ -471,83 +471,80 @@ export function BasicTagsExample() {
 
 ---
 
-### 🛠 Bảng thông số Props (`MultiInputProps`)
+### 🛠 Props Specification (`MultiInputProps`)
 
-| Tên Prop | Kiểu dữ liệu | Giá trị mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `value` | `string[]` | — | Mảng danh sách tags (Controlled mode). |
-| `defaultValue` | `string[]` | `[]` | Danh sách tags mặc định ban đầu (Uncontrolled mode). |
-| `onChange` | `(values: string[]) => void` | — | Callback kích hoạt mỗi khi danh sách tags thay đổi. |
-| `inputValue` | `string` | — | Giá trị chuỗi text đang gõ dở trong ô input (Controlled). |
-| `onInputValueChange` | `(value: string) => void` | — | Callback khi text đang gõ dở thay đổi. |
-| `delimiters` | `string[]` | `['Enter']` | Mảng các phím kích hoạt tạo tag (`'Enter'`, `','`, `'Tab'`, `'Space'`). |
-| `showAddButton` | `boolean` | `false` | Hiển thị nút (+) ở cuối ô input để click tạo tag. |
-| `renderAddButton` | `(props: { onAdd: () => void; disabled?: boolean }) => ReactNode` | — | Tùy biến render nút (+) thêm tag. |
-| `addOnBlur` | `boolean` | `false` | Tự động tạo tag từ chuỗi đang gõ dở khi blur ra ngoài. |
-| `addOnPaste` | `boolean` | `true` | Tự động phân tách chuỗi khi Paste vào ô input. |
-| `pasteSplitRegex` | `RegExp` | `/[\r\n,;\t]+/` | Regex dùng để phân tách chuỗi khi Paste. |
-| `trimValues` | `boolean` | `true` | Tự động cắt bỏ khoảng trắng thừa đầu và cuối mỗi tag. |
-| `allowDuplicates` | `boolean` | `false` | Cho phép nhập các tag trùng lặp hay không. |
-| `onDuplicate` | `(value: string) => void` | — | Callback khi người dùng cố gắng thêm tag đã tồn tại. |
-| `maxTags` | `number` | — | Số lượng tag tối đa cho phép thêm vào danh sách. |
-| `onMaxTagsReached` | `(value: string) => void` | — | Callback kích hoạt khi đạt giới hạn `maxTags`. |
-| `maxTagLength` | `number` | — | Giới hạn số ký tự tối đa của 1 tag. |
-| `validateTag` | `(tag: string) => boolean \| string` | — | Hàm kiểm tra hợp lệ của tag (trả về `false` hoặc `string` báo lỗi). |
-| `onValidateError` | `(tag: string, error?: string) => void` | — | Callback khi tag không vượt qua kiểm tra validate. |
-| `maxTagCount` | `number` | — | Số lượng tag tối đa hiển thị trước khi thu gọn thành `+N`. |
-| `renderTag` | `(props: TagRenderProps) => ReactNode` | — | Tùy biến hiển thị badge tag hoàn toàn. |
-| `tagVariant` | `BadgeVariant` | `'soft'` | Biến thể hiển thị giao diện của Badge tag. |
-| `tagColor` | `BadgeColor` | `'primary'` | Chủ đề màu sắc của Badge tag. |
-| `tagRadius` | `BadgeRadius` | — | Độ bo góc của Badge tag (tự đồng bộ theo Input nếu không truyền). |
-| `tagSize` | `BadgeSize` | — | Kích thước của Badge tag (tự đồng bộ theo `size` nếu không truyền). |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ tổng thể của MultiInput. |
-| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Biến thể hiển thị giao diện khung input. |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc viền và viền focus. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Độ bo góc của khung input. |
-| `label` | `ReactNode` | — | Nhãn tiêu đề của MultiInput. |
-| `labelPlacement` | `'floating' \| 'top' \| 'left'` | `'floating'` | Vị trí đặt nhãn. |
-| `config` | `MultiInputConfig` | — | Cấu hình tập trung các cờ trạng thái (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`). |
-| `id` | `string` | — | ID tùy biến của thẻ input. |
-| `name` | `string` | — | Tên trường form (tự động render danh sách hidden input `name[]` chứa các tag). |
-| `placeholder` | `string` | `'Type and press Enter...'` | Placeholder khi danh sách tag rỗng. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ tương tác. |
-| `readOnly` | `boolean` | `false` | Chế độ chỉ đọc, không cho thêm/xóa tag. |
-| `autoFocus` | `boolean` | `false` | Tự động focus vào ô input khi mount. |
-| `leftIcon` | `ReactNode` | — | Icon hiển thị ở đầu khung input. |
-| `leftAddon` | `ReactNode` | — | Khung addon cố định ở bên trái. |
-| `rightIcon` | `ReactNode` | — | Icon hiển thị ở cuối khung input. |
-| `rightAddon` | `ReactNode` | — | Khung addon cố định ở bên phải. |
-| `helperText` | `ReactNode` | — | Đoạn văn bản hướng dẫn bên dưới. |
-| `errorMessage` | `ReactNode` | — | Thông báo lỗi hiển thị bên dưới. |
-| `onClear` | `() => void` | — | Callback khi nhấn nút xóa toàn bộ tags. |
-| `ref` | `Ref<HTMLInputElement>` | — | Ref chuyển tiếp đến thẻ `<input>` gõ text bên trong. |
+| `value` | `string[]` | — | Current array of tags (Controlled mode). |
+| `defaultValue` | `string[]` | `[]` | Initial default tags array (Uncontrolled mode). |
+| `onChange` | `(values: string[]) => void` | — | Callback invoked whenever the tag list changes. |
+| `inputValue` | `string` | — | Current draft text inside the input field (Controlled). |
+| `onInputValueChange` | `(value: string) => void` | — | Callback invoked when the draft text changes. |
+| `delimiters` | `string[]` | `['Enter']` | Array of keys that trigger tag creation (`'Enter'`, `','`, `'Tab'`, `'Space'`). |
+| `showAddButton` | `boolean` | `false` | Displays a (+) button at the end of the input to create tags on click. |
+| `renderAddButton` | `(props: { onAdd: () => void; disabled?: boolean }) => ReactNode` | — | Custom renderer for the (+) add tag button. |
+| `addOnBlur` | `boolean` | `false` | Automatically creates a tag from draft text when focus leaves the input. |
+| `addOnPaste` | `boolean` | `true` | Automatically splits strings pasted into the input into tags. |
+| `pasteSplitRegex` | `RegExp` | `/[\r\n,;\t]+/` | Regular expression used to parse and split pasted text. |
+| `trimValues` | `boolean` | `true` | Automatically trims leading and trailing whitespace from each tag. |
+| `allowDuplicates` | `boolean` | `false` | Whether duplicate tags are allowed. |
+| `onDuplicate` | `(value: string) => void` | — | Callback invoked when attempting to add an already existing tag. |
+| `maxTags` | `number` | — | Maximum number of tags allowed in the list. |
+| `onMaxTagsReached` | `(value: string) => void` | — | Callback invoked when the `maxTags` threshold is reached. |
+| `maxTagLength` | `number` | — | Maximum character length for a single tag. |
+| `validateTag` | `(tag: string) => boolean \| string` | — | Validation function for tag strings (returns `false` or error string). |
+| `onValidateError` | `(tag: string, error?: string) => void` | — | Callback invoked when a tag fails validation. |
+| `maxTagCount` | `number` | — | Maximum number of tags displayed before collapsing into `+N`. |
+| `renderTag` | `(props: TagRenderProps) => ReactNode` | — | Custom renderer function for badge tags. |
+| `tagVariant` | `BadgeVariant` | `'soft'` | Visual appearance variant for badge tags. |
+| `tagColor` | `BadgeColor` | `'primary'` | Theme color for badge tags. |
+| `tagRadius` | `BadgeRadius` | — | Corner radius for badge tags (inherits from Input if omitted). |
+| `tagSize` | `BadgeSize` | — | Size of badge tags (inherits from `size` if omitted). |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Overall size of MultiInput. |
+| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Visual appearance variant of the input frame. |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Theme color for borders and focus outlines. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | — | Corner radius of the input frame. |
+| `label` | `ReactNode` | — | Label displayed for MultiInput. |
+| `labelPlacement` | `'floating' \| 'top' \| 'left'` | `'floating'` | Position of the label. |
+| `config` | `MultiInputConfig` | — | Consolidated configuration flags (`isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`). |
+| `id` | `string` | — | Custom ID for the input element. |
+| `name` | `string` | — | Form field name (automatically renders hidden inputs `name[]` for tags). |
+| `placeholder` | `string` | `'Type and press Enter...'` | Placeholder text when the tag list is empty. |
+| `disabled` | `boolean` | `false` | Disables all user interaction. |
+| `readOnly` | `boolean` | `false` | Read-only mode; prevents adding or removing tags. |
+| `autoFocus` | `boolean` | `false` | Automatically focuses the input upon mounting. |
+| `leftIcon` | `ReactNode` | — | Leading icon displayed at the start of the input. |
+| `leftAddon` | `ReactNode` | — | Fixed addon prepended to the left. |
+| `rightIcon` | `ReactNode` | — | Trailing icon displayed at the end of the input. |
+| `rightAddon` | `ReactNode` | — | Fixed addon appended to the right. |
+| `helperText` | `ReactNode` | — | Helper guidance text displayed beneath the input. |
+| `errorMessage` | `ReactNode` | — | Error message displayed beneath the input. |
+| `onClear` | `() => void` | — | Callback invoked when clicking the button to clear all tags. |
+| `ref` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying HTML `<input>` element. |
 
 ---
 
-### ⚙️ Cấu hình `MultiInputConfig`
+### ⚙️ `MultiInputConfig` Options
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :---: | :--- |
-| `isRequired` | `boolean` | `false` | Hiển thị dấu `*` đỏ và đánh dấu `aria-required="true"`. |
-| `isInvalid` | `boolean` | `false` | Bật viền đỏ báo lỗi và `aria-invalid="true"`. |
-| `isLoading` | `boolean` | `false` | Vô hiệu hóa tương tác và bật `aria-busy="true"`. |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi `isLoading = true`. |
-| `isClearable` | `boolean` | `false` | Hiển thị nút xóa nhanh toàn bộ tags khi có ít nhất 1 tag hoặc text. |
-| `isFullWidth` | `boolean` | `false` | Mở rộng chiếm toàn bộ 100% chiều ngang container cha. |
+| `isRequired` | `boolean` | `false` | Displays red asterisk `*` and sets `aria-required="true"`. |
+| `isInvalid` | `boolean` | `false` | Activates red error border and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Disables interaction and sets `aria-busy="true"`. |
+| `showSpinner` | `boolean` | `false` | Displays loading spinner icon when `isLoading={true}`. |
+| `isClearable` | `boolean` | `false` | Displays quick clear button when at least 1 tag or text is present. |
+| `isFullWidth` | `boolean` | `false` | Expands width to occupy 100% of parent container. |
 
 ---
 
-## 🛠️ Các hàm tiện ích (Utility Functions)
+## 🛠️ Utility Functions
 
-Gói thư viện xuất khẩu các hàm helper tiện ích chuyên dụng cho việc xử lý số, OTP, và phân tách tags:
+The package exports dedicated helper functions for numbers, OTP, and tag parsing:
 
-| Tên hàm | Tham số | Giá trị trả về | Mô tả |
+| Function | Parameters | Return Type | Description |
 | :--- | :--- | :--- | :--- |
-| `splitTagsFromText(text, splitRegex?, trim?)` | `text: string, splitRegex?: RegExp, trim?: boolean` | `string[]` | Phân tách chuỗi văn bản (khi gõ hoặc Paste) thành danh sách các tag độc lập theo regex phân cách và cắt bỏ khoảng trắng thừa. |
-| `isValidOtpChar(char, type)` | `char: string, type: OtpInputType` | `boolean` | Kiểm tra xem 1 ký tự nhập vào có hợp lệ theo kiểu OTP chỉ định (`numeric`, `alphanumeric`, `alpha`) hay không. |
-| `sanitizeOtpString(text, type)` | `text: string, type: OtpInputType` | `string` | Làm sạch toàn bộ chuỗi text, chỉ giữ lại các ký tự hợp lệ theo kiểu OTP chỉ định. |
-| `formatNumberString(...)` | `value: string, options?: NumberFormatOptions` | `string` | Định dạng chuỗi số với dấu phân cách hàng nghìn và phần thập phân. |
-| `parseRawNumberString(value)` | `value: string` | `string` | Chuyển đổi chuỗi số hiển thị về dạng số thô tiêu chuẩn. |
-
-
-
+| `splitTagsFromText(text, splitRegex?, trim?)` | `text: string, splitRegex?: RegExp, trim?: boolean` | `string[]` | Splits text strings (from typing or pasting) into independent tags using delimiter regex and trims excess whitespace. |
+| `isValidOtpChar(char, type)` | `char: string, type: OtpInputType` | `boolean` | Validates whether a typed character conforms to the specified OTP type (`numeric`, `alphanumeric`, `alpha`). |
+| `sanitizeOtpString(text, type)` | `text: string, type: OtpInputType` | `string` | Sanitizes a text string, retaining only valid characters for the specified OTP type. |
+| `formatNumberString(...)` | `value: string, options?: NumberFormatOptions` | `string` | Formats number strings with thousand and decimal separators. |
+| `parseRawNumberString(value)` | `value: string` | `string` | Parses formatted display number strings back into raw numeric representations. |

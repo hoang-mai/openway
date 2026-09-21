@@ -23,6 +23,8 @@ import ResetIcon from "@/components/icons/ResetIcon";
 import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import type { TableFilterDef } from "./types";
+import { useLocale } from "@/components/common/OpenWayProvider";
+import type { TableLocale } from "@/locale/types";
 
 /**
  * Định dạng giá trị của bộ lọc để hiển thị tóm tắt trên Badge Chip.
@@ -30,18 +32,22 @@ import type { TableFilterDef } from "./types";
 export function formatTableFilterBadgeValue(
   field: TableFilterDef,
   val: unknown,
-  historicalOptionLabels?: Map<string | number, ReactNode>
+  historicalOptionLabels?: Map<string | number, ReactNode>,
+  locale?: TableLocale
 ): string {
+  const notEntered = locale?.notEntered ?? "Chưa nhập";
+  const notSelected = locale?.notSelected ?? "Chưa chọn";
+
   if (val === undefined || val === null || val === "") {
-    return "Chưa nhập";
+    return notEntered;
   }
 
   if (val instanceof Date) {
-    return val.toLocaleDateString("vi-VN");
+    return val.toLocaleDateString();
   }
 
   if (Array.isArray(val)) {
-    if (val.length === 0) return "Chưa chọn";
+    if (val.length === 0) return notSelected;
     // Date range
     if (
       field.type === "date-range" ||
@@ -50,14 +56,14 @@ export function formatTableFilterBadgeValue(
     ) {
       const formatPart = (d: unknown) => {
         if (!d) return "";
-        if (d instanceof Date) return d.toLocaleDateString("vi-VN");
+        if (d instanceof Date) return d.toLocaleDateString();
         const parsed = new Date(d as string);
-        if (!isNaN(parsed.getTime())) return parsed.toLocaleDateString("vi-VN");
+        if (!isNaN(parsed.getTime())) return parsed.toLocaleDateString();
         return String(d);
       };
       const start = formatPart(val[0]);
       const end = formatPart(val[1]);
-      return start && end ? `${start} - ${end}` : start || end || "Chưa chọn";
+      return start && end ? `${start} - ${end}` : start || end || notSelected;
     }
     // Checkbox group / Options (multi-select / select)
     const getOptionLabel = (item: unknown) => {
@@ -124,6 +130,7 @@ function TableFilterBadgeChip({
   onRemove,
   onChange,
 }: TableFilterBadgeChipProps) {
+  const tableLocale = useLocale("table");
   const fieldName = field.name;
 
   const {
@@ -208,7 +215,7 @@ function TableFilterBadgeChip({
       (currentValue.length > 0 &&
         (currentValue[0] != null || currentValue[1] != null)));
 
-  const displayVal = formatTableFilterBadgeValue(field, currentValue, historicalOptionLabels);
+  const displayVal = formatTableFilterBadgeValue(field, currentValue, historicalOptionLabels, tableLocale);
   const isDateOrDateRange =
     field.type === "date" || field.type === "date-range";
 
@@ -385,7 +392,7 @@ function TableFilterBadgeChip({
             }
           }}
           onDelete={() => onRemove()}
-          deleteAriaLabel={`Xóa bộ lọc ${field.label}`}
+          deleteAriaLabel={`${tableLocale.resetFilter} ${field.label}`}
           variant="soft"
           color={isOpen ? "primary" : "neutral"}
           radius="md"
@@ -489,6 +496,7 @@ export function TableMenuFilter({
   onReset,
   className = "",
 }: TableMenuFilterProps) {
+  const tableLocale = useLocale("table");
   const [manuallyAddedFields, setManuallyAddedFields] = useState<string[]>([]);
 
   const activeFieldNames = useMemo(() => {
@@ -630,7 +638,7 @@ export function TableMenuFilter({
           })}
         >
           <PlusIcon className="size-3.5 text-neutral-400" />
-          <span>Bộ lọc</span>
+          <span>{tableLocale.filter}</span>
           <ChevronDownIcon
             className={`size-3 text-neutral-400 transition-transform ${
               isAddMenuOpen ? "rotate-180" : ""
@@ -654,7 +662,7 @@ export function TableMenuFilter({
               })}
             >
               <div className="px-2 py-1 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider select-none">
-                Chọn trường cần lọc
+                {tableLocale.selectFilterField}
               </div>
               <div className="space-y-0.5 mt-0.5">
                 {filters.map((field) => {
@@ -676,7 +684,7 @@ export function TableMenuFilter({
                       <span>{field.label}</span>
                       {isAlreadyActive && (
                         <span className="text-[10px] text-neutral-400">
-                          Đang lọc
+                          {tableLocale.filtering}
                         </span>
                       )}
                     </button>
@@ -723,10 +731,10 @@ export function TableMenuFilter({
           data-testid="table-filter-reset-button"
           onClick={handleResetAll}
           className={tableFilterConfig.resetButton}
-          title="Đặt lại toàn bộ bộ lọc"
+          title={tableLocale.resetAllFilters}
         >
           <ResetIcon className="size-3.5" />
-          <span>Đặt lại</span>
+          <span>{tableLocale.resetFilter}</span>
         </button>
       )}
     </div>

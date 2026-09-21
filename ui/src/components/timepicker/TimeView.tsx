@@ -10,6 +10,7 @@ import {
   parseTimeToDate,
 } from "./utils";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/components/common/OpenWayProvider";
 import TimeColumn from "./TimeColumn";
 
 /**
@@ -35,6 +36,7 @@ export default function TimeView({
   radius,
   className = "",
 }: TimeViewProps) {
+  const timePickerLocale = useLocale("timePicker");
   const minTime = useMemo(() => parseTimeToDate(customMinTime), [customMinTime]);
   const maxTime = useMemo(() => parseTimeToDate(customMaxTime), [customMaxTime]);
 
@@ -243,7 +245,7 @@ export default function TimeView({
       <div className={`flex divide-x divide-neutral-200 ${sizeStyles.panelPadding}`}>
         {/* Hours Column */}
         <TimeColumn
-          ariaLabel="Giờ"
+          ariaLabel={timePickerLocale.hours}
           items={hourItems}
           selectedValue={use12Hours ? currentHour12 : value ? currentHour24 : null}
           onSelect={handleHourSelect}
@@ -254,7 +256,7 @@ export default function TimeView({
 
         {/* Minutes Column */}
         <TimeColumn
-          ariaLabel="Phút"
+          ariaLabel={timePickerLocale.minutes}
           items={minuteItems}
           selectedValue={value ? currentMinute : null}
           onSelect={handleMinuteSelect}
@@ -266,7 +268,7 @@ export default function TimeView({
         {/* Seconds Column */}
         {showSeconds && (
           <TimeColumn
-            ariaLabel="Giây"
+            ariaLabel={timePickerLocale.seconds}
             items={secondItems}
             selectedValue={value ? currentSecond : null}
             onSelect={handleSecondSelect}
@@ -279,7 +281,7 @@ export default function TimeView({
         {/* Period (AM/PM) Column */}
         {use12Hours && (
           <TimeColumn
-            ariaLabel="Buổi"
+            ariaLabel={timePickerLocale.period}
             items={periodItems}
             selectedValue={value ? currentPeriod : null}
             onSelect={handlePeriodSelect}

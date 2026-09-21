@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import { MonthGridProps } from "./types";
 import { datePickerSizeConfig, datePickerColorConfig, datePickerRadiusConfig } from "./constants";
-import { resolveLocale, isSameMonth } from "./utils";
+import { isSameMonth } from "./utils";
+import { useLocale } from "../common/OpenWayProvider";
 import { getSafeConfig } from "@/utils/function";
 
 export default function MonthGrid({
@@ -11,9 +12,8 @@ export default function MonthGrid({
   size = "md",
   color = "primary",
   radius,
-  locale,
 }: MonthGridProps) {
-  const loc = resolveLocale(locale);
+  const loc = useLocale("datePicker");
   const sizeStyles = getSafeConfig(size, datePickerSizeConfig, "md");
   const colorStyles = getSafeConfig(color, datePickerColorConfig, "primary");
   const radiusClass = getSafeConfig(radius, datePickerRadiusConfig, "lg");

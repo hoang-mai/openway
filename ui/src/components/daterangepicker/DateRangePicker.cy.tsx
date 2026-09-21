@@ -81,7 +81,6 @@ const DateRangePickerShowcase = ({ onRangeChange, onRangeIOChange }: HarnessProp
               onChange={setViewTabRange}
               defaultView="months"
               config={{ showViewTabs: true, isClearable: true }}
-              locale="vi"
               helperText="Hỗ trợ chọn khoảng Tháng hoặc Năm"
             />
           </div>

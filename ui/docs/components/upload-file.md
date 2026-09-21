@@ -1,53 +1,53 @@
 # 📄 Upload File Component Suite (`@openway/ui`)
 
-Bộ component **UploadFile** toàn diện, linh hoạt và hiệu năng cao dành cho việc tải lên, kéo thả (Drag & Drop), quản lý danh sách, xem trước (Preview) và kiểm tra các loại tệp tin tài liệu (PDF, Word, Excel, PowerPoint, ZIP, Media, Code, v.v.).
+A comprehensive, flexible, and high-performance **UploadFile** component suite for file uploading, drag-and-drop interactions, file list management, instant file previewing, and validation across documents and media files (PDF, Word, Excel, PowerPoint, ZIP, Audio, Video, Code, and more).
 
-Component được xây dựng đồng bộ 100% với hệ thống **Design System** của `@openway/ui`, tương đương cấu trúc với `UploadImage`, sử dụng chung kiểu dữ liệu `PreviewFile` và tích hợp sâu với `<FileContainer>` để xem trước tệp tin tức thì.
-
----
-
-## 🌟 Điểm nổi bật
-
-- **Kiểu dữ liệu đồng nhất toàn hệ sinh thái**:
-  - Tái sử dụng trực tiếp kiểu dữ liệu `PreviewFile` (`File | ServerFile | string`) từ `file-preview` tương thích hoàn toàn với `UploadImage` và `FileContainer`.
-- **Hệ thống nhận diện `FileIcon` thông minh**:
-  - Tự động phân tích phần mở rộng và MIME type để hiển thị icon tài liệu và huy hiệu màu sắc đặc trưng:
-    - 🔴 **PDF**: Huy hiệu đỏ (`PDF`)
-    - 🔵 **Word / Docs** (`doc`, `docx`): Huy hiệu xanh dương (`DOC`)
-    - 🟢 **Excel / Sheets** (`xls`, `xlsx`, `csv`): Huy hiệu xanh lá (`XLS`)
-    - 🟠 **PowerPoint** (`ppt`, `pptx`): Huy hiệu cam (`PPT`)
-    - 🟡 **Archive / ZIP** (`zip`, `rar`, `7z`, `tar`): Huy hiệu vàng/hổ phách (`ZIP`)
-    - 🟣 **Audio**: Huy hiệu tím (`AUD`)
-    - 🔷 **Video**: Huy hiệu xanh ngọc (`VID`)
-    - ⬛ **Code**: Huy hiệu chàm (`DEV`)
-    - ⚪ **Khác**: Huy hiệu trung tính (`FILE`)
-- **3 Chế độ hiển thị (`viewMode`)**:
-  - `dropzone` *(mặc định)*: Khung viền nét đứt lớn hỗ trợ kéo thả và nhấn chọn tệp. Danh sách các tệp tin đã tải lên luôn hiển thị trực quan ngay bên dưới.
-  - `button`: Nút bấm kích hoạt tải tệp gọn gàng kèm icon, thích hợp cho toolbar hoặc khu vực hẹp.
-  - `compact`: Khung kéo thả thu gọn dạng thanh ngang 1 dòng tiết kiệm diện tích.
-- **2 Kiểu hiển thị danh sách (`listType`)**:
-  - `list` *(mặc định)*: Dạng hàng ngang chi tiết với icon, tên file, dung lượng format (`formatBytes`), thanh tiến trình và các nút hành động.
-  - `grid`: Bố cục dạng thẻ (card) trên lưới responsive.
-- **Theo dõi tiến trình & Trạng thái lỗi**:
-  - Hỗ trợ hiển thị thanh tiến trình mini động khi `status: "uploading"` kèm tỷ lệ `%` hoàn thành.
-  - Hiển thị thông báo lỗi chi tiết khi `status: "error"` và nút **Thử lại** (`onRetry`).
-- **Tích hợp sẵn xem trước & Tải xuống**:
-  - Click vào tên tệp hoặc nút Xem trước (`EyeIcon`) tự động kích hoạt modal `<FileContainer>` đa năng.
-  - Hỗ trợ tải trực tiếp tệp về máy tính qua `downloadFile` hoặc callback `onDownload`.
-- **Chuẩn Design System**:
-  - 5 kích thước: `xs`, `sm`, `md`, `lg`, `xl`.
-  - 7 bảng màu: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
-  - 4 biến thể: `outline`, `filled`, `ghost`, `other`.
-  - Bo góc: `none`, `sm`, `md`, `lg`, `xl`, `full`.
-  - Safe Config Fallback với `getSafeConfig`.
-  - Nhãn form hỗ trợ `isRequired` (dấu sao đỏ) và đổi màu khi focus (`group-focus-within/field`).
-- **Hỗ trợ tiếp cận (A11y)**:
-  - Tương thích bàn phím: <kbd>Tab</kbd>, <kbd>Enter</kbd> / <kbd>Space</kbd> để chọn file, <kbd>Delete</kbd> / <kbd>Backspace</kbd> để xóa tệp.
-  - Vùng thông báo động Screen Reader qua `aria-live="polite"`.
+Built 100% in harmony with the `@openway/ui` **Design System**, structurally parallel to `UploadImage`, sharing the universal `PreviewFile` data structure and deeply integrated with `<FileContainer>` for rich instantaneous previews.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🌟 Features
+
+- **Unified Ecosystem Data Types**:
+  - Directly reuses the `PreviewFile` (`File | ServerFile | string`) data type from `file-preview`, ensuring seamless compatibility with `UploadImage` and `FileContainer`.
+- **Intelligent `FileIcon` Identification System**:
+  - Automatically analyzes extensions and MIME types to display recognizable document icons and color badges:
+    - 🔴 **PDF**: Red badge (`PDF`)
+    - 🔵 **Word / Docs** (`doc`, `docx`): Blue badge (`DOC`)
+    - 🟢 **Excel / Sheets** (`xls`, `xlsx`, `csv`): Green badge (`XLS`)
+    - 🟠 **PowerPoint** (`ppt`, `pptx`): Orange badge (`PPT`)
+    - 🟡 **Archive / ZIP** (`zip`, `rar`, `7z`, `tar`): Amber/yellow badge (`ZIP`)
+    - 🟣 **Audio**: Purple badge (`AUD`)
+    - 🔷 **Video**: Teal badge (`VID`)
+    - ⬛ **Code**: Indigo badge (`DEV`)
+    - ⚪ **Other**: Neutral badge (`FILE`)
+- **3 View Modes (`viewMode`)**:
+  - `dropzone` *(default)*: Large dashed-border drop zone supporting drag-and-drop and click-to-upload. The list of uploaded files is cleanly rendered immediately below.
+  - `button`: Compact upload trigger button with leading icon, ideal for toolbars or narrow spaces.
+  - `compact`: Single-line horizontal drag-and-drop bar saving vertical layout real estate.
+- **2 List Layouts (`listType`)**:
+  - `list` *(default)*: Detailed horizontal rows displaying file icon, filename, formatted file size (`formatBytes`), progress bar, and action buttons.
+  - `grid`: Card-based layout on a responsive grid.
+- **Progress Tracking & Error Handling**:
+  - Dynamic mini progress bar when `status: "uploading"` displaying percentage completion.
+  - Detailed error messages when `status: "error"` along with a **Retry** button (`onRetry`).
+- **Integrated Preview & Download**:
+  - Clicking filename or preview button (`EyeIcon`) triggers the versatile `<FileContainer>` modal.
+  - Direct file downloads to disk via `downloadFile` or custom `onDownload` callback.
+- **Design System Standards**:
+  - 5 sizes: `xs`, `sm`, `md`, `lg`, `xl`.
+  - 7 color palettes: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
+  - 4 variants: `outline`, `filled`, `ghost`, `other`.
+  - Border radii: `none`, `sm`, `md`, `lg`, `xl`, `full`.
+  - Safe Config Fallback with `getSafeConfig`.
+  - Form label with `isRequired` indicator (red asterisk) and focus color highlights (`group-focus-within/field`).
+- **Accessibility (A11y)**:
+  - Keyboard support: <kbd>Tab</kbd>, <kbd>Enter</kbd> / <kbd>Space</kbd> to pick files, <kbd>Delete</kbd> / <kbd>Backspace</kbd> to delete files.
+  - Screen Reader live regions via `aria-live="polite"`.
+
+---
+
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -76,9 +76,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Chế độ Dropzone mặc định (1 tệp hoặc nhiều tệp)
+### 1. Default Dropzone Mode (Single or Multiple Files)
 
 ```tsx
 import { useState } from "react";
@@ -91,9 +91,9 @@ export function BasicExample() {
     <UploadFile
       value={files}
       onChange={setFiles}
-      label="Tài liệu đính kèm"
+      label="Attached Documents"
       config={{ isRequired: true }}
-      helperText="Hỗ trợ PDF, DOCX, XLSX tối đa 10MB"
+      helperText="Supports PDF, DOCX, XLSX up to 10MB"
       maxSize={10 * 1024 * 1024}
     />
   );
@@ -102,144 +102,146 @@ export function BasicExample() {
 
 ---
 
-### 2. Bố cục danh sách dạng Grid (`listType="grid"`)
+### 2. Grid Layout (`listType="grid"`)
 
 ```tsx
 <UploadFile
   listType="grid"
   config={{ multiple: true }}
-  label="Hồ sơ nghiệm thu dự án"
+  label="Project Acceptance Dossier"
   defaultValue={[
-    { id: "1", name: "bien-ban-nghiem-thu.pdf", size: 1450000 },
-    { id: "2", name: "phu-luc-khoi-luong.xlsx", size: 850000 },
+    { id: "1", name: "acceptance-report.pdf", size: 1450000 },
+    { id: "2", name: "volume-breakdown.xlsx", size: 850000 },
   ]}
 />
 ```
 
 ---
 
-### 3. Chế độ Button Trigger
+### 3. Button Trigger Mode
 
 ```tsx
 <UploadFile
   viewMode="button"
-  buttonText="Chọn tài liệu"
+  buttonText="Select Documents"
   config={{ multiple: true }}
-  label="Hồ sơ đính kèm"
-  onChange={(items) => console.log("Danh sách tệp:", items)}
+  label="Attached Documents"
+  onChange={(items) => console.log("File list:", items)}
 />
 ```
 
 ---
 
-### 4. Chế độ Compact Dropzone (Thanh ngang 1 dòng)
+### 4. Compact Dropzone Mode (Single-line Bar)
 
 ```tsx
 <UploadFile
   viewMode="compact"
-  label="Bản sao chứng minh thư"
-  dropzoneTitle="Kéo thả CMND/CCCD hoặc nhấn để duyệt"
+  label="ID Card Scan"
+  dropzoneTitle="Drag and drop ID card scan or click to browse"
 />
 ```
 
 ---
 
-### 5. Quản lý trạng thái Uploading & Lỗi
+### 5. Managing Upload Progress & Error States
 
 ```tsx
 const fileList: ServerFile[] = [
   {
     id: "1",
-    name: "bao-cao-tai-chinh.xlsx",
+    name: "financial-report.xlsx",
     size: 2500000,
     status: "uploading",
     progress: 75,
   },
   {
     id: "2",
-    name: "ho-so-loi.zip",
+    name: "corrupted-file.zip",
     size: 15000000,
     status: "error",
-    error: "Dung lượng vượt quá cấu hình máy chủ",
+    error: "File size exceeds server upload limit",
   },
 ];
 
 <UploadFile
   value={fileList}
   onRetry={(item, index) => {
-    console.log("Thử lại tải tệp:", item);
+    console.log("Retrying upload for:", item);
   }}
 />
 ```
 
 ---
 
-### 6. Sử dụng độc lập `FileIcon`
+### 6. Standalone `FileIcon` Usage
 
 ```tsx
 import { FileIcon } from "@openway/ui";
 
 <div className="flex items-center gap-3">
-  <FileIcon fileName="bao-cao.pdf" size="md" />
-  <FileIcon fileName="bang-luong.xlsx" size="md" />
-  <FileIcon fileName="du-an.zip" size="md" />
+  <FileIcon fileName="report.pdf" size="md" />
+  <FileIcon fileName="payroll.xlsx" size="md" />
+  <FileIcon fileName="project.zip" size="md" />
   <FileIcon fileName="source-code.ts" size="md" />
 </div>
 ```
 
 ---
 
-## ⚙️ Bảng Props `UploadFileProps`
+## ⚙️ Props Reference (`UploadFileProps`)
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `config` | `UploadFileConfig` | `undefined` | Cấu hình tập trung các cờ boolean (`multiple`, `isRequired`, `isInvalid`, `isLoading`, `showFileList`...) |
-| `value` | `PreviewFile[] \| PreviewFile \| null` | `undefined` | Danh sách tệp tin (Controlled mode) |
-| `defaultValue` | `PreviewFile[] \| PreviewFile \| null` | `undefined` | Giá trị ban đầu (Uncontrolled mode) |
-| `onChange` | `(items: PreviewFile[]) => void` | `undefined` | Callback khi danh sách tệp thay đổi |
-| `onRemove` | `(item: PreviewFile, index: number) => void` | `undefined` | Callback khi xóa 1 tệp tin |
-| `onPreview` | `(item: PreviewFile) => void` | `undefined` | Callback khi bấm xem trước |
-| `onDownload` | `(item: PreviewFile) => void` | `undefined` | Callback khi bấm tải xuống |
-| `onRetry` | `(item: PreviewFile, index: number) => void` | `undefined` | Callback khi bấm nút thử lại |
-| `viewMode` | `'dropzone' \| 'button' \| 'compact'` | `'dropzone'` | Chế độ hiển thị giao diện tải |
-| `listType` | `'list' \| 'grid'` | `'list'` | Kiểu bố cục danh sách tệp |
-| `shape` | `'rectangle' \| 'square'` | `'rectangle'` | Hình dạng khung Dropzone |
-| `maxCount` | `number` | `1` (khi !multiple) | Số lượng tệp tối đa |
-| `maxSize` | `number` | `undefined` | Dung lượng tệp tối đa (bytes) |
-| `minSize` | `number` | `undefined` | Dung lượng tệp tối thiểu (bytes) |
-| `accept` | `string \| Accept` | `undefined` | Định dạng cho phép (ví dụ: `".pdf,.docx"`) |
-| `beforeUpload` | `(file: File) => boolean \| string \| Promise<...>` | `undefined` | Hook kiểm tra tệp trước khi nạp |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích thước component |
-| `color` | `'primary' \| 'secondary' \| 'neutral' \| ...` | `'primary'` | Bảng màu chủ đề |
-| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Biến thể đường viền/nền |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Độ bo góc |
-| `label` | `ReactNode` | `undefined` | Tiêu đề nhãn của trường form |
-| `labelClassName` | `string` | `""` | Lớp CSS tùy biến cho nhãn |
-| `helperText` | `ReactNode` | `undefined` | Văn bản gợi ý |
-| `errorMessage`| `ReactNode` | `undefined` | Thông báo lỗi |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa tương tác |
-| `readOnly` | `boolean` | `false` | Chế độ chỉ đọc |
-| `renderItem` | `(item, index, actions) => ReactNode` | `undefined` | Tùy biến render từng mục tệp |
-
-### Cấu trúc `UploadFileConfig`
-
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
-| :--- | :--- | :--- | :--- |
-| `multiple` | `boolean` | `false` | Cho phép tải lên nhiều tệp tin cùng lúc |
-| `isRequired` | `boolean` | `false` | Đánh dấu trường bắt buộc nhập (dấu * đỏ) |
-| `isInvalid` | `boolean` | `false` | Đánh dấu trạng thái lỗi |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải / xử lý |
-| `showSpinner` | `boolean` | `false` | Hiển thị biểu tượng xoay spinner khi đang loading |
-| `showFileList`| `boolean` | `true` | Hiển thị danh sách tệp bên dưới |
-| `showPreviewButton` | `boolean` | `true` | Hiển thị nút xem trước trên từng mục tệp |
-| `showDownloadButton`| `boolean` | `true` | Hiển thị nút tải xuống trên từng mục tệp |
-| `showRemoveButton` | `boolean` | `true` | Hiển thị nút xóa trên từng mục tệp |
+| `config` | `UploadFileConfig` | `undefined` | Consolidated configuration object for boolean flags (`multiple`, `isRequired`, `isInvalid`, `isLoading`, `showFileList`, etc.) |
+| `value` | `PreviewFile[] \| PreviewFile \| null` | `undefined` | Current list of files (Controlled mode) |
+| `defaultValue` | `PreviewFile[] \| PreviewFile \| null` | `undefined` | Initial file list (Uncontrolled mode) |
+| `onChange` | `(items: PreviewFile[]) => void` | `undefined` | Callback invoked when the file list changes |
+| `onRemove` | `(item: PreviewFile, index: number) => void` | `undefined` | Callback invoked when removing a file |
+| `onPreview` | `(item: PreviewFile) => void` | `undefined` | Callback invoked when clicking preview |
+| `onDownload` | `(item: PreviewFile) => void` | `undefined` | Callback invoked when clicking download |
+| `onRetry` | `(item: PreviewFile, index: number) => void` | `undefined` | Callback invoked when clicking retry |
+| `viewMode` | `'dropzone' \| 'button' \| 'compact'` | `'dropzone'` | Display layout style for upload trigger |
+| `listType` | `'list' \| 'grid'` | `'list'` | File listing layout format |
+| `shape` | `'rectangle' \| 'square'` | `'rectangle'` | Dropzone frame geometry |
+| `maxCount` | `number` | `1` (when !multiple) | Maximum number of allowed files |
+| `maxSize` | `number` | `undefined` | Maximum allowed file size in bytes |
+| `minSize` | `number` | `undefined` | Minimum allowed file size in bytes |
+| `accept` | `string \| Accept` | `undefined` | Allowed file extensions or MIME types (e.g., `".pdf,.docx"`) |
+| `beforeUpload` | `(file: File) => boolean \| string \| Promise<...>` | `undefined` | Hook function to validate file prior to loading |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Component size scale |
+| `color` | `'primary' \| 'secondary' \| 'neutral' \| ...` | `'primary'` | Theme color palette |
+| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Border and background styling variant |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Border radius |
+| `label` | `ReactNode` | `undefined` | Form field label |
+| `labelClassName` | `string` | `""` | Custom CSS class for label |
+| `helperText` | `ReactNode` | `undefined` | Instructional or hint text beneath input |
+| `errorMessage`| `ReactNode` | `undefined` | Error message displayed on validation failure |
+| `disabled` | `boolean` | `false` | Disables interaction |
+| `readOnly` | `boolean` | `false` | Read-only mode |
+| `renderItem` | `(item, index, actions) => ReactNode` | `undefined` | Custom item renderer function |
 
 ---
 
-## ⌨️ Phím tắt & Trợ năng (Accessibility)
+### `UploadFileConfig` Reference
 
-- <kbd>Tab</kbd>: Di chuyển tiêu điểm bàn phím vào vùng Dropzone, nút Tải hoặc từng mục tệp tin.
-- <kbd>Enter</kbd> hoặc <kbd>Space</kbd>: Mở hộp thoại chọn tệp của hệ thống hoặc kích hoạt xem trước.
-- <kbd>Delete</kbd> hoặc <kbd>Backspace</kbd>: Xóa tệp đang được focus khỏi danh sách (trừ chế độ `readOnly` hoặc `disabled`).
-- Tự động phát âm thanh/thông báo trợ năng qua vùng `<div aria-live="polite" className="sr-only">`.
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `multiple` | `boolean` | `false` | Allows uploading multiple files concurrently |
+| `isRequired` | `boolean` | `false` | Marks field as required (renders red `*`) |
+| `isInvalid` | `boolean` | `false` | Enables invalid error visual state |
+| `isLoading` | `boolean` | `false` | Indicates loading or processing state |
+| `showSpinner` | `boolean` | `false` | Displays spinning indicator during loading |
+| `showFileList`| `boolean` | `true` | Renders file list below trigger |
+| `showPreviewButton` | `boolean` | `true` | Displays preview button on file rows |
+| `showDownloadButton`| `boolean` | `true` | Displays download button on file rows |
+| `showRemoveButton` | `boolean` | `true` | Displays remove button on file rows |
+
+---
+
+## ⌨️ Keyboard Shortcuts & Accessibility
+
+- <kbd>Tab</kbd>: Moves keyboard focus to the Dropzone, Upload button, or individual file items.
+- <kbd>Enter</kbd> or <kbd>Space</kbd>: Triggers system file selection dialog or activates file preview.
+- <kbd>Delete</kbd> or <kbd>Backspace</kbd>: Removes focused file from list (unless in `readOnly` or `disabled` mode).
+- Automatic status announcements dispatched via screen reader live region `<div aria-live="polite" className="sr-only">`.

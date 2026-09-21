@@ -1,43 +1,43 @@
-# ?? Upload Avatar Component Suite (`@openway/ui`)
+# üë§ Upload Avatar Component Suite (`@openway/ui`)
 
-Component **UploadAvatar** to‡n di?n, linh ho?t v‡ tuong t·c cao cho phÈp ngu?i d˘ng t?i lÍn, kÈo th? (Drag & Drop), c?t xÈn (Crop), xem tru?c (Lightbox Preview) v‡ qu?n l˝ ?nh d?i di?n. Thi?t k? d?ng b? ho‡n h?o v?i h? th?ng **Design System**, h? tr? **Safe Config Fallback**, **Qu?n l˝ b? nh? t? d?ng (Lifecycle Cleanup)** v‡ tu‚n th? tiÍu chu?n **WAI-ARIA Accessibility**.
+A comprehensive, flexible, and highly interactive **UploadAvatar** component that empowers users to upload, drag-and-drop, crop, preview in a lightbox, and manage avatar images. Seamlessly integrated with the `@openway/ui` **Design System**, supporting **Safe Config Fallback**, **Automated Lifecycle Memory Cleanup**, and strict **WAI-ARIA Accessibility** compliance.
 
 ---
 
-## ?? –i?m n?i b?t
+## üåü Features
 
-- **TÌch h?p quy trÏnh x? l˝ ?nh tr?n gÛi**:
-  - ??? **KÈo th? & Ch?n t?p**: H? tr? kÈo th? ?nh tr?c quan nh? `react-dropzone`, t? d?ng ki?m tra d?nh d?ng MIME (`accept`) v‡ gi?i h?n dung lu?ng (`maxSize`).
-  - ?? **C?t xÈn ?nh tÌch h?p (`UploadAvatarCropModal`)**: TÌch h?p s?n modal c?t ?nh tr?c quan h? tr? Zoom, Xoay (Rotate 90∞), L?t ?nh (Flip), Reset v‡ Ch?n t?p kh·c ngay trong modal.
-  - ?? **Xem tru?c phÛng to (Lightbox Preview)**: TÌch h?p v?i `<FileContainer>` v‡ `<FilePreview>` d? phÛng to, xoay ?nh v‡ t?i xu?ng ?nh ch?t lu?ng g?c.
-  - ??? **XÛa nhanh & Thao t·c ti?n l?i**: Menu h‡nh d?ng hi?n th? mu?t m‡ khi hover (ho?c focus) cho phÈp Xem tru?c, C?t l?i v‡ XÛa ?nh.
-- **Qu?n l˝ b? nh? t?i uu (Zero Memory Leak)**:
-  - ?ng d?ng mÙ hÏnh **Lifecycle Cleanup**: T? d?ng gi?i phÛng Blob URL (`URL.revokeObjectURL`) bÍn trong `useEffect cleanup` khi dÛng modal, d?i ?nh ho?c khi component unmount.
-- **5 KÌch thu?c tiÍu chu?n (`size`)**:
+- **All-in-One Image Workflow**:
+  - üìÅ **Drag-and-Drop & File Selection**: Intuitive drag-and-drop powered by `react-dropzone`, automatically verifying MIME types (`accept`) and file size limits (`maxSize`).
+  - ‚úÇÔ∏è **Built-in Image Cropping (`UploadAvatarCropModal`)**: Integrated modal supporting Zoom, 90¬∞ Rotation, Flip, Reset, and choosing alternate files directly inside the modal.
+  - üîç **Full-screen Lightbox Preview**: Integrated with `<FileContainer>` and `<FilePreview>` for zooming, rotating, and downloading the original high-resolution file.
+  - ‚ö° **Quick Removal & Action Menu**: Smooth action menu appearing on hover/focus allowing users to Preview, Re-crop, and Remove the avatar.
+- **Optimized Memory Management (Zero Memory Leaks)**:
+  - Implements **Lifecycle Cleanup**: Automatically revokes Blob URLs (`URL.revokeObjectURL`) within `useEffect` cleanup functions when closing modals, replacing avatars, or unmounting components.
+- **5 Standard Sizes (`size`)**:
   - `xs`: 48x48px (`size-12`)
   - `sm`: 64x64px (`size-16`)
-  - `md`: 80x80px (`size-20` - *m?c d?nh*)
+  - `md`: 80x80px (`size-20` ‚Äì *default*)
   - `lg`: 96x96px (`size-24`)
   - `xl`: 128x128px (`size-32`)
-- **3 Bi?n th? giao di?n (`variant`)**:
-  - `outline` *(m?c d?nh)*: Vi?n nÈt rı r‡ng quanh khung avatar, hover/focus d?i m‡u vi?n ch? d?.
-  - `filled`: N?n pastel nh?t (`bg-{color}-50/60`), vi?n d?ng di?u.
-  - `ghost`: N?n trong su?t, vi?n m? t?i gi?n.
-  - `other`: B? qua c·c style m?c d?nh, t? do t˘y bi?n qua `avatarClassName`.
-- **7 Ch? d? m‡u s?c (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
-- **2 HÏnh d?ng linh ho?t (`shape`)**:
-  - `circle` *(m?c d?nh)*: HÏnh trÚn ho‡n h?o (`rounded-full`).
-  - `square`: HÏnh vuÙng v?i t˘y ch?n bo gÛc `radius` (`none`, `sm`, `md`, `lg`, `xl`, `full`).
-- **Icon Avatar m?c d?nh tinh t?**: S? d?ng silhouette `<AvatarIcon />` s?c nÈt l‡m icon gi? ch? (placeholder) thay th? cho icon d·m m‚y truy?n th?ng.
-- **–?ng b? c?u hÏnh Form & A11y nhu `Input`**:
-  - NhÛm c·c c? boolean v‡o prop `config`: `isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`.
-  - H? tr? `labelPlacement` (`top` ho?c `left`) c˘ng van b?n tr? gi˙p `helperText` v‡ thÙng b·o l?i `errorMessage`.
-  - Tuong thÌch b‡n phÌm: <kbd>Space</kbd> / <kbd>Enter</kbd> d? ch?n ?nh, <kbd>Delete</kbd> / <kbd>Backspace</kbd> d? xÛa ?nh.
-  - H? tr? Screen Reader v?i v˘ng thÙng b·o d?ng `aria-live`.
+- **3 Visual Variants (`variant`)**:
+  - `outline` *(default)*: Crisp border around the avatar frame, adapting border colors on hover and focus.
+  - `filled`: Soft pastel background (`bg-{color}-50/60`) with matching border.
+  - `ghost`: Transparent background with minimal subtle border.
+  - `other`: Bypasses default styles for complete custom styling via `avatarClassName`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
+- **2 Flexible Shapes (`shape`)**:
+  - `circle` *(default)*: Perfectly circular avatar (`rounded-full`).
+  - `square`: Square avatar with customizable corner radius `radius` (`none`, `sm`, `md`, `lg`, `xl`, `full`).
+- **Refined Default Avatar Icon**: Uses a crisp `<AvatarIcon />` silhouette placeholder instead of generic upload cloud icons.
+- **Unified Form & A11y Configuration (Consistent with `Input`)**:
+  - Consolidates boolean flags into the `config` prop: `isRequired`, `isInvalid`, `isLoading`, `showSpinner`, `isClearable`, `isFullWidth`.
+  - Supports `labelPlacement` (`top` or `left`), `helperText`, and `errorMessage`.
+  - Keyboard accessible: <kbd>Space</kbd> / <kbd>Enter</kbd> to pick files, <kbd>Delete</kbd> / <kbd>Backspace</kbd> to remove avatar.
+  - Screen reader friendly with `aria-live` status announcement regions.
 
 ---
 
-## ?? C‡i d?t & Import
+## üöÄ Installation & Import
 
 ```tsx
 import {
@@ -69,11 +69,11 @@ import type {
 
 ---
 
-## ?? Hu?ng d?n s? d?ng
+## üìñ Usage Guide
 
-### 1. S? d?ng co b?n (Uncontrolled & Controlled)
+### 1. Basic Usage (Uncontrolled & Controlled)
 
-#### C·ch 1: T? qu?n l˝ (Uncontrolled v?i `defaultValue`)
+#### Method 1: Self-managed (Uncontrolled with `defaultValue`)
 ```tsx
 import { UploadAvatar } from "@openway/ui";
 
@@ -81,15 +81,15 @@ export function UncontrolledExample() {
   return (
     <UploadAvatar
       defaultValue="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300"
-      label="?nh d?i di?n"
-      helperText="H? tr? JPG, PNG, WEBP du?i 5MB"
+      label="Avatar"
+      helperText="Supports JPG, PNG, WEBP under 5MB"
       onChange={(item) => console.log("Avatar changed:", item)}
     />
   );
 }
 ```
 
-#### C·ch 2: Qu?n l˝ tr?ng th·i (Controlled v?i `value`)
+#### Method 2: State-managed (Controlled with `value`)
 ```tsx
 import { useState } from "react";
 import { UploadAvatar, PreviewFile } from "@openway/ui";
@@ -102,11 +102,11 @@ export function ControlledExample() {
       <UploadAvatar
         value={avatar}
         onChange={setAvatar}
-        label="?nh d?i di?n h? so"
-        helperText="Click d? t?i ?nh lÍn v‡ c?t xÈn"
+        label="Profile Avatar"
+        helperText="Click to upload and crop image"
       />
       <p className="text-xs text-neutral-500">
-        –„ ch?n: {avatar ? (typeof avatar === "string" ? avatar : avatar.name) : "Chua cÛ ?nh"}
+        Selected: {avatar ? (typeof avatar === "string" ? avatar : avatar.name) : "No image selected"}
       </p>
     </div>
   );
@@ -115,32 +115,32 @@ export function ControlledExample() {
 
 ---
 
-### 2. T˘y ch?nh tÌnh nang C?t ?nh (`crop`)
+### 2. Customizing Image Cropping (`crop`)
 
-B?n cÛ th? c?u hÏnh modal c?t ?nh chi ti?t ho?c t?t ho‡n to‡n tÌnh nang n‡y:
+Configure detailed cropping modal behavior or disable it entirely:
 
 ```tsx
 import { UploadAvatar } from "@openway/ui";
 
-// 1. T˘y ch?nh modal c?t ?nh
+// 1. Customize crop modal
 <UploadAvatar
   crop={{
-    aspectRatio: 1, // T? l? 1:1
-    cropShape: "round", // V˘ng c?t trÚn "round" ho?c vuÙng "rect"
-    showGrid: true, // Hi?n th? lu?i can ch?nh
+    aspectRatio: 1, // 1:1 Aspect ratio
+    cropShape: "round", // Round "round" or rectangular "rect" crop mask
+    showGrid: true, // Show 3x3 alignment grid
     minZoom: 1,
     maxZoom: 5,
-    modalTitle: "T˘y ch?nh gÛc ch?p ?nh d?i di?n",
+    modalTitle: "Adjust Profile Avatar",
   }}
 />
 
-// 2. T?t ho‡n to‡n modal c?t ?nh (Nh?n file tr?c ti?p sau khi ch?n)
+// 2. Disable crop modal completely (direct upload upon selection)
 <UploadAvatar crop={false} />
 ```
 
 ---
 
-### 3. KÌch thu?c (`size`) & HÏnh d?ng (`shape`)
+### 3. Sizes (`size`) & Shapes (`shape`)
 
 ```tsx
 import { UploadAvatar } from "@openway/ui";
@@ -148,20 +148,20 @@ import { UploadAvatar } from "@openway/ui";
 export function SizesAndShapesExample() {
   return (
     <div className="flex flex-wrap items-center gap-6">
-      {/* C·c kÌch thu?c */}
+      {/* Standard sizes */}
       <UploadAvatar size="xs" label="XS (48px)" />
       <UploadAvatar size="sm" label="SM (64px)" />
       <UploadAvatar size="md" label="MD (80px)" />
       <UploadAvatar size="lg" label="LG (96px)" />
       <UploadAvatar size="xl" label="XL (128px)" />
 
-      {/* HÏnh vuÙng bo gÛc */}
+      {/* Rounded square */}
       <UploadAvatar
         shape="square"
         radius="lg"
         size="lg"
         crop={{ cropShape: "rect" }}
-        label="Logo cÙng ty"
+        label="Company Logo"
       />
     </div>
   );
@@ -170,7 +170,7 @@ export function SizesAndShapesExample() {
 
 ---
 
-### 4. Bi?n th? (`variant`) & M‡u s?c (`color`)
+### 4. Variants (`variant`) & Colors (`color`)
 
 ```tsx
 import { UploadAvatar } from "@openway/ui";
@@ -181,7 +181,7 @@ export function VariantsAndColorsExample() {
       <UploadAvatar variant="outline" color="primary" label="Outline Primary" />
       <UploadAvatar variant="filled" color="secondary" label="Filled Secondary" />
       <UploadAvatar variant="ghost" color="neutral" label="Ghost Neutral" />
-      <UploadAvatar config={{ isInvalid: true }} errorMessage="?nh khÙng h?p l?" />
+      <UploadAvatar config={{ isInvalid: true }} errorMessage="Invalid avatar image" />
     </div>
   );
 }
@@ -189,7 +189,7 @@ export function VariantsAndColorsExample() {
 
 ---
 
-### 5. TÌch h?p React Hook Form
+### 5. Integration with React Hook Form
 
 ```tsx
 import { useForm, Controller } from "react-hook-form";
@@ -213,14 +213,14 @@ export function ProfileForm() {
       <Controller
         name="avatar"
         control={control}
-        rules={{ required: "Vui lÚng t?i lÍn ?nh d?i di?n c?a b?n" }}
+        rules={{ required: "Please upload your profile avatar" }}
         render={({ field: { value, onChange, ref } }) => (
           <UploadAvatar
             ref={ref}
             value={value}
             onChange={onChange}
-            label="?nh d?i di?n"
-            helperText="KÌch thu?c t?i da 2MB"
+            label="Profile Avatar"
+            helperText="Maximum size 2MB"
             maxSize={2 * 1024 * 1024}
             config={{
               isRequired: true,
@@ -232,7 +232,7 @@ export function ProfileForm() {
           />
         )}
       />
-      <Button type="submit" disabled={isSubmitting}>Luu thÙng tin</Button>
+      <Button type="submit" disabled={isSubmitting}>Save Changes</Button>
     </form>
   );
 }
@@ -240,79 +240,79 @@ export function ProfileForm() {
 
 ---
 
-## ?? B?ng thu?c tÌnh Props
+## üõ† Props Reference
 
 ### `UploadAvatarProps`
 
-| Thu?c tÌnh | Ki?u d? li?u | M?c d?nh | MÙ t? |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `value` | `PreviewFile \| string \| null` | `undefined` | Gi· tr? ?nh avatar hi?n t?i (d˘ng ? ch? d? Controlled). |
-| `defaultValue` | `PreviewFile \| string \| null` | `null` | Gi· tr? ?nh avatar kh?i t?o ban d?u (d˘ng ? ch? d? Uncontrolled). |
-| `onChange` | `(item: PreviewFile \| null) => void` | `undefined` | Callback khi ?nh avatar thay d?i ho?c b? xÛa (`null`). |
-| `onRemove` | `(item: PreviewFile) => void` | `undefined` | Callback khi ngu?i d˘ng nh?n n˙t xÛa ?nh. |
-| `onPreview` | `(item: PreviewFile) => void` | `undefined` | Callback khi ngu?i d˘ng m? modal xem tru?c phÛng to (lightbox). |
-| `onClear` | `() => void` | `undefined` | Callback kÌch ho?t khi n˙t xÛa nhanh du?c g?i. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | KÌch thu?c avatar (48px, 64px, 80px, 96px, 128px). |
-| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Ki?u bi?n th? hi?n th? khung vi?n avatar. |
-| `color` | `'primary' \| 'secondary' \| 'neutral' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'primary'` | Ch? d? b?ng m‡u s?c hi?n th?. |
-| `shape` | `'circle' \| 'square'` | `'circle'` | HÏnh d?ng avatar (`circle`: trÚn ho‡n to‡n; `square`: vuÙng). |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | Theo `size` | T˘y bi?n bo gÛc khi `shape="square"`. |
-| `crop` | `boolean \| UploadAvatarCropOptions` | `true` | B?t/t?t ho?c c?u hÏnh modal c?t xÈn ?nh tru?c khi t?i lÍn. |
-| `maxSize` | `number` | `undefined` | KÌch thu?c t?p t?i da cho phÈp (don v?: bytes). |
-| `accept` | `string \| Accept` | `"image/*"` | C·c d?nh d?ng MIME type du?c phÈp t?i lÍn. |
-| `config` | `UploadAvatarConfig` | `{}` | Gom nhÛm c·c c? boolean tr?ng th·i v‡ tÌnh nang (xem b?ng bÍn du?i). |
-| `label` | `ReactNode` | `undefined` | Nh„n hi?n th? tiÍu d? cho tru?ng avatar. |
-| `labelPlacement`| `'top' \| 'left'` | `'top'` | V? trÌ d?t nh„n so v?i avatar. |
-| `helperText` | `ReactNode` | `undefined` | –o?n van b?n hu?ng d?n/ch˙ thÌch bÍn du?i avatar. |
-| `errorMessage` | `ReactNode` | `undefined` | ThÙng b·o l?i hi?n th? bÍn du?i avatar (t? d?ng kÌch ho?t vi?n d?). |
-| `disabled` | `boolean` | `false` | VÙ hi?u hÛa to‡n b? tuong t·c t?i lÍn. |
-| `readOnly` | `boolean` | `false` | Ch? d? ch? xem, khÙng cho phÈp thay d?i hay xÛa. |
-| `icon` | `ReactNode` | `<AvatarIcon />` | T˘y bi?n icon placeholder khi chua cÛ ?nh. |
-| `name` | `string` | `undefined` | TÍn c?a tru?ng input file trong form HTML. |
-| `id` | `string` | T? d?ng sinh | ID c?a ph?n t? input (d˘ng cho liÍn k?t label & a11y). |
-| `ref` | `Ref<HTMLInputElement>` | `undefined` | Ref chuy?n ti?p d?n th? input file ?n bÍn trong. |
-| `className` | `string` | `""` | T˘y bi?n class container ngo‡i c˘ng. |
-| `wrapperClassName` | `string` | `""` | Alias c?a `className`. |
-| `avatarClassName` | `string` | `""` | T˘y bi?n class ·p d?ng riÍng cho khung vi?n c?a avatar. |
-| `labelClassName` | `string` | `""` | T˘y bi?n class cho nh„n `<label>`. |
-| `helperClassName` | `string` | `""` | T˘y bi?n class cho text hu?ng d?n / thÙng b·o l?i. |
+| `value` | `PreviewFile \| string \| null` | `undefined` | Current avatar value (Controlled mode). |
+| `defaultValue` | `PreviewFile \| string \| null` | `null` | Initial avatar value (Uncontrolled mode). |
+| `onChange` | `(item: PreviewFile \| null) => void` | `undefined` | Callback invoked when avatar changes or is cleared (`null`). |
+| `onRemove` | `(item: PreviewFile) => void` | `undefined` | Callback invoked when the remove button is clicked. |
+| `onPreview` | `(item: PreviewFile) => void` | `undefined` | Callback invoked when lightbox preview is opened. |
+| `onClear` | `() => void` | `undefined` | Callback invoked when quick clear is executed. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Avatar dimensions (48px, 64px, 80px, 96px, 128px). |
+| `variant` | `'outline' \| 'filled' \| 'ghost' \| 'other'` | `'outline'` | Border and background styling variant. |
+| `color` | `'primary' \| 'secondary' \| 'neutral' \| 'error' \| 'success' \| 'warning' \| 'info'` | `'primary'` | Theme color per Design System. |
+| `shape` | `'circle' \| 'square'` | `'circle'` | Shape of the avatar frame (`circle`: full circle; `square`: square). |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | Inherited from `size` | Corner radius override when `shape="square"`. |
+| `crop` | `boolean \| UploadAvatarCropOptions` | `true` | Enables/disables or configures image crop modal before upload. |
+| `maxSize` | `number` | `undefined` | Maximum allowed file size in bytes. |
+| `accept` | `string \| Accept` | `"image/*"` | Allowed MIME types or file extensions. |
+| `config` | `UploadAvatarConfig` | `{}` | Consolidated configuration object for boolean state flags (see table below). |
+| `label` | `ReactNode` | `undefined` | Header label rendered for the avatar field. |
+| `labelPlacement`| `'top' \| 'left'` | `'top'` | Position of the label relative to the avatar. |
+| `helperText` | `ReactNode` | `undefined` | Helper text rendered beneath the avatar. |
+| `errorMessage` | `ReactNode` | `undefined` | Error message displayed beneath avatar (triggers invalid error styling). |
+| `disabled` | `boolean` | `false` | Disables all user interaction and upload abilities. |
+| `readOnly` | `boolean` | `false` | Read-only mode; prevents uploading, modifying, or removing the image. |
+| `icon` | `ReactNode` | `<AvatarIcon />` | Custom placeholder icon when no image is present. |
+| `name` | `string` | `undefined` | Name attribute for HTML form submissions. |
+| `id` | `string` | Auto-generated | Element ID for label binding and accessibility. |
+| `ref` | `Ref<HTMLInputElement>` | `undefined` | Forwarded ref to the hidden `<input type="file">`. |
+| `className` | `string` | `""` | Custom CSS class for the outermost container. |
+| `wrapperClassName` | `string` | `""` | Alias for `className`. |
+| `avatarClassName` | `string` | `""` | Custom CSS class applied directly to the avatar frame. |
+| `labelClassName` | `string` | `""` | Custom CSS class for the `<label>` element. |
+| `helperClassName` | `string` | `""` | Custom CSS class for helperText and errorMessage containers. |
 
 ---
 
 ### `UploadAvatarConfig`
 
-| Thu?c tÌnh | Ki?u d? li?u | M?c d?nh | MÙ t? |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `isRequired` | `boolean` | `false` | –·nh d?u b?t bu?c nh?p (hi?n th? d?u `*` d? c?nh label). |
-| `isInvalid` | `boolean` | `false` | –·nh d?u tru?ng khÙng h?p l? (kÌch ho?t vi?n d? v‡ `aria-invalid`). |
-| `isLoading` | `boolean` | `false` | –ang t?i t?p, khÛa tuong t·c v‡ kÌch ho?t `aria-busy`. |
-| `showSpinner` | `boolean` | `false` | Hi?n th? bi?u tu?ng xoay spinner overlay khi `isLoading=true`. |
-| `isClearable` | `boolean` | `false` | Cho phÈp hi?n th? n˙t xÛa nhanh avatar. |
-| `isFullWidth` | `boolean` | `false` | M? r?ng container bao ngo‡i chi?m 100% chi?u r?ng khung cha. |
+| `isRequired` | `boolean` | `false` | Marks field as required (renders red `*` beside label). |
+| `isInvalid` | `boolean` | `false` | Activates invalid error styling and sets `aria-invalid="true"`. |
+| `isLoading` | `boolean` | `false` | Sets loading state, locks interactions, and enables `aria-busy="true"`. |
+| `showSpinner` | `boolean` | `false` | Renders a loading spinner overlay when `isLoading=true`. |
+| `isClearable` | `boolean` | `false` | Displays quick clear button for removing avatar. |
+| `isFullWidth` | `boolean` | `false` | Expands outer container to 100% of parent container width. |
 
 ---
 
 ### `UploadAvatarCropOptions`
 
-| Thu?c tÌnh | Ki?u d? li?u | M?c d?nh | MÙ t? |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `aspectRatio` | `number` | `1` | T? l? khung hÏnh c?t (m?c d?nh 1:1 cho avatar). |
-| `cropShape` | `'round' \| 'rect'` | `'round'` cho circle, `'rect'` cho square | HÏnh d?ng m?t n? c?t xÈn ?nh trong modal. |
-| `showGrid` | `boolean` | `true` | Hi?n th? du?ng lu?i t? l? 3x3 khi c?t ?nh. |
-| `minZoom` | `number` | `1` | M?c d? thu nh? t?i thi?u. |
-| `maxZoom` | `number` | `4` | M?c d? phÛng to t?i da. |
-| `modalTitle` | `string` | `"C?t ?nh d?i di?n"` | TiÍu d? thanh header c?a modal c?t ?nh. |
+| `aspectRatio` | `number` | `1` | Aspect ratio for cropping (defaults to 1:1 for avatar). |
+| `cropShape` | `'round' \| 'rect'` | `'round'` for circle, `'rect'` for square | Shape of crop mask overlay inside modal. |
+| `showGrid` | `boolean` | `true` | Displays 3x3 alignment rule grid during cropping. |
+| `minZoom` | `number` | `1` | Minimum zoom level. |
+| `maxZoom` | `number` | `4` | Maximum zoom level. |
+| `modalTitle` | `string` | `"Crop Avatar"` | Header title for the crop modal dialog. |
 
 ---
 
-## ??? Kh? nang ti?p c?n (Accessibility)
+## ‚ôø Accessibility
 
 - **WAI-ARIA & Keyboard Navigation**:
-  - Ph?n t? avatar du?c g·n `role="button"`, `tabIndex={0}`, cÛ th? di?u hu?ng b?ng phÌm <kbd>Tab</kbd>.
-  - Nh?n <kbd>Space</kbd> ho?c <kbd>Enter</kbd> d? kÌch ho?t h?p tho?i ch?n t?p tin.
-  - Khi d„ cÛ ?nh, nh?n <kbd>Delete</kbd> ho?c <kbd>Backspace</kbd> s? xÛa ?nh ngay l?p t?c.
+  - The avatar element is assigned `role="button"` and `tabIndex={0}`, navigatable via <kbd>Tab</kbd>.
+  - Press <kbd>Space</kbd> or <kbd>Enter</kbd> to open file selection dialog.
+  - When an image is present, pressing <kbd>Delete</kbd> or <kbd>Backspace</kbd> immediately clears the avatar.
 - **Screen Reader Support**:
-  - TÌch h?p v˘ng ch?a `aria-live="polite"` (`sr-only`) t? d?ng thÙng b·o tr?ng th·i c?p nh?t ho?c xÛa ?nh cho ngu?i khi?m th? b?ng ti?ng Vi?t chu?n.
-  - LiÍn k?t t? d?ng gi?a label, helperText, errorMessage v?i input thÙng qua `aria-describedby` v‡ `htmlFor`.
-- **Tr?ng th·i vÙ hi?u hÛa**:
-  - Khi `disabled={true}` ho?c `isLoading={true}`, ph?n t? t? d?ng thi?t l?p `aria-disabled="true"`, `aria-busy="true"` v‡ ngan ch?n to‡n b? s? ki?n click, kÈo th?.
+  - Integrated `aria-live="polite"` (`sr-only`) region announces status updates, upload completions, or deletions to assistive technologies.
+  - Automatic association between label, helperText, errorMessage, and input via `aria-describedby` and `htmlFor`.
+- **Disabled & Loading States**:
+  - When `disabled={true}` or `isLoading={true}`, the component automatically asserts `aria-disabled="true"` and `aria-busy="true"`, preventing click and drag events.

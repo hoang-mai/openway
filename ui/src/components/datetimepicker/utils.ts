@@ -1,4 +1,4 @@
-import { LocaleConfig } from "../datepicker/types";
+import type { DatePickerLocale } from "../../locale/types";
 import { formatDate } from "../datepicker/utils";
 
 /**
@@ -58,7 +58,7 @@ export function toDateTime(val: unknown, formatStr: string = "DD/MM/YYYY HH:mm:s
 export function formatDateTime(
   date: Date | null | undefined,
   formatStr: string = "DD/MM/YYYY HH:mm:ss",
-  locale?: "vi" | "en" | LocaleConfig
+  locale?: DatePickerLocale
 ): string {
   if (!date || isNaN(date.getTime())) return "";
   return formatDate(date, formatStr, locale);

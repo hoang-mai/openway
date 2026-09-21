@@ -1,15 +1,15 @@
 # ♾️ Hook `useInfiniteScroll` (`@openway/ui`)
 
-Hook React độc lập, hiệu năng cao phục vụ cơ chế tải dữ liệu vô tận (Infinite Scroll) dựa trên 100% **IntersectionObserver** nguyên bản của trình duyệt.
+A standalone, high-performance React hook for infinite scrolling mechanisms powered 100% by the browser's native **IntersectionObserver** API.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Zero Main-Thread Overhead**: Hoàn toàn không gắn event listener `scroll` thủ công trên container, loại bỏ hiện tượng giật lag khung hình khi cuộn nhanh.
-- **Pure React 19 Compliant**: Không sử dụng ref dư thừa để lưu primitives (`hasMore`, `isLoading`, `disabled`), hoàn toàn tuân thủ quy chuẩn render của React 19.
-- **Chống Request Trùng lặp (Mutex Lock)**: Sử dụng duy nhất một cờ khóa an toàn `isTriggeringRef` để ngăn chặn các lượt gọi API async liên tiếp trong cùng một chu kỳ render.
-- **Tự động kích hoạt khi hoàn tất tải**: Nếu dữ liệu trang trước đã tải xong (`isLoading: false`) mà phần tử sentinel vẫn đang nằm trong tầm quan sát, hook sẽ tự động kích hoạt tải tiếp trang kế tiếp một cách mượt mà.
+- **Zero Main-Thread Overhead**: Does not attach manual `scroll` event listeners to containers, completely eliminating frame stutter and lag during fast scrolling.
+- **Pure React 19 Compliant**: Avoids unnecessary refs for storing primitives (`hasMore`, `isLoading`, `disabled`), fully adhering to React 19 render conventions.
+- **Duplicate Request Prevention (Mutex Lock)**: Employs a single, safe `isTriggeringRef` lock flag to prevent consecutive async API calls within the same render cycle.
+- **Auto-trigger on Fetch Completion**: If previous page data has finished loading (`isLoading: false`) while the sentinel element remains in view, the hook seamlessly triggers loading the next page.
 
 ---
 
@@ -22,9 +22,9 @@ import type { UseInfiniteScrollOptions, UseInfiniteScrollReturn } from "@openway
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### Sử dụng với Danh sách thẻ (Card List / Feed)
+### Using with a Card List / Feed
 
 ```tsx
 import { useState } from "react";
@@ -37,7 +37,7 @@ export function PostFeed() {
 
   const loadMorePosts = async () => {
     setIsLoading(true);
-    // Giả lập gọi API
+    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 800));
     setPosts((prev) => [
       ...prev,
@@ -52,7 +52,7 @@ export function PostFeed() {
     onLoadMore: loadMorePosts,
     hasMore,
     isLoading,
-    rootMargin: "150px", // Bắt đầu tải trước khi chạm đáy 150px
+    rootMargin: "150px", // Start loading 150px before reaching the bottom
   });
 
   return (
@@ -63,7 +63,7 @@ export function PostFeed() {
         </div>
       ))}
 
-      {/* Phần tử Sentinel để IntersectionObserver theo dõi */}
+      {/* Sentinel element observed by IntersectionObserver */}
       <div ref={sentinelRef} className="py-2">
         {isLoading && (
           <Skeleton lines={2} height="2.5rem" className="w-full" />
@@ -72,7 +72,7 @@ export function PostFeed() {
 
       {!hasMore && (
         <p className="text-center text-xs text-neutral-400 py-2">
-          Đã tải hết toàn bộ bài viết
+          All posts have been loaded
         </p>
       )}
     </div>
@@ -82,14 +82,14 @@ export function PostFeed() {
 
 ---
 
-## 🎛️ Bảng Options
+## 🎛️ Options Table
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `onLoadMore` | `() => void \| Promise<void>` | **Bắt buộc** | Callback kích hoạt khi sentinel xuất hiện trong tầm nhìn. |
-| `hasMore` | `boolean` | `true` | Còn dữ liệu trang sau hay không. Nếu `false`, hook không kích hoạt nữa. |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải dữ liệu. Ngăn chặn kích hoạt lượt tải mới khi lượt cũ chưa hoàn tất. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ cơ chế theo dõi. |
-| `rootMargin` | `string` | `"100px"` | Khoảng cách biên quan sát trước khi người dùng chạm tới đáy. |
-| `threshold` | `number \| number[]` | `0` | Ngưỡng hiển thị của phần tử sentinel (từ `0` đến `1`). |
-| `root` | `Element \| null \| RefObject` | `null` | Khung cuộn gốc. Mặc định là viewport trình duyệt. |
+| `onLoadMore` | `() => void \| Promise<void>` | **Required** | Callback triggered when the sentinel element enters the viewport. |
+| `hasMore` | `boolean` | `true` | Whether more pages are available. If `false`, the hook stops triggering. |
+| `isLoading` | `boolean` | `false` | Loading state. Prevents triggering a new fetch cycle when the previous one has not completed. |
+| `disabled` | `boolean` | `false` | Disables the entire observation mechanism. |
+| `rootMargin` | `string` | `"100px"` | Margin around the root bounding box before triggering when approaching the bottom. |
+| `threshold` | `number \| number[]` | `0` | Visibility threshold of the sentinel element (from `0` to `1`). |
+| `root` | `Element \| null \| RefObject` | `null` | The scroll container element. Defaults to the browser viewport. |

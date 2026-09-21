@@ -1,31 +1,31 @@
 # 🔽 Dropdown Component (`@openway/ui`)
 
-Bộ component **Dropdown Menu** xây dựng theo mô hình **Compound Component** trên nền tảng **`@floating-ui/react`**, hỗ trợ **điều hướng bàn phím WAI-ARIA Menu hoàn chỉnh**, **tự động căn chỉnh vị trí thông minh (flip/shift/offset)**, **hiệu ứng chuyển động mượt mà**, và tương thích hoàn toàn với **React 19 / React Compiler**.
+A versatile **Dropdown Menu** component suite built on top of the **Compound Component** pattern powered by **`@floating-ui/react`**, featuring **complete WAI-ARIA Menu keyboard navigation**, **intelligent positioning (flip/shift/offset)**, **smooth animations**, and full compatibility with **React 19 / React Compiler**.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
-- **Compound Component Pattern**: Cấu trúc module linh hoạt gồm `<Dropdown>`, `<DropdownTrigger>`, `<DropdownMenu>`, `<DropdownItem>`, `<DropdownHeader>`, `<DropdownGroup>`, `<DropdownSeparator>`.
-- **Hỗ trợ React 19 & React Compiler**: Áp dụng mô hình `Slot` component giúp xử lý `ref` sạch sẽ qua JSX, không gây lỗi runtime hay cảnh báo `Cannot access refs during render`.
-- **Hệ thống z-index đồng bộ**: Tích hợp với `DEFAULT_Z_INDEX.DROPDOWN` (mặc định `50`) từ hệ thống constant toàn cục.
-- **Tự động định vị thông minh**: Tính toán vị trí nổi thông minh qua `@floating-ui/react` với các middleware `offset`, `flip`, `shift`.
-- **Luôn nổi trên cùng (Floating Portal)**: Menu luôn được render qua `<FloatingPortal>` để không bị ảnh hưởng bởi CSS `overflow: hidden` hoặc `z-index` của cha.
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` giúp lấy an toàn `sizeConfig`, `radiusConfig`, `colorConfig`, ngăn ngừa crash giao diện khi nhận giá trị không hợp lệ.
+- **Compound Component Pattern**: Modular architecture comprising `<Dropdown>`, `<DropdownTrigger>`, `<DropdownMenu>`, `<DropdownItem>`, `<DropdownHeader>`, `<DropdownGroup>`, and `<DropdownSeparator>`.
+- **React 19 & React Compiler Support**: Adopts the `Slot` component pattern for clean `ref` handling via JSX without triggering runtime errors or `Cannot access refs during render` warnings.
+- **Unified z-index System**: Integrates with `DEFAULT_Z_INDEX.DROPDOWN` (default `50`) from global constants.
+- **Intelligent Positioning**: Automatic floating position calculations via `@floating-ui/react` with `offset`, `flip`, and `shift` middlewares.
+- **Always on Top (Floating Portal)**: Rendered through `<FloatingPortal>` to avoid clipping by parent CSS `overflow: hidden` or `z-index` stacking contexts.
+- **Safe Config Fallback**: Built-in `getSafeConfig` utility guarantees safe fallback resolution for `sizeConfig`, `radiusConfig`, and `colorConfig`, preventing runtime crashes when invalid values are supplied.
 - **WAI-ARIA Accessibility**:
-  - `role="menu"` cho dropdown menu container.
-  - `role="menuitem"` cho từng item lựa chọn.
-  - `role="group"` cho nhóm menu item.
+  - `role="menu"` on the dropdown menu container.
+  - `role="menuitem"` on each selectable item.
+  - `role="group"` on menu item groups.
   - `aria-expanded`, `aria-haspopup="menu"`, `aria-disabled`.
-  - Hỗ trợ đầy đủ phím tắt bàn phím: `ArrowDown`, `ArrowUp`, `Home`, `End`, `Enter`, `Space`, `Escape`.
-- **Nhiều tùy chọn kích thước & màu sắc**:
-  - 5 kích cỡ: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl`.
-  - 7 chủ đề màu: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
-  - 6 cấp độ bo góc: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
+  - Comprehensive keyboard navigation: `ArrowDown`, `ArrowUp`, `Home`, `End`, `Enter`, `Space`, `Escape`.
+- **Extensive Size & Color Options**:
+  - 5 sizes: `xs`, `sm`, `md` (*default*), `lg`, `xl`.
+  - 7 color themes: `primary`, `secondary`, `neutral`, `error`, `success`, `warning`, `info`.
+  - 6 corner radius variants: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import {
@@ -54,9 +54,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Menu cơ bản
+### 1. Basic Menu
 
 ```tsx
 import {
@@ -71,12 +71,12 @@ export function BasicDropdown() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button>Mở Menu</Button>
+        <Button>Open Menu</Button>
       </DropdownTrigger>
       <DropdownMenu>
-        <DropdownItem onClick={() => console.log("Hồ sơ")}>Hồ sơ cá nhân</DropdownItem>
-        <DropdownItem onClick={() => console.log("Cài đặt")}>Cài đặt tài khoản</DropdownItem>
-        <DropdownItem isDanger onClick={() => console.log("Đăng xuất")}>Đăng xuất</DropdownItem>
+        <DropdownItem onClick={() => console.log("Profile")}>User Profile</DropdownItem>
+        <DropdownItem onClick={() => console.log("Settings")}>Account Settings</DropdownItem>
+        <DropdownItem isDanger onClick={() => console.log("Logout")}>Log Out</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
@@ -85,7 +85,7 @@ export function BasicDropdown() {
 
 ---
 
-### 2. Menu đầy đủ tính năng (Header, Group, Icon, Shortcut, Danger)
+### 2. Feature-Rich Menu (Header, Group, Icon, Shortcut, Danger)
 
 ```tsx
 import {
@@ -104,28 +104,28 @@ export function AdvancedDropdown() {
   return (
     <Dropdown placement="bottom-start" size="md">
       <DropdownTrigger>
-        <Button variant="outline">Tài khoản của tôi</Button>
+        <Button variant="outline">My Account</Button>
       </DropdownTrigger>
       <DropdownMenu minWidth={240}>
         <DropdownHeader>
-          <div className="font-semibold text-neutral-900">Nguyễn Văn A</div>
-          <div className="text-xs text-neutral-500">vana@example.com</div>
+          <div className="font-semibold text-neutral-900">John Doe</div>
+          <div className="text-xs text-neutral-500">john.doe@example.com</div>
         </DropdownHeader>
         <DropdownSeparator />
 
-        <DropdownGroup title="Quản lý">
+        <DropdownGroup title="Management">
           <DropdownItem icon={<UserIcon />} shortcut="⌘P" onClick={() => {}}>
-            Hồ sơ cá nhân
+            User Profile
           </DropdownItem>
           <DropdownItem icon={<SettingsIcon />} shortcut="⌘S" onClick={() => {}}>
-            Cài đặt
+            Settings
           </DropdownItem>
         </DropdownGroup>
         <DropdownSeparator />
 
-        <DropdownGroup title="Bảo mật">
+        <DropdownGroup title="Security">
           <DropdownItem icon={<LockIcon />} onClick={() => {}}>
-            Đổi mật khẩu
+            Change Password
           </DropdownItem>
           <DropdownItem
             icon={<TrashIcon />}
@@ -133,7 +133,7 @@ export function AdvancedDropdown() {
             shortcut="⌘⌫"
             onClick={() => {}}
           >
-            Xóa tài khoản
+            Delete Account
           </DropdownItem>
         </DropdownGroup>
       </DropdownMenu>
@@ -144,9 +144,9 @@ export function AdvancedDropdown() {
 
 ---
 
-### 3. Tùy chỉnh Trigger qua `asChild`
+### 3. Custom Trigger via `asChild`
 
-Khi bật `asChild` (hoặc truyền trực tiếp một phần tử con hợp lệ), `DropdownTrigger` sẽ truyền toàn bộ accessibility attributes và sự kiện vào phần tử con mà không bọc thêm thẻ `<button>` thừa:
+When enabling `asChild` (or passing a single valid React child element directly), `DropdownTrigger` delegates all accessibility attributes and event listeners directly to that child without introducing unnecessary wrapper `<button>` elements:
 
 ```tsx
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, IconButton } from "@openway/ui";
@@ -156,12 +156,12 @@ export function CustomTriggerDropdown() {
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger asChild>
-        <IconButton icon={<MoreVerticalIcon />} aria-label="Tùy chọn khác" variant="ghost" />
+        <IconButton icon={<MoreVerticalIcon />} aria-label="More options" variant="ghost" />
       </DropdownTrigger>
       <DropdownMenu>
-        <DropdownItem>Chỉnh sửa</DropdownItem>
-        <DropdownItem>Sao chép liên kết</DropdownItem>
-        <DropdownItem isDanger>Xóa mục này</DropdownItem>
+        <DropdownItem>Edit</DropdownItem>
+        <DropdownItem>Copy Link</DropdownItem>
+        <DropdownItem isDanger>Delete Item</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
@@ -170,33 +170,33 @@ export function CustomTriggerDropdown() {
 
 ---
 
-### 4. Kích hoạt bằng Hover (`trigger="hover"`)
+### 4. Trigger on Hover (`trigger="hover"`)
 
 ```tsx
 <Dropdown trigger="hover" placement="bottom-start">
   <DropdownTrigger>
-    <Button variant="soft">Rê chuột để mở</Button>
+    <Button variant="soft">Hover to Open</Button>
   </DropdownTrigger>
   <DropdownMenu>
-    <DropdownItem>Tùy chọn 1</DropdownItem>
-    <DropdownItem>Tùy chọn 2</DropdownItem>
+    <DropdownItem>Option 1</DropdownItem>
+    <DropdownItem>Option 2</DropdownItem>
   </DropdownMenu>
 </Dropdown>
 ```
 
 ---
 
-## ♿ Khả năng truy cập & Điều hướng bàn phím
+## ♿ Accessibility & Keyboard Navigation
 
-| Phím bấm | Hành vi |
+| Key | Behavior |
 | :--- | :--- |
-| `Enter` / `Space` / `ArrowDown` | Mở menu khi đang focus tại trigger và focus vào item đầu tiên. |
-| `ArrowDown` | Di chuyển focus xuống item tiếp theo (tự động bỏ qua item bị `disabled` hoặc separator). |
-| `ArrowUp` | Di chuyển focus lên item phía trên (hỗ trợ vòng lặp danh sách `loop: true`). |
-| `Home` | Nhảy nhanh tới item đầu tiên trong menu. |
-| `End` | Nhảy nhanh tới item cuối cùng trong menu. |
-| `Escape` | Đóng menu và trả focus về lại trigger element. |
-| `Enter` / `Space` | Kích hoạt sự kiện `onClick` của item đang chọn và đóng menu (nếu `closeOnSelect={true}`). |
+| `Enter` / `Space` / `ArrowDown` | Opens the menu when focused on the trigger and focuses the first item. |
+| `ArrowDown` | Moves focus to the next item (automatically skips `disabled` items and separators). |
+| `ArrowUp` | Moves focus to the previous item (supports looping via `loop: true`). |
+| `Home` | Jumps focus to the first item in the menu. |
+| `End` | Jumps focus to the last item in the menu. |
+| `Escape` | Closes the menu and returns focus to the trigger element. |
+| `Enter` / `Space` | Activates the `onClick` event of the focused item and closes the menu (if `closeOnSelect={true}`). |
 
 ---
 
@@ -204,72 +204,72 @@ export function CustomTriggerDropdown() {
 
 ### `<Dropdown>` (Root Component)
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Các component con (`DropdownTrigger`, `DropdownMenu`). |
-| `open` | `boolean` | — | Trạng thái mở menu (chế độ Controlled). |
-| `defaultOpen` | `boolean` | `false` | Trạng thái mở ban đầu (chế độ Uncontrolled). |
-| `onOpenChange` | `(open: boolean) => void` | — | Callback khi trạng thái đóng/mở thay đổi. |
-| `trigger` | `'click' \| 'hover'` | `'click'` | Kiểu kích hoạt mở dropdown. |
-| `placement` | `DropdownPlacement` | `'bottom-start'` | Vị trí hiển thị menu so với trigger. |
-| `offset` | `number` | `4` | Khoảng cách (px) giữa trigger và menu. |
-| `flip` | `boolean` | `true` | Tự động đảo hướng khi bị tràn mép màn hình. |
-| `shift` | `boolean` | `true` | Tự động dịch chuyển menu để không bị che khuất. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích thước áp dụng cho menu và items. |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Độ bo góc của khung menu. |
-| `color` | `DropdownColor` | `'primary'` | Tông màu chủ đạo khi item được active/hover. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ Dropdown. |
-| `animated` | `boolean` | `true` | Bật/tắt animation mở/đóng menu. |
-| `animationDuration` | `number` | `150` | Thời lượng animation (ms). |
-| `closeOnSelect` | `boolean` | `true` | Tự động đóng menu khi chọn một item. |
-| `closeOnEsc` | `boolean` | `true` | Đóng menu khi nhấn phím `Escape`. |
-| `closeOnClickOutside` | `boolean` | `true` | Đóng menu khi click ra ngoài. |
+| `children` | `ReactNode` | — | Child components (`DropdownTrigger`, `DropdownMenu`). |
+| `open` | `boolean` | — | Controlled open state of the menu. |
+| `defaultOpen` | `boolean` | `false` | Initial open state in uncontrolled mode. |
+| `onOpenChange` | `(open: boolean) => void` | — | Callback invoked when the open/closed state changes. |
+| `trigger` | `'click' \| 'hover'` | `'click'` | Trigger interaction mode to open the dropdown. |
+| `placement` | `DropdownPlacement` | `'bottom-start'` | Menu placement relative to the trigger. |
+| `offset` | `number` | `4` | Distance (px) between the trigger and menu. |
+| `flip` | `boolean` | `true` | Automatically flips placement when overflowing the viewport. |
+| `shift` | `boolean` | `true` | Automatically shifts menu along the axis to remain visible. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size applied to the menu and its items. |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Corner radius of the menu container. |
+| `color` | `DropdownColor` | `'primary'` | Primary accent color when an item is active/hovered. |
+| `disabled` | `boolean` | `false` | Disables the entire Dropdown. |
+| `animated` | `boolean` | `true` | Enables or disables enter/exit animations. |
+| `animationDuration` | `number` | `150` | Animation duration in milliseconds. |
+| `closeOnSelect` | `boolean` | `true` | Automatically closes the menu when an item is selected. |
+| `closeOnEsc` | `boolean` | `true` | Closes the menu when pressing `Escape`. |
+| `closeOnClickOutside` | `boolean` | `true` | Closes the menu when clicking outside. |
 
 ---
 
 ### `<DropdownTrigger>`
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Phần tử con làm trigger. |
-| `asChild` | `boolean` | `false` | Sử dụng chính phần tử con thay vì bọc button mặc định. |
-| `className` | `string` | `""` | Class CSS tùy biến bổ sung. |
-| `ref` | `Ref<HTMLElement>` | — | React 19 Ref trực tiếp vào trigger element. |
+| `children` | `ReactNode` | — | Trigger element. |
+| `asChild` | `boolean` | `false` | Merges props and behavior onto child element without a wrapper button. |
+| `className` | `string` | `""` | Additional custom CSS classes. |
+| `ref` | `Ref<HTMLElement>` | — | React 19 Ref forwarding directly to the trigger element. |
 
 ---
 
 ### `<DropdownMenu>`
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Nội dung bên trong menu (Header, Group, Item, Separator). |
-| `minWidth` | `string \| number` | — | Độ rộng tối thiểu của menu. |
-| `zIndex` | `number` | `DEFAULT_Z_INDEX.DROPDOWN` (50) | Thứ tự z-index của menu. |
-| `className` | `string` | `""` | Class CSS tùy biến bổ sung. |
-| `style` | `CSSProperties` | — | Style inline tùy biến bổ sung. |
-| `ref` | `Ref<HTMLDivElement>` | — | React 19 Ref trực tiếp vào menu container. |
+| `children` | `ReactNode` | — | Content inside the menu (Header, Group, Item, Separator). |
+| `minWidth` | `string \| number` | — | Minimum width of the menu container. |
+| `zIndex` | `number` | `DEFAULT_Z_INDEX.DROPDOWN` (50) | Z-index stacking order for the menu. |
+| `className` | `string` | `""` | Additional custom CSS classes. |
+| `style` | `CSSProperties` | — | Additional custom inline styles. |
+| `ref` | `Ref<HTMLDivElement>` | — | React 19 Ref forwarding directly to the menu container. |
 
 ---
 
 ### `<DropdownItem>`
 
-| Prop | Kiểu dữ liệu | Mặc định | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Nhãn hoặc nội dung của item. |
-| `icon` | `ReactNode` | — | Icon hiển thị ở phía trước (bên trái). |
-| `shortcut` | `string` | — | Ký hiệu phím tắt hiển thị ở bên phải (ví dụ: `"⌘K"`, `"Ctrl+S"`). |
-| `color` | `DropdownColor` | — | Ghi đè màu sắc riêng cho item này. |
-| `size` | `DropdownSize` | — | Ghi đè kích thước riêng cho item này. |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa item (không thể hover hay click). |
-| `isDanger` | `boolean` | `false` | Định dạng item theo phong cách cảnh báo/hành động nguy hiểm (chữ đỏ, hover nền đỏ nhạt). |
-| `onClick` | `(e: MouseEvent) => void` | — | Callback khi người dùng click vào item. |
-| `className` | `string` | `""` | Class CSS tùy biến bổ sung. |
-| `ref` | `Ref<HTMLDivElement>` | — | React 19 Ref trực tiếp vào item. |
+| `children` | `ReactNode` | — | Label or content of the item. |
+| `icon` | `ReactNode` | — | Leading icon displayed on the left. |
+| `shortcut` | `string` | — | Keyboard shortcut indicator displayed on the right (e.g., `"⌘K"`, `"Ctrl+S"`). |
+| `color` | `DropdownColor` | — | Overrides the color theme for this item. |
+| `size` | `DropdownSize` | — | Overrides the size for this item. |
+| `disabled` | `boolean` | `false` | Disables the item (prevents hover and click interactions). |
+| `isDanger` | `boolean` | `false` | Styles item as a destructive/danger action (red text, light red hover background). |
+| `onClick` | `(e: MouseEvent) => void` | — | Callback invoked when the user clicks the item. |
+| `className` | `string` | `""` | Additional custom CSS classes. |
+| `ref` | `Ref<HTMLDivElement>` | — | React 19 Ref forwarding directly to the item. |
 
 ---
 
 ### `<DropdownHeader>`, `<DropdownGroup>`, `<DropdownSeparator>`
 
-- `<DropdownHeader>`: Hiển thị thông tin tiêu đề/tài khoản đầu menu (`<div>` chuẩn WAI-ARIA menu).
-- `<DropdownGroup title="Tiêu đề nhóm">`: Gom nhóm các item và hiển thị nhãn nhóm `role="group"`.
-- `<DropdownSeparator>`: Đường kẻ ngang phân cách ngữ cảnh giữa các nhóm menu (thẻ `<hr>` ngữ nghĩa HTML5).
+- `<DropdownHeader>`: Displays header/account information at the top of the menu (`<div>` conforming to WAI-ARIA menu structure).
+- `<DropdownGroup title="Group Title">`: Groups related items under a common title with `role="group"`.
+- `<DropdownSeparator>`: Contextual divider between menu groups (semantic HTML5 `<hr>` tag).

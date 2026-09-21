@@ -1,39 +1,39 @@
 # ☑️ Checkbox & CheckboxGroup Component (`@openway/ui`)
 
-Bộ đôi component **Checkbox** và **CheckboxGroup** chuyên nghiệp, thiết kế theo kiến trúc **Data-driven thuần túy (Pure Data-driven)**, không sử dụng React Context, loại bỏ hoàn toàn `useEffect` gây cascading render, tích hợp **Live Search (Client & Server modes)** thông qua component `Input` variant `outline`, hỗ trợ **bảo lưu mục đã chọn (Preserve Selected)** và tuân thủ chặt chẽ tiêu chuẩn **WAI-ARIA Accessibility**.
+A professional **Checkbox** and **CheckboxGroup** component pair designed using a **Pure Data-driven** architecture, free of React Context, completely eliminating `useEffect` cascading renders, featuring **Live Search (Client & Server modes)** via the `outline` variant `Input` component, supporting **Preserve Selected items**, and adhering strictly to **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Key Features
 
 ### 1. Checkbox
-- **Độc lập & Tối ưu**: Không phụ thuộc vào Context, nhận props trực tiếp, hỗ trợ chuyển tiếp `ref` chuẩn React 19 mà không cần wrapper trung gian.
-- **5 Kích thước tiêu chuẩn (`size`)**: `xs`, `sm`, `md` (*mặc định*), `lg`, `xl` đồng bộ tỉ lệ ô tick, icon SVG, nhãn và văn bản chú thích.
-- **4 Biến thể giao diện (`variant`)**:
-  - `filled` (*mặc định*): Nền màu chủ đề khi được chọn.
-  - `outline`: Viền nét màu chủ đề, nền trong suốt.
-  - `soft`: Nền pastel dịu mắt (`bg-{color}-100`).
-  - `other`: Tự do tùy biến style qua `boxClassName`.
-- **7 Chủ đề màu sắc (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
-- **6 Mức độ bo góc (`radius`)**: `none`, `sm`, `md` (*mặc định*), `lg`, `xl`, `full`.
-- **Trạng thái gạch ngang (`indeterminate`)**: Hỗ trợ trạng thái chọn một phần với thuộc tính chuẩn `aria-checked="mixed"` và icon trừ (`MinusIcon`).
-- **2 Vị trí đặt nhãn (`labelPlacement`)**: `right` (*mặc định*) và `left` (căn đều hai bên).
-- **Safe Config Fallback**: Sử dụng `getSafeConfig` đảm bảo component luôn an toàn, không bao giờ bị lỗi hiển thị khi nhận giá trị không hợp lệ.
+- **Independent & Optimized**: Zero Context dependency, receives props directly, supports standard React 19 forwarded `ref` without intermediary wrappers.
+- **5 Standard Sizes (`size`)**: `xs`, `sm`, `md` (*default*), `lg`, `xl` with synchronized proportions across the checkbox, SVG icon, label, and helper text.
+- **4 Visual Variants (`variant`)**:
+  - `filled` (*default*): Theme background color when checked.
+  - `outline`: Theme border color with transparent background.
+  - `soft`: Gentle pastel background (`bg-{color}-100`).
+  - `other`: Freely customize styles via `boxClassName`.
+- **7 Color Themes (`color`)**: `primary`, `secondary`, `error`, `success`, `warning`, `info`, `neutral`.
+- **6 Border Radius Options (`radius`)**: `none`, `sm`, `md` (*default*), `lg`, `xl`, `full`.
+- **Indeterminate State (`indeterminate`)**: Supports partially selected states with the standard `aria-checked="mixed"` attribute and a minus icon (`MinusIcon`).
+- **2 Label Placements (`labelPlacement`)**: `right` (*default*) and `left` (space-between alignment).
+- **Safe Config Fallback**: Uses `getSafeConfig` to ensure the component remains completely safe without display issues when receiving invalid prop values.
 
 ### 2. CheckboxGroup
-- **Kiến trúc Data-driven thuần túy**: Nhận danh sách lựa chọn qua prop `options: CheckboxOptionItem<TData>[]`. Không còn cấu trúc compound component cồng kềnh, không tốn chi phí Context Provider.
-- **Tích hợp tìm kiếm trực quan (`searchable`)**:
-  - Sử dụng component `Input` variant `outline` với icon tìm kiếm (`SearchIcon`) và nút xóa nhanh (`isClearable`).
-  - **Không làm mất focus**: Trạng thái tải ngầm hiển thị spinner ở góc phải qua `rightIcon`, không disable input trong khi người dùng đang gõ phím.
-- **2 Chế độ tìm kiếm linh hoạt (`searchMode`)**:
-  - `client` (*mặc định*): Tìm kiếm thông minh bằng thuật toán fuzzy ranking của `@tanstack/match-sorter-utils`. Hỗ trợ tìm theo đa trường dữ liệu (`searchField`) hoặc custom function (`filterFn`).
-  - `server`: Tìm kiếm qua API máy chủ với `onSearch` và bộ đệm thời gian `debounceMs`.
-- **Bảo lưu mục đã chọn (`preserveSelected`)**: Tự động ghim lại các mục đã chọn lên đầu danh sách khi chuyển đổi từ khóa tìm kiếm mới, quản lý bộ nhớ thông minh (chỉ lưu các mục thực sự được tick chọn).
-- **2 Bố cục sắp xếp (`orientation`)**: `vertical` (*mặc định*) và `horizontal`.
+- **Pure Data-driven Architecture**: Receives the options list via the `options: CheckboxOptionItem<TData>[]` prop. No bulky compound components, no Context Provider overhead.
+- **Integrated Visual Search (`searchable`)**:
+  - Uses the `outline` variant `Input` component with a search icon (`SearchIcon`) and quick-clear button (`isClearable`).
+  - **Maintains Focus**: Background loading state shows a right spinner via `rightIcon`, without disabling the input while the user is actively typing.
+- **2 Flexible Search Modes (`searchMode`)**:
+  - `client` (*default*): Smart search powered by the fuzzy ranking algorithm of `@tanstack/match-sorter-utils`. Supports multi-field searches (`searchField`) or custom functions (`filterFn`).
+  - `server`: Server-side API search with `onSearch` and configurable `debounceMs`.
+- **Preserve Selected Items (`preserveSelected`)**: Automatically pins selected items to the top of the list when changing search keywords, with smart memory management (only retains truly checked items).
+- **2 Layout Orientations (`orientation`)**: `vertical` (*default*) and `horizontal`.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Checkbox, CheckboxGroup } from "@openway/ui";
@@ -52,9 +52,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Sử dụng Checkbox đơn lẻ
+### 1. Standalone Checkbox Usage
 
 ```tsx
 import { useState } from "react";
@@ -67,8 +67,8 @@ export function SingleCheckboxExample() {
     <Checkbox
       checked={agree}
       onChange={(e) => setAgree(e.target.checked)}
-      label="Tôi đồng ý với các điều khoản và chính sách dịch vụ"
-      helperText="Vui lòng đọc kỹ trước khi tiếp tục"
+      label="I agree to the terms and privacy policy"
+      helperText="Please read carefully before proceeding"
       config={{ isRequired: true }}
     />
   );
@@ -77,7 +77,7 @@ export function SingleCheckboxExample() {
 
 ---
 
-### 2. CheckboxGroup cơ bản (Data-driven)
+### 2. Basic CheckboxGroup (Data-driven)
 
 ```tsx
 import { useState } from "react";
@@ -88,8 +88,8 @@ export function BasicGroupExample() {
 
   return (
     <CheckboxGroup
-      label="Kỹ năng công nghệ"
-      helperText="Chọn các kỹ năng bạn có kinh nghiệm làm việc"
+      label="Technical Skills"
+      helperText="Select skills you have experience working with"
       value={selected}
       onChange={setSelected}
       color="primary"
@@ -107,7 +107,7 @@ export function BasicGroupExample() {
 
 ---
 
-### 3. Tìm kiếm Client Mode (Fuzzy Search & Đa trường)
+### 3. Client Mode Search (Fuzzy Search & Multi-field)
 
 ```tsx
 import { useState } from "react";
@@ -125,10 +125,10 @@ export function ClientSearchExample() {
 
   return (
     <CheckboxGroup
-      label="Tìm kiếm Framework"
+      label="Search Frameworks"
       searchable
       searchField={["label", "code", "description"]}
-      searchPlaceholder="Tìm theo tên, mã code hoặc mô tả..."
+      searchPlaceholder="Search by name, code, or description..."
       preserveSelected
       value={selected}
       onChange={setSelected}
@@ -140,12 +140,12 @@ export function ClientSearchExample() {
 
 ---
 
-### 4. Tìm kiếm Server Mode & Phân trang vô tận (`useSelectInfiniteQuery`)
+### 4. Server Mode Search & Infinite Pagination (`useSelectInfiniteQuery`)
 
-`CheckboxGroup` hoạt động hoàn hảo với hook `useSelectInfiniteQuery`:
-- Hook tự động merge từ khóa tìm kiếm vào `filters` theo `searchField` (ví dụ: `name: "phone"`).
-- Hook quản lý debounce tập trung, khi người dùng gõ tìm kiếm, `CheckboxGroup` gọi trực tiếp `onSearch` và hook sẽ debounce trước khi truy vấn API.
-- Hỗ trợ cuộn vô tận mượt mà khi kết hợp `maxHeight` và `listFooter`.
+`CheckboxGroup` works seamlessly with the `useSelectInfiniteQuery` hook:
+- The hook automatically merges search keywords into `filters` based on `searchField` (e.g., `name: "phone"`).
+- The hook manages centralized debouncing; when users type into search, `CheckboxGroup` directly calls `onSearch` and the hook debounces before calling the API.
+- Supports smooth infinite scrolling when combining `maxHeight` and `listFooter`.
 
 ```tsx
 import { CheckboxGroup } from "@openway/ui";
@@ -154,7 +154,7 @@ import { useSelectInfiniteQuery } from "@openway/ui/query";
 export function InfiniteProductCheckboxGroup() {
   const { selectProps } = useSelectInfiniteQuery({
     queryKey: ["products-infinite"],
-    searchField: "q", // Merge từ khóa search vào filters: { q: "phone", ... }
+    searchField: "q", // Merge search keyword into filters: { q: "phone", ... }
     queryFn: async ({ pageParam, filters }) => {
       const queryParams = new URLSearchParams({
         limit: "10",
@@ -181,9 +181,9 @@ export function InfiniteProductCheckboxGroup() {
     <div className="max-w-md">
       <CheckboxGroup
         {...selectProps}
-        label="Danh sách sản phẩm (Infinite Scroll)"
+        label="Product List (Infinite Scroll)"
         searchable
-        searchPlaceholder="Tìm sản phẩm..."
+        searchPlaceholder="Search products..."
         maxHeight={300}
         color="info"
       />
@@ -194,75 +194,75 @@ export function InfiniteProductCheckboxGroup() {
 
 ---
 
-## 🎛️ Bảng Props & API Reference
+## 🎛️ Props & API Reference
 
 ### `CheckboxProps`
 
-Kế thừa `Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "type">`:
+Inherits `Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "type">`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Kích cỡ ô chọn, icon và nhãn |
-| `variant` | `'filled' \| 'outline' \| 'soft' \| 'other'` | `'filled'` | Kiểu dáng hiển thị của box |
-| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Chủ đề màu sắc |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Mức độ bo góc |
-| `config` | `CheckboxConfig` | `undefined` | Cấu hình cờ trạng thái (`isRequired`, `indeterminate`, `isLoading`, `isInvalid`,...) |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa tương tác |
-| `readOnly` | `boolean` | `false` | Chế độ chỉ đọc |
-| `labelPlacement` | `'right' \| 'left'` | `'right'` | Vị trí hiển thị nhãn |
-| `label` | `ReactNode` | `undefined` | Nhãn văn bản cạnh ô checkbox |
-| `helperText` | `ReactNode` | `undefined` | Chú thích bên dưới |
-| `errorMessage` | `ReactNode` | `undefined` | Thông báo lỗi |
-| `icon` | `ReactNode` | `CheckIcon` | Icon tùy biến khi checked |
-| `indeterminateIcon` | `ReactNode` | `MinusIcon` | Icon tùy biến khi indeterminate |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the checkbox box, icon, and label |
+| `variant` | `'filled' \| 'outline' \| 'soft' \| 'other'` | `'filled'` | Visual style of the checkbox box |
+| `color` | `'primary' \| 'secondary' \| 'error' \| 'success' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Color theme |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Border radius |
+| `config` | `CheckboxConfig` | `undefined` | Status flags configuration (`isRequired`, `indeterminate`, `isLoading`, `isInvalid`, etc.) |
+| `disabled` | `boolean` | `false` | Disables interaction |
+| `readOnly` | `boolean` | `false` | Read-only mode |
+| `labelPlacement` | `'right' \| 'left'` | `'right'` | Label display placement |
+| `label` | `ReactNode` | `undefined` | Text label next to the checkbox |
+| `helperText` | `ReactNode` | `undefined` | Helper text displayed below |
+| `errorMessage` | `ReactNode` | `undefined` | Error message |
+| `icon` | `ReactNode` | `CheckIcon` | Custom icon when checked |
+| `indeterminateIcon` | `ReactNode` | `MinusIcon` | Custom icon when indeterminate |
 
 ---
 
 ### `CheckboxGroupProps<TData = unknown, TValue extends string | number = string>`
 
-Kế thừa `Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue">`:
+Inherits `Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue">`:
 
-| Thuộc tính | Kiểu dữ liệu | Mặc định | Mô tả |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `options` | `CheckboxOptionItem<TData, TValue>[]` | `[]` | Mảng dữ liệu các lựa chọn (Data-driven) |
-| `value` | `TValue[]` | `undefined` | Danh sách giá trị đã chọn (Controlled) |
-| `defaultValue` | `TValue[]` | `[]` | Danh sách giá trị mặc định (Uncontrolled) |
-| `onChange` | `(values: TValue[]) => void` | `undefined` | Callback khi danh sách chọn thay đổi |
-| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Bố cục sắp xếp các mục |
-| `searchable` | `boolean` | `false` | Bật/tắt thanh tìm kiếm |
-| `searchMode` | `'client' \| 'server'` | `'client'` | Chế độ tìm kiếm phía client hoặc gọi API server |
-| `searchField` | `string \| string[]` | `'label'` | Các trường dữ liệu dùng để tìm kiếm (Client mode) |
-| `filterFn` | `(item, query) => boolean` | `undefined` | Hàm lọc tùy biến phía client |
-| `onSearch` | `(query) => void` | `undefined` | Callback khi người dùng gõ tìm kiếm (Server mode) |
-| `listFooter` | `ReactNode` | `undefined` | Nội dung ở đáy danh sách (Sentinel / Skeleton loading) |
-| `maxHeight` | `number \| string` | `undefined` | Giới hạn chiều cao và bật thanh cuộn dọc cho danh sách |
-| `preserveSelected` | `boolean` | `true` | Bảo lưu các mục đã chọn khi từ khóa tìm kiếm thay đổi |
-| `emptyText` | `ReactNode` | `'Không tìm thấy kết quả'` | Thông báo khi không có kết quả |
-| `emptyProps` | `Partial<EmptyProps>` | `undefined` | Tùy biến props cho component `Empty` khi danh sách trống |
-| `size` | `CheckboxSize` | `'md'` | Kích cỡ truyền xuống toàn bộ checkbox con |
-| `color` | `CheckboxColor` | `'primary'` | Màu sắc truyền xuống toàn bộ checkbox con |
-| `variant` | `CheckboxVariant` | `'filled'` | Biến thể truyền xuống toàn bộ checkbox con |
-| `radius` | `CheckboxRadius` | `undefined` | Bo góc truyền xuống toàn bộ checkbox con |
-| `disabled` | `boolean` | `false` | Vô hiệu hóa toàn bộ nhóm |
-| `isLoading` | `boolean` | `false` | Trạng thái đang tải dữ liệu (Data Loading từ API/query) |
-| `skeletonCount` | `number` | `3` | Số lượng dòng Skeleton hiển thị khi đang tải dữ liệu |
-| `renderSkeleton` | `() => ReactNode` | `undefined` | Tùy biến render giao diện Skeleton khi tải dữ liệu |
-| `config` | `CheckboxGroupConfig` | `undefined` | Cấu hình cờ trạng thái (`isLoading` - trạng thái bận khóa tương tác, `showSpinner`, `isRequired`, `isInvalid`,...) |
-| `label` | `ReactNode` | `undefined` | Tiêu đề của nhóm |
-| `helperText` | `ReactNode` | `undefined` | Chú thích của nhóm |
-| `errorMessage` | `ReactNode` | `undefined` | Thông báo lỗi của nhóm |
+| `options` | `CheckboxOptionItem<TData, TValue>[]` | `[]` | Data array of options (Data-driven) |
+| `value` | `TValue[]` | `undefined` | List of selected values (Controlled) |
+| `defaultValue` | `TValue[]` | `[]` | List of default selected values (Uncontrolled) |
+| `onChange` | `(values: TValue[]) => void` | `undefined` | Callback invoked when selected list changes |
+| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Layout orientation of items |
+| `searchable` | `boolean` | `false` | Enables/disables search bar |
+| `searchMode` | `'client' \| 'server'` | `'client'` | Search mode: client-side filtering or server API call |
+| `searchField` | `string \| string[]` | `'label'` | Data fields used for searching (Client mode) |
+| `filterFn` | `(item, query) => boolean` | `undefined` | Custom client-side filter function |
+| `onSearch` | `(query) => void` | `undefined` | Callback when user types in search (Server mode) |
+| `listFooter` | `ReactNode` | `undefined` | Content at the bottom of the list (Sentinel / Skeleton loading) |
+| `maxHeight` | `number \| string` | `undefined` | Limits height and enables vertical scrollbar |
+| `preserveSelected` | `boolean` | `true` | Preserves selected items when search keywords change |
+| `emptyText` | `ReactNode` | `'No results found'` | Notice displayed when no options match |
+| `emptyProps` | `Partial<EmptyProps>` | `undefined` | Custom props for the `Empty` component when list is empty |
+| `size` | `CheckboxSize` | `'md'` | Size propagated to all child checkboxes |
+| `color` | `CheckboxColor` | `'primary'` | Color propagated to all child checkboxes |
+| `variant` | `CheckboxVariant` | `'filled'` | Variant propagated to all child checkboxes |
+| `radius` | `CheckboxRadius` | `undefined` | Border radius propagated to all child checkboxes |
+| `disabled` | `boolean` | `false` | Disables the entire group |
+| `isLoading` | `boolean` | `false` | Data loading state (Data Loading from API/query) |
+| `skeletonCount` | `number` | `3` | Number of Skeleton lines shown during data loading |
+| `renderSkeleton` | `() => ReactNode` | `undefined` | Custom Skeleton render function during data loading |
+| `config` | `CheckboxGroupConfig` | `undefined` | State flags configuration (`isLoading` - busy locking state, `showSpinner`, `isRequired`, `isInvalid`, etc.) |
+| `label` | `ReactNode` | `undefined` | Group label |
+| `helperText` | `ReactNode` | `undefined` | Group helper text |
+| `errorMessage` | `ReactNode` | `undefined` | Group error message |
 
 ---
 
 ### `CheckboxOptionItem<TData = unknown, TValue extends string | number = string | number>`
 
-| Trường | Kiểu dữ liệu | Mô tả |
+| Field | Type | Description |
 | :--- | :--- | :--- |
-| `value` | `TValue` | Giá trị định danh duy nhất của ô chọn (string hoặc number) |
-| `label` | `ReactNode` | Nhãn hiển thị chính |
-| `description` | `ReactNode` | Đoạn chú thích/mô tả phụ bên dưới nhãn |
-| `disabled` | `boolean` | Vô hiệu hóa ô chọn này |
-| `isReadOnly` | `boolean` | Chế độ chỉ đọc cho ô chọn này |
-| `indeterminate`| `boolean` | Trạng thái gạch ngang cho ô chọn này |
-| `data` | `TData` | Đối tượng dữ liệu gốc đính kèm |
-| `[key: string]` | `unknown` | Mở rộng các trường tùy ý (phục vụ lọc theo `searchField`) |
+| `value` | `TValue` | Unique identifier value of the option (string or number) |
+| `label` | `ReactNode` | Main display label |
+| `description` | `ReactNode` | Secondary note/description beneath the label |
+| `disabled` | `boolean` | Disables this option |
+| `isReadOnly` | `boolean` | Read-only mode for this option |
+| `indeterminate`| `boolean` | Indeterminate state for this option |
+| `data` | `TData` | Attached original data object |
+| `[key: string]` | `unknown` | Extended arbitrary fields (for filtering via `searchField`) |

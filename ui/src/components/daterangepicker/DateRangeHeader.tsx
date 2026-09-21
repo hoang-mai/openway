@@ -4,7 +4,7 @@ import ChevronRightIcon from "../icons/ChevronRightIcon";
 import DoubleChevronLeftIcon from "../icons/DoubleChevronLeftIcon";
 import DoubleChevronRightIcon from "../icons/DoubleChevronRightIcon";
 import { dateRangePickerSizeConfig, dateRangePickerColorConfig } from "./constants";
-import { resolveLocale } from "../datepicker/utils";
+import { useLocale } from "../common/OpenWayProvider";
 import { getSafeConfig } from "@/utils/function";
 
 export default function DateRangeHeader({
@@ -20,9 +20,8 @@ export default function DateRangeHeader({
   onNextDecade,
   size = "md",
   color = "primary",
-  locale,
 }: DateRangeHeaderProps) {
-  const loc = resolveLocale(locale);
+  const loc = useLocale("datePicker");
   const sizeStyles = getSafeConfig(size, dateRangePickerSizeConfig, "md");
   const colorStyles = getSafeConfig(color, dateRangePickerColorConfig, "primary");
 
@@ -80,6 +79,12 @@ export default function DateRangeHeader({
     }
   };
 
+  const prevYearLabel = loc.prevYear;
+  const prevMonthLabel = loc.prevMonth;
+  const nextMonthLabel = loc.nextMonth;
+  const nextYearLabel = loc.nextYear;
+  const switchViewLabel = loc.switchView;
+
   return (
     <div className="flex items-center justify-between px-2 py-1.5 border-b border-neutral-200">
       {/* Cụm nút lùi bên trái */}
@@ -88,7 +93,7 @@ export default function DateRangeHeader({
           <button
             type="button"
             onClick={onPrevYear}
-            aria-label="Năm trước"
+            aria-label={prevYearLabel}
             className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors cursor-pointer`}
           >
             <DoubleChevronLeftIcon width={14} height={14} />
@@ -97,7 +102,7 @@ export default function DateRangeHeader({
         <button
           type="button"
           onClick={handlePrev}
-          aria-label="Tháng trước"
+          aria-label={prevMonthLabel}
           className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors cursor-pointer`}
         >
           <ChevronLeftIcon width={sizeStyles.iconSize} height={sizeStyles.iconSize} />
@@ -110,7 +115,7 @@ export default function DateRangeHeader({
           <button
             type="button"
             onClick={handleTitleClick}
-            aria-label="Đổi chế độ xem lịch"
+            aria-label={switchViewLabel}
             className={`font-semibold text-neutral-800 hover:${colorStyles.activeText} hover:bg-neutral-100 rounded-md px-2 py-1 transition-colors cursor-pointer ${sizeStyles.headerText}`}
           >
             {title1}
@@ -120,7 +125,7 @@ export default function DateRangeHeader({
           <button
             type="button"
             onClick={handleTitleClick}
-            aria-label="Đổi chế độ xem lịch"
+            aria-label={switchViewLabel}
             className={`font-semibold text-neutral-800 hover:${colorStyles.activeText} hover:bg-neutral-100 rounded-md px-2 py-1 transition-colors cursor-pointer ${sizeStyles.headerText}`}
           >
             {title2}
@@ -133,7 +138,7 @@ export default function DateRangeHeader({
         <button
           type="button"
           onClick={handleNext}
-          aria-label="Tháng tiếp theo"
+          aria-label={nextMonthLabel}
           className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors cursor-pointer`}
         >
           <ChevronRightIcon width={sizeStyles.iconSize} height={sizeStyles.iconSize} />
@@ -142,7 +147,7 @@ export default function DateRangeHeader({
           <button
             type="button"
             onClick={onNextYear}
-            aria-label="Năm tiếp theo"
+            aria-label={nextYearLabel}
             className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors cursor-pointer`}
           >
             <DoubleChevronRightIcon width={14} height={14} />

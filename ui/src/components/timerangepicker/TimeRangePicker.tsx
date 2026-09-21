@@ -30,6 +30,7 @@ import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { useLocale } from "@/components/common/OpenWayProvider";
 
 /**
  * Component TimeRangePicker - Ô chọn khoảng thời gian (Start Time - End Time) chuyên nghiệp theo Design System.
@@ -43,8 +44,8 @@ export default function TimeRangePicker({
   format: customFormat,
   displayFormat: customDisplayFormat,
   separator = " - ",
-  startLabel = "Thời gian bắt đầu",
-  endLabel = "Thời gian kết thúc",
+  startLabel: startLabelProp,
+  endLabel: endLabelProp,
   use12Hours = false,
   showSeconds = true,
   hourStep = 1,
@@ -82,6 +83,10 @@ export default function TimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: TimeRangePickerProps) {
+  const timePickerLocale = useLocale("timePicker");
+  const startLabel = startLabelProp ?? timePickerLocale.startTime;
+  const endLabel = endLabelProp ?? timePickerLocale.endTime;
+
   const {
     isRequired = false,
     isInvalid = false,
@@ -344,7 +349,7 @@ export default function TimeRangePicker({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Xóa khoảng thời gian"
+                aria-label={timePickerLocale.clearText}
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${

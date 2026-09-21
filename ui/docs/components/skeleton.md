@@ -1,37 +1,37 @@
 # 💀 Skeleton & LoadingImage Component (`@openway/ui`)
 
-Bộ đôi component **Skeleton** và **LoadingImage** hiện đại, hiệu năng cao, thiết kế chuẩn **Design System**, hỗ trợ placeholder tải dữ liệu mượt mà, chống giật layout (Cumulative Layout Shift - CLS), tích hợp **Safe Config Fallback** (`getSafeConfig`) và tuân thủ tiêu chuẩn **WAI-ARIA Accessibility**.
+Modern, high-performance **Skeleton** and **LoadingImage** component suite built to **Design System** standards. Provides smooth data loading placeholders to eliminate Cumulative Layout Shift (CLS), integrates **Safe Config Fallback** (`getSafeConfig`), and conforms to **WAI-ARIA Accessibility** standards.
 
 ---
 
-## 🌟 Điểm nổi bật
+## 🌟 Highlights
 
 - **Skeleton Placeholder**:
-  - **3 Biến thể animation (`variant`)**:
-    - `pulse` *(mặc định)*: Hiệu ứng nhịp thở mờ dần mượt mà.
-    - `wave`: Hiệu ứng shimmer ánh sáng lướt chéo từ góc trên-trái xuống góc dưới-phải (sử dụng GPU-accelerated CSS).
-    - `none`: Placeholder tĩnh không chuyển động.
-  - **2 Kiểu hình dạng (`shape`)**:
-    - `rectangle` *(mặc định)*: Hình chữ nhật hoặc vuông, kết hợp với `radius`.
-    - `circle`: Hình tròn hoàn hảo (`rounded-full`), tự động bỏ qua `radius`.
-  - **6 Mức bo góc (`radius`)**: `none`, `sm`, `md` *(mặc định)*, `lg`, `xl`, `full`.
-  - **Multi-line mode (`lines`)**: Tự động xếp chồng nhiều dòng văn bản theo dạng đoạn văn, với dòng cuối cùng tự động thu hẹp 60% chiều rộng để tạo cảm giác tự nhiên.
-  - **Linh hoạt kích thước (`width`, `height`, `gap`)**: Nhận cả số nguyên (`px`) lẫn chuỗi CSS (`rem`, `%`, `vh`...).
+  - **3 Animation Variants (`variant`)**:
+    - `pulse` *(default)*: Smooth fading breathing animation.
+    - `wave`: GPU-accelerated diagonal shimmer from top-left to bottom-right.
+    - `none`: Static placeholder without animation.
+  - **2 Shapes (`shape`)**:
+    - `rectangle` *(default)*: Rectangular or square shape, paired with `radius`.
+    - `circle`: Perfect circular shape (`rounded-full`), automatically ignores `radius`.
+  - **6 Border Radius Levels (`radius`)**: `none`, `sm`, `md` *(default)*, `lg`, `xl`, `full`.
+  - **Multi-line Mode (`lines`)**: Automatically stacks multiple text lines as paragraphs, with the final line narrowed to 60% width for a natural look.
+  - **Flexible Dimensions (`width`, `height`, `gap`)**: Supports both numeric pixel values and CSS string units (`rem`, `%`, `vh`, etc.).
 
 - **LoadingImage**:
-  - **Tích hợp Next.js Image**: Kế thừa toàn bộ tối ưu hóa của `next/image` (`fill`, `priority`, `sizes`, `quality`...).
-  - **Hỗ trợ đa dạng nguồn ảnh (`src`)**: Nhận đường dẫn ảnh URL/StaticImport, đồng thời hỗ trợ trực tiếp đối tượng **`File`** hoặc **`Blob`** (tự động tạo & giải phóng Object URL an toàn, không memory leak).
-  - **Tự động tối ưu `unoptimized`**: Tự động kích hoạt khi nhận `File` / `Blob` để tránh lỗi phân giải trên Image Optimization server của Next.js.
-  - **Tùy biến căn chỉnh (`objectFit`)**: Hỗ trợ 5 kiểu `cover` *(mặc định)*, `contain`, `fill`, `none`, `scale-down`.
-  - **Tự động reset trạng thái**: Reset `isLoaded` và `hasError` khi `src` thay đổi.
-  - **Fallback Error State**: Tự động hiển thị icon placeholder dự phòng khi ảnh tải lỗi (`onError`).
+  - **Next.js Image Integration**: Inherits full optimization from `next/image` (`fill`, `priority`, `sizes`, `quality`, etc.).
+  - **Versatile Image Sources (`src`)**: Accepts URL strings/StaticImport, as well as direct **`File`** or **`Blob`** objects (automatically creates and revokes Object URLs safely without memory leaks).
+  - **Automatic `unoptimized` Handling**: Automatically enables `unoptimized` for `File` / `Blob` sources to avoid resolution errors on Next.js Image Optimization server.
+  - **Object Fit Options (`objectFit`)**: Supports 5 modes: `cover` *(default)*, `contain`, `fill`, `none`, and `scale-down`.
+  - **Automatic State Reset**: Resets `isLoaded` and `hasError` when `src` changes.
+  - **Fallback Error State**: Automatically displays a fallback placeholder icon if the image fails to load (`onError`).
 
-- **Safe Config Fallback**: Tích hợp hàm `getSafeConfig` từ `@/utils/function` đảm bảo an toàn tuyệt đối, không crash giao diện khi nhận giá trị `variant`, `radius`, `objectFit` không hợp lệ.
-- **Trợ năng (Accessibility)**: Tích hợp đầy đủ `role="status"`, `aria-label="Loading..."`.
+- **Safe Config Fallback**: Integrates `getSafeConfig` to guarantee stability and prevent layout crashes on invalid `variant`, `radius`, or `objectFit` inputs.
+- **Accessibility**: Built-in `role="status"` and `aria-label="Loading..."` attributes.
 
 ---
 
-## 🚀 Cài đặt & Import
+## 🚀 Installation & Import
 
 ```tsx
 import { Skeleton, LoadingImage } from "@openway/ui";
@@ -47,9 +47,9 @@ import type {
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 📖 Usage Guide
 
-### 1. Skeleton cơ bản
+### 1. Basic Skeleton
 
 ```tsx
 import { Skeleton } from "@openway/ui";
@@ -57,26 +57,26 @@ import { Skeleton } from "@openway/ui";
 export function BasicSkeletonExample() {
   return (
     <div className="space-y-4">
-      {/* Khối đơn */}
+      {/* Single block */}
       <Skeleton width="100%" height="2rem" />
 
-      {/* Avatar tròn */}
+      {/* Circular avatar */}
       <Skeleton shape="circle" width={48} height={48} />
 
-      {/* Hiệu ứng sóng wave */}
+      {/* Shimmer wave effect */}
       <Skeleton variant="wave" width="200px" height="1.5rem" />
     </div>
   );
 }
 ```
 
-### 2. Multi-line Skeleton (Đoạn văn bản)
+### 2. Multi-line Skeleton (Paragraph Text)
 
 ```tsx
 <Skeleton lines={3} height="1rem" gap="0.75rem" />
 ```
 
-### 3. LoadingImage với URL hoặc File / Blob
+### 3. LoadingImage with URL or File / Blob
 
 ```tsx
 import { LoadingImage } from "@openway/ui";
@@ -84,7 +84,7 @@ import { LoadingImage } from "@openway/ui";
 export function ImageExamples({ file }: { file?: File }) {
   return (
     <div className="flex gap-4">
-      {/* Load ảnh qua URL với bo góc lg */}
+      {/* Load image via URL with lg border radius */}
       <LoadingImage
         src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
         alt="Mountain view"
@@ -94,7 +94,7 @@ export function ImageExamples({ file }: { file?: File }) {
         objectFit="cover"
       />
 
-      {/* Load ảnh trực tiếp từ đối tượng File (Upload preview) */}
+      {/* Load image directly from File object (Upload preview) */}
       {file && (
         <LoadingImage
           src={file}
@@ -116,35 +116,34 @@ export function ImageExamples({ file }: { file?: File }) {
 
 ### `SkeletonProps`
 
-| Prop | Type | Default | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `variant` | `'pulse' \| 'wave' \| 'none'` | `'pulse'` | Kiểu hiệu ứng hoạt ảnh placeholder |
-| `shape` | `'rectangle' \| 'circle'` | `'rectangle'` | Hình dạng hiển thị |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Độ bo góc (chỉ áp dụng khi `shape === 'rectangle'`) |
-| `width` | `string \| number` | — | Chiều rộng (px hoặc chuỗi CSS) |
-| `height` | `string \| number` | `'1rem'` | Chiều cao (px hoặc chuỗi CSS) |
-| `lines` | `number` | `1` | Số dòng hiển thị dạng cột (khi > 1) |
-| `gap` | `string \| number` | `'0.5rem'` | Khoảng cách giữa các dòng khi `lines > 1` |
-| `className` | `string` | `""` | Tùy biến class Tailwind bên ngoài |
-| `ref` | `React.Ref<HTMLDivElement>` | — | Ref trỏ tới thẻ div gốc |
+| `variant` | `'pulse' \| 'wave' \| 'none'` | `'pulse'` | Animation effect variant for placeholder |
+| `shape` | `'rectangle' \| 'circle'` | `'rectangle'` | Shape of the skeleton placeholder |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Border radius (only applies when `shape === 'rectangle'`) |
+| `width` | `string \| number` | — | Width (px or CSS string) |
+| `height` | `string \| number` | `'1rem'` | Height (px or CSS string) |
+| `lines` | `number` | `1` | Number of stacked lines (when > 1) |
+| `gap` | `string \| number` | `'0.5rem'` | Spacing between lines when `lines > 1` |
+| `className` | `string` | `""` | Additional Tailwind CSS classes |
+| `ref` | `React.Ref<HTMLDivElement>` | — | Ref attached to root div element |
 
 ### `LoadingImageProps`
 
-| Prop | Type | Default | Mô tả |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `src` | `ImageProps['src'] \| File \| Blob \| ServerFile` | — | Nguồn ảnh (URL, import tĩnh, File/Blob hoặc ServerFile) |
-| `alt` | `string` | `""` | Văn bản thay thế cho ảnh |
-| `width` | `number` | — | Chiều rộng hiển thị (nếu không dùng `fill`) |
-| `height` | `number` | — | Chiều cao hiển thị (nếu không dùng `fill`) |
-| `fill` | `boolean` | `false` | Co giãn ảnh lấp đầy wrapper cha |
-| `skeletonVariant` | `'pulse' \| 'wave' \| 'none'` | `'pulse'` | Variant của skeleton khi đang tải |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Bo góc áp dụng cho cả skeleton và ảnh |
-| `objectFit` | `'cover' \| 'contain' \| 'fill' \| 'none' \| 'scale-down'` | `'cover'` | Kiểu căn chỉnh ảnh |
-| `preview` | `boolean` | `true` | Bật xem trước ảnh phóng to trong modal khi click (qua FilePreview & FileContainer) |
-| `wrapperClassName` | `string` | `""` | Class tùy biến cho wrapper div |
-| `wrapperStyle` | `CSSProperties` | — | Style inline cho wrapper div |
-| `onClick` | `(e) => void` | — | Callback khi click vào ảnh / wrapper |
-| `onLoad` | `(e) => void` | — | Callback khi ảnh tải thành công |
-| `onError` | `(e) => void` | — | Callback khi ảnh gặp lỗi tải |
-| `ref` | `React.Ref<HTMLDivElement>` | — | Ref trỏ tới thẻ wrapper div |
-
+| `src` | `ImageProps['src'] \| File \| Blob \| ServerFile` | — | Image source (URL, static import, File/Blob, or ServerFile) |
+| `alt` | `string` | `""` | Alternative text for the image |
+| `width` | `number` | — | Display width (if `fill` is not used) |
+| `height` | `number` | — | Display height (if `fill` is not used) |
+| `fill` | `boolean` | `false` | Stretches image to fill parent wrapper |
+| `skeletonVariant` | `'pulse' \| 'wave' \| 'none'` | `'pulse'` | Skeleton variant while loading |
+| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Border radius applied to both skeleton and image |
+| `objectFit` | `'cover' \| 'contain' \| 'fill' \| 'none' \| 'scale-down'` | `'cover'` | CSS object-fit layout mode |
+| `preview` | `boolean` | `true` | Enables modal preview modal on click (via FilePreview & FileContainer) |
+| `wrapperClassName` | `string` | `""` | Custom CSS class for the wrapper div |
+| `wrapperStyle` | `CSSProperties` | — | Inline style for the wrapper div |
+| `onClick` | `(e) => void` | — | Click callback on image / wrapper |
+| `onLoad` | `(e) => void` | — | Callback fired when image finishes loading |
+| `onError` | `(e) => void` | — | Callback fired if image loading fails |
+| `ref` | `React.Ref<HTMLDivElement>` | — | Ref attached to the wrapper div element |

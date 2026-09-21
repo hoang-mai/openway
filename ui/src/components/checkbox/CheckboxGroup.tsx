@@ -14,6 +14,7 @@ import SearchIcon from "@/components/icons/SearchIcon";
 import Spinner from "@/components/icons/Spinner";
 import Skeleton from "@/components/skeleton/Skeleton";
 import Empty from "@/components/empty/Empty";
+import { useLocale } from "@/components/common/OpenWayProvider";
 
 const DEFAULT_OPTIONS: never[] = [];
 const DEFAULT_VALUE: never[] = [];
@@ -47,7 +48,7 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
   options = DEFAULT_OPTIONS as CheckboxOptionItem<TData, TValue>[],
   config,
   searchMode = "client",
-  searchPlaceholder = "Tìm kiếm...",
+  searchPlaceholder: searchPlaceholderProp,
   searchValue: searchValueProp,
   defaultSearchValue = "",
   onSearchChange,
@@ -55,7 +56,7 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
   searchField = "label",
   filterFn,
   onSearch,
-  emptyText = "Không tìm thấy kết quả",
+  emptyText: emptyTextProp,
   emptyProps,
   listFooter,
   maxHeight,
@@ -66,6 +67,10 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
   ref,
   ...props
 }: CheckboxGroupProps<TData, TValue>) {
+  const checkboxLocale = useLocale("checkbox");
+  const selectLocale = useLocale("select");
+  const searchPlaceholder = searchPlaceholderProp ?? selectLocale.searchPlaceholder;
+  const emptyText = emptyTextProp ?? checkboxLocale.emptyText;
   const {
     isRequired = false,
     isInvalid: isInvalidProp,
@@ -415,8 +420,8 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
                 image={searchable || searchMode === "server" ? "search" : "default"}
                 description={
                   !currentSearch.trim() && searchMode === "server"
-                    ? "Nhập từ khóa để tìm kiếm..."
-                    : (emptyText ?? "Không tìm thấy kết quả")
+                    ? searchPlaceholder
+                    : emptyText
                 }
                 className="py-1"
                 {...emptyProps}

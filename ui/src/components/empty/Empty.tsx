@@ -5,6 +5,7 @@ import { emptySizeConfig, emptyLayoutConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import EmptyIllustration from "./EmptyIllustration";
 import { isPresetImage, isUrlString, getImageInlineStyle } from "./utils";
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function Empty({
   size = "md",
@@ -12,10 +13,10 @@ export default function Empty({
   image = "default",
   imageSize,
   imageClassName = "",
-  imageAlt = "Trống",
+  imageAlt = "Empty",
   title,
   titleClassName = "",
-  description = "Không có dữ liệu",
+  description: descriptionProp,
   descriptionClassName = "",
   actions,
   actionsClassName = "",
@@ -25,6 +26,8 @@ export default function Empty({
   ref,
   ...props
 }: EmptyProps) {
+  const emptyLocale = useLocale("empty");
+  const description = descriptionProp ?? emptyLocale.description;
   const currentSize = getSafeConfig(size, emptySizeConfig, "md");
   const currentLayout = getSafeConfig(layout, emptyLayoutConfig, "vertical");
 

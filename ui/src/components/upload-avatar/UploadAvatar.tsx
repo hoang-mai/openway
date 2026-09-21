@@ -24,6 +24,7 @@ import Spinner from "../icons/Spinner";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
 import { PreviewFile } from "@/components/file-preview/types";
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function UploadAvatar({
   size = "md",
@@ -58,6 +59,7 @@ export default function UploadAvatar({
   helperClassName = "",
   ref,
 }: UploadAvatarProps) {
+  const uploadLocale = useLocale("upload");
   const {
     isRequired = false,
     isInvalid = false,
@@ -134,7 +136,7 @@ export default function UploadAvatar({
       updateItem(null);
       onRemove?.(removedItem);
       onClear?.();
-      setSrAnnouncement("Đã xóa ảnh đại diện.");
+      setSrAnnouncement(uploadLocale.avatarRemovedSr);
     }
   };
 
@@ -168,19 +170,19 @@ export default function UploadAvatar({
         handleOpenCropModal({ file });
       } else {
         updateItem(file);
-        setSrAnnouncement("Tải ảnh đại diện thành công.");
+        setSrAnnouncement(uploadLocale.avatarUploadedSr);
       }
     },
     onDropRejected: (rejections) => {
       const err = rejections[0]?.errors[0];
       const msg =
         err?.code === "file-too-large"
-          ? `Dung lượng tệp vượt quá giới hạn${maxSize ? ` ${(maxSize / (1024 * 1024)).toFixed(1)}MB` : ""}.`
+          ? uploadLocale.maxSizeError(maxSize ? `${(maxSize / (1024 * 1024)).toFixed(1)}MB` : "")
           : err?.code === "file-invalid-type"
-            ? "Định dạng tệp không được hỗ trợ."
-            : err?.message || "Tệp không hợp lệ.";
+            ? uploadLocale.invalidTypeError
+            : err?.message || uploadLocale.invalidTypeError;
       setValidationError(msg);
-      setSrAnnouncement(`Lỗi tệp: ${msg}`);
+      setSrAnnouncement(uploadLocale.fileErrorSr(msg));
     },
   });
 
@@ -383,11 +385,11 @@ export default function UploadAvatar({
             showGrid={cropOptions.showGrid ?? true}
             minZoom={cropOptions.minZoom ?? 1}
             maxZoom={cropOptions.maxZoom ?? 4}
-            modalTitle={cropOptions.modalTitle || "Cắt ảnh đại diện"}
+            modalTitle={cropOptions.modalTitle || uploadLocale.cropTitle}
             onClose={() => setCropData(null)}
             onApply={(croppedFile: File) => {
               updateItem(croppedFile);
-              setSrAnnouncement("Ảnh đại diện đã được cập nhật thành công.");
+              setSrAnnouncement(uploadLocale.avatarUpdatedSr);
               setCropData(null);
             }}
           />

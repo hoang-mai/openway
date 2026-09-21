@@ -12,6 +12,9 @@ import {
 import { toast } from "../components/toast";
 import type { ToastOptions } from "../components/toast/types";
 import type { AlertVariant } from "../components/alert/types";
+import { useLocale } from "../components/common/OpenWayProvider";
+import { enUS } from "../locale/enUS";
+import type { MutationLocale } from "../locale/types";
 
 /**
  * Mục tiêu invalidate cache: có thể là QueryKey (readonly unknown[]) hoặc InvalidateQueryFilters.
@@ -160,8 +163,14 @@ export type UseMutationAppReturn<
  * - Standard JS Error (`error.message`)
  * - String error
  */
-export function extractErrorMessage(error: unknown, fallback = "Đã xảy ra lỗi. Vui lòng thử lại sau."): string {
-  if (!error) return fallback;
+export function extractErrorMessage(
+  error: unknown,
+  fallback?: string,
+  locale?: MutationLocale
+): string {
+  const loc = locale ?? enUS.mutation;
+  const defaultFallback = fallback ?? loc.defaultError;
+  if (!error) return defaultFallback;
 
   if (typeof error === "string" && error.trim()) {
     return error;
@@ -214,23 +223,23 @@ export function extractErrorMessage(error: unknown, fallback = "Đã xảy ra l�
       if (status) {
         switch (status) {
           case 400:
-            return "Dữ liệu yêu cầu không hợp lệ (400).";
+            return loc.badRequest;
           case 401:
-            return "Phiên làm việc đã hết hạn hoặc chưa đăng nhập (401).";
+            return loc.unauthorized;
           case 403:
-            return "Bạn không có quyền thực hiện thao tác này (403).";
+            return loc.forbidden;
           case 404:
-            return "Không tìm thấy dữ liệu yêu cầu (404).";
+            return loc.notFound;
           case 409:
-            return "Dữ liệu bị trùng lặp hoặc xung đột (409).";
+            return loc.conflict;
           case 422:
-            return "Dữ liệu gửi lên không đúng định dạng (422).";
+            return loc.unprocessable;
           case 500:
-            return "Lỗi máy chủ nội bộ. Vui lòng thử lại sau (500).";
+            return loc.serverError;
           case 502:
           case 503:
           case 504:
-            return "Không thể kết nối đến máy chủ. Vui lòng thử lại sau.";
+            return loc.networkError;
         }
       }
     }
@@ -249,7 +258,7 @@ export function extractErrorMessage(error: unknown, fallback = "Đã xảy ra l�
     }
   }
 
-  return fallback;
+  return defaultFallback;
 }
 
 /**
@@ -310,6 +319,7 @@ export function useMutationApp<
 >(
   options: UseMutationAppOptions<TData, TError, TVariables, TContext>
 ): UseMutationAppReturn<TData, TError, TVariables, TContext> {
+  const mutationLocale = useLocale("mutation");
   const queryClient = useQueryClient();
   const activeToastIdsRef = useRef<Array<string | number>>([]);
 
@@ -444,7 +454,7 @@ export function useMutationApp<
         if (typeof effectiveError === "function") {
           errorTitle = effectiveError(error, variables);
         } else if (effectiveError === true) {
-          errorTitle = "Đã xảy ra lỗi";
+          errorTitle = mutationLocale.errorTitle;
         } else {
           errorTitle = effectiveError;
         }
@@ -458,7 +468,7 @@ export function useMutationApp<
         const errorDesc =
           customErrorDesc !== undefined
             ? (customErrorDesc || undefined)
-            : extractErrorMessage(error);
+            : extractErrorMessage(error, undefined, mutationLocale);
 
         toast.error(errorTitle, errorDesc, {
           ...customToastOptions,

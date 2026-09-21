@@ -1,7 +1,7 @@
 import { ReactNode, Ref } from "react";
 import type { Placement } from "@floating-ui/react";
 import type { LabelPlacement } from "../input/types";
-import type { CalendarView, LocaleConfig } from "../datepicker/types";
+import type { CalendarView } from "../datepicker/types";
 import type { TimeValue } from "../timepicker/types";
 
 /**
@@ -144,12 +144,6 @@ export interface DateTimePickerProps {
    * @default 'side-by-side'
    */
   layout?: DateTimePickerLayout;
-
-  /**
-   * Cấu hình ngôn ngữ ('vi' | 'en' hoặc đối tượng LocaleConfig)
-   * @default 'vi'
-   */
-  locale?: "vi" | "en" | LocaleConfig;
 
   // ==================== Calendar Props ====================
   /**

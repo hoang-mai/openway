@@ -9,6 +9,7 @@ import Skeleton from "@/components/skeleton/Skeleton";
 import Empty from "@/components/empty/Empty";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import { rankAndFilterItems, getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/components/common/OpenWayProvider";
 
 const DEFAULT_OPTIONS: never[] = [];
 
@@ -39,14 +40,14 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
   labelClassName = "",
   helperClassName = "",
   config,
-  searchPlaceholder = "Tìm kiếm...",
+  searchPlaceholder: searchPlaceholderProp,
   searchValue: searchValueProp,
   onSearchChange,
   searchMode = "client",
   searchField = "label",
   filterFn,
   onSearch,
-  emptyText = "Không tìm thấy kết quả",
+  emptyText: emptyTextProp,
   emptyProps,
   searchClassName = "",
   searchInputSize: searchInputSizeProp,
@@ -58,6 +59,10 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
   ref,
   ...props
 }: RadioGroupProps<TData, TValue>) {
+  const radioLocale = useLocale("radio");
+  const selectLocale = useLocale("select");
+  const searchPlaceholder = searchPlaceholderProp ?? selectLocale.searchPlaceholder;
+  const emptyText = emptyTextProp ?? radioLocale.emptyText;
   const {
     isRequired = false,
     isInvalid: isInvalidProp,
@@ -395,8 +400,8 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
                 image={searchable || searchMode === "server" ? "search" : "default"}
                 description={
                   !currentSearch.trim() && searchMode === "server"
-                    ? "Nhập từ khóa để tìm kiếm..."
-                    : (emptyText ?? "Không tìm thấy kết quả")
+                    ? searchPlaceholder
+                    : emptyText
                 }
                 className="py-1"
                 {...emptyProps}

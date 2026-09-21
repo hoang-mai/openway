@@ -9,6 +9,7 @@ import {
   uploadFileVariantColorConfig,
 } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "../common/OpenWayProvider";
 
 export default function UploadFileDropzone({
   size = "md",
@@ -31,6 +32,7 @@ export default function UploadFileDropzone({
   className = "",
   describedById,
 }: UploadFileDropzoneProps) {
+  const uploadLocale = useLocale("upload");
   const currentSize = getSafeConfig(size, uploadFileSizeConfig, "md");
   const effectiveRadius = getSafeConfig(radius, uploadFileRadiusConfig, "md");
 
@@ -39,8 +41,8 @@ export default function UploadFileDropzone({
     variant !== "other" ? getSafeConfig(variant, uploadFileVariantColorConfig, "outline") : null;
   const colorStyles = variantConfig ? getSafeConfig(effectiveColor, variantConfig, "primary") : null;
 
-  const defaultTitle = "Kéo thả tệp tin vào đây, hoặc nhấn để duyệt file";
-  const defaultDesc = "Hỗ trợ tài liệu PDF, Office, tệp nén ZIP, media...";
+  const defaultTitle = uploadLocale.dragDropText;
+  const defaultDesc = uploadLocale.dropzoneDescription;
 
   const isDragActive = dragStatus === "active";
   const isDragReject = dragStatus === "reject";
@@ -90,14 +92,14 @@ export default function UploadFileDropzone({
             )}
           </div>
           <span className={`truncate text-neutral-700 font-medium ${currentSize.descSize}`}>
-            {dropzoneTitle || "Kéo thả hoặc nhấn để tải tệp lên"}
+            {dropzoneTitle || uploadLocale.dragDropText}
           </span>
         </div>
 
         <span
           className={`shrink-0 text-primary-600 group-hover:text-primary-700 font-semibold ${currentSize.descSize}`}
         >
-          Chọn file
+          {uploadLocale.browseButton}
         </span>
       </div>
     );
