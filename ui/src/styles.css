@@ -214,33 +214,43 @@ button:focus:not(:focus-visible),
 
 /* ================= UI CROSS-BROWSER SCROLLBAR ================= */
 /* Firefox */
-* {
+*,
+textarea {
   scrollbar-width: thin;
   scrollbar-color: rgba(55, 53, 47, 0.2) transparent;
 }
 
 /* Chrome, Edge, Safari */
-.ui-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(55, 53, 47, 0.25) transparent;
-}
-
+*::-webkit-scrollbar,
+textarea::-webkit-scrollbar,
 .ui-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 
+*::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track,
 .ui-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 
+*::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb,
 .ui-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(55, 53, 47, 0.2);
   border-radius: 9999px;
 }
 
+*::-webkit-scrollbar-thumb:hover,
+textarea::-webkit-scrollbar-thumb:hover,
 .ui-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(55, 53, 47, 0.35);
+}
+
+*::-webkit-scrollbar-corner,
+textarea::-webkit-scrollbar-corner,
+.ui-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 /* Reset native HTML dialog backdrop to prevent browser grey flash */
