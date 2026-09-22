@@ -21,9 +21,9 @@ export type TypographyType =
 
 
 /**
- * 10 Màu chữ chuẩn Notion Design System & các alias Design System
+ * 10 Màu chữ chuẩn UI Design System & các alias Design System
  */
-export type NotionColor =
+export type UiColor =
   | "default"
   | "gray"
   | "brown"
@@ -46,10 +46,7 @@ export type NotionColor =
   | "neutral"
   | (string & {});
 
-/**
- * 10 Màu nền highlight (Mark) chuẩn Notion Design System
- */
-export type NotionMarkColor =
+export type UiMarkColor =
   | "gray"
   | "brown"
   | "orange"
@@ -171,9 +168,9 @@ export interface TypographyProps extends Omit<HTMLAttributes<HTMLElement>, "colo
   type?: TypographyType;
 
   /**
-   * 10 Màu chữ chuẩn Notion
+   * 10 Màu chữ chuẩn UI Design System
    */
-  color?: NotionColor;
+  color?: UiColor;
 
   /**
    * Kích thước văn bản
@@ -191,9 +188,9 @@ export interface TypographyProps extends Omit<HTMLAttributes<HTMLElement>, "colo
   align?: TypographyAlign;
 
   /**
-   * Đánh dấu highlight nền pastel theo 10 màu Notion
+   * Đánh dấu highlight nền pastel theo 10 màu UI Design System
    */
-  mark?: NotionMarkColor;
+  mark?: UiMarkColor;
 
   /**
    * Định dạng inline code (chữ đỏ #eb5757 trên nền xám ấm nhẹ của Notion)

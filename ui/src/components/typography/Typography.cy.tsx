@@ -220,14 +220,14 @@ describe("<Typography /> Notion Design Component Showcase", () => {
     // 2. Kiểm tra Content Blocks
     cy.get("code")
       .should("exist")
-      .and("have.class", "notion-inline-code")
+      .and("have.class", "ui-inline-code")
       .and("contain.text", "npm install @openway/ui");
 
-    cy.contains("inline code modifier").should("have.class", "notion-inline-code");
+    cy.contains("inline code modifier").should("have.class", "ui-inline-code");
 
     cy.get("blockquote")
       .should("exist")
-      .and("have.class", "notion-quote")
+      .and("have.class", "ui-quote")
       .and("contain.text", "Albert Einstein");
 
     cy.get("kbd").should("exist").and("have.class", "font-mono").and("contain.text", "Ctrl");
@@ -235,7 +235,7 @@ describe("<Typography /> Notion Design Component Showcase", () => {
     cy.contains("OpenWay Internal Link")
       .closest("a")
       .should("have.attr", "href", "https://openway.dev")
-      .and("have.class", "text-primary-500");
+      .and("have.class", "text-primary-600");
 
     cy.contains("External Link (target _blank)")
       .closest("a")
@@ -248,17 +248,17 @@ describe("<Typography /> Notion Design Component Showcase", () => {
       .should("exist");
 
     cy.contains("Important Note")
-      .closest(".notion-callout")
+      .closest(".ui-callout")
       .find("svg")
       .should("exist");
 
     cy.contains("Warning Note")
-      .closest(".notion-callout")
+      .closest(".ui-callout")
       .should("contain.text", "⚠️")
       .and("have.class", "bg-[#fbecdd]");
 
     cy.contains("Launch Info")
-      .closest(".notion-callout")
+      .closest(".ui-callout")
       .should("contain.text", "🚀");
 
     // 3. Kiểm tra Colors & Highlights

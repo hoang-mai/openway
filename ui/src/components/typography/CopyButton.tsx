@@ -59,7 +59,7 @@ export default function CopyButton({ copyable, children, hasHoverAction }: CopyB
       onClick={handleCopy}
       aria-label={isCopied ? String(copiedTip) : String(defaultTip)}
       className={`inline-flex items-center justify-center p-1 ml-1.5 rounded text-neutral-500 hover:text-neutral-800 hover:bg-neutral-200/60 transition-all duration-150 cursor-pointer align-middle ${
-        hasHoverAction ? "notion-hover-action" : ""
+        hasHoverAction ? "ui-hover-action" : ""
       }`}
     >
       {isCopied ? (

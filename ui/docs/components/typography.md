@@ -26,7 +26,7 @@ A unified, comprehensive **Typography** component faithfully adhering to the **N
 
 ```tsx
 import { Typography, Text } from "@openway/ui";
-import type { TypographyProps, NotionColor, NotionMarkColor } from "@openway/ui";
+import type { TypographyProps, UiColor, UiMarkColor } from "@openway/ui";
 ```
 
 ---
@@ -196,11 +196,11 @@ Typography integrates **Next.js** (`next/link`) `<Link>` for optimal client-side
 ### 1. Base Props (Common to all types)
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `color` | `NotionColor` | `"default"` | 10 Notion text colors (`gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`, `pink`, `red`) or alias |
+| `color` | `UiColor` | `"default"` | 10 UI text colors (`gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`, `pink`, `red`) or alias |
 | `size` | `TypographySize` | `undefined` | Typography scale size: `"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"`, `"2xl"`, `"3xl"`, `"4xl"` |
 | `weight` | `TypographyWeight` | `undefined` | Font weight: `"normal"`, `"medium"`, `"semibold"`, `"bold"` |
 | `align` | `TypographyAlign` | `undefined` | Text alignment: `"left"`, `"center"`, `"right"`, `"justify"` |
-| `mark` | `NotionMarkColor` | `undefined` | Pastel background highlight across 10 Notion colors (passing `true` defaults to yellow) |
+| `mark` | `UiMarkColor` | `undefined` | Pastel background highlight across 10 UI colors (passing `true` defaults to yellow) |
 | `code` | `boolean` | `false` | Enables coral red `#eb5757` inline code formatting |
 | `keyboard` | `boolean` | `false` | Enables keyboard shortcut `<kbd>` styling |
 | `strong` | `boolean` | `false` | Bold font weight (`font-semibold`) |

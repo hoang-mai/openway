@@ -126,7 +126,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
         zIndex: DEFAULT_Z_INDEX.SELECT,
       }}
       {...getFloatingProps({
-        className: `flex flex-col bg-neutral-white border border-neutral-200/80 shadow-notion-dropdown overflow-hidden focus:outline-none min-w-[200px] ${menuRadiusClass} ${className}`,
+        className: `flex flex-col bg-neutral-white border border-neutral-200/80 shadow-ui-dropdown overflow-hidden focus:outline-none min-w-[200px] ${menuRadiusClass} ${className}`,
         onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
           if (e.key === "Enter" && activeIndex !== null) {
             e.preventDefault();

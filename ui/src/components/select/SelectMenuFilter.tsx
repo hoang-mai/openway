@@ -350,7 +350,7 @@ function FilterBadgeChip({
               zIndex: DEFAULT_Z_INDEX.SELECT_FILTER,
             }}
             {...getFloatingProps({
-              className: `bg-neutral-white border border-neutral-200/90 rounded-lg p-2.5 shadow-notion-dropdown ${
+              className: `bg-neutral-white border border-neutral-200/90 rounded-lg p-2.5 shadow-ui-dropdown ${
                 field.type === "date" || field.type === "date-range"
                   ? "w-[272px]"
                   : field.type === "checkbox-group"
@@ -546,7 +546,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                 }}
                 {...getAddFloatingProps({
                   className:
-                    "bg-neutral-white border border-neutral-200/80 rounded-md p-1 shadow-notion-dropdown min-w-[160px]",
+                    "bg-neutral-white border border-neutral-200/80 rounded-md p-1 shadow-ui-dropdown min-w-[160px]",
                 })}
               >
                 <div className="px-2 py-1 text-[11px] font-medium text-neutral-400 uppercase tracking-wider select-none">

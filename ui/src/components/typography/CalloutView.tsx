@@ -24,7 +24,7 @@ export default function CalloutView({
   return (
     <div
       ref={ref}
-      className={`notion-callout flex items-start gap-3 p-3.5 sm:p-4 rounded-md border text-sm transition-colors duration-150 ${colorClass} ${className}`.trim()}
+      className={`ui-callout flex items-start gap-3 p-3.5 sm:p-4 rounded-md border text-sm transition-colors duration-150 ${colorClass} ${className}`.trim()}
       {...restProps}
     >
       {icon && (

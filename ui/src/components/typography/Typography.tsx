@@ -125,7 +125,7 @@ export default function Typography({
     italic && "italic",
     underline && "underline underline-offset-2",
     isDelete && "line-through text-neutral-400",
-    isCode && "notion-inline-code",
+    isCode && "ui-inline-code",
     isKbd &&
       "font-mono text-[11px] leading-none px-1.5 py-1 rounded-xs bg-neutral-100 border border-neutral-200 text-neutral-700 shadow-xs",
     tabular && "tabular-nums font-feature-settings-tnum",
@@ -160,7 +160,7 @@ export default function Typography({
     alignClass,
     modifierClasses,
     ellipsisConfig && "block",
-    hasHoverAction && "notion-hover-trigger group relative",
+    hasHoverAction && "ui-hover-trigger group relative",
     className,
   ]
     .filter(Boolean)

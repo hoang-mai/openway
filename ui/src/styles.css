@@ -1,39 +1,39 @@
 @import "tailwindcss";
 
 @theme {
-  /* ================= NOTION TYPOGRAPHY STACK ================= */
+  /* ================= UI TYPOGRAPHY STACK ================= */
   --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
   --font-mono: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
 
-  /* ================= NOTION WARM NEUTRALS ================= */
+  /* ================= UI WARM NEUTRALS ================= */
   --color-neutral-white: #ffffff;
-  --color-neutral-50: #f7f6f3;   /* Notion Sidebar / Table Header / Dropzone */
-  --color-neutral-100: #ebeae8;  /* Notion Hairline Border / Light Divider */
-  --color-neutral-200: #e3e2e0;  /* Notion Main Border / Input Outline */
-  --color-neutral-300: #d3d1cb;  /* Notion Strong Border / Scrollbar Thumb */
-  --color-neutral-400: #9b9a97;  /* Notion Placeholder / Muted Icon */
-  --color-neutral-500: #787774;  /* Notion Secondary Text / Subtitle / Helper */
-  --color-neutral-600: #5f5e5b;  /* Notion Darker Helper Text */
-  --color-neutral-700: #45443f;  /* Notion Form Label / Section Heading */
-  --color-neutral-800: #3c3a35;  /* Notion Dark Neutral */
-  --color-neutral-900: #37352f;  /* Notion Primary Text Body & Headings */
-  --color-neutral-950: #20201d;  /* Notion Deep Charcoal */
+  --color-neutral-50: #f7f6f3;   /* UI Sidebar / Table Header / Dropzone */
+  --color-neutral-100: #ebeae8;  /* UI Hairline Border / Light Divider */
+  --color-neutral-200: #e3e2e0;  /* UI Main Border / Input Outline */
+  --color-neutral-300: #d3d1cb;  /* UI Strong Border / Scrollbar Thumb */
+  --color-neutral-400: #9b9a97;  /* UI Placeholder / Muted Icon */
+  --color-neutral-500: #787774;  /* UI Secondary Text / Subtitle / Helper */
+  --color-neutral-600: #5f5e5b;  /* UI Darker Helper Text */
+  --color-neutral-700: #45443f;  /* UI Form Label / Section Heading */
+  --color-neutral-800: #3c3a35;  /* UI Dark Neutral */
+  --color-neutral-900: #37352f;  /* UI Primary Text Body & Headings */
+  --color-neutral-950: #20201d;  /* UI Deep Charcoal */
   --color-neutral-black: #000000;
 
-  /* ================= NOTION INTERACTIVE BLUE ================= */
+  /* ================= UI INTERACTIVE BLUE ================= */
   --color-primary-50: #edf5fc;   /* Light Blue Tint Selection */
   --color-primary-100: #d3e5f8;
   --color-primary-200: #a8ccf0;
   --color-primary-300: #73aee7;
   --color-primary-400: #4392de;
-  --color-primary-500: #2383e2;   /* Notion Interactive Blue */
+  --color-primary-500: #2383e2;   /* UI Interactive Blue */
   --color-primary-600: #1b6ec2;   /* Blue Hover */
   --color-primary-700: #17579b;   /* Blue Active / Pressed */
   --color-primary-800: #14467d;
   --color-primary-900: #103761;
   --color-primary-950: #0a213b;
 
-  /* ================= NOTION PURPLE / SECONDARY ================= */
+  /* ================= UI PURPLE / SECONDARY ================= */
   --color-secondary-50: #e8deee;
   --color-secondary-100: #d8c9e0;
   --color-secondary-200: #c1a8ce;
@@ -46,7 +46,7 @@
   --color-secondary-900: #2b0e38;
   --color-secondary-950: #1c0825;
 
-  /* ================= NOTION STATUS RED (ERROR) ================= */
+  /* ================= UI STATUS RED (ERROR) ================= */
   --color-error-50: #ffe2dd;    /* Pastel Error Background */
   --color-error-100: #fcd0c7;
   --color-error-200: #f7a394;
@@ -59,7 +59,7 @@
   --color-error-900: #5d1715;   /* Error Text Dark */
   --color-error-950: #3a0d0c;
 
-  /* ================= NOTION STATUS GREEN (SUCCESS) ================= */
+  /* ================= UI STATUS GREEN (SUCCESS) ================= */
   --color-success-50: #dbeddb;  /* Pastel Success Background */
   --color-success-100: #c2e2c2;
   --color-success-200: #93cfa3;
@@ -72,7 +72,7 @@
   --color-success-900: #1c3829;  /* Success Text Dark */
   --color-success-950: #0e1e16;
 
-  /* ================= NOTION STATUS ORANGE/YELLOW (WARNING) ================= */
+  /* ================= UI STATUS ORANGE/YELLOW (WARNING) ================= */
   --color-warning-50: #fdecc8;  /* Pastel Warning Background */
   --color-warning-100: #fce2a6;
   --color-warning-200: #f8cb66;
@@ -85,43 +85,43 @@
   --color-warning-900: #402c1b;  /* Warning Text Dark */
   --color-warning-950: #261a0f;
 
-  /* ================= NOTION INFO (BRIGHT OCEAN BLUE) ================= */
+  /* ================= UI INFO (BRIGHT OCEAN BLUE) ================= */
   --color-info-50: #e8f4fc;     /* Fresh bright pastel background */
   --color-info-100: #d1eaf8;
   --color-info-200: #a9d7f3;
   --color-info-300: #6ebfeb;
   --color-info-400: #38a5df;
-  --color-info-500: #2eaadc;    /* Notion bright blue (--select-color-0) */
+  --color-info-500: #2eaadc;    /* UI bright blue (--select-color-0) */
   --color-info-600: #168ec2;
-  --color-info-700: #0b6e99;    /* Notion authentic blue text (--notion-blue) */
+  --color-info-700: #0b6e99;    /* UI authentic blue text */
   --color-info-800: #0c5b7f;
   --color-info-900: #0f4b67;    /* Deep clear info text */
   --color-info-950: #092f42;
 
-  /* ================= NOTION 10 TEXT COLORS ================= */
-  --color-notion-default: #37352f;
-  --color-notion-gray: #787774;
-  --color-notion-brown: #9f6b53;
-  --color-notion-orange: #d9730d;
-  --color-notion-yellow: #cb912f;
-  --color-notion-green: #448361;
-  --color-notion-blue: #337ea9;
-  --color-notion-purple: #9065b0;
-  --color-notion-pink: #c14c8a;
-  --color-notion-red: #d44c47;
+  /* ================= UI 10 TEXT COLORS ================= */
+  --color-ui-default: #37352f;
+  --color-ui-gray: #787774;
+  --color-ui-brown: #9f6b53;
+  --color-ui-orange: #d9730d;
+  --color-ui-yellow: #cb912f;
+  --color-ui-green: #448361;
+  --color-ui-blue: #337ea9;
+  --color-ui-purple: #9065b0;
+  --color-ui-pink: #c14c8a;
+  --color-ui-red: #d44c47;
 
-  /* ================= NOTION 10 HIGHLIGHT / BACKGROUND COLORS ================= */
-  --color-notion-bg-gray: #f1f1ef;
-  --color-notion-bg-brown: #f4eeee;
-  --color-notion-bg-orange: #fbecdd;
-  --color-notion-bg-yellow: #fbf3db;
-  --color-notion-bg-green: #edf3ec;
-  --color-notion-bg-blue: #e7f3f8;
-  --color-notion-bg-purple: #f4f0f7;
-  --color-notion-bg-pink: #f9eef3;
-  --color-notion-bg-red: #fdebec;
+  /* ================= UI 10 HIGHLIGHT / BACKGROUND COLORS ================= */
+  --color-ui-bg-gray: #f1f1ef;
+  --color-ui-bg-brown: #f4eeee;
+  --color-ui-bg-orange: #fbecdd;
+  --color-ui-bg-yellow: #fbf3db;
+  --color-ui-bg-green: #edf3ec;
+  --color-ui-bg-blue: #e7f3f8;
+  --color-ui-bg-purple: #f4f0f7;
+  --color-ui-bg-pink: #f9eef3;
+  --color-ui-bg-red: #fdebec;
 
-  /* ================= NOTION CRISP GEOMETRY (BORDER RADII) ================= */
+  /* ================= UI CRISP GEOMETRY (BORDER RADII) ================= */
   --radius-2xs: 2px;
   --radius-xs: 3px;
   --radius-sm: 4px;
@@ -131,7 +131,7 @@
   --radius-2xl: 10px;
 }
 
-/* ================= NOTION GLOBAL STYLES ================= */
+/* ================= UI GLOBAL STYLES ================= */
 ::selection {
   background-color: rgba(45, 170, 219, 0.3);
 }
@@ -152,8 +152,8 @@ button:focus:not(:focus-visible),
   font-variant-numeric: tabular-nums;
 }
 
-/* ================= NOTION TYPOGRAPHY UTILITIES ================= */
-.notion-inline-code {
+/* ================= UI TYPOGRAPHY UTILITIES ================= */
+.ui-inline-code {
   color: #be3131;
   background-color: rgba(135, 131, 120, 0.15);
   font-family: var(--font-mono);
@@ -162,14 +162,14 @@ button:focus:not(:focus-visible),
   padding: 0.15em 0.35em;
 }
 
-.notion-quote {
+.ui-quote {
   border-left: 3px solid currentColor;
   padding-left: 0.875rem;
   margin: 0.5rem 0;
   font-style: italic;
 }
 
-.notion-callout {
+.ui-callout {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
@@ -179,43 +179,40 @@ button:focus:not(:focus-visible),
   background-color: var(--color-neutral-50);
 }
 
-.notion-hover-trigger .notion-hover-action {
+.ui-hover-trigger .ui-hover-action {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease-in-out;
 }
 
-.notion-hover-trigger:hover .notion-hover-action,
-.notion-hover-trigger:focus-within .notion-hover-action {
+.ui-hover-trigger:hover .ui-hover-action,
+.ui-hover-trigger:focus-within .ui-hover-action {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* ================= OPENWAY LAYERED AMBIENT SHADOWS ================= */
-.shadow-notion-dropdown,
-.shadow-openway-dropdown {
+/* ================= UI LAYERED AMBIENT SHADOWS ================= */
+.shadow-ui-dropdown {
   box-shadow: 
     rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
     rgba(15, 15, 15, 0.10) 0px 3px 6px, 
     rgba(15, 15, 15, 0.06) 0px 9px 24px;
 }
 
-.shadow-notion-modal,
-.shadow-openway-modal {
+.shadow-ui-modal {
   box-shadow: 
     rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
     rgba(15, 15, 15, 0.10) 0px 4px 12px, 
     rgba(15, 15, 15, 0.20) 0px 24px 48px -8px;
 }
 
-.shadow-notion-card,
-.shadow-openway-card {
+.shadow-ui-card {
   box-shadow: 
     rgba(15, 15, 15, 0.08) 0px 0px 0px 1px, 
     rgba(15, 15, 15, 0.04) 0px 2px 4px;
 }
 
-/* ================= NOTION CROSS-BROWSER SCROLLBAR ================= */
+/* ================= UI CROSS-BROWSER SCROLLBAR ================= */
 /* Firefox */
 * {
   scrollbar-width: thin;
@@ -251,7 +248,7 @@ dialog::backdrop {
   background: transparent;
 }
 
-/* ================= NOTION ANIMATION KEYFRAMES ================= */
+/* ================= UI ANIMATION KEYFRAMES ================= */
 @keyframes errorSlideIn {
   0% {
     opacity: 0;
@@ -470,7 +467,7 @@ dialog::backdrop {
 }
 
 /* ================= Dropdown / Popover Animations ================= */
-@keyframes notionDropdownIn {
+@keyframes uiDropdownIn {
   0% {
     opacity: 0;
     transform: translateY(-4px) scale(0.98);
@@ -482,18 +479,18 @@ dialog::backdrop {
 }
 
 .animate-dropdown-in {
-  animation: notionDropdownIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: uiDropdownIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ================= Notion Spinner Animation ================= */
-@keyframes notionSpinner {
+/* ================= UI Spinner Animation ================= */
+@keyframes uiSpinner {
   to {
     transform: rotate(360deg);
   }
 }
 
-.animate-notion-spinner {
-  animation: notionSpinner 0.6s linear infinite;
+.animate-ui-spinner {
+  animation: uiSpinner 0.6s linear infinite;
 }
 
 /* ================= Skeleton Shimmer Animation ================= */

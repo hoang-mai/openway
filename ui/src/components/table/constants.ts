@@ -71,7 +71,7 @@ export const tableToolbarConfig = {
   clearButton:
     "absolute inset-y-0 right-0 flex items-center pr-2.5 text-neutral-400 hover:text-neutral-600 cursor-pointer",
   columnPopoverContent:
-    "w-56 p-1 bg-white border border-neutral-200/90 rounded-lg shadow-notion-dropdown",
+    "w-56 p-1 bg-white border border-neutral-200/90 rounded-lg shadow-ui-dropdown",
   columnPopoverHeader:
     "px-2.5 py-1.5 text-xs font-semibold text-neutral-500 border-b border-neutral-100 uppercase tracking-wider",
   columnItemCheckbox:
@@ -83,7 +83,7 @@ export const tableFilterConfig = {
   addButton:
     "inline-flex items-center gap-1.5 h-8 px-3 text-xs font-normal text-neutral-500 hover:text-neutral-800 bg-white hover:bg-neutral-100/70 border border-neutral-200/70 hover:border-neutral-300 rounded-md transition-colors shadow-none cursor-pointer select-none",
   addMenuDropdown:
-    "bg-white border border-neutral-200/90 rounded-lg p-1 shadow-notion-dropdown min-w-48",
+    "bg-white border border-neutral-200/90 rounded-lg p-1 shadow-ui-dropdown min-w-48",
   addMenuItem:
     "w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-sm text-left transition-colors cursor-pointer text-neutral-700 hover:bg-neutral-100/70",
   addMenuItemActive: "text-primary-700 font-medium bg-primary-50/70 hover:bg-primary-50",
@@ -102,7 +102,7 @@ export const tableFilterConfig = {
   resetButton:
     "inline-flex items-center gap-1 h-8 px-2 text-xs font-medium text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100/70 rounded-md transition-colors cursor-pointer select-none",
   popoverContent:
-    "bg-white border border-neutral-200/90 rounded-lg p-3 shadow-notion-dropdown",
+    "bg-white border border-neutral-200/90 rounded-lg p-3 shadow-ui-dropdown",
   popoverHeader: "flex items-center justify-between pb-1.5 mb-2 border-b border-neutral-100",
   popoverTitle: "text-xs font-medium text-neutral-600",
   popoverFooter:

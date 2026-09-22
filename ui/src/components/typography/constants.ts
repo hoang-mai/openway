@@ -31,9 +31,9 @@ export const variantStyleMap: Record<TypographyType, string> = {
   h6: "text-sm font-semibold leading-normal text-neutral-900 my-0.5 block",
   p: "text-sm sm:text-base leading-relaxed mb-3 last:mb-0 text-neutral-900 block",
   span: "text-sm leading-normal inline",
-  callout: "notion-callout text-sm text-neutral-900 my-2.5",
-  blockquote: "notion-quote text-neutral-800 block",
-  code: "notion-inline-code inline",
+  callout: "ui-callout text-sm text-neutral-900 my-2.5",
+  blockquote: "ui-quote text-neutral-800 block",
+  code: "ui-inline-code inline",
   kbd: "inline-flex items-center justify-center font-mono text-[11px] leading-none px-1.5 py-1 rounded-xs bg-neutral-100 border border-neutral-200 text-neutral-700 shadow-xs select-none align-baseline",
   a: "text-primary-600 hover:text-primary-700 hover:underline transition-colors duration-150 cursor-pointer inline-flex items-center gap-1",
 };
