@@ -1,5 +1,10 @@
 # @openway/ui
 
+[![npm version](https://img.shields.io/npm/v/@openway/ui.svg?style=flat&color=2383e2)](https://www.npmjs.com/package/@openway/ui)
+[![license](https://img.shields.io/npm/l/@openway/ui.svg?style=flat)](https://github.com/hoang-mai/openway/blob/main/ui/LICENSE)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=flat&logo=buy-me-a-coffee)](https://buymeacoffee.com/maianhhoang)
+[![Donate MoMo](https://img.shields.io/badge/Donate-MoMo-ae2070?style=flat&logo=momo&logoColor=white)](https://me.momo.vn/maianhhoang)
+
 > **Enterprise-grade React 19 UI component library (OpenWay Design System)**, precision-engineered for Next.js 15/16+ and Tailwind CSS v4 with built-in internationalization (i18n).
 
 The library embodies a modern, calm aesthetic: **Warm Paper Aesthetics**, **Interactive Blue `#2383e2`**, **Soothing Pastel Status Accents**, **Layered Ambient Shadows**, **Crisp 2px–10px Corner Geometry**, and **Snappy 120ms–200ms Micro-Interactions**.
@@ -216,6 +221,14 @@ Explore in-depth component specifications and code examples in the [docs/](./doc
 
 ---
 
-## 8. License
+## 8. 💖 Sponsor & Support
 
-Published under the [MIT License](LICENSE).
+If you find `@openway/ui` helpful, please consider supporting the project:
+- **Buy Me a Coffee**: [buymeacoffee.com/maianhhoang](https://buymeacoffee.com/maianhhoang)
+- **MoMo**: [me.momo.vn/maianhhoang](https://me.momo.vn/maianhhoang) (`0867254603`)
+
+---
+
+## 9. License
+
+Published under the [MIT License](https://github.com/hoang-mai/openway/blob/main/ui/LICENSE).

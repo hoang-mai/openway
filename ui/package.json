@@ -16,6 +16,25 @@
   "publishConfig": {
     "access": "public"
   },
+  "homepage": "https://github.com/hoang-mai/openway/tree/main/ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoang-mai/openway.git",
+    "directory": "ui"
+  },
+  "bugs": {
+    "url": "https://github.com/hoang-mai/openway/issues"
+  },
+  "funding": [
+    {
+      "type": "buy-me-a-coffee",
+      "url": "https://buymeacoffee.com/maianhhoang"
+    },
+    {
+      "type": "custom",
+      "url": "https://me.momo.vn/maianhhoang"
+    }
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
