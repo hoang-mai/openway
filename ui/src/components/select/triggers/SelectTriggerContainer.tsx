@@ -13,6 +13,7 @@ export interface SelectTriggerContainerProps {
   showSpinner?: boolean;
   showClear?: boolean;
   onClear?: (e: React.MouseEvent) => void;
+  hideChevron?: boolean;
   startContent?: ReactNode;
   endContent?: ReactNode;
   triggerRef: (node: HTMLElement | null) => void;
@@ -36,6 +37,7 @@ export function SelectTriggerContainer({
   showSpinner = false,
   showClear = false,
   onClear,
+  hideChevron = false,
   startContent,
   endContent,
   triggerRef,
@@ -50,6 +52,8 @@ export function SelectTriggerContainer({
 }: SelectTriggerContainerProps) {
   const statusStyles = disabled
     ? "opacity-60 cursor-not-allowed bg-neutral-100 pointer-events-none"
+    : hideChevron
+    ? "cursor-default"
     : "cursor-pointer";
 
   return (
@@ -102,9 +106,11 @@ export function SelectTriggerContainer({
 
         {endContent}
 
-        <span className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} aria-hidden="true">
-          <ChevronDownIcon className={currentSize.icon} />
-        </span>
+        {!hideChevron && (
+          <span className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} aria-hidden="true">
+            <ChevronDownIcon className={currentSize.icon} />
+          </span>
+        )}
       </div>
     </div>
   );

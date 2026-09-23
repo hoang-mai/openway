@@ -29,6 +29,7 @@ export interface SingleSelectTriggerProps<TData = unknown> {
   onSearchChange?: (val: string) => void;
   onClear?: (e: React.MouseEvent) => void;
   clearable?: boolean;
+  hideChevron?: boolean;
   isLoading?: boolean;
   showSpinner?: boolean;
   startContent?: ReactNode;
@@ -59,6 +60,7 @@ export function SingleSelectTrigger<TData = unknown>({
   onSearchChange,
   onClear,
   clearable = false,
+  hideChevron = false,
   isLoading = false,
   showSpinner = false,
   startContent,
@@ -145,6 +147,7 @@ export function SingleSelectTrigger<TData = unknown>({
       showSpinner={showSpinner}
       showClear={showClear}
       onClear={onClear}
+      hideChevron={hideChevron}
       startContent={startContent}
       endContent={endContent}
       triggerRef={triggerRef}

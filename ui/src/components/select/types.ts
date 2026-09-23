@@ -292,7 +292,12 @@ export interface BaseSelectProps<TData = unknown, TFilters extends Record<string
   emptyProps?: Partial<EmptyProps>;
 
   // ==================== ACTIONS & STATES ====================
-  /** Render menu qua Portal để tránh bị che bởi overflow hidden. Mặc định true */
+  /**
+   * Có render menu qua Portal lơ lửng (Floating Popover) hay không.
+   * - `true` (mặc định): Dropdown popover trôi nổi, bấm trigger để mở menu.
+   * - `false`: Chế độ Inline Listbox tĩnh (tương tự DatePicker). Không cần bấm trigger, danh sách options luôn hiển thị cố định ngay bên dưới và ẩn icon Chevron.
+   * @default true
+   */
   portal?: boolean;
   /** Container để gắn portal menu vào (mặc định document.body, tự động nhận diện `<dialog>` nếu Select nằm trong Modal/Confirm) */
   portalRoot?: HTMLElement | null | React.RefObject<HTMLElement | null>;

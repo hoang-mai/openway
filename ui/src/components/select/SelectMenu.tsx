@@ -109,24 +109,33 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
     reference,
   });
 
-  const shouldRender = isMounted !== undefined ? isMounted : isOpen;
+  const isInline = !portal;
+  const shouldRender = isInline ? true : isMounted !== undefined ? isMounted : isOpen;
   if (!shouldRender) return null;
 
   const menuRadiusClass = getSafeConfig(radius, menuRadiusConfig, "md");
   const currentSize = getSafeConfig(size, sizeConfig, "md");
   const roundedClass = getSafeConfig(radius, radiusConfig, "md");
 
-  const menuContent = (
-    <div
-      ref={floatingRef}
-      data-state={isOpen ? "open" : "closed"}
-      style={{
+  const containerStyle: CSSProperties = isInline
+    ? {}
+    : {
         ...floatingStyles,
         ...(animated ? transitionStyles : {}),
         zIndex: DEFAULT_Z_INDEX.SELECT,
-      }}
+      };
+
+  const containerClasses = isInline
+    ? `relative flex flex-col bg-neutral-white border border-neutral-200/80 shadow-xs overflow-hidden focus:outline-none w-full mt-1.5 ${menuRadiusClass} ${className}`
+    : `flex flex-col bg-neutral-white border border-neutral-200/80 shadow-ui-dropdown overflow-hidden focus:outline-none min-w-[200px] ${menuRadiusClass} ${className}`;
+
+  const menuContent = (
+    <div
+      ref={floatingRef}
+      data-state={isInline ? "open" : isOpen ? "open" : "closed"}
+      style={containerStyle}
       {...getFloatingProps({
-        className: `flex flex-col bg-neutral-white border border-neutral-200/80 shadow-ui-dropdown overflow-hidden focus:outline-none min-w-[200px] ${menuRadiusClass} ${className}`,
+        className: containerClasses,
         onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
           if (e.key === "Enter" && activeIndex !== null) {
             e.preventDefault();

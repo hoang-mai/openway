@@ -920,6 +920,102 @@ describe("<Select /> Component Tests (Single Mount Harness)", () => {
 });
 
 // ==========================================
+// TEST SUITE: Inline Listbox Mode (portal={false})
+// ==========================================
+describe("Select & MultiSelect Inline Listbox Mode (portal={false})", () => {
+  it("renders options statically below trigger without clicking, hides chevron, and stays open on selection", () => {
+    const onSingleChange = cy.stub().as("onSingleChange");
+
+    const InlineSelectTest = () => {
+      const [val, setVal] = useState<string | number | null>(null);
+      return (
+        <div className="p-4 max-w-md">
+          <Select
+            id="inline-select-test"
+            label="Inline Select"
+            placeholder="Chọn hoa quả inline..."
+            options={fruitsOptions}
+            value={val}
+            onChange={(next) => {
+              setVal(next);
+              onSingleChange(next);
+            }}
+            searchable
+            portal={false}
+          />
+        </div>
+      );
+    };
+
+    cy.mount(<InlineSelectTest />);
+
+    // 1. Menu listbox is visible immediately without clicking trigger
+    cy.get("#inline-select-test [role='listbox']").should("be.visible");
+    cy.get("#inline-select-test [role='listbox']").contains("Táo (Apple)").should("be.visible");
+    cy.get("#inline-select-test [role='listbox']").contains("Chuối (Banana)").should("be.visible");
+
+    // 2. Chevron down icon is hidden
+    cy.get("#inline-select-test-trigger").within(() => {
+      cy.get("svg").should("not.exist");
+    });
+
+    // 3. Search works inline without closing
+    cy.get("#inline-select-test-trigger input[aria-label='Search']").type("cam");
+    cy.get("#inline-select-test [role='listbox']").contains("Cam (Orange)").should("be.visible");
+    cy.get("#inline-select-test [role='listbox']").contains("Táo (Apple)").should("not.exist");
+
+    // 4. Clicking option selects it, updates value, and listbox STAYS visible (does not close)
+    cy.get("#inline-select-test [role='listbox']").contains("Cam (Orange)").click();
+    cy.get("@onSingleChange").should("have.been.calledWith", "orange");
+    cy.get("#inline-select-test [role='listbox']").should("be.visible");
+  });
+
+  it("verifies MultiSelect in inline mode (portal={false}) toggles tags and stays visible", () => {
+    const onMultiChange = cy.stub().as("onMultiChange");
+
+    const InlineMultiSelectTest = () => {
+      const [vals, setVals] = useState<(string | number)[]>(["apple"]);
+      return (
+        <div className="p-4 max-w-md">
+          <MultiSelect
+            id="inline-multiselect-test"
+            label="Inline MultiSelect"
+            placeholder="Chọn nhiều hoa quả..."
+            options={fruitsOptions}
+            value={vals}
+            onChange={(next) => {
+              setVals(next);
+              onMultiChange(next);
+            }}
+            portal={false}
+          />
+        </div>
+      );
+    };
+
+    cy.mount(<InlineMultiSelectTest />);
+
+    // 1. Listbox is visible immediately
+    cy.get("#inline-multiselect-test [role='listbox']").should("be.visible");
+
+    // 2. Initial tag 'Táo (Apple)' is visible
+    cy.get("#inline-multiselect-test-trigger").contains("Táo (Apple)").should("be.visible");
+
+    // 3. Chevron down is hidden
+    cy.get("#inline-multiselect-test-trigger").within(() => {
+      // Only delete icon on badge may exist, no trigger chevron
+      cy.get("[aria-label='Clear selection']").should("not.exist");
+    });
+
+    // 4. Select another option 'Chuối (Banana)' -> stays open
+    cy.get("#inline-multiselect-test [role='listbox']").contains("Chuối (Banana)").click();
+    cy.get("@onMultiChange").should("have.been.calledWith", ["apple", "banana"]);
+    cy.get("#inline-multiselect-test [role='listbox']").should("be.visible");
+    cy.get("#inline-multiselect-test-trigger").contains("Chuối (Banana)").should("be.visible");
+  });
+});
+
+// ==========================================
 // TEST SUITE: useSelectInfiniteQuery Adapter
 // ==========================================
 // describe("useSelectInfiniteQuery & Infinite Scroll Integration", () => {

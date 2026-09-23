@@ -160,7 +160,16 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   }, [currentValues, options, historicalOptions, isFetching]);
 
   // ==================== OPEN & ACTIVE INDEX ====================
-  const [isOpen, setIsOpen] = useState(false);
+  const isInline = !portal;
+  const [isOpenState, setIsOpenState] = useState(false);
+  const isOpen = isInline ? true : isOpenState;
+  const setIsOpen = useCallback(
+    (nextOpen: boolean | ((prev: boolean) => boolean)) => {
+      if (isInline) return;
+      setIsOpenState(nextOpen);
+    },
+    [isInline]
+  );
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   // ==================== SEARCH & FILTERS HOOK ====================
@@ -203,6 +212,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
     placement,
     isOpen,
     onOpenChange: (nextOpen) => {
+      if (isInline) return;
       setIsOpen(nextOpen);
       if (!nextOpen) {
         setActiveIndex(null);
@@ -218,6 +228,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
     animationDuration,
     activeIndex,
     onNavigate: setActiveIndex,
+    isInline,
   });
 
   // ==================== SELECTION HANDLERS ====================
@@ -300,11 +311,11 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
         if (targetOption && !targetOption.disabled) {
           handleSelectOption(targetOption);
         }
-      } else if (!isOpen) {
+      } else if (!isOpen && !isInline) {
         e.preventDefault();
         setIsOpen(true);
       }
-    } else if (e.key === "ArrowDown" && !isOpen) {
+    } else if (e.key === "ArrowDown" && !isOpen && !isInline) {
       setIsOpen(true);
     }
   };
@@ -382,6 +393,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
             onRemoveTag={handleRemoveTag}
             onClear={handleClear}
             clearable={isClearable}
+            hideChevron={isInline}
             isLoading={isTriggerLoading}
             showSpinner={showSpinner}
             startContent={startContent}

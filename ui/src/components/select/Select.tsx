@@ -134,7 +134,16 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
     return item;
   }, [currentValue, options, historicalOptions, isFetching]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const isInline = !portal;
+  const [isOpenState, setIsOpenState] = useState(false);
+  const isOpen = isInline ? true : isOpenState;
+  const setIsOpen = useCallback(
+    (nextOpen: boolean | ((prev: boolean) => boolean)) => {
+      if (isInline) return;
+      setIsOpenState(nextOpen);
+    },
+    [isInline]
+  );
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const {
@@ -172,6 +181,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
       placement,
       isOpen,
       onOpenChange: (nextOpen) => {
+        if (isInline) return;
         setIsOpen(nextOpen);
         if (!nextOpen) {
           setActiveIndex(null);
@@ -187,6 +197,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
       animationDuration,
       activeIndex,
       onNavigate: setActiveIndex,
+      isInline,
     });
 
   const handleSelectOption = useCallback(
@@ -204,10 +215,12 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
         setUncontrolledValue(option.value);
       }
       onChange?.(option.value, option);
-      setIsOpen(false);
+      if (!isInline) {
+        setIsOpen(false);
+      }
       resetSearch();
     },
-    [isDisabled, readOnly, isControlled, onChange, resetSearch]
+    [isDisabled, readOnly, isControlled, onChange, resetSearch, isInline, setIsOpen]
   );
 
   const handleClear = useCallback(
@@ -234,11 +247,11 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
         if (targetOption && !targetOption.disabled) {
           handleSelectOption(targetOption);
         }
-      } else if (!isOpen) {
+      } else if (!isOpen && !isInline) {
         e.preventDefault();
         setIsOpen(true);
       }
-    } else if (e.key === "ArrowDown" && !isOpen) {
+    } else if (e.key === "ArrowDown" && !isOpen && !isInline) {
       setIsOpen(true);
     }
   };
@@ -315,6 +328,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
             onSearchChange={handleSearchChange}
             onClear={handleClear}
             clearable={isClearable}
+            hideChevron={isInline}
             isLoading={isTriggerLoading}
             showSpinner={showSpinner}
             startContent={startContent}

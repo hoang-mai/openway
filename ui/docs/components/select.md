@@ -260,7 +260,7 @@ const filterFields: SelectFilterField[] = [
 | `clearable` | `boolean` | `false` | Displays quick clear button for selected value(s). |
 | `disabled` | `boolean` | `false` | Disables user interaction. |
 | `isLoading` | `boolean` | `false` | Displays loading state indicator. |
-| `portal` | `boolean` | `true` | Renders menu through a portal to prevent container overflow clipping. |
+| `portal` | `boolean` | `true` | `true`: Renders menu through a portal as a floating popover. `false`: Static inline listbox mode (no need to click trigger, options are permanently shown underneath). |
 | `maxMenuHeight` | `number` | `280` | Maximum height of the scrollable menu in pixels. |
 | `renderOption` | `(option, state) => ReactNode` | `undefined` | Custom render function for each listbox option. |
 | `renderValue` | `(selected) => ReactNode` | `undefined` | Custom render function for selected value on the trigger. |

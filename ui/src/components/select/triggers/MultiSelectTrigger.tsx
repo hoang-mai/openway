@@ -27,6 +27,7 @@ export interface MultiSelectTriggerProps<TData = unknown> {
   onRemoveTag?: (option: SelectOptionItem<TData>) => void;
   onClear?: (e: React.MouseEvent) => void;
   clearable?: boolean;
+  hideChevron?: boolean;
   isLoading?: boolean;
   showSpinner?: boolean;
   startContent?: ReactNode;
@@ -59,6 +60,7 @@ export function MultiSelectTrigger<TData = unknown>({
   onRemoveTag,
   onClear,
   clearable = false,
+  hideChevron = false,
   isLoading = false,
   showSpinner = false,
   startContent,
@@ -160,6 +162,7 @@ export function MultiSelectTrigger<TData = unknown>({
       showSpinner={showSpinner}
       showClear={showClear}
       onClear={onClear}
+      hideChevron={hideChevron}
       startContent={startContent}
       endContent={endContent}
       triggerRef={triggerRef}

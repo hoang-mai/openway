@@ -27,6 +27,7 @@ export interface UseSelectFloatingOptions {
   animationDuration?: number;
   activeIndex: number | null;
   onNavigate: (index: number | null) => void;
+  isInline?: boolean;
 }
 
 export interface UseSelectFloatingReturn {
@@ -52,28 +53,30 @@ export function useSelectFloating({
   animationDuration = 150,
   activeIndex,
   onNavigate,
+  isInline = false,
 }: UseSelectFloatingOptions): UseSelectFloatingReturn {
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const isInteractive = !disabled && !readOnly;
 
   const { refs, elements, floatingStyles, context } = useFloating<HTMLElement>({
     placement,
-    open: isOpen && isInteractive,
+    open: isInline ? true : isOpen && isInteractive,
     onOpenChange: (nextOpen) => {
-      if (isInteractive && (!isLoading || isOpen || !nextOpen)) {
+      if (!isInline && isInteractive && (!isLoading || isOpen || !nextOpen)) {
         onOpenChange(nextOpen);
       }
     },
-    whileElementsMounted: autoUpdate,
+    whileElementsMounted: isInline ? undefined : autoUpdate,
     transform: false,
-    middleware: [offsetMiddleware(4), flipMiddleware(), shiftMiddleware({ padding: 8 })],
+    middleware: isInline ? [] : [offsetMiddleware(4), flipMiddleware(), shiftMiddleware({ padding: 8 })],
   });
 
   const click = useClick(context, {
-    enabled: isInteractive && (!isLoading || isOpen),
+    enabled: !isInline && isInteractive && (!isLoading || isOpen),
   });
 
   const dismiss = useDismiss(context, {
+    enabled: !isInline,
     outsidePress: (event) => {
       const target = event.target as HTMLElement | null;
       if (target?.closest?.("[data-select-filter-popover]")) {
@@ -96,15 +99,15 @@ export function useSelectFloating({
 
   const { isMounted, styles: transitionStyles } = useFloatingTransition(context, {
     duration: animationDuration,
-    animated,
+    animated: isInline ? false : animated,
   });
 
   return {
     refs,
     elements,
-    floatingStyles,
-    transitionStyles,
-    isMounted,
+    floatingStyles: isInline ? {} : floatingStyles,
+    transitionStyles: isInline ? {} : transitionStyles,
+    isMounted: isInline ? true : isMounted,
     context,
     getReferenceProps,
     getFloatingProps,
