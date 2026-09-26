@@ -46,6 +46,36 @@ export function formatNumberString(
   // Tự động bật cho phép số âm nếu min chưa set hoặc min < 0
   const allowNeg = options?.allowNegative ?? (min === undefined || min < 0);
 
+  // 1. Khi đầu vào là kiểu số JS thuần túy (typeof rawInput === "number")
+  if (typeof rawInput === "number") {
+    if (isNaN(rawInput)) return "";
+    let num = rawInput;
+
+    if (max !== undefined && num > max) num = max;
+    if (min !== undefined && num < min && (clampMin || (num < 0 && min < 0))) num = min;
+
+    const isNegative = allowNeg && num < 0;
+    const absNum = Math.abs(num);
+
+    if (maxDecimals > 0) {
+      const numStr = absNum.toString();
+      const parts = numStr.split(".");
+      const intPart = parts[0] ?? "0";
+      const decPart = parts[1] ? parts[1].slice(0, maxDecimals) : "";
+
+      const formattedInt = parseInt(intPart, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, thousandSep);
+      const sign = isNegative ? "-" : "";
+
+      return decPart ? `${sign}${formattedInt}${decimalSep}${decPart}` : `${sign}${formattedInt}`;
+    } else {
+      const intVal = Math.round(absNum);
+      const formattedInt = intVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, thousandSep);
+      const sign = isNegative ? "-" : "";
+      return `${sign}${formattedInt}`;
+    }
+  }
+
+  // 2. Khi đầu vào là chuỗi người dùng nhập (typeof rawInput === "string")
   const rawStr = String(rawInput).trim();
   if (!rawStr) return "";
 
@@ -57,12 +87,9 @@ export function formatNumberString(
     return "-";
   }
 
-  // Nếu có số thập phân (maxDecimals > 0)
-  if (maxDecimals > 0) {
-    const hasDecimal = rawStr.includes(decimalSep);
-
-    if (hasDecimal) {
-      const parts = rawStr.split(decimalSep);
+  // Nếu có số thập phân (maxDecimals > 0) và chuỗi chứa đúng ký tự decimalSeparator
+  if (maxDecimals > 0 && rawStr.includes(decimalSep)) {
+    const parts = rawStr.split(decimalSep);
       const integerDigits = parts[0]?.replace(/\D/g, "") ?? "";
       const decimalDigits = parts.slice(1).join("").replace(/\D/g, "").slice(0, maxDecimals);
 
@@ -96,7 +123,6 @@ export function formatNumberString(
       return decimalDigits.length > 0
         ? `${sign}${formattedInteger || "0"}${decimalSep}${decimalDigits}`
         : `${sign}${formattedInteger}`;
-    }
   }
 
   // Chế độ số nguyên thuần túy

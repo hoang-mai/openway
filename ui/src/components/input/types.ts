@@ -182,7 +182,7 @@ export interface PasswordInputProps extends Omit<InputProps, "type"> {
   onVisibilityChange?: (visible: boolean) => void;
 }
 
-export interface NumberInputProps extends Omit<InputProps, "type" | "value" | "defaultValue"> {
+export interface NumberInputProps extends Omit<InputProps, "type" | "value" | "defaultValue" | "onChange"> {
   /**
    * Giá trị số hoặc chuỗi đã được định dạng (vd: 1000000 hoặc "1.000.000" hoặc "1.000.000,50")
    */
@@ -192,6 +192,11 @@ export interface NumberInputProps extends Omit<InputProps, "type" | "value" | "d
    * Giá trị mặc định ban đầu khi khởi tạo (Uncontrolled)
    */
   defaultValue?: string | number | null;
+
+  /**
+   * Callback khi giá trị số thay đổi. Trả về trực tiếp kiểu số (number) hoặc null khi xóa/trống (giúp gửi null lên server thay vì bị bỏ qua).
+   */
+  onChange?: (value: number | null, rawValue?: string) => void;
 
   /**
    * Giá trị nhỏ nhất cho phép

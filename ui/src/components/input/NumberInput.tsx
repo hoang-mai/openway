@@ -28,15 +28,28 @@ export default function NumberInput({
   };
 
   const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = useState<string | number | null | undefined>(defaultValue);
-  const currentValue = isControlled ? value : internalValue;
+  const [internalValue, setInternalValue] = useState(defaultValue);
 
-  const formattedDisplayValue = formatNumberString(currentValue, formatOptions);
+  // Chuỗi text tạm thời người dùng đang gõ (giữ dấu - và dấu phân cách dở dang)
+  const [typingText, setTypingText] = useState<string | null>(null);
+
+  // Parse số của chuỗi đang gõ để so sánh với prop value
+  const parsedTyping = typingText !== null
+    ? (parseNumber(typingText, { thousandSeparator, decimalSeparator }) ?? null)
+    : null;
+
+  // Nếu prop value trùng khớp với giá trị đang gõ -> giữ nguyên typingText để không bị nuốt dấu.
+  // Nếu prop value bị thay đổi từ bên ngoài (ví dụ nút Reset, fetch data) -> tự động format theo value mới.
+  const displayValue = (typingText !== null && (!isControlled || parsedTyping === value))
+    ? typingText
+    : formatNumberString(isControlled ? value : internalValue, formatOptions);
 
   const handleClear = () => {
+    setTypingText(null);
     if (!isControlled) {
       setInternalValue("");
     }
+    onChange?.(null, "");
     onClear?.();
   };
 
@@ -51,21 +64,17 @@ export default function NumberInput({
     // Tính toán lại vị trí con trỏ chuột không bị nhảy
     const newCaretPos = calculateCaretPosition(rawInputValue, newFormattedValue, oldCaretPos, { decimalSeparator });
 
+    setTypingText(newFormattedValue);
     if (!isControlled) {
       setInternalValue(newFormattedValue);
     }
 
-    // Gán giá trị vào target và trigger onChange
-    inputElement.value = newFormattedValue;
+    // Parse ra số thuần (number | null)
+    const parsed = parseNumber(newFormattedValue, { thousandSeparator, decimalSeparator });
+    const parsedNum = parsed !== undefined ? parsed : null;
 
-    if (onChange) {
-      const syntheticEvent = {
-        ...e,
-        target: inputElement,
-        currentTarget: inputElement,
-      } as ChangeEvent<HTMLInputElement>;
-      onChange(syntheticEvent);
-    }
+    inputElement.value = newFormattedValue;
+    onChange?.(parsedNum, newFormattedValue);
 
     // Đặt lại vị trí con trỏ chuột
     requestAnimationFrame(() => {
@@ -76,22 +85,16 @@ export default function NumberInput({
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+    setTypingText(null);
+    const currentValue = isControlled ? value : internalValue;
     if (min !== undefined && currentValue !== undefined && currentValue !== null && currentValue !== "") {
-      const num = parseNumber(String(currentValue), { thousandSeparator, decimalSeparator });
+      const num = typeof currentValue === "number" ? currentValue : parseNumber(String(currentValue), { thousandSeparator, decimalSeparator });
       if (num !== undefined && num < min) {
         const clampedValue = formatNumberString(min, { ...formatOptions, clampMin: true });
         if (!isControlled) {
           setInternalValue(clampedValue);
         }
-        if (onChange) {
-          e.target.value = clampedValue;
-          const syntheticEvent = {
-            ...e,
-            target: e.target,
-            currentTarget: e.target,
-          } as unknown as ChangeEvent<HTMLInputElement>;
-          onChange(syntheticEvent);
-        }
+        onChange?.(min, clampedValue);
       }
     }
     onBlur?.(e);
@@ -102,7 +105,7 @@ export default function NumberInput({
       ref={ref}
       type="text"
       inputMode={maxDecimalDigits > 0 ? "decimal" : "numeric"}
-      value={formattedDisplayValue}
+      value={displayValue}
       onChange={handleChange}
       onBlur={handleBlur}
       onClear={handleClear}

@@ -3,51 +3,57 @@ import NumberInput from "./NumberInput";
 
 describe("NumberInput Component", () => {
   describe("1. Number Formatting with Dot (.)", () => {
-    it("formats 3 digits, 4 digits, 6 digits and millions automatically", () => {
+    it("formats 3 digits, 4 digits, 6 digits and millions automatically and outputs numeric value", () => {
       const FormattedForm = () => {
-        const [val, setVal] = useState("");
+        const [val, setVal] = useState<number | null>(null);
         return (
           <div className="p-4 max-w-sm">
             <NumberInput
               label="Số tiền thanh toán"
               value={val}
-              onChange={(e) => setVal(e.target.value)}
+              onChange={(v) => setVal(v)}
               placeholder="Nhập số tiền..."
             />
-            <span data-testid="output">{val}</span>
+            <span data-testid="output">{val !== null ? val : "null"}</span>
           </div>
         );
       };
 
       cy.mount(<FormattedForm />);
 
-      // Type 1000 -> 1.000
+      // Type 1000 -> UI displays 1.000, output state is 1000
       cy.get("input").type("1000");
       cy.get("input").should("have.value", "1.000");
-      cy.get("[data-testid='output']").should("have.text", "1.000");
+      cy.get("[data-testid='output']").should("have.text", "1000");
 
-      // Type 000 -> 1.000.000
+      // Type 000 -> UI displays 1.000.000, output state is 1000000
       cy.get("input").type("000");
       cy.get("input").should("have.value", "1.000.000");
-      cy.get("[data-testid='output']").should("have.text", "1.000.000");
+      cy.get("[data-testid='output']").should("have.text", "1000000");
     });
 
     it("ignores letters and non-digit characters", () => {
       const CleanNumberForm = () => {
-        const [val, setVal] = useState("");
-        return <NumberInput value={val} onChange={(e) => setVal(e.target.value)} placeholder="Chỉ nhận số" />;
+        const [val, setVal] = useState<number | null>(null);
+        return (
+          <div>
+            <NumberInput value={val} onChange={(v) => setVal(v)} placeholder="Chỉ nhận số" />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
+          </div>
+        );
       };
 
       cy.mount(<CleanNumberForm />);
       cy.get("input").type("abc12xy345z");
       cy.get("input").should("have.value", "12.345");
+      cy.get("[data-testid='output']").should("have.text", "12345");
     });
   });
 
   describe("2. Custom Separators & Decimal Support", () => {
     it("supports decimalSeparator and maxDecimalDigits (VN: 1.000,50)", () => {
       const DecimalForm = () => {
-        const [val, setVal] = useState("");
+        const [val, setVal] = useState<number | null>(null);
         return (
           <div className="p-4 max-w-sm">
             <NumberInput
@@ -56,9 +62,10 @@ describe("NumberInput Component", () => {
               decimalSeparator=","
               thousandSeparator="."
               value={val}
-              onChange={(e) => setVal(e.target.value)}
+              onChange={(v) => setVal(v)}
               placeholder="0,00"
             />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
           </div>
         );
       };
@@ -66,19 +73,46 @@ describe("NumberInput Component", () => {
       cy.mount(<DecimalForm />);
       cy.get("input").type("1250,75");
       cy.get("input").should("have.value", "1.250,75");
+      cy.get("[data-testid='output']").should("have.text", "1250.75");
 
       // Type more digits beyond maxDecimalDigits=2 -> stays at 1.250,75 and caret doesn't jump to 0
       cy.get("input").type("9");
       cy.get("input").should("have.value", "1.250,75");
-      cy.get("input").then(($input) => {
-        const el = $input[0] as HTMLInputElement;
-        expect(el.selectionStart).to.equal("1.250,75".length);
-      });
+      cy.get("[data-testid='output']").should("have.text", "1250.75");
+      // Blur to body or other element
+      cy.get("input").blur();
+      cy.get("input").should("have.value", "1.250,75");
+      cy.get("[data-testid='output']").should("have.text", "1250.75");
+    });
+
+
+    it("correctly formats integer when typed into decimal input (12345 -> 12.345)", () => {
+      const WeightForm = () => {
+        const [val, setVal] = useState<number | null>(null);
+        return (
+          <div className="p-4 max-w-sm">
+            <NumberInput
+              label="Khối lượng sản phẩm"
+              maxDecimalDigits={2}
+              decimalSeparator=","
+              thousandSeparator="."
+              value={val}
+              onChange={(v) => setVal(v)}
+            />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
+          </div>
+        );
+      };
+
+      cy.mount(<WeightForm />);
+      cy.get("input").type("12345");
+      cy.get("input").should("have.value", "12.345");
+      cy.get("[data-testid='output']").should("have.text", "12345");
     });
 
     it("supports US format (1,000,000.99)", () => {
       const USDecimalForm = () => {
-        const [val, setVal] = useState("");
+        const [val, setVal] = useState<number | null>(null);
         return (
           <div className="p-4 max-w-sm">
             <NumberInput
@@ -87,9 +121,10 @@ describe("NumberInput Component", () => {
               decimalSeparator="."
               thousandSeparator=","
               value={val}
-              onChange={(e) => setVal(e.target.value)}
+              onChange={(v) => setVal(v)}
               placeholder="0.00"
             />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
           </div>
         );
       };
@@ -97,16 +132,18 @@ describe("NumberInput Component", () => {
       cy.mount(<USDecimalForm />);
       cy.get("input").type("1000000.99");
       cy.get("input").should("have.value", "1,000,000.99");
+      cy.get("[data-testid='output']").should("have.text", "1000000.99");
     });
   });
 
   describe("3. Negative Numbers Support", () => {
     it("handles typing negative integer (-5000 -> -5.000)", () => {
       const NegativeForm = () => {
-        const [val, setVal] = useState("");
+        const [val, setVal] = useState<number | null>(null);
         return (
           <div className="p-4 max-w-sm">
-            <NumberInput label="Nhiệt độ (°C)" value={val} onChange={(e) => setVal(e.target.value)} placeholder="-50" />
+            <NumberInput label="Nhiệt độ (°C)" value={val} onChange={(v) => setVal(v)} placeholder="-50" />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
           </div>
         );
       };
@@ -114,11 +151,12 @@ describe("NumberInput Component", () => {
       cy.mount(<NegativeForm />);
       cy.get("input").type("-5000");
       cy.get("input").should("have.value", "-5.000");
+      cy.get("[data-testid='output']").should("have.text", "-5000");
     });
 
     it("handles typing negative decimal (-1250,75)", () => {
       const NegativeDecimalForm = () => {
-        const [val, setVal] = useState("");
+        const [val, setVal] = useState<number | null>(null);
         return (
           <div className="p-4 max-w-sm">
             <NumberInput
@@ -127,8 +165,9 @@ describe("NumberInput Component", () => {
               decimalSeparator=","
               thousandSeparator="."
               value={val}
-              onChange={(e) => setVal(e.target.value)}
+              onChange={(v) => setVal(v)}
             />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
           </div>
         );
       };
@@ -136,22 +175,24 @@ describe("NumberInput Component", () => {
       cy.mount(<NegativeDecimalForm />);
       cy.get("input").type("-1250,75");
       cy.get("input").should("have.value", "-1.250,75");
+      cy.get("[data-testid='output']").should("have.text", "-1250.75");
     });
   });
 
-  describe("3. Min and Max Clamping", () => {
+  describe("4. Min and Max Clamping", () => {
     it("automatically clamps to max in real-time when typing beyond max", () => {
       const MaxBoundedForm = () => {
-        const [val, setVal] = useState("");
+        const [val, setVal] = useState<number | null>(null);
         return (
           <div className="p-4 max-w-sm">
             <NumberInput
               label="Số lượng tối đa 1.000"
               max={1000}
               value={val}
-              onChange={(e) => setVal(e.target.value)}
+              onChange={(v) => setVal(v)}
               placeholder="Max 1.000"
             />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
           </div>
         );
       };
@@ -161,26 +202,29 @@ describe("NumberInput Component", () => {
       // Type 500 -> 500 (under max)
       cy.get("input").type("500");
       cy.get("input").should("have.value", "500");
+      cy.get("[data-testid='output']").should("have.text", "500");
 
       // Type 5000 -> automatically clamped to 1.000
       cy.get("input").type("0");
       cy.get("input").should("have.value", "1.000");
+      cy.get("[data-testid='output']").should("have.text", "1000");
     });
 
     it("allows typing numbers below positive min during input and clamps to min on blur", () => {
       const onBlurSpy = cy.spy().as("onBlurSpy");
       const MinBoundedForm = () => {
-        const [val, setVal] = useState("");
+        const [val, setVal] = useState<number | null>(null);
         return (
           <div className="p-4 max-w-sm">
             <NumberInput
               label="Số lượng tối thiểu 100"
               min={100}
               value={val}
-              onChange={(e) => setVal(e.target.value)}
+              onChange={(v) => setVal(v)}
               onBlur={onBlurSpy}
               placeholder="Min 100"
             />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
             <button id="other-btn" type="button">
               Focus out
             </button>
@@ -192,14 +236,17 @@ describe("NumberInput Component", () => {
       // Type 1 -> 1 (not jumped to 100)
       cy.get("input").type("1");
       cy.get("input").should("have.value", "1");
+      cy.get("[data-testid='output']").should("have.text", "1");
 
       // Type 5 -> 15 (not jumped to 100)
       cy.get("input").type("5");
       cy.get("input").should("have.value", "15");
+      cy.get("[data-testid='output']").should("have.text", "15");
 
       // Blur -> automatically clamped to 100
       cy.get("#other-btn").click();
       cy.get("input").should("have.value", "100");
+      cy.get("[data-testid='output']").should("have.text", "100");
       cy.get("@onBlurSpy").should("have.been.calledOnce");
     });
 
@@ -213,28 +260,33 @@ describe("NumberInput Component", () => {
     });
   });
 
-  describe("4. Clearable and Slots Support", () => {
-    it("supports isClearable and rightAddon/leftIcon", () => {
+  describe("5. Clearable and Slots Support", () => {
+    it("supports isClearable and emits null when cleared", () => {
       const ClearableNumber = () => {
-        const [val, setVal] = useState("500.000");
+        const [val, setVal] = useState<number | null>(500000);
         return (
-          <NumberInput
-            label="Giá tour"
-            config={{ isClearable: true }}
-            rightAddon="VNĐ"
-            value={val}
-            onChange={(e) => setVal(e.target.value)}
-            onClear={() => setVal("")}
-          />
+          <div>
+            <NumberInput
+              label="Giá tour"
+              config={{ isClearable: true }}
+              rightAddon="VNĐ"
+              value={val}
+              onChange={(v) => setVal(v)}
+              onClear={() => setVal(null)}
+            />
+            <span data-testid="output">{val !== null ? val : "null"}</span>
+          </div>
         );
       };
 
       cy.mount(<ClearableNumber />);
       cy.get("input").should("have.value", "500.000");
       cy.contains("VNĐ").should("be.visible");
+      cy.get("[data-testid='output']").should("have.text", "500000");
 
       cy.get("button[aria-label='Clear input']").click();
       cy.get("input").should("have.value", "");
+      cy.get("[data-testid='output']").should("have.text", "null");
     });
 
     it("forwards ref to HTMLInputElement directly", () => {
@@ -254,23 +306,23 @@ describe("NumberInput Component", () => {
     });
   });
 
-  describe("5. Interactive Testing Studio / Visual Showcase", () => {
+  describe("6. Interactive Testing Studio / Visual Showcase", () => {
     it("renders complete interactive testing studio with preset buttons and live value inspect", () => {
       const Showcase = () => {
         // 1. VNĐ
-        const [vnd, setVnd] = useState("1.500.000");
+        const [vnd, setVnd] = useState<number | null>(1500000);
 
         // 2. Số Âm
-        const [temp, setTemp] = useState("-25");
+        const [temp, setTemp] = useState<number | null>(-25);
 
         // 3. Số Thập Phân (kg)
-        const [weight, setWeight] = useState("12,75");
+        const [weight, setWeight] = useState<number | null>(12.75);
 
         // 4. Min / Max
-        const [bounded, setBounded] = useState("500");
+        const [bounded, setBounded] = useState<number | null>(500);
 
         // 5. Chuẩn Quốc tế US ($)
-        const [usd, setUsd] = useState("2,450.75");
+        const [usd, setUsd] = useState<number | null>(2450.75);
 
         return (
           <div className="p-8 max-w-4xl mx-auto space-y-8 bg-neutral-100 min-h-screen">
@@ -278,7 +330,7 @@ describe("NumberInput Component", () => {
               <h1 className="text-2xl font-bold text-neutral-900 mb-2">🎮 NumberInput Interactive Testing Studio</h1>
               <p className="text-sm text-neutral-500">
                 Khu vực thử nghiệm trực tiếp đầy đủ các tính năng: phân cách dấu chấm 3 số, số âm, số thập phân, ép
-                min/max và chuẩn quốc tế.
+                min/max và chuẩn quốc tế. Đầu ra onChange trả về number, khi xóa/clear trả về null (sẵn sàng serialize JSON lên server).
               </p>
             </div>
 
@@ -295,44 +347,44 @@ describe("NumberInput Component", () => {
                   label="Số tiền thanh toán"
                   rightAddon="₫"
                   value={vnd}
-                  onChange={(e) => setVnd(e.target.value)}
+                  onChange={(v) => setVnd(v)}
                   config={{ isClearable: true }}
-                  onClear={() => setVnd("")}
+                  onClear={() => setVnd(null)}
                   helperText="Tự động thêm dấu chấm mỗi 3 số"
                 />
                 <div className="text-xs bg-neutral-50 p-2.5 rounded border border-neutral-200 space-y-1">
                   <div>
-                    <strong>String Value:</strong> <code className="text-primary-600 font-mono">"{vnd}"</code>
+                    <strong>Numeric Value:</strong> <code className="text-primary-600 font-mono">{String(vnd)}</code>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-1">
                   <button
                     type="button"
-                    onClick={() => setVnd("50.000")}
+                    onClick={() => setVnd(50000)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     50.000 ₫
                   </button>
                   <button
                     type="button"
-                    onClick={() => setVnd("1.000.000")}
+                    onClick={() => setVnd(1000000)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     1.000.000 ₫
                   </button>
                   <button
                     type="button"
-                    onClick={() => setVnd("100.000.000")}
+                    onClick={() => setVnd(100000000)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     100.000.000 ₫
                   </button>
                   <button
                     type="button"
-                    onClick={() => setVnd("")}
+                    onClick={() => setVnd(null)}
                     className="px-2.5 py-1 text-xs bg-error-50 text-error-600 hover:bg-error-100 rounded font-medium cursor-pointer"
                   >
-                    Xóa
+                    Xóa (null)
                   </button>
                 </div>
               </div>
@@ -349,35 +401,35 @@ describe("NumberInput Component", () => {
                   label="Nhiệt độ / Chênh lệch tài chính"
                   rightAddon="°C"
                   value={temp}
-                  onChange={(e) => setTemp(e.target.value)}
+                  onChange={(v) => setTemp(v)}
                   config={{ isClearable: true }}
                   maxDecimalDigits={2}
-                  onClear={() => setTemp("")}
+                  onClear={() => setTemp(null)}
                   helperText="Có thể gõ dấu trừ (-) ở đầu"
                 />
                 <div className="text-xs bg-neutral-50 p-2.5 rounded border border-neutral-200 space-y-1">
                   <div>
-                    <strong>String Value:</strong> <code className="text-error-600 font-mono">"{temp}"</code>
+                    <strong>Numeric Value:</strong> <code className="text-error-600 font-mono">{String(temp)}</code>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-1">
                   <button
                     type="button"
-                    onClick={() => setTemp("-50")}
+                    onClick={() => setTemp(-50)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     -50 °C
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTemp("-1.500.000")}
+                    onClick={() => setTemp(-1500000)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     -1.500.000
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTemp("-25,5")}
+                    onClick={() => setTemp(-25.5)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     -25,5
@@ -399,35 +451,35 @@ describe("NumberInput Component", () => {
                   decimalSeparator=","
                   thousandSeparator="."
                   value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
+                  onChange={(v) => setWeight(v)}
                   rightAddon="kg"
                   config={{ isClearable: true }}
-                  onClear={() => setWeight("")}
+                  onClear={() => setWeight(null)}
                   helperText="Tối đa 2 chữ số thập phân"
                 />
                 <div className="text-xs bg-neutral-50 p-2.5 rounded border border-neutral-200 space-y-1">
                   <div>
-                    <strong>String Value:</strong> <code className="text-warning-800 font-mono">"{weight}"</code>
+                    <strong>Numeric Value:</strong> <code className="text-warning-800 font-mono">{String(weight)}</code>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-1">
                   <button
                     type="button"
-                    onClick={() => setWeight("0,5")}
+                    onClick={() => setWeight(0.5)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     0,5 kg
                   </button>
                   <button
                     type="button"
-                    onClick={() => setWeight("12,75")}
+                    onClick={() => setWeight(12.75)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     12,75 kg
                   </button>
                   <button
                     type="button"
-                    onClick={() => setWeight("999,99")}
+                    onClick={() => setWeight(999.99)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     999,99 kg
@@ -448,25 +500,25 @@ describe("NumberInput Component", () => {
                   min={-100}
                   max={1000}
                   value={bounded}
-                  onChange={(e) => setBounded(e.target.value)}
+                  onChange={(v) => setBounded(v)}
                   helperText="Gõ quá 1.000 tự động ép về 1.000 ngay"
                 />
                 <div className="text-xs bg-neutral-50 p-2.5 rounded border border-neutral-200 space-y-1">
                   <div>
-                    <strong>String Value:</strong> <code className="text-success-700 font-mono">"{bounded}"</code>
+                    <strong>Numeric Value:</strong> <code className="text-success-700 font-mono">{String(bounded)}</code>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-1">
                   <button
                     type="button"
-                    onClick={() => setBounded("1.000")}
+                    onClick={() => setBounded(1000)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     Gõ quá 5000 (ép về 1.000)
                   </button>
                   <button
                     type="button"
-                    onClick={() => setBounded("-100")}
+                    onClick={() => setBounded(-100)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     Gõ âm quá -500 (ép về -100)
@@ -488,28 +540,28 @@ describe("NumberInput Component", () => {
                   decimalSeparator="."
                   maxDecimalDigits={2}
                   value={usd}
-                  onChange={(e) => setUsd(e.target.value)}
+                  onChange={(v) => setUsd(v)}
                   rightAddon="$"
                   config={{ isClearable: true }}
-                  onClear={() => setUsd("")}
+                  onClear={() => setUsd(null)}
                   helperText="Format quốc tế: phân cách nghìn bằng dấu phẩy (,), thập phân bằng dấu chấm (.)"
                 />
                 <div className="text-xs bg-neutral-50 p-2.5 rounded border border-neutral-200 space-y-1">
                   <div>
-                    <strong>String Value:</strong> <code className="text-info-700 font-mono">"{usd}"</code>
+                    <strong>Numeric Value:</strong> <code className="text-info-700 font-mono">{String(usd)}</code>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-1">
                   <button
                     type="button"
-                    onClick={() => setUsd("25.50")}
+                    onClick={() => setUsd(25.5)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     $25.50
                   </button>
                   <button
                     type="button"
-                    onClick={() => setUsd("1,000,000.99")}
+                    onClick={() => setUsd(1000000.99)}
                     className="px-2.5 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded font-medium cursor-pointer"
                   >
                     $1,000,000.99

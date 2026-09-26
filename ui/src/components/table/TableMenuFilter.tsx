@@ -12,7 +12,6 @@ import {
 } from "@floating-ui/react";
 import { useFloatingTransition } from "@/hooks/useFloatingTransition";
 import { Input, type InputProps, NumberInput } from "@/components/input";
-import { parseNumber } from "@/components/input/utils";
 import { DatePicker } from "@/components/datepicker";
 import { DateRangePicker } from "@/components/daterangepicker";
 import { CheckboxGroup, type CheckboxOptionItem } from "@/components/checkbox";
@@ -276,15 +275,9 @@ function TableFilterBadgeChip({
           min={field.min}
           max={field.max}
           step={field.step}
-          value={(currentValue as number | string) ?? ""}
-          onChange={(e) => {
-            const raw = e.target.value;
-            if (raw === "") {
-              onChange({ [field.name]: "" });
-            } else {
-              const parsed = parseNumber(raw);
-              onChange({ [field.name]: parsed !== undefined ? parsed : raw });
-            }
+          value={currentValue !== undefined && currentValue !== null && currentValue !== "" ? (currentValue as number) : ""}
+          onChange={(val) => {
+            onChange({ [field.name]: val !== undefined ? val : "" });
           }}
           onClear={() => onChange({ [field.name]: "" })}
           {...(field.props || {})}
