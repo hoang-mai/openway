@@ -38,7 +38,7 @@ import Skeleton from "../skeleton/Skeleton";
 import IconButton from "../button/IconButton";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import { DEFAULT_PAGE_SIZE } from "./constants";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export function DataTable<TData extends RowData = RowData>({
   columns,

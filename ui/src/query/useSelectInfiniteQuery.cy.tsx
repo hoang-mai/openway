@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   useSelectInfiniteQuery,
   SelectQueryParams,
-} from "@/components/select/hooks/useSelectInfiniteQuery";
+} from "./useSelectInfiniteQuery";
 
 interface OptionResponse {
   data: Array<{ value: string; label: string }>;

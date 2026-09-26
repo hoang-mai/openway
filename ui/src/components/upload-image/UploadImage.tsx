@@ -7,13 +7,13 @@ import { uploadImageLabelColorConfig, uploadImageSizeConfig } from "./constants"
 import { getSafeConfig } from "@/utils/function";
 import { formatBytes, normalizeInitialValues } from "./utils";
 import { normalizeAccept } from "../upload-file/utils";
-import { getFileName } from "@/components/file-preview";
+import { getFileName } from "@/components/file-preview/utils";
 import FileContainer from "../file-preview/FileContainer";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import UploadImageDropzone from "./UploadImageDropzone";
 import UploadImageList from "./UploadImageList";
 import { PreviewFile } from "@/components/file-preview/types";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export default function UploadImage({
   value,

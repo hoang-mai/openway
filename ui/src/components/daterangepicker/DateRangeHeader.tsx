@@ -4,7 +4,7 @@ import ChevronRightIcon from "../icons/ChevronRightIcon";
 import DoubleChevronLeftIcon from "../icons/DoubleChevronLeftIcon";
 import DoubleChevronRightIcon from "../icons/DoubleChevronRightIcon";
 import { dateRangePickerSizeConfig, dateRangePickerColorConfig } from "./constants";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 import { getSafeConfig } from "@/utils/function";
 
 export default function DateRangeHeader({

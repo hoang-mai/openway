@@ -31,7 +31,7 @@ import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 /**
  * Component DateTimePicker - Ô chọn Ngày & Giờ tích hợp theo Design System.

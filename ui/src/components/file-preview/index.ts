@@ -3,7 +3,6 @@ export { default as FilePreview } from "./FilePreview";
 export { default as FileContainer } from "./FileContainer";
 export { useFileContext } from "./FileContext";
 export { IMAGE_EXTENSIONS, PDF_EXTENSIONS, VIDEO_EXTENSIONS, AUDIO_EXTENSIONS, DOCUMENT_EXTENSIONS } from "./constants";
-export { getFileName, getFileExtension, getFileType, normalizePreviewFile, downloadFile, isServerFile } from "./utils";
 export type * from "./types";
 
 // ImagePreview sub-module

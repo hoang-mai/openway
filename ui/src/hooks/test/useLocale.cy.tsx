@@ -1,5 +1,5 @@
 import React from "react";
-import { OpenWayProvider, useLocale } from "@/components/common/OpenWayProvider";
+import { OpenWayProvider, useLocale } from "@/locale";
 import { viVN } from "@/locale/viVN";
 import type { OpenWayLocale } from "@/locale/types";
 

@@ -14,7 +14,7 @@ import SearchIcon from "@/components/icons/SearchIcon";
 import Spinner from "@/components/icons/Spinner";
 import Skeleton from "@/components/skeleton/Skeleton";
 import Empty from "@/components/empty/Empty";
-import { useLocale } from "@/components/common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 const DEFAULT_OPTIONS: never[] = [];
 const DEFAULT_VALUE: never[] = [];

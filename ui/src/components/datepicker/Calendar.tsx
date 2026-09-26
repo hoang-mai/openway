@@ -8,7 +8,7 @@ import Tabs from "../tabs/Tabs";
 import TabList from "../tabs/TabList";
 import Tab from "../tabs/Tab";
 import { generateCalendarGrid, toDate } from "./utils";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 import { calendarRadiusConfig, datePickerSizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 

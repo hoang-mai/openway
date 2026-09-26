@@ -2,7 +2,8 @@ import { HTMLAttributes, ReactNode, Ref } from "react";
 
 export type BadgeSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type BadgeVariant = "soft" | "filled" | "outline" | "ghost" | "other";
-export type BadgeColor = "primary" | "secondary" | "error" | "success" | "warning" | "info" | "neutral";
+export type BadgeUIColor = "default" | "gray" | "brown" | "orange" | "yellow" | "green" | "blue" | "purple" | "pink" | "red";
+export type BadgeColor = "primary" | "secondary" | "error" | "success" | "warning" | "info" | "neutral" | BadgeUIColor;
 export type BadgeRadius = "none" | "sm" | "md" | "lg" | "xl" | "full";
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {

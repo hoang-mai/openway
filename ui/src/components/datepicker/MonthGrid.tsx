@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { MonthGridProps } from "./types";
 import { datePickerSizeConfig, datePickerColorConfig, datePickerRadiusConfig } from "./constants";
 import { isSameMonth } from "./utils";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 import { getSafeConfig } from "@/utils/function";
 
 export default function MonthGrid({

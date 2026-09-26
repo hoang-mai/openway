@@ -27,7 +27,7 @@ import FieldLabel from "@/components/common/FieldLabel";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
-import { useLocale } from "@/components/common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 /**
  * Component TimeRangePicker - Ô chọn khoảng thời gian (Start Time - End Time) chuyên nghiệp theo Design System.

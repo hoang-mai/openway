@@ -5,7 +5,7 @@ import { emptySizeConfig, emptyLayoutConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import EmptyIllustration from "./EmptyIllustration";
 import { isPresetImage, isUrlString, getImageInlineStyle } from "./utils";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export default function Empty({
   size = "md",

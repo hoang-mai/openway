@@ -27,12 +27,6 @@ export type { DefaultTableFeatures, UseDataTableOptions } from "./useDataTable";
 export { fuzzyFilter, type RankingInfo } from "./fuzzyFilter";
 
 export {
-  tableSizeConfig,
-  tableVariantConfig,
-  tableAlignConfig,
-  tableToolbarConfig,
-  tableFilterConfig,
-  tablePaginationConfig,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SIZE_OPTIONS,
 } from "./constants";

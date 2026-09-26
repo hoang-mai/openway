@@ -12,7 +12,7 @@ import {
 import { toast } from "../components/toast";
 import type { ToastOptions } from "../components/toast/types";
 import type { AlertVariant } from "../components/alert/types";
-import { useLocale } from "../components/common/OpenWayProvider";
+import { useLocale } from "../locale";
 import { enUS } from "../locale/enUS";
 import type { MutationLocale } from "../locale/types";
 

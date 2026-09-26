@@ -8,7 +8,7 @@ import {
   DatePickerRadius,
 } from "./index";
 import { LabelPlacement } from "../input/types";
-import { OpenWayProvider } from "../common/OpenWayProvider";
+import { OpenWayProvider } from "@/locale";
 import { viVN } from "@/locale/viVN";
 
 // ============================================================================

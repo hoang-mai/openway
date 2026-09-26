@@ -15,7 +15,7 @@ import UploadIcon from "../icons/UploadIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import Spinner from "../icons/Spinner";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export interface UploadAvatarCropContentProps {
   imageSrc?: string;

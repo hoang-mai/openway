@@ -32,11 +32,17 @@ When the user asks for:
 
 ## Code Generation Guidelines
 
-1. **Imports**:
+1. **Imports (Granular Subpath Imports for Optimal Tree Shaking)**:
    ```tsx
-   import { Button, Input, Select, Table, Modal } from "@openway/ui";
+   import { Button } from "@openway/ui/button";
+   import { Input } from "@openway/ui/input";
+   import { Select } from "@openway/ui/select";
+   import { Table } from "@openway/ui/table";
+   import { Modal } from "@openway/ui/modal";
    // For TanStack Query server integration:
    import { useSelectInfiniteQuery } from "@openway/ui/query";
+   // For i18n localization:
+   import { OpenWayProvider, viVN } from "@openway/ui/locale";
    ```
 2. **Zero `any`**:
    Always type props, states, and option entities strictly:

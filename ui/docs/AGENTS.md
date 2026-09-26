@@ -24,65 +24,28 @@ When creating, modifying, or using UI components in the project:
 
 ---
 
-## 📦 Standard Import Rules
+## 📦 Standard Import Rules (Granular Subpath Imports)
+
+`@openway/ui` enforces **Granular Subpath Imports** for 100% optimal Tree Shaking. Consumers import directly from subpaths:
 
 ```tsx
-// 1. All 36 UI Components, Icons, and Shared Core Hooks
-import {
-  Button,
-  IconButton,
-  Input,
-  MultiInput,
-  OtpInput,
-  FieldLabel,
-  HelperErrorText,
-  Textarea,
-  Select,
-  MultiSelect,
-  Checkbox,
-  CheckboxGroup,
-  Radio,
-  RadioGroup,
-  Toggle,
-  Slider,
-  Table,
-  DataTable,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalClose,
-  Confirm,
-  Dropdown,
-  Popover,
-  Tooltip,
-  Alert,
-  Badge,
-  Skeleton,
-  Toast,
-  Tabs,
-  Collapse,
-  Empty,
-  DatePicker,
-  DateRangePicker,
-  TimePicker,
-  TimeRangePicker,
-  DateTimePicker,
-  DateTimeRangePicker,
-  UploadFile,
-  UploadAvatar,
-  UploadImage,
-  FilePreview,
-  Carousel,
-  Typography,
-  Text,
-  useInfiniteScroll,
-  useDebounce,
-  useDebouncedCallback,
-} from "@openway/ui";
+// 1. Components (import only what you use)
+import { Button, IconButton } from "@openway/ui/button";
+import { Input, PasswordInput, NumberInput } from "@openway/ui/input";
+import { Select, MultiSelect } from "@openway/ui/select";
+import { Table, DataTable } from "@openway/ui/table";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@openway/ui/modal";
+import { DatePicker, DateRangePicker } from "@openway/ui/datepicker";
+import { Badge } from "@openway/ui/badge";
 
-// 2. Specialized Query Hooks for TanStack Query v5 (server-side pagination, infinite scroll)
-import { useTableQuery, useSelectInfiniteQuery } from "@openway/ui/query";
+// 2. Localization (i18n)
+import { OpenWayProvider, viVN, enUS } from "@openway/ui/locale";
+
+// 3. TanStack Query Hooks (server-side pagination, infinite scroll, mutations)
+import { useTableQuery, useSelectInfiniteQuery, useMutationApp } from "@openway/ui/query";
+
+// 4. Utility Hooks
+import { useDebounce, useDebouncedCallback, useInfiniteScroll } from "@openway/ui/hooks";
 ```
 
 ---

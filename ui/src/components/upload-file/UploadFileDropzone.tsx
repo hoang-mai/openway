@@ -9,7 +9,7 @@ import {
   uploadFileVariantColorConfig,
 } from "./constants";
 import { getSafeConfig } from "@/utils/function";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export default function UploadFileDropzone({
   size = "md",

@@ -8,7 +8,7 @@ import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import DoubleChevronLeftIcon from "../icons/DoubleChevronLeftIcon";
 import DoubleChevronRightIcon from "../icons/DoubleChevronRightIcon";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 function getPaginationRange(currentPage: number, totalPages: number): (number | string)[] {
   if (totalPages <= 7) {

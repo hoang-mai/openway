@@ -3,7 +3,7 @@ import { sizeConfig } from "./constants";
 import Button from "../button/Button";
 import { useConfirmContext } from "./ConfirmContext";
 import { getSafeConfig } from "@/utils/function";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 /**
  * Phần chân của hộp thoại Confirm (Chứa các nút hành động Xác nhận, Hủy, hoặc các nút tùy chỉnh)

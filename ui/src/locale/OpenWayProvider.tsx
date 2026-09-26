@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, ReactNode } from "react";
-import type { OpenWayLocale } from "../../locale/types";
-import { enUS } from "../../locale/enUS";
+import type { OpenWayLocale } from "./types";
+import { enUS } from "./enUS";
 
 /**
  * Context quản lý cấu hình ngôn ngữ toàn cục cho OpenWay UI
@@ -22,7 +22,7 @@ export interface OpenWayProviderProps {
  *
  * @example
  * ```tsx
- * import { OpenWayProvider, viVN } from "@openway/ui";
+ * import { OpenWayProvider, viVN } from "@openway/ui/locale";
  *
  * export default function App({ children }) {
  *   return (

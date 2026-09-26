@@ -11,7 +11,8 @@ import {
   FloatingPortal,
 } from "@floating-ui/react";
 import { useFloatingTransition } from "@/hooks/useFloatingTransition";
-import { Input, type InputProps, NumberInput, parseNumber } from "@/components/input";
+import { Input, type InputProps, NumberInput } from "@/components/input";
+import { parseNumber } from "@/components/input/utils";
 import { DatePicker } from "@/components/datepicker";
 import { DateRangePicker } from "@/components/daterangepicker";
 import { CheckboxGroup, type CheckboxOptionItem } from "@/components/checkbox";
@@ -23,7 +24,7 @@ import ResetIcon from "@/components/icons/ResetIcon";
 import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import type { TableFilterDef } from "./types";
-import { useLocale } from "@/components/common/OpenWayProvider";
+import { useLocale } from "@/locale";
 import type { TableLocale } from "@/locale/types";
 
 /**

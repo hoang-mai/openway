@@ -79,7 +79,7 @@ Starting in **v2.0.0**, `@openway/ui` features a unified, zero-dependency locali
 
 ```tsx
 import "@openway/ui/styles.css";
-import { OpenWayProvider, viVN } from "@openway/ui";
+import { OpenWayProvider, viVN } from "@openway/ui/locale";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

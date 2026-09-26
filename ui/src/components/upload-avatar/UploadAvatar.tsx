@@ -24,7 +24,7 @@ import Spinner from "../icons/Spinner";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
 import { PreviewFile } from "@/components/file-preview/types";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export default function UploadAvatar({
   size = "md",

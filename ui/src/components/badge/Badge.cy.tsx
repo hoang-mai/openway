@@ -1,5 +1,5 @@
 import React from "react";
-import { BadgeSize, BadgeVariant, BadgeColor, BadgeRadius } from "./types";
+import { BadgeSize, BadgeVariant, BadgeColor, BadgeRadius, BadgeUIColor } from "./types";
 import { Badge } from "./index";
 
 const CheckIcon = () => (
@@ -147,11 +147,76 @@ describe("<Badge /> Tailwind Component Tests", () => {
         </div>
       );
 
-      cy.get("#badge-filled-primary").should("have.class", "bg-primary-500").and("have.class", "text-neutral-white");
+      cy.get("#badge-filled-primary").should("have.class", "bg-primary-600").and("have.class", "text-neutral-white");
 
-      cy.get("#badge-filled-warning").should("have.class", "bg-warning-500").and("have.class", "text-neutral-950");
+      cy.get("#badge-filled-warning").should("have.class", "bg-warning-400").and("have.class", "text-neutral-950");
 
       cy.get("#badge-filled-neutral").should("have.class", "bg-neutral-800").and("have.class", "text-neutral-white");
+    });
+  });
+
+  /* ========================================================================
+     3b. Unit Tests - 10 UI Colors (BadgeUIColor)
+     ======================================================================== */
+  describe("10 Notion-style UI Colors (BadgeUIColor)", () => {
+    const uiColors: BadgeUIColor[] = [
+      "default",
+      "gray",
+      "brown",
+      "orange",
+      "yellow",
+      "green",
+      "blue",
+      "purple",
+      "pink",
+      "red",
+    ];
+
+    uiColors.forEach((color) => {
+      it(`renders soft variant UI color="${color}" correctly`, () => {
+        cy.mount(<Badge color={color}>{color.toUpperCase()}</Badge>);
+        cy.get("span.inline-flex")
+          .first()
+          .should("be.visible")
+          .and("contain.text", color.toUpperCase())
+          .and("have.class", `bg-ui-bg-${color}`)
+          .and("have.class", `text-ui-${color}`);
+      });
+
+      it(`renders filled variant UI color="${color}" correctly`, () => {
+        cy.mount(
+          <Badge variant="filled" color={color}>
+            FILLED {color.toUpperCase()}
+          </Badge>
+        );
+        cy.get("span.inline-flex")
+          .first()
+          .should("be.visible")
+          .and("contain.text", `FILLED ${color.toUpperCase()}`)
+          .and("have.class", `bg-ui-${color}`);
+      });
+
+      it(`renders outline variant UI color="${color}" correctly`, () => {
+        cy.mount(
+          <Badge variant="outline" color={color}>
+            OUTLINE {color.toUpperCase()}
+          </Badge>
+        );
+        cy.get("span.inline-flex")
+          .first()
+          .should("be.visible")
+          .and("contain.text", `OUTLINE ${color.toUpperCase()}`)
+          .and("have.class", `text-ui-${color}`);
+      });
+
+      it(`renders dot with UI color="${color}" correctly`, () => {
+        cy.mount(
+          <Badge dot color={color}>
+            {color}
+          </Badge>
+        );
+        cy.get(`.bg-ui-${color}`).should("exist");
+      });
     });
   });
 

@@ -4,11 +4,4 @@ export { default as UploadFileList } from "./UploadFileList";
 export { default as UploadFileItemRow } from "./UploadFileItemRow";
 export { default as FileIcon } from "./FileIcon";
 
-export {
-  getFileCategory,
-  getPreviewFileSize,
-  getPreviewItemStatus,
-  normalizeAccept,
-} from "./utils";
-
 export type * from "./types";

@@ -1,5 +1,5 @@
 import React from "react";
-import { OpenWayProvider } from "./common/OpenWayProvider";
+import { OpenWayProvider } from "@/locale";
 import { viVN } from "@/locale/viVN";
 
 // 1. Button & IconButton

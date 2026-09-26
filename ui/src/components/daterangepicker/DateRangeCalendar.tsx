@@ -9,7 +9,7 @@ import TabList from "../tabs/TabList";
 import Tab from "../tabs/Tab";
 import { generateRangeCalendarGrid } from "./utils";
 import { toDate } from "../datepicker/utils";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 import { dateRangeCalendarRadiusConfig, dateRangePickerSizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { DateRangeDayGridProps } from "./types";
 import { dateRangePickerSizeConfig, dateRangePickerColorConfig, dateRangePickerRadiusConfig } from "./constants";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 import { getSafeConfig } from "@/utils/function";
 
 export default function DateRangeDayGrid({

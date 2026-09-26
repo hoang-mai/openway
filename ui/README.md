@@ -79,7 +79,7 @@ If your project requires custom brand colors while preserving OpenWay geometry a
 ### In `app/layout.tsx`:
 ```tsx
 import "./globals.css";
-import { OpenWayProvider, enUS } from "@openway/ui";
+import { OpenWayProvider, enUS } from "@openway/ui/locale";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -97,18 +97,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ### Using Components in a Page:
 ```tsx
-import { 
-  Button, 
-  Input, 
-  Select, 
-  DatePicker, 
-  Table, 
-  Badge,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from "@openway/ui";
+import { Button } from "@openway/ui/button";
+import { Input } from "@openway/ui/input";
+import { DatePicker } from "@openway/ui/datepicker";
+import { Badge } from "@openway/ui/badge";
 
 export default function Dashboard() {
   return (
@@ -139,7 +131,7 @@ export default function Dashboard() {
 
 ### Switch to Vietnamese:
 ```tsx
-import { OpenWayProvider, viVN } from "@openway/ui";
+import { OpenWayProvider, viVN } from "@openway/ui/locale";
 
 export default function App({ children }: { children: React.ReactNode }) {
   return (

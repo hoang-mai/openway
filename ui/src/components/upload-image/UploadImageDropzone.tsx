@@ -14,8 +14,8 @@ import {
   uploadImageVariantColorConfig,
 } from "./constants";
 import { getSafeConfig } from "@/utils/function";
-import { getFileName } from "@/components/file-preview";
-import { useLocale } from "../common/OpenWayProvider";
+import { getFileName } from "@/components/file-preview/utils";
+import { useLocale } from "@/locale";
 
 export default function UploadImageDropzone({
   size = "md",

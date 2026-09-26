@@ -15,7 +15,7 @@ import CloseIcon from "../icons/CloseIcon";
 import RotateCwIcon from "../icons/RotateCwIcon";
 import { TableMenuFilter } from "./TableMenuFilter";
 import { tableToolbarConfig } from "./constants";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 const DEFAULT_FILTER_VALUES: Record<string, unknown> = {};
 

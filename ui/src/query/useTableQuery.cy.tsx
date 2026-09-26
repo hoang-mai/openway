@@ -1,6 +1,6 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useTableQuery, TableQueryParams } from "@/components/table/hooks/useTableQuery";
+import { useTableQuery, TableQueryParams } from "./useTableQuery";
 
 interface UserRow {
   id: number;

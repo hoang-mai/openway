@@ -5,7 +5,7 @@ import PlusIcon from "../icons/PlusIcon";
 import { UploadImageListProps } from "./types";
 import { uploadImageRadiusConfig, uploadImageSizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
-import { getFileName } from "@/components/file-preview";
+import { getFileName } from "@/components/file-preview/utils";
 
 export default function UploadImageList({
   items,

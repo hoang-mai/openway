@@ -8,12 +8,5 @@ export { default as SelectMenuFilter } from "./SelectMenuFilter";
 export { default as SelectOption } from "./SelectOption";
 export { useSelectFloating } from "./hooks/useSelectFloating";
 export { useSelectSearch } from "./hooks/useSelectSearch";
+
 export type * from "./types";
-export {
-  createOptionsMap,
-  getSelectedOption,
-  getSelectedOptions,
-  getVisibleTags,
-  formatFilterBadgeValue,
-} from "./utils";
-export { filterSizeConfig } from "./constants";

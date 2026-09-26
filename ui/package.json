@@ -1,6 +1,6 @@
 {
   "name": "@openway/ui",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Enterprise-grade React 19 UI component library (OpenWay Design System) with Warm Paper Aesthetics, Tailwind CSS v4, and built-in i18n.",
   "keywords": [
     "react19",
@@ -36,21 +36,29 @@
     }
   ],
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "./package.json": "./package.json",
+    "./styles.css": "./dist/styles.css",
+    "./locale": {
+      "types": "./dist/locale/index.d.ts",
+      "import": "./dist/locale/index.js",
+      "require": "./dist/locale/index.cjs"
     },
     "./query": {
-      "types": "./dist/query.d.ts",
-      "import": "./dist/query.js",
-      "require": "./dist/query.cjs"
+      "types": "./dist/query/index.d.ts",
+      "import": "./dist/query/index.js",
+      "require": "./dist/query/index.cjs"
     },
-    "./styles.css": "./dist/styles.css"
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.cjs"
+    },
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.cjs"
+    }
   },
   "sideEffects": [
     "dist/styles.css",
@@ -63,7 +71,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "node --max-old-space-size=8192 ./node_modules/tsup/dist/cli-default.js",
     "prepublishOnly": "pnpm build",
     "lint": "eslint",
     "check-types": "tsc --noEmit",

@@ -13,7 +13,8 @@ import {
 import { useFloatingTransition } from "@/hooks/useFloatingTransition";
 import { SelectFilterField, SelectFilterLayout, SelectColor, SelectRadius, SelectSize } from "./types";
 import { formatFilterBadgeValue } from "./utils";
-import { Input, NumberInput, parseNumber } from "@/components/input";
+import { Input, NumberInput } from "@/components/input";
+import { parseNumber } from "@/components/input/utils";
 import { DatePicker } from "@/components/datepicker";
 import { DateRangePicker } from "@/components/daterangepicker";
 import { CheckboxGroup, type CheckboxOptionItem } from "@/components/checkbox";
@@ -25,7 +26,7 @@ import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { getSafeConfig } from "@/utils/function";
 import { filterSizeConfig } from "./constants";
-import { useLocale } from "@/components/common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export interface SelectMenuFilterProps<TFilters extends Record<string, unknown> = Record<string, unknown>> {
   filters: SelectFilterField<unknown>[];

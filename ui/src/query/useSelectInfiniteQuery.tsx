@@ -6,7 +6,7 @@ import {
   type UseInfiniteQueryOptions,
   type UseInfiniteQueryResult,
 } from "@tanstack/react-query";
-import type { SelectOptionItem } from "../types";
+import type { SelectOptionItem } from "@/components/select/types";
 import { useInfiniteScroll, type UseInfiniteScrollOptions } from "@/hooks/useInfiniteScroll";
 import { useDebounce } from "@/hooks/useDebounce";
 import Skeleton from "@/components/skeleton/Skeleton";

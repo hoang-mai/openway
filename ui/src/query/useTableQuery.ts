@@ -14,7 +14,7 @@ import type {
   SortingState,
   Updater,
 } from "@tanstack/react-table";
-import { DEFAULT_PAGE_SIZE } from "../constants";
+import { DEFAULT_PAGE_SIZE } from "@/components/table/constants";
 import { DEFAULT_DEBOUNCE_DELAY } from "@/constants";
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -229,13 +229,6 @@ function resolveUpdater<T>(updater: Updater<T>, prev: T): T {
 
 /**
  * Hook Adapter `useTableQuery` tích hợp TanStack Table v9 và TanStack Query v5.
- *
- * Tính năng:
- * - Đồng bộ hai chiều trạng thái bảng (Pagination, Sorting, Filtering, Search) với server API.
- * - Tự động định dạng tham số `TableQueryParams`: `page` (1-indexed), `pageSize`, `search`, `sortBy`, `sortOrder`, `filters`.
- * - Tự động gắn `queryParams` vào `queryKey` của TanStack Query để kích hoạt cache/refetch thông minh.
- * - Hỗ trợ phân trang mượt mà bằng `placeholderData: keepPreviousData` (không bị nhấp nháy Skeleton khi chuyển trang).
- * - Cung cấp `tableProps` dựng sẵn truyền trực tiếp vào `<DataTable {...tableProps} />`.
  */
 export function useTableQuery<TData extends RowData = RowData, TResponse = unknown, TError = Error>(
   options: UseTableQueryOptions<TData, TResponse, TError>
@@ -264,8 +257,6 @@ export function useTableQuery<TData extends RowData = RowData, TResponse = unkno
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(initialColumnFilters ?? []);
   const [globalFilter, setGlobalFilter] = useState<string>(initialGlobalFilter ?? "");
 
-  // Debounce bộ lọc cột trước khi gửi lên API máy chủ.
-  // Khi bộ lọc rỗng hoặc vừa xóa chip, gọi API ngay lập tức (delay = 0).
   const [filterTrack, setFilterTrack] = useState({
     prevCount: columnFilters.length,
     prevFilters: columnFilters,

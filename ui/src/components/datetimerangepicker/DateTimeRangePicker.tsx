@@ -30,7 +30,7 @@ import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { dateRangeCalendarRadiusConfig, dateRangePickerRadiusConfig, dateRangePickerVariantStyles } from "@/components/daterangepicker/constants";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 /**
  * Component DateTimeRangePicker - Ô chọn khoảng Ngày & Giờ (Start - End) chuyên nghiệp theo Design System.

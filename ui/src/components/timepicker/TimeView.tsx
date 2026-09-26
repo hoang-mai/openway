@@ -10,7 +10,7 @@ import {
   parseTimeToDate,
 } from "./utils";
 import { getSafeConfig } from "@/utils/function";
-import { useLocale } from "@/components/common/OpenWayProvider";
+import { useLocale } from "@/locale";
 import TimeColumn from "./TimeColumn";
 
 /**

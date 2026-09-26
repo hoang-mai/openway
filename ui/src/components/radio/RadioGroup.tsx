@@ -9,7 +9,7 @@ import Skeleton from "@/components/skeleton/Skeleton";
 import Empty from "@/components/empty/Empty";
 import HelperErrorText from "@/components/common/HelperErrorText";
 import { rankAndFilterItems, getSafeConfig } from "@/utils/function";
-import { useLocale } from "@/components/common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 const DEFAULT_OPTIONS: never[] = [];
 

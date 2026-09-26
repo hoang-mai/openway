@@ -13,7 +13,7 @@ import { formatBytes, normalizeInitialValues } from "../upload-image/utils";
 import { normalizeAccept } from "./utils";
 import { getSafeConfig } from "@/utils/function";
 import { PreviewFile } from "@/components/file-preview/types";
-import { useLocale } from "../common/OpenWayProvider";
+import { useLocale } from "@/locale";
 
 export default function UploadFile({
   value,
