@@ -14,7 +14,7 @@ import type {
   SortingState,
   Updater,
 } from "@tanstack/react-table";
-import { DEFAULT_PAGE_SIZE } from "@/components/table/constants";
+import { DEFAULT_PAGE_SIZE } from "@/lib/table/constants";
 import { DEFAULT_DEBOUNCE_DELAY } from "@/constants";
 import { useDebounce } from "@/hooks/useDebounce";
 

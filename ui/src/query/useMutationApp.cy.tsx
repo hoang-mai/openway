@@ -1,7 +1,7 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useMutationApp, extractErrorMessage } from "./useMutationApp";
-import { Toaster } from "@/components/toast";
+import { Toaster } from "@/lib/toast";
 
 describe("extractErrorMessage Unit Tests", () => {
   it("extracts string error directly", () => {

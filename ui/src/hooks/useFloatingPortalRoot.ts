@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { usePortalRootContext, PortalRoot } from "@/components/portal/PortalRootContext";
+import { usePortalRootContext, PortalRoot } from "@/lib/portal/PortalRootContext";
 
 export interface UseFloatingPortalRootOptions {
   portalRoot?: PortalRoot;

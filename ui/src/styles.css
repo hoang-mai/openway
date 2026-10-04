@@ -1,24 +1,110 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --ui-neutral-white: #ffffff;
+  --ui-neutral-50: #f7f6f3;
+  --ui-neutral-100: #ebeae8;
+  --ui-neutral-200: #e3e2e0;
+  --ui-neutral-300: #d3d1cb;
+  --ui-neutral-400: #9b9a97;
+  --ui-neutral-500: #787774;
+  --ui-neutral-600: #5f5e5b;
+  --ui-neutral-700: #45443f;
+  --ui-neutral-800: #3c3a35;
+  --ui-neutral-900: #37352f;
+  --ui-neutral-950: #20201d;
+  --ui-neutral-black: #000000;
+
+  --ui-text-default: #37352f;
+  --ui-text-gray: #787774;
+  --ui-text-brown: #9f6b53;
+  --ui-text-orange: #d9730d;
+  --ui-text-yellow: #cb912f;
+  --ui-text-green: #448361;
+  --ui-text-blue: #337ea9;
+  --ui-text-purple: #9065b0;
+  --ui-text-pink: #c14c8a;
+  --ui-text-red: #d44c47;
+
+  --ui-bg-default: #f7f6f3;
+  --ui-bg-gray: #f1f1ef;
+  --ui-bg-brown: #f4eeee;
+  --ui-bg-orange: #fbecdd;
+  --ui-bg-yellow: #fbf3db;
+  --ui-bg-green: #edf3ec;
+  --ui-bg-blue: #e7f3f8;
+  --ui-bg-purple: #f4f0f7;
+  --ui-bg-pink: #f9eef3;
+  --ui-bg-red: #fdebec;
+
+  --ui-caret: #37352f;
+  --ui-selection: rgba(45, 170, 219, 0.3);
+}
+
+.dark {
+  color-scheme: dark;
+  --ui-neutral-white: #191919;
+  --ui-neutral-50: #262626;
+  --ui-neutral-100: #242424;
+  --ui-neutral-200: #2e2e2e;
+  --ui-neutral-300: #404040;
+  --ui-neutral-400: #737373;
+  --ui-neutral-500: #a4a4a4;
+  --ui-neutral-600: #b8b8b8;
+  --ui-neutral-700: #d4d4d4;
+  --ui-neutral-800: #e5e5e5;
+  --ui-neutral-900: #ebebeb;
+  --ui-neutral-950: #f5f5f5;
+  --ui-neutral-black: #ffffff;
+
+  --ui-text-default: #ebebeb;
+  --ui-text-gray: #a4a4a4;
+  --ui-text-brown: #c49984;
+  --ui-text-orange: #e59045;
+  --ui-text-yellow: #e5be62;
+  --ui-text-green: #6c9b7d;
+  --ui-text-blue: #5b97bd;
+  --ui-text-purple: #a782c3;
+  --ui-text-pink: #cf79a7;
+  --ui-text-red: #e16f64;
+
+  --ui-bg-default: #262626;
+  --ui-bg-gray: #2d2d2d;
+  --ui-bg-brown: #382c2a;
+  --ui-bg-orange: #3f2f22;
+  --ui-bg-yellow: #3f3822;
+  --ui-bg-green: #25392b;
+  --ui-bg-blue: #223746;
+  --ui-bg-purple: #342a3e;
+  --ui-bg-pink: #3e2733;
+  --ui-bg-red: #432929;
+
+  --ui-caret: #ebebeb;
+  --ui-selection: rgba(35, 131, 226, 0.4);
+}
+
 @theme {
   /* ================= UI TYPOGRAPHY STACK ================= */
   --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
   --font-mono: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
 
   /* ================= UI WARM NEUTRALS ================= */
-  --color-neutral-white: #ffffff;
-  --color-neutral-50: #f7f6f3;   /* UI Sidebar / Table Header / Dropzone */
-  --color-neutral-100: #ebeae8;  /* UI Hairline Border / Light Divider */
-  --color-neutral-200: #e3e2e0;  /* UI Main Border / Input Outline */
-  --color-neutral-300: #d3d1cb;  /* UI Strong Border / Scrollbar Thumb */
-  --color-neutral-400: #9b9a97;  /* UI Placeholder / Muted Icon */
-  --color-neutral-500: #787774;  /* UI Secondary Text / Subtitle / Helper */
-  --color-neutral-600: #5f5e5b;  /* UI Darker Helper Text */
-  --color-neutral-700: #45443f;  /* UI Form Label / Section Heading */
-  --color-neutral-800: #3c3a35;  /* UI Dark Neutral */
-  --color-neutral-900: #37352f;  /* UI Primary Text Body & Headings */
-  --color-neutral-950: #20201d;  /* UI Deep Charcoal */
-  --color-neutral-black: #000000;
+  --color-neutral-white: var(--ui-neutral-white);
+  --color-neutral-50: var(--ui-neutral-50);
+  --color-neutral-100: var(--ui-neutral-100);
+  --color-neutral-200: var(--ui-neutral-200);
+  --color-neutral-300: var(--ui-neutral-300);
+  --color-neutral-400: var(--ui-neutral-400);
+  --color-neutral-500: var(--ui-neutral-500);
+  --color-neutral-600: var(--ui-neutral-600);
+  --color-neutral-700: var(--ui-neutral-700);
+  --color-neutral-800: var(--ui-neutral-800);
+  --color-neutral-900: var(--ui-neutral-900);
+  --color-neutral-950: var(--ui-neutral-950);
+  --color-neutral-black: var(--ui-neutral-black);
 
   /* ================= UI INTERACTIVE BLUE ================= */
   --color-primary-50: #edf5fc;   /* Light Blue Tint Selection */
@@ -99,46 +185,81 @@
   --color-info-950: #092f42;
 
   /* ================= UI 10 TEXT COLORS ================= */
-  --color-ui-default: #37352f;
-  --color-ui-gray: #787774;
-  --color-ui-brown: #9f6b53;
-  --color-ui-orange: #d9730d;
-  --color-ui-yellow: #cb912f;
-  --color-ui-green: #448361;
-  --color-ui-blue: #337ea9;
-  --color-ui-purple: #9065b0;
-  --color-ui-pink: #c14c8a;
-  --color-ui-red: #d44c47;
+  --color-ui-default: var(--ui-text-default);
+  --color-ui-gray: var(--ui-text-gray);
+  --color-ui-brown: var(--ui-text-brown);
+  --color-ui-orange: var(--ui-text-orange);
+  --color-ui-yellow: var(--ui-text-yellow);
+  --color-ui-green: var(--ui-text-green);
+  --color-ui-blue: var(--ui-text-blue);
+  --color-ui-purple: var(--ui-text-purple);
+  --color-ui-pink: var(--ui-text-pink);
+  --color-ui-red: var(--ui-text-red);
 
   /* ================= UI 10 HIGHLIGHT / BACKGROUND COLORS ================= */
-  --color-ui-bg-default: #f7f6f3;
-  --color-ui-bg-gray: #f1f1ef;
-  --color-ui-bg-brown: #f4eeee;
-  --color-ui-bg-orange: #fbecdd;
-  --color-ui-bg-yellow: #fbf3db;
-  --color-ui-bg-green: #edf3ec;
-  --color-ui-bg-blue: #e7f3f8;
-  --color-ui-bg-purple: #f4f0f7;
-  --color-ui-bg-pink: #f9eef3;
-  --color-ui-bg-red: #fdebec;
+  --color-ui-bg-default: var(--ui-bg-default);
+  --color-ui-bg-gray: var(--ui-bg-gray);
+  --color-ui-bg-brown: var(--ui-bg-brown);
+  --color-ui-bg-orange: var(--ui-bg-orange);
+  --color-ui-bg-yellow: var(--ui-bg-yellow);
+  --color-ui-bg-green: var(--ui-bg-green);
+  --color-ui-bg-blue: var(--ui-bg-blue);
+  --color-ui-bg-purple: var(--ui-bg-purple);
+  --color-ui-bg-pink: var(--ui-bg-pink);
+  --color-ui-bg-red: var(--ui-bg-red);
 
   /* ================= UI CRISP GEOMETRY (BORDER RADII) ================= */
-  --radius-2xs: 2px;
-  --radius-xs: 3px;
-  --radius-sm: 4px;
-  --radius-md: 5px;
-  --radius-lg: 6px;
-  --radius-xl: 8px;
-  --radius-2xl: 10px;
+  --radius-2xs: 0.125rem;
+  --radius-xs: 0.1875rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Laptop lớn & Màn hình làm việc (xl >= 1280px) */
+@media (min-width: 1280px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+/* Màn hình Desktop 21"-24" (2xl >= 1536px) */
+@media (min-width: 1536px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+/* Màn hình Desktop Full HD 1080p chuẩn (>= 1920px) */
+@media (min-width: 1920px) {
+  html {
+    font-size: 19px;
+  }
+}
+
+/* Màn hình Siêu rộng / 2K QHD / 4K Displays (>= 2560px) */
+@media (min-width: 2560px) {
+  html {
+    font-size: 21px;
+  }
 }
 
 /* ================= UI GLOBAL STYLES ================= */
 ::selection {
-  background-color: rgba(45, 170, 219, 0.3);
+  background-color: var(--ui-selection);
 }
 
 input, textarea {
-  caret-color: rgb(55, 53, 47);
+  caret-color: var(--ui-caret);
 }
 
 button:focus:not(:focus-visible),
@@ -163,6 +284,11 @@ button:focus:not(:focus-visible),
   padding: 0.15em 0.35em;
 }
 
+.dark .ui-inline-code {
+  color: #eb5757;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
 .ui-quote {
   border-left: 3px solid currentColor;
   padding-left: 0.875rem;
@@ -180,6 +306,11 @@ button:focus:not(:focus-visible),
   background-color: var(--color-neutral-50);
 }
 
+.dark .ui-callout {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-neutral-50);
+}
+
 .ui-hover-trigger .ui-hover-action {
   opacity: 0;
   pointer-events: none;
@@ -193,24 +324,50 @@ button:focus:not(:focus-visible),
 }
 
 /* ================= UI LAYERED AMBIENT SHADOWS ================= */
-.shadow-ui-dropdown {
+.shadow-ui-dropdown,
+.shadow-dropdown {
   box-shadow: 
     rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
     rgba(15, 15, 15, 0.10) 0px 3px 6px, 
     rgba(15, 15, 15, 0.06) 0px 9px 24px;
 }
 
-.shadow-ui-modal {
+.dark .shadow-ui-dropdown,
+.dark .shadow-dropdown {
+  box-shadow: 
+    rgba(255, 255, 255, 0.08) 0px 0px 0px 1px, 
+    rgba(0, 0, 0, 0.40) 0px 4px 12px, 
+    rgba(0, 0, 0, 0.60) 0px 12px 32px;
+}
+
+.shadow-ui-modal,
+.shadow-modal {
   box-shadow: 
     rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
     rgba(15, 15, 15, 0.10) 0px 4px 12px, 
     rgba(15, 15, 15, 0.20) 0px 24px 48px -8px;
 }
 
-.shadow-ui-card {
+.dark .shadow-ui-modal,
+.dark .shadow-modal {
+  box-shadow: 
+    rgba(255, 255, 255, 0.10) 0px 0px 0px 1px, 
+    rgba(0, 0, 0, 0.50) 0px 8px 24px, 
+    rgba(0, 0, 0, 0.70) 0px 24px 48px;
+}
+
+.shadow-ui-card,
+.shadow-card {
   box-shadow: 
     rgba(15, 15, 15, 0.08) 0px 0px 0px 1px, 
     rgba(15, 15, 15, 0.04) 0px 2px 4px;
+}
+
+.dark .shadow-ui-card,
+.dark .shadow-card {
+  box-shadow: 
+    rgba(255, 255, 255, 0.08) 0px 0px 0px 1px, 
+    rgba(0, 0, 0, 0.25) 0px 2px 4px;
 }
 
 /* ================= UI CROSS-BROWSER SCROLLBAR ================= */
@@ -219,6 +376,11 @@ button:focus:not(:focus-visible),
 textarea {
   scrollbar-width: thin;
   scrollbar-color: rgba(55, 53, 47, 0.2) transparent;
+}
+
+.dark,
+.dark textarea {
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
 /* Chrome, Edge, Safari */
@@ -242,16 +404,41 @@ textarea::-webkit-scrollbar-thumb,
   border-radius: 9999px;
 }
 
+.dark *::-webkit-scrollbar-thumb,
+.dark textarea::-webkit-scrollbar-thumb,
+.dark .ui-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 *::-webkit-scrollbar-thumb:hover,
 textarea::-webkit-scrollbar-thumb:hover,
 .ui-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(55, 53, 47, 0.35);
 }
 
+.dark *::-webkit-scrollbar-thumb:hover,
+.dark textarea::-webkit-scrollbar-thumb:hover,
+.dark .ui-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
 *::-webkit-scrollbar-corner,
 textarea::-webkit-scrollbar-corner,
 .ui-scrollbar::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Reset native HTML dialog backdrop to prevent browser grey flash */
@@ -577,4 +764,13 @@ dialog::backdrop {
 
 .animate-table-subrow-in {
   animation: tableSubrowFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }

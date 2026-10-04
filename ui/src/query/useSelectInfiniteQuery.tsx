@@ -6,10 +6,10 @@ import {
   type UseInfiniteQueryOptions,
   type UseInfiniteQueryResult,
 } from "@tanstack/react-query";
-import type { SelectOptionItem } from "@/components/select/types";
+import type { SelectOptionItem } from "@/lib/select/types";
 import { useInfiniteScroll, type UseInfiniteScrollOptions } from "@/hooks/useInfiniteScroll";
 import { useDebounce } from "@/hooks/useDebounce";
-import Skeleton from "@/components/skeleton/Skeleton";
+import Skeleton from "@/lib/skeleton/Skeleton";
 
 /**
  * Các tham số truy vấn chuẩn hóa được chuyển tới hàm `queryFn`.

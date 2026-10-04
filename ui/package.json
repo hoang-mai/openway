@@ -1,6 +1,6 @@
 {
   "name": "@openway/ui",
-  "version": "2.0.7",
+  "version": "2.0.9",
   "description": "Enterprise-grade React 19 UI component library (OpenWay Design System) with Warm Paper Aesthetics, Tailwind CSS v4, and built-in i18n.",
   "keywords": [
     "react19",
@@ -44,6 +44,11 @@
       "import": "./dist/locale/index.js",
       "require": "./dist/locale/index.cjs"
     },
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "import": "./dist/theme/index.js",
+      "require": "./dist/theme/index.cjs"
+    },
     "./query": {
       "types": "./dist/query/index.d.ts",
       "import": "./dist/query/index.js",
@@ -53,6 +58,21 @@
       "types": "./dist/hooks/index.d.ts",
       "import": "./dist/hooks/index.js",
       "require": "./dist/hooks/index.cjs"
+    },
+    "./types/*": {
+      "types": "./dist/types/*.d.ts",
+      "import": "./dist/types/*.js",
+      "require": "./dist/types/*.cjs"
+    },
+    "./components/*": {
+      "types": "./dist/components/*/index.d.ts",
+      "import": "./dist/components/*/index.js",
+      "require": "./dist/components/*/index.cjs"
+    },
+    "./lib/*": {
+      "types": "./dist/lib/*/index.d.ts",
+      "import": "./dist/lib/*/index.js",
+      "require": "./dist/lib/*/index.cjs"
     },
     "./*": {
       "types": "./dist/*/index.d.ts",
@@ -76,7 +96,7 @@
     "lint": "eslint",
     "check-types": "tsc --noEmit",
     "doctor": "pnpm dlx react-doctor@latest",
-    "test:a11y": "cypress run --component --spec \"src/components/Accessibility.cy.tsx\"",
+    "test:a11y": "cypress run --component --spec \"src/lib/Accessibility.cy.tsx\"",
     "cypress:open": "cypress open --component",
     "cypress:run": "cypress run --component"
   },

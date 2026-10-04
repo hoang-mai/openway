@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFloatingPortalRoot } from "../useFloatingPortalRoot";
-import { PortalRootContext, PortalRoot } from "@/components/portal/PortalRootContext";
+import { PortalRootContext, PortalRoot } from "@/lib/portal/PortalRootContext";
 
 function PortalRootConsumer({
   customRoot,

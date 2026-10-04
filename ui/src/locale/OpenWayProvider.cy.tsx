@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { OpenWayProvider } from "./OpenWayProvider";
 import { enUS } from "./enUS";
 import { viVN } from "./viVN";
-import ConfirmFooter from "../components/confirm/ConfirmFooter";
-import Empty from "../components/empty/Empty";
-import Button from "../components/button/Button";
+import ConfirmFooter from "../lib/confirm/ConfirmFooter";
+import Empty from "../lib/empty/Empty";
+import Button from "../lib/button/Button";
 
 function DynamicLocaleDemo() {
   const [locale, setLocale] = useState(enUS);
