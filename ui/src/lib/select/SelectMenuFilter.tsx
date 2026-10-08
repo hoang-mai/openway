@@ -162,7 +162,7 @@ function FilterBadgeChip({
             size="sm"
             color={color}
             radius={radius}
-            placeholder={field.placeholder || "Nhập từ khóa..."}
+            placeholder={field.placeholder || selectLocale.keywordPlaceholder}
             value={(currentValue as string) || ""}
             onChange={(e) => onChange({ [field.name]: e.target.value })}
             {...(field.props || {})}
@@ -176,7 +176,7 @@ function FilterBadgeChip({
             size="sm"
             color={color}
             radius={radius}
-            placeholder={field.placeholder || "Nhập số..."}
+            placeholder={field.placeholder || selectLocale.numberPlaceholder}
             min={field.min}
             max={field.max}
             step={field.step}
@@ -196,7 +196,7 @@ function FilterBadgeChip({
             size="sm"
             color={color}
             radius={radius}
-            placeholder={field.placeholder || "Chọn ngày"}
+            placeholder={field.placeholder || selectLocale.datePlaceholder}
             minDate={field.minDate}
             maxDate={field.maxDate}
             value={currentValue as Date | null | undefined}
@@ -213,7 +213,7 @@ function FilterBadgeChip({
             size="sm"
             color={color}
             radius={radius}
-            placeholder={field.placeholder || "Chọn khoảng ngày"}
+            placeholder={field.placeholder || selectLocale.dateRangePlaceholder}
             value={rangeVal}
             onChange={(range) => {
               onChange({
@@ -271,7 +271,7 @@ function FilterBadgeChip({
                 preserveSelected,
               }}
               searchMode={searchMode}
-              searchPlaceholder={field.searchPlaceholder || "Tìm kiếm lựa chọn..."}
+              searchPlaceholder={field.searchPlaceholder || selectLocale.searchOptionsPlaceholder}
               onSearch={field.onSearch || field.props?.onSearch}
               onSearchChange={field.onSearchChange || field.props?.onSearchChange}
               isLoading={field.isLoading ?? field.props?.isLoading}
@@ -312,7 +312,11 @@ function FilterBadgeChip({
             }
           }}
           onDelete={() => onRemove()}
-          deleteAriaLabel={`Xóa bộ lọc ${field.label}`}
+          deleteAriaLabel={
+            selectLocale.deleteFilterAriaLabel
+              ? selectLocale.deleteFilterAriaLabel(typeof field.label === "string" ? field.label : "")
+              : `Delete filter ${typeof field.label === "string" ? field.label : ""}`
+          }
           variant="soft"
           color={isOpen ? color : "neutral"}
           radius={radius}
@@ -360,7 +364,7 @@ function FilterBadgeChip({
                 type="button"
                 onClick={() => onOpenChange(false)}
                 className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-xs hover:bg-neutral-100 transition-colors cursor-pointer"
-                title="Đóng"
+                title={selectLocale.close}
               >
                 <CloseIcon className="size-3" />
               </button>
@@ -376,14 +380,14 @@ function FilterBadgeChip({
                 onClick={onRemove}
                 className={`text-neutral-500 hover:text-error-600 hover:bg-error-50 px-1.5 py-0.5 rounded-sm transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
               >
-                Xóa bộ lọc
+                {selectLocale.clearFilter}
               </button>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
                 className={`font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 px-2 py-0.5 rounded-sm border border-neutral-200 transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
               >
-                Xong
+                {selectLocale.done}
               </button>
             </div>
           </div>
@@ -400,12 +404,14 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
   onChange,
   onReset,
   showReset = true,
-  resetText = "Đặt lại bộ lọc",
+  resetText,
   size = "md",
   color = "primary",
   radius = "md",
 }: SelectMenuFilterProps<TFilters>) {
-  const selectLocale = useLocale("select");
+  const selectLocale = useLocale("select", {
+    resetFilter: typeof resetText === "string" ? resetText : undefined,
+  });
   // Active fields list (fields that user selected to filter)
   const [activeFieldNames, setActiveFieldNames] = useState<string[]>(() => {
     const initial: string[] = [];
@@ -515,7 +521,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
             ref={setReference}
             type="button"
             {...getAddRefProps({
-              className: `inline-flex items-center text-neutral-500 hover:text-neutral-800 bg-white hover:bg-neutral-100/70 border border-neutral-200/70 hover:border-neutral-300 transition-colors shadow-none cursor-pointer select-none ${sizeStyles.button}`,
+              className: `inline-flex items-center text-neutral-500 hover:text-neutral-800 bg-neutral-white hover:bg-neutral-100/70 border border-neutral-200/70 hover:border-neutral-300 transition-colors shadow-none cursor-pointer select-none ${sizeStyles.button}`,
             })}
           >
             <PlusIcon className={`${sizeStyles.buttonIcon} text-neutral-400`} />
@@ -562,7 +568,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                         className={`w-full flex items-center justify-between px-2 py-1.5 text-xs rounded-sm text-left transition-colors cursor-pointer ${
                           isAlreadyActive
                             ? "text-primary-700 font-medium bg-primary-50/60 hover:bg-primary-50"
-                            : "text-neutral-700 hover:bg-[#f1f1ef]"
+                            : "text-neutral-700 hover:bg-neutral-100"
                         }`}
                       >
                         <span>{field.label}</span>

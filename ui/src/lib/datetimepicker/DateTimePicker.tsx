@@ -78,6 +78,7 @@ export default function DateTimePicker({
   portalRoot,
   config,
   onClear,
+  clearAriaLabel,
   placement = "bottom-start",
   className = "",
   wrapperClassName = "",
@@ -86,7 +87,9 @@ export default function DateTimePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimePickerProps) {
-  const datePickerLocale = useLocale("datePicker");
+  const datePickerLocale = useLocale("datePicker", {
+    clearDateTime: clearAriaLabel,
+  });
   const {
     isRequired = false,
     isInvalid = false,
@@ -324,7 +327,7 @@ export default function DateTimePicker({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Xóa ngày giờ"
+                aria-label={datePickerLocale.clearDateTime}
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${
@@ -354,7 +357,7 @@ export default function DateTimePicker({
                 ref={setFloating}
                 id={popoverId}
                 role="dialog"
-                aria-label="Choose date and time"
+                aria-label={datePickerLocale.chooseDateTime}
                 style={{
                   ...floatingStyles,
                   ...transitionStyles,

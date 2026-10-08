@@ -52,7 +52,9 @@ export default function UploadImage({
   previewClassName = "",
   helperClassName = "",
 }: UploadImageProps) {
-  const uploadLocale = useLocale("upload");
+  const uploadLocale = useLocale("upload", {
+    browseButton: typeof buttonTextProp === "string" ? buttonTextProp : undefined,
+  });
   const buttonText = buttonTextProp ?? uploadLocale.browseButton;
   const generatedId = useId();
   const inputId = `${generatedId}-input`;

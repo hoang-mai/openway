@@ -4,6 +4,7 @@ import { sizeConfig, iconBadgeColorConfig, defaultIcons } from "./constants";
 import CloseIcon from "../icons/CloseIcon";
 import { useConfirmContext } from "./ConfirmContext";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 /**
  * Phần đầu của hộp thoại Confirm (Hiển thị icon badge, tiêu đề và nút đóng X)
@@ -18,10 +19,12 @@ export default function ConfirmHeader({
   showCloseButton = false,
   onClose,
   closeButtonClassName = "",
+  closeButtonAriaLabel,
   className = "",
   children,
   ...props
 }: ConfirmHeaderProps) {
+  const confirmLocale = useLocale("confirm", { closeAriaLabel: closeButtonAriaLabel });
   const confirmContext = useConfirmContext();
   const currentSize = getSafeConfig(size ?? confirmContext?.size, sizeConfig, "md");
   const badgeStyle = getSafeConfig(color ?? confirmContext?.color, iconBadgeColorConfig, "warning");
@@ -75,7 +78,7 @@ export default function ConfirmHeader({
           type="button"
           onClick={handleClose}
           disabled={isLoading}
-          aria-label="Đóng hộp thoại"
+          aria-label={confirmLocale.closeAriaLabel}
           data-testid="confirm-close-button"
           className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-md transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${currentSize.closeButton} ${closeButtonClassName}`}
         >

@@ -55,13 +55,13 @@ export const variantContainerConfig: Record<
   Record<CollapseColor, string>
 > = {
   outlined: {
-    primary: "border border-primary-200 bg-white divide-y divide-primary-100 overflow-hidden",
-    secondary: "border border-secondary-200 bg-white divide-y divide-secondary-100 overflow-hidden",
-    neutral: "border border-neutral-200 bg-white divide-y divide-neutral-200 overflow-hidden",
-    error: "border border-error-200 bg-white divide-y divide-error-100 overflow-hidden",
-    success: "border border-success-200 bg-white divide-y divide-success-100 overflow-hidden",
-    warning: "border border-warning-200 bg-white divide-y divide-warning-100 overflow-hidden",
-    info: "border border-info-200 bg-white divide-y divide-info-100 overflow-hidden",
+    primary: "border border-primary-200 bg-neutral-white divide-y divide-primary-100 overflow-hidden",
+    secondary: "border border-secondary-200 bg-neutral-white divide-y divide-secondary-100 overflow-hidden",
+    neutral: "border border-neutral-200 bg-neutral-white divide-y divide-neutral-200 overflow-hidden",
+    error: "border border-error-200 bg-neutral-white divide-y divide-error-100 overflow-hidden",
+    success: "border border-success-200 bg-neutral-white divide-y divide-success-100 overflow-hidden",
+    warning: "border border-warning-200 bg-neutral-white divide-y divide-warning-100 overflow-hidden",
+    info: "border border-info-200 bg-neutral-white divide-y divide-info-100 overflow-hidden",
   },
   filled: {
     primary: "bg-primary-50/40 border border-primary-100 divide-y divide-primary-100/80 overflow-hidden",
@@ -100,13 +100,13 @@ export const variantPanelConfig: Record<
   filled: { primary: "", secondary: "", neutral: "", error: "", success: "", warning: "", info: "" },
   ghost: { primary: "", secondary: "", neutral: "", error: "", success: "", warning: "", info: "" },
   separated: {
-    primary: "bg-white border border-primary-200 shadow-xs overflow-hidden",
-    secondary: "bg-white border border-secondary-200 shadow-xs overflow-hidden",
-    neutral: "bg-white border border-neutral-200 shadow-xs overflow-hidden",
-    error: "bg-white border border-error-200 shadow-xs overflow-hidden",
-    success: "bg-white border border-success-200 shadow-xs overflow-hidden",
-    warning: "bg-white border border-warning-200 shadow-xs overflow-hidden",
-    info: "bg-white border border-info-200 shadow-xs overflow-hidden",
+    primary: "bg-neutral-white border border-primary-200 shadow-xs overflow-hidden",
+    secondary: "bg-neutral-white border border-secondary-200 shadow-xs overflow-hidden",
+    neutral: "bg-neutral-white border border-neutral-200 shadow-xs overflow-hidden",
+    error: "bg-neutral-white border border-error-200 shadow-xs overflow-hidden",
+    success: "bg-neutral-white border border-success-200 shadow-xs overflow-hidden",
+    warning: "bg-neutral-white border border-warning-200 shadow-xs overflow-hidden",
+    info: "bg-neutral-white border border-info-200 shadow-xs overflow-hidden",
   },
 };
 

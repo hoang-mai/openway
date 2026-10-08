@@ -6,6 +6,7 @@ import { UploadImageListProps } from "./types";
 import { uploadImageRadiusConfig, uploadImageSizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { getFileName } from "@/lib/file-preview/utils";
+import { useLocale } from "@/locale";
 
 export default function UploadImageList({
   items,
@@ -22,13 +23,14 @@ export default function UploadImageList({
   showAddButton = true,
   className = "",
 }: UploadImageListProps) {
+  const uploadLocale = useLocale("upload");
   const currentSize = getSafeConfig(size, uploadImageSizeConfig, "md");
   const activeRadius = getSafeConfig(radius, uploadImageRadiusConfig, "md");
   const canAddMore = !maxCount || items.length < maxCount;
 
   return (
     <ul
-      aria-label="Danh sách hình ảnh đã tải lên"
+      aria-label={uploadLocale.imageListAriaLabel}
       className={`flex flex-wrap items-center list-none p-0 m-0 ${currentSize.gap} ${className}`}
     >
       {items.map((item, index) => {
@@ -58,7 +60,7 @@ export default function UploadImageList({
             key={itemKey}
             data-testid="upload-image-item"
             tabIndex={disabled ? -1 : 0}
-            aria-label={`Hình ảnh ${itemName}`}
+            aria-label={uploadLocale.imageAriaLabel ? uploadLocale.imageAriaLabel(itemName) : itemName}
             onKeyDown={(e) => {
               if (disabled || readOnly) return;
               if (e.key === "Delete" || e.key === "Backspace") {
@@ -91,9 +93,9 @@ export default function UploadImageList({
                       e.stopPropagation();
                       onPreview(item);
                     }}
-                    aria-label={`Preview image ${itemName}`}
-                    title="Xem trước"
-                    className="p-1 rounded-md text-neutral-white hover:bg-neutral-white/20 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-hidden transition-colors cursor-pointer"
+                    aria-label={uploadLocale.previewFileAriaLabel ? uploadLocale.previewFileAriaLabel(itemName) : itemName}
+                    title={uploadLocale.preview}
+                    className="p-1 rounded-md text-white hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-hidden transition-colors cursor-pointer"
                   >
                     <EyeIcon width={16} height={16} />
                   </button>
@@ -106,9 +108,9 @@ export default function UploadImageList({
                       e.stopPropagation();
                       onRemove(item, index);
                     }}
-                    aria-label={`Remove image ${itemName}`}
-                    title="Xóa ảnh"
-                    className="p-1 rounded-md text-error-300 hover:text-error-200 hover:bg-neutral-white/20 focus-visible:ring-2 focus-visible:ring-error-400 focus-visible:outline-hidden transition-colors cursor-pointer"
+                    aria-label={uploadLocale.removeFileAriaLabel ? uploadLocale.removeFileAriaLabel(itemName) : itemName}
+                    title={uploadLocale.removeImage}
+                    className="p-1 rounded-md text-error-300 hover:text-error-200 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-error-400 focus-visible:outline-hidden transition-colors cursor-pointer"
                   >
                     <TrashIcon width={16} height={16} />
                   </button>
@@ -126,8 +128,8 @@ export default function UploadImageList({
             type="button"
             disabled={disabled}
             onClick={onTriggerUpload}
-            aria-label="Add image"
-            title="Thêm hình ảnh"
+            aria-label={uploadLocale.addImageAriaLabel}
+            title={uploadLocale.addImage}
             className={`${currentSize.thumbnailSize} ${activeRadius} border-2 border-dashed border-neutral-300 hover:border-neutral-400 hover:bg-neutral-100 text-neutral-400 hover:text-neutral-600 flex flex-col items-center justify-center transition-colors duration-150 ease-in-out cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden`}
           >
             <PlusIcon width={currentSize.iconSize * 0.5} height={currentSize.iconSize * 0.5} />

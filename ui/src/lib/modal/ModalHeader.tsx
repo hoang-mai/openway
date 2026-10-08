@@ -4,6 +4,7 @@ import { sizeConfig } from "./constants";
 import CloseIcon from "../icons/CloseIcon";
 import { useModalContext } from "./ModalContext";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function ModalHeader({
   size,
@@ -14,10 +15,12 @@ export default function ModalHeader({
   showCloseButton = true,
   onClose,
   closeButtonClassName = "",
+  closeButtonAriaLabel,
   className = "",
   children,
   ...props
 }: ModalHeaderProps) {
+  const modalLocale = useLocale("modal", { closeAriaLabel: closeButtonAriaLabel });
   const modalContext = useModalContext();
   const currentSize = getSafeConfig(size ?? modalContext?.size, sizeConfig, "md");
   const isLoading = modalContext?.isLoading;
@@ -59,7 +62,7 @@ export default function ModalHeader({
           type="button"
           onClick={handleClose}
           disabled={isLoading}
-          aria-label="Đóng hộp thoại"
+          aria-label={modalLocale.closeAriaLabel}
           data-testid="modal-close-button"
           className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-md transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${currentSize.closeButton} ${closeButtonClassName}`}
         >

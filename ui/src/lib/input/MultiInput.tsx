@@ -15,6 +15,7 @@ import HelperErrorText from "@/lib/common/HelperErrorText";
 import FieldLabel from "@/lib/common/FieldLabel";
 import { getSafeConfig } from "@/utils/function";
 import { splitTagsFromText } from "./utils";
+import { useLocale } from "@/locale";
 
 export default function MultiInput({
   size,
@@ -67,10 +68,15 @@ export default function MultiInput({
   disabled = false,
   readOnly = false,
   className = "",
-  placeholder = "Nhập và nhấn Enter...",
+  placeholder,
   autoFocus = false,
   ref,
+  "data-testid": dataTestId,
 }: MultiInputProps) {
+  const inputLocale = useLocale("input", {
+    multiInputPlaceholder: placeholder,
+  });
+
   const {
     isRequired = false,
     isInvalid = false,
@@ -331,6 +337,7 @@ export default function MultiInput({
 
   return (
     <div
+      data-testid={dataTestId}
       role="group"
       aria-labelledby={labelId}
       className={`group/field relative flex ${
@@ -442,7 +449,7 @@ export default function MultiInput({
                   aria-busy={isLoading}
                   aria-disabled={disabled || isLoading}
                   aria-autocomplete="none"
-                  placeholder={currentValues.length === 0 ? placeholder : ""}
+                  placeholder={currentValues.length === 0 ? inputLocale.multiInputPlaceholder : ""}
                   className={`flex-1 bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400 disabled:cursor-not-allowed ${currentSize.input} ${className}`}
                 />
               ) : null}
@@ -468,7 +475,7 @@ export default function MultiInput({
                       }
                     }}
                     disabled={!currentInputValue.trim() || !canAddMore}
-                    aria-label="Thêm thẻ"
+                    aria-label={inputLocale.addTagAriaLabel}
                     className={`inline-flex items-center justify-center p-1 rounded hover:bg-neutral-200 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer text-neutral-600 hover:text-neutral-900 ${addButtonClassName}`}
                   >
                     <PlusIcon className={currentSize.icon} />
@@ -478,7 +485,7 @@ export default function MultiInput({
             )}
 
             {isLoading && showSpinner && (
-              <div className="flex items-center justify-center pl-1.5 shrink-0" role="status" aria-label="Đang tải">
+              <div className="flex items-center justify-center pl-1.5 shrink-0" role="status" aria-label={inputLocale.loading}>
                 {renderIconWrapper(<Spinner />)}
               </div>
             )}
@@ -487,7 +494,7 @@ export default function MultiInput({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Xóa tất cả các thẻ"
+                aria-label={inputLocale.clearAllTagsAriaLabel}
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center pl-1.5 shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${currentSize.icon} ${

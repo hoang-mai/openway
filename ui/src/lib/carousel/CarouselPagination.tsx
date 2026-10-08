@@ -2,6 +2,7 @@ import { getSafeConfig } from "@/utils/function";
 import { CarouselPaginationProps } from "./types";
 import { useCarouselContext } from "./context";
 import { dotStyleConfig, glassPaginationWrapper, sizeConfig } from "./constants";
+import { useLocale } from "@/locale";
 
 export function CarouselPagination({
   type = "dots",
@@ -10,6 +11,9 @@ export function CarouselPagination({
   ref,
   ...props
 }: CarouselPaginationProps) {
+  const carouselLocale = useLocale("carousel", {
+    paginationAriaLabel: props["aria-label"],
+  });
   const { currentIndex, totalSlides, slidesToShow, loop, scrollTo, size } = useCarouselContext();
 
   if (type === "none" || totalSlides <= 1) return null;
@@ -40,7 +44,7 @@ export function CarouselPagination({
     <div
       ref={ref}
       role="tablist"
-      aria-label="Phân trang băng chuyền"
+      aria-label={carouselLocale.paginationAriaLabel}
       className={`absolute z-10 bottom-2.5 left-1/2 -translate-x-1/2 inline-flex items-center justify-center ${glassPaginationWrapper} ${
         currentSize.paginationWrapper
       } ${className}`}
@@ -56,7 +60,7 @@ export function CarouselPagination({
               type="button"
               role="tab"
               aria-selected={isActive}
-              aria-label={`Chuyển đến slide ${index + 1}`}
+              aria-label={carouselLocale.slideAriaLabel(index + 1)}
               disabled={!clickable}
               onClick={() => clickable && scrollTo(index)}
               className={`transition-all duration-300 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 ${
@@ -75,7 +79,7 @@ export function CarouselPagination({
             type="button"
             role="tab"
             aria-selected={isActive}
-            aria-label={`Chuyển đến slide ${index + 1}`}
+            aria-label={carouselLocale.slideAriaLabel(index + 1)}
             disabled={!clickable}
             onClick={() => clickable && scrollTo(index)}
             className={`transition-all duration-300 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 ${

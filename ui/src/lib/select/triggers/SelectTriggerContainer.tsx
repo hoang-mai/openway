@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import ChevronDownIcon from "@/lib/icons/ChevronDownIcon";
 import CloseIcon from "@/lib/icons/CloseIcon";
 import Spinner from "@/lib/icons/Spinner";
+import { useLocale } from "@/locale";
 
 export interface SelectTriggerContainerProps {
   id?: string;
@@ -50,6 +51,7 @@ export function SelectTriggerContainer({
   className = "",
   children,
 }: SelectTriggerContainerProps) {
+  const selectLocale = useLocale("select");
   const statusStyles = disabled
     ? "opacity-60 cursor-not-allowed bg-neutral-100 pointer-events-none"
     : hideChevron
@@ -93,7 +95,7 @@ export function SelectTriggerContainer({
         {showClear && !isLoading && (
           <button
             type="button"
-            aria-label="Clear selection"
+            aria-label={selectLocale.clearSelection}
             onClick={(e) => {
               e.stopPropagation();
               onClear?.(e);

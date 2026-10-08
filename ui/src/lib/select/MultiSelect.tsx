@@ -9,6 +9,7 @@ import { useSelectSearch } from "./hooks/useSelectSearch";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { getSelectedOptions } from "./utils";
+import { useLocale } from "@/locale";
 
 const DEFAULT_OPTIONS: never[] = [];
 const EMPTY_VALUES: (string | number)[] = [];
@@ -26,7 +27,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   id: idProp,
   label,
   labelPlacement = "floating",
-  placeholder = "Chọn...",
+  placeholder,
   helperText,
   errorMessage,
   isDisabled = false,
@@ -76,6 +77,13 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   "aria-labelledby": ariaLabelledByProp,
   ...props
 }: MultiSelectProps<TData, TFilters>) {
+  const selectLocale = useLocale("select", {
+    placeholder,
+    searchPlaceholder,
+    emptyText: typeof emptyText === "string" ? emptyText : undefined,
+    resetFilter: typeof resetFiltersText === "string" ? resetFiltersText : undefined,
+  });
+
   const {
     isRequired = false,
     isInvalid: isInvalidConfig = false,
@@ -332,7 +340,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
   const ariaLabel =
     ariaLabelProp ||
     (typeof label === "string" ? label : undefined) ||
-    placeholder;
+    selectLocale.placeholder;
   const ariaLabelledBy = label ? labelId : ariaLabelledByProp;
 
   const renderLabel = () => (
@@ -382,7 +390,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
             variant={variant}
             color={color}
             radius={radius}
-            placeholder={searchPlaceholder || placeholder}
+            placeholder={selectLocale.searchPlaceholder || selectLocale.placeholder}
             disabled={isDisabled}
             readOnly={readOnly}
             isInvalid={isInvalid}
@@ -421,7 +429,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
             portalRoot={portalRoot}
             reference={reference}
             maxMenuHeight={maxMenuHeight}
-            emptyText={emptyText}
+            emptyText={emptyText ?? selectLocale.emptyText}
             emptyProps={emptyProps}
             menuHeader={menuHeader}
             menuFooter={menuFooter}
@@ -431,7 +439,7 @@ export function MultiSelect<TData = unknown, TFilters extends Record<string, unk
             menuFilterLayout={menuFilterLayout}
             menuFilterGridCols={menuFilterGridCols}
             showResetFilters={showResetFilters}
-            resetFiltersText={resetFiltersText}
+            resetFiltersText={resetFiltersText ?? selectLocale.resetFilter}
             onMenuFilterChange={handleFilterChange}
             onResetFilters={handleResetFilters}
             renderOption={renderOption}

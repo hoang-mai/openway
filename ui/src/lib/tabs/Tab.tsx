@@ -5,6 +5,7 @@ import { useTabsContext } from "./context";
 import { sizeConfig, radiusConfig, colorTabConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import CloseIcon from "../icons/CloseIcon";
+import { useLocale } from "@/locale";
 
 export default function Tab({
   value,
@@ -34,6 +35,8 @@ export default function Tab({
     disabled: groupDisabled,
     onCloseTab,
   } = useTabsContext();
+
+  const tabsLocale = useLocale("tabs");
 
   const internalRef = useRef<HTMLButtonElement | null>(null);
   const mergedRef = useMergeRefs([internalRef, ref]);
@@ -151,7 +154,7 @@ export default function Tab({
       {closable && (
         <button
           type="button"
-          aria-label="Close tab"
+          aria-label={tabsLocale.closeTab}
           disabled={isDisabled}
           tabIndex={isActive ? 0 : -1}
           onClick={handleClose}

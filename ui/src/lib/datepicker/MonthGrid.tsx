@@ -69,7 +69,7 @@ export default function MonthGrid({
   };
 
   return (
-    <div ref={gridRef} role="grid" aria-label="Chọn tháng" className="grid grid-cols-3 gap-2 py-2">
+    <div ref={gridRef} role="grid" aria-label={loc.selectMonth} className="grid grid-cols-3 gap-2 py-2">
       {loc.monthsShort.map((monthName, idx) => {
         const monthDate = new Date(currentYear, idx, 1);
         const isSelected = selectedDate ? isSameMonth(monthDate, selectedDate) : false;

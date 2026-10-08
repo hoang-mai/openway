@@ -141,6 +141,11 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
    */
   onClear?: () => void;
 
+  /**
+   * Nhãn aria-label cho nút xóa nội dung
+   */
+  clearAriaLabel?: string;
+
   // ==================== LAYOUT & CUSTOMIZATION ====================
   /**
    * Tùy biến className cho container bọc toàn bộ (bao gồm label, input wrapper, helper/error text)
@@ -463,6 +468,11 @@ export interface OtpInputProps {
    * Class tùy biến cho helperText / errorMessage
    */
   helperClassName?: string;
+
+  /**
+   * Data test ID cho automation testing
+   */
+  "data-testid"?: string;
 }
 
 // ==================== MULTI INPUT TYPES ====================
@@ -775,4 +785,9 @@ export interface MultiInputProps {
   helperClassName?: string;
   tagClassName?: string;
   addButtonClassName?: string;
+
+  /**
+   * Data test ID cho automation testing
+   */
+  "data-testid"?: string;
 }

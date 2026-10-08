@@ -81,6 +81,7 @@ export default function DateTimeRangePicker({
   portalRoot,
   config,
   onClear,
+  clearAriaLabel,
   placement = "bottom-start",
   className = "",
   wrapperClassName = "",
@@ -89,10 +90,13 @@ export default function DateTimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DateTimeRangePickerProps) {
-  const datePickerLocale = useLocale("datePicker");
-  const timePickerLocale = useLocale("timePicker");
-  const startLabel = startLabelProp ?? timePickerLocale.startTime;
-  const endLabel = endLabelProp ?? timePickerLocale.endTime;
+  const datePickerLocale = useLocale("datePicker", {
+    clearDateTimeRange: clearAriaLabel,
+  });
+  const timePickerLocale = useLocale("timePicker", {
+    startTime: startLabelProp,
+    endTime: endLabelProp,
+  });
 
   const {
     isRequired = false,
@@ -377,7 +381,7 @@ export default function DateTimeRangePicker({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Xóa khoảng ngày giờ"
+                aria-label={datePickerLocale.clearDateTimeRange}
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${
@@ -407,7 +411,7 @@ export default function DateTimeRangePicker({
                 ref={setFloating}
                 id={popoverId}
                 role="dialog"
-                aria-label="Choose date and time range"
+                aria-label={datePickerLocale.chooseDateTimeRange}
                 style={{
                   ...floatingStyles,
                   ...transitionStyles,
@@ -452,7 +456,11 @@ export default function DateTimeRangePicker({
                       key={`timeview-step-${activeStep}`}
                       value={currentStepDate || selectedRange[0]}
                       onChange={handleTimeChange}
-                      ariaLabel={activeStep === "start" ? `${startLabel} time` : `${endLabel} time`}
+                      ariaLabel={
+                        activeStep === "start"
+                          ? `${timePickerLocale.startTime} time`
+                          : `${timePickerLocale.endTime} time`
+                      }
                       use12Hours={use12Hours}
                       showSeconds={showSeconds}
                       hourStep={hourStep}
@@ -484,7 +492,7 @@ export default function DateTimeRangePicker({
                           : "bg-neutral-white border-neutral-300 hover:bg-neutral-100 text-neutral-700"
                       }`}
                     >
-                      ← {startLabel}
+                      ← {timePickerLocale.startTime}
                     </button>
 
                     {/* Button Chuyển sang Kết thúc */}
@@ -497,7 +505,7 @@ export default function DateTimeRangePicker({
                           : "bg-neutral-white border-neutral-300 hover:bg-neutral-100 text-neutral-700"
                       }`}
                     >
-                      {endLabel} →
+                      {timePickerLocale.endTime} →
                     </button>
                   </div>
 
@@ -507,7 +515,7 @@ export default function DateTimeRangePicker({
                     onClick={() => setIsOpen(false)}
                     className={`px-3.5 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer ${buttonColorStyle.applyButton}`}
                   >
-                    Áp dụng
+                    {datePickerLocale.apply}
                   </button>
                 </div>
               </div>

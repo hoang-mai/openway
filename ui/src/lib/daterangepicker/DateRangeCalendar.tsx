@@ -56,10 +56,9 @@ export default function DateRangeCalendar({
   // Tabs
   const loc = useLocale("datePicker");
   const tabItems = useMemo(() => {
-    const tabLabels = loc.viewTabs;
     return (viewTabs || ["days", "months", "years"]).map((v) => ({
       key: v,
-      label: tabLabels[v],
+      label: loc.viewTabs?.[v] || v,
     }));
   }, [viewTabs, loc.viewTabs]);
 

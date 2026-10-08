@@ -9,6 +9,7 @@ import {
 import { sizeConfig, radiusConfig, variantColorConfig } from "../constants";
 import { getSafeConfig } from "@/utils/function";
 import SelectTriggerContainer from "./SelectTriggerContainer";
+import { useLocale } from "@/locale";
 
 export interface SingleSelectTriggerProps<TData = unknown> {
   id?: string;
@@ -51,7 +52,7 @@ export function SingleSelectTrigger<TData = unknown>({
   variant = "outline",
   color = "primary",
   radius = "md",
-  placeholder = "Chọn...",
+  placeholder,
   disabled = false,
   readOnly = false,
   isInvalid = false,
@@ -71,6 +72,7 @@ export function SingleSelectTrigger<TData = unknown>({
   onKeyDown,
   className = "",
 }: SingleSelectTriggerProps<TData>) {
+  const selectLocale = useLocale("select", { placeholder });
   const inputRef = useRef<HTMLInputElement>(null);
   const currentSize = getSafeConfig(size, sizeConfig, "md");
   const roundedClass = getSafeConfig(radius, radiusConfig, "md");
@@ -102,9 +104,9 @@ export function SingleSelectTrigger<TData = unknown>({
           <input
             ref={inputRef}
             type="text"
-            aria-label="Search"
+            aria-label={selectLocale.searchAriaLabel}
             value={searchValue ?? ""}
-            placeholder={selectedOption ? selectedOption.label : placeholder}
+            placeholder={selectedOption ? selectedOption.label : selectLocale.placeholder}
             onChange={(e) => onSearchChange?.(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === " ") {
@@ -130,7 +132,7 @@ export function SingleSelectTrigger<TData = unknown>({
         {selectedOption ? (
           <span className="text-neutral-900">{selectedOption.label}</span>
         ) : (
-          <span className="text-neutral-600">{placeholder}</span>
+          <span className="text-neutral-600">{selectLocale.placeholder}</span>
         )}
       </div>
     );

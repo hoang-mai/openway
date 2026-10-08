@@ -3,6 +3,7 @@ import { AlertProps } from "./types";
 import { sizeConfig, radiusConfig, variantColorConfig, iconColorConfig, defaultIcons } from "./constants";
 import CloseIcon from "../icons/CloseIcon";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function Alert({
   size,
@@ -15,7 +16,7 @@ export default function Alert({
   action,
   closable = true,
   onClose,
-  closeAriaLabel = "Đóng cảnh báo",
+  closeAriaLabel,
   banner = false,
   titleClassName = "",
   descriptionClassName = "",
@@ -29,6 +30,7 @@ export default function Alert({
   ...props
 }: AlertProps) {
 
+  const alertLocale = useLocale("alert", { closeAriaLabel });
   const currentSize = getSafeConfig(size, sizeConfig, "md");
 
   const roundedClass = banner ? "rounded-none border-x-0 w-full" : getSafeConfig(radius, radiusConfig, "lg");
@@ -107,7 +109,7 @@ export default function Alert({
         <button
           type="button"
           onClick={handleClose}
-          aria-label={closeAriaLabel}
+          aria-label={alertLocale.closeAriaLabel}
           className={`inline-flex items-center justify-center shrink-0 rounded-md transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-current opacity-70 hover:opacity-100 ${
             variant === "filled" ? "hover:bg-white/20 active:bg-white/30" : "hover:bg-black/5 active:bg-black/10"
           } ${currentSize.closeButton} ${closeButtonClassName}`}

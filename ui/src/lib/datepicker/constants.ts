@@ -144,8 +144,8 @@ export const datePickerColorConfig: Record<
   }
 > = {
   primary: {
-    selected: "bg-primary-500 text-neutral-white hover:bg-primary-600",
-    selectedText: "text-neutral-white",
+    selected: "bg-primary-500 text-white hover:bg-primary-600",
+    selectedText: "text-white",
     rangeBg: "bg-primary-100 text-primary-900",
     rangeText: "text-primary-900",
     hoverBg: "hover:bg-primary-200 hover:text-primary-900",
@@ -154,8 +154,8 @@ export const datePickerColorConfig: Record<
     accentBg: "bg-primary-500",
   },
   secondary: {
-    selected: "bg-secondary-500 text-neutral-white hover:bg-secondary-600",
-    selectedText: "text-neutral-white",
+    selected: "bg-secondary-500 text-white hover:bg-secondary-600",
+    selectedText: "text-white",
     rangeBg: "bg-secondary-100 text-secondary-900",
     rangeText: "text-secondary-900",
     hoverBg: "hover:bg-secondary-200 hover:text-secondary-900",
@@ -164,8 +164,8 @@ export const datePickerColorConfig: Record<
     accentBg: "bg-secondary-500",
   },
   neutral: {
-    selected: "bg-neutral-800 text-neutral-white hover:bg-neutral-900",
-    selectedText: "text-neutral-white",
+    selected: "bg-neutral-800 text-white hover:bg-neutral-900",
+    selectedText: "text-white",
     rangeBg: "bg-neutral-200 text-neutral-900",
     rangeText: "text-neutral-900",
     hoverBg: "hover:bg-neutral-300 hover:text-neutral-900",
@@ -174,8 +174,8 @@ export const datePickerColorConfig: Record<
     accentBg: "bg-neutral-800",
   },
   error: {
-    selected: "bg-error-500 text-neutral-white hover:bg-error-600",
-    selectedText: "text-neutral-white",
+    selected: "bg-error-500 text-white hover:bg-error-600",
+    selectedText: "text-white",
     rangeBg: "bg-error-100 text-error-900",
     rangeText: "text-error-900",
     hoverBg: "hover:bg-error-200 hover:text-error-900",
@@ -184,8 +184,8 @@ export const datePickerColorConfig: Record<
     accentBg: "bg-error-500",
   },
   success: {
-    selected: "bg-success-500 text-neutral-white hover:bg-success-600",
-    selectedText: "text-neutral-white",
+    selected: "bg-success-500 text-white hover:bg-success-600",
+    selectedText: "text-white",
     rangeBg: "bg-success-100 text-success-900",
     rangeText: "text-success-900",
     hoverBg: "hover:bg-success-200 hover:text-success-900",
@@ -204,8 +204,8 @@ export const datePickerColorConfig: Record<
     accentBg: "bg-warning-500",
   },
   info: {
-    selected: "bg-info-500 text-neutral-white hover:bg-info-600",
-    selectedText: "text-neutral-white",
+    selected: "bg-info-500 text-white hover:bg-info-600",
+    selectedText: "text-white",
     rangeBg: "bg-info-100 text-info-900",
     rangeText: "text-info-900",
     hoverBg: "hover:bg-info-200 hover:text-info-900",

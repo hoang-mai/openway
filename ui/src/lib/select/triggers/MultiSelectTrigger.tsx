@@ -5,6 +5,7 @@ import { getVisibleTags } from "../utils";
 import { getSafeConfig } from "@/utils/function";
 import { Badge } from "@/lib/badge";
 import SelectTriggerContainer from "./SelectTriggerContainer";
+import { useLocale } from "@/locale";
 
 export interface MultiSelectTriggerProps<TData = unknown> {
   id?: string;
@@ -49,7 +50,7 @@ export function MultiSelectTrigger<TData = unknown>({
   variant = "outline",
   color = "primary",
   radius = "md",
-  placeholder = "Chọn...",
+  placeholder,
   disabled = false,
   readOnly = false,
   isInvalid = false,
@@ -71,6 +72,7 @@ export function MultiSelectTrigger<TData = unknown>({
   onKeyDown,
   className = "",
 }: MultiSelectTriggerProps<TData>) {
+  const selectLocale = useLocale("select", { placeholder });
   const inputRef = useRef<HTMLInputElement>(null);
   const currentSize = getSafeConfig(size, sizeConfig, "md");
   const roundedClass = getSafeConfig(radius, radiusConfig, "md");
@@ -129,9 +131,9 @@ export function MultiSelectTrigger<TData = unknown>({
           <input
             ref={inputRef}
             type="text"
-            aria-label="Search"
+            aria-label={selectLocale.searchAriaLabel}
             value={searchValue ?? ""}
-            placeholder={hasSelection ? "" : placeholder}
+            placeholder={hasSelection ? "" : selectLocale.placeholder}
             onChange={(e) => onSearchChange?.(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === " ") {
@@ -145,7 +147,7 @@ export function MultiSelectTrigger<TData = unknown>({
             className={`bg-transparent outline-none border-none p-0 flex-1 min-w-15 text-neutral-900 placeholder:text-neutral-400 ${currentSize.input}`}
           />
         ) : !hasSelection ? (
-          <span className="text-neutral-600 truncate">{placeholder}</span>
+          <span className="text-neutral-600 truncate">{selectLocale.placeholder}</span>
         ) : null}
       </div>
     );

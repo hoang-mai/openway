@@ -63,11 +63,11 @@ export const radiusConfig: Record<CarouselRadius, string> = {
  */
 export const navVariantConfig: Record<CarouselNavigationVariant, string> = {
   glass:
-    "bg-white/80 backdrop-blur-md border border-neutral-200/70 text-neutral-800 shadow-xs hover:bg-white hover:text-neutral-950 active:scale-90 disabled:opacity-25 disabled:pointer-events-none",
+    "bg-neutral-white/80 backdrop-blur-md border border-neutral-200/70 text-neutral-800 shadow-xs hover:bg-neutral-white hover:text-neutral-950 active:scale-90 disabled:opacity-25 disabled:pointer-events-none",
   filled:
     "bg-primary-600 text-white shadow-md hover:bg-primary-700 active:bg-primary-800 disabled:bg-neutral-300 disabled:text-neutral-500 disabled:opacity-50",
   outline:
-    "border border-primary-600 text-primary-600 bg-white/70 backdrop-blur-sm hover:bg-primary-50 disabled:border-neutral-300 disabled:text-neutral-400",
+    "border border-primary-600 text-primary-600 bg-neutral-white/70 backdrop-blur-sm hover:bg-primary-50 disabled:border-neutral-300 disabled:text-neutral-400",
   ghost:
     "text-primary-600 hover:bg-primary-100/60 active:bg-primary-200/60 disabled:text-neutral-400",
 };
@@ -76,7 +76,7 @@ export const navVariantConfig: Record<CarouselNavigationVariant, string> = {
  * Phong cách kính mờ cho thanh phân trang (Pagination Wrapper)
  */
 export const glassPaginationWrapper =
-  "bg-white/80 backdrop-blur-md border border-neutral-200/80 shadow-xs rounded-full";
+  "bg-neutral-white/80 backdrop-blur-md border border-neutral-200/80 shadow-xs rounded-full";
 
 /**
  * Màu sắc chuẩn cho Dots / Lines

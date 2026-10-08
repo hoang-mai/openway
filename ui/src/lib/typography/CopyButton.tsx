@@ -4,6 +4,7 @@ import { extractTextFromNode } from "./utils";
 import CopyIcon from "@/lib/icons/CopyIcon";
 import CheckIcon from "@/lib/icons/CheckIcon";
 import { Tooltip } from "@/lib/tooltip";
+import { useLocale } from "@/locale";
 
 export interface CopyButtonProps {
   copyable?: boolean | CopyConfig;
@@ -49,15 +50,17 @@ export default function CopyButton({ copyable, children, hasHoverAction }: CopyB
   if (!copyable) return null;
 
   const copyConf: CopyConfig = typeof copyable === "object" ? copyable : {};
-  const defaultTip = Array.isArray(copyConf.tooltips) ? copyConf.tooltips[0] : "Sao chép";
-  const copiedTip = Array.isArray(copyConf.tooltips) ? copyConf.tooltips[1] : "Đã sao chép!";
+  const typographyLocale = useLocale("typography", {
+    copy: Array.isArray(copyConf.tooltips) ? String(copyConf.tooltips[0]) : undefined,
+    copied: Array.isArray(copyConf.tooltips) ? String(copyConf.tooltips[1]) : undefined,
+  });
   const showTooltip = copyConf.tooltips !== false;
 
   const buttonElement = (
     <button
       type="button"
       onClick={handleCopy}
-      aria-label={isCopied ? String(copiedTip) : String(defaultTip)}
+      aria-label={isCopied ? typographyLocale.copied : typographyLocale.copy}
       className={`inline-flex items-center justify-center p-1 ml-1.5 rounded text-neutral-500 hover:text-neutral-800 hover:bg-neutral-200/60 transition-all duration-150 cursor-pointer align-middle ${
         hasHoverAction ? "ui-hover-action" : ""
       }`}
@@ -72,7 +75,7 @@ export default function CopyButton({ copyable, children, hasHoverAction }: CopyB
 
   if (showTooltip) {
     return (
-      <Tooltip content={isCopied ? copiedTip : defaultTip} placement="top" size="xs">
+      <Tooltip content={isCopied ? typographyLocale.copied : typographyLocale.copy} placement="top" size="xs">
         {buttonElement}
       </Tooltip>
     );

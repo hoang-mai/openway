@@ -13,7 +13,7 @@ export default function Empty({
   image = "default",
   imageSize,
   imageClassName = "",
-  imageAlt = "Empty",
+  imageAlt,
   title,
   titleClassName = "",
   description: descriptionProp,
@@ -26,7 +26,10 @@ export default function Empty({
   ref,
   ...props
 }: EmptyProps) {
-  const emptyLocale = useLocale("empty");
+  const emptyLocale = useLocale("empty", {
+    description: typeof descriptionProp === "string" ? descriptionProp : undefined,
+    imageAlt,
+  });
   const description = descriptionProp ?? emptyLocale.description;
   const currentSize = getSafeConfig(size, emptySizeConfig, "md");
   const currentLayout = getSafeConfig(layout, emptyLayoutConfig, "vertical");
@@ -50,7 +53,7 @@ export default function Empty({
       return (
         <Image
           src={image}
-          alt={imageAlt}
+          alt={emptyLocale.imageAlt || "Empty"}
           width={dimension}
           height={dimension}
           className="size-full object-contain pointer-events-none select-none"

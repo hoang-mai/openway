@@ -32,7 +32,10 @@ export default function UploadFileDropzone({
   className = "",
   describedById,
 }: UploadFileDropzoneProps) {
-  const uploadLocale = useLocale("upload");
+  const uploadLocale = useLocale("upload", {
+    dragDropText: typeof dropzoneTitle === "string" ? dropzoneTitle : undefined,
+    dropzoneDescription: typeof dropzoneDescription === "string" ? dropzoneDescription : undefined,
+  });
   const currentSize = getSafeConfig(size, uploadFileSizeConfig, "md");
   const effectiveRadius = getSafeConfig(radius, uploadFileRadiusConfig, "md");
 
@@ -40,9 +43,6 @@ export default function UploadFileDropzone({
   const variantConfig =
     variant !== "other" ? getSafeConfig(variant, uploadFileVariantColorConfig, "outline") : null;
   const colorStyles = variantConfig ? getSafeConfig(effectiveColor, variantConfig, "primary") : null;
-
-  const defaultTitle = uploadLocale.dragDropText;
-  const defaultDesc = uploadLocale.dropzoneDescription;
 
   const isDragActive = dragStatus === "active";
   const isDragReject = dragStatus === "reject";
@@ -70,7 +70,7 @@ export default function UploadFileDropzone({
     const defaultCompactProps = {
       role: "button",
       tabIndex: disabled || readOnly ? -1 : 0,
-      "aria-label": "Khu vực tải tệp lên thu gọn",
+      "aria-label": uploadLocale.compactDropzoneAriaLabel,
       "aria-disabled": disabled || readOnly,
       "aria-invalid": isInvalid,
       "aria-describedby": describedById,
@@ -92,7 +92,7 @@ export default function UploadFileDropzone({
             )}
           </div>
           <span className={`truncate text-neutral-700 font-medium ${currentSize.descSize}`}>
-            {dropzoneTitle || uploadLocale.dragDropText}
+            {dropzoneTitle ?? uploadLocale.dragDropText}
           </span>
         </div>
 
@@ -117,7 +117,7 @@ export default function UploadFileDropzone({
   const defaultProps = {
     role: "button",
     tabIndex: disabled || readOnly ? -1 : 0,
-    "aria-label": "Khu vực kéo thả và tải tệp tin lên",
+    "aria-label": uploadLocale.dropzoneAriaLabel,
     "aria-disabled": disabled || readOnly,
     "aria-invalid": isInvalid,
     "aria-describedby": describedById,
@@ -137,7 +137,7 @@ export default function UploadFileDropzone({
           }`}
         >
           <Spinner width={currentSize.iconSize * 0.8} height={currentSize.iconSize * 0.8} />
-          <span className={`${currentSize.titleSize} font-medium`}>Đang xử lý tệp tin...</span>
+          <span className={`${currentSize.titleSize} font-medium`}>{uploadLocale.processingFile}</span>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-2">
@@ -152,12 +152,12 @@ export default function UploadFileDropzone({
               colorStyles?.titleHover || "group-hover:text-neutral-900"
             } transition-colors`}
           >
-            {isLoading ? "Đang xử lý tệp tin..." : (dropzoneTitle ?? defaultTitle)}
+            {isLoading ? uploadLocale.processingFile : (dropzoneTitle ?? uploadLocale.dragDropText)}
           </div>
 
           {/* Description */}
           <div id={describedById} className={`${currentSize.descSize} text-neutral-600`}>
-            {dropzoneDescription ?? defaultDesc}
+            {dropzoneDescription ?? uploadLocale.dropzoneDescription}
           </div>
         </div>
       )}

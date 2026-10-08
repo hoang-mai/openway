@@ -133,6 +133,11 @@ export interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaE
   onClear?: () => void;
 
   /**
+   * Nhãn aria-label cho nút xóa nội dung
+   */
+  clearAriaLabel?: string;
+
+  /**
    * Số dòng tối thiểu khi autoResize bật
    * @default 3
    */

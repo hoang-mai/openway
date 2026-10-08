@@ -137,31 +137,31 @@ export const dateTimeRangePickerButtonColorConfig: Record<
   }
 > = {
   primary: {
-    activeStep: "bg-primary-500 border-primary-500 text-neutral-white shadow-xs",
-    applyButton: "bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-neutral-white shadow-xs",
+    activeStep: "bg-primary-500 border-primary-500 text-white shadow-xs",
+    applyButton: "bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white shadow-xs",
   },
   secondary: {
-    activeStep: "bg-secondary-500 border-secondary-500 text-neutral-white shadow-xs",
-    applyButton: "bg-secondary-500 hover:bg-secondary-600 active:bg-secondary-700 text-neutral-white shadow-xs",
+    activeStep: "bg-secondary-500 border-secondary-500 text-white shadow-xs",
+    applyButton: "bg-secondary-500 hover:bg-secondary-600 active:bg-secondary-700 text-white shadow-xs",
   },
   error: {
-    activeStep: "bg-error-500 border-error-500 text-neutral-white shadow-xs",
-    applyButton: "bg-error-500 hover:bg-error-600 active:bg-error-700 text-neutral-white shadow-xs",
+    activeStep: "bg-error-500 border-error-500 text-white shadow-xs",
+    applyButton: "bg-error-500 hover:bg-error-600 active:bg-error-700 text-white shadow-xs",
   },
   success: {
-    activeStep: "bg-success-500 border-success-500 text-neutral-white shadow-xs",
-    applyButton: "bg-success-500 hover:bg-success-600 active:bg-success-700 text-neutral-white shadow-xs",
+    activeStep: "bg-success-500 border-success-500 text-white shadow-xs",
+    applyButton: "bg-success-500 hover:bg-success-600 active:bg-success-700 text-white shadow-xs",
   },
   warning: {
     activeStep: "bg-warning-500 border-warning-500 text-neutral-950 shadow-xs",
     applyButton: "bg-warning-500 hover:bg-warning-600 active:bg-warning-700 text-neutral-950 shadow-xs",
   },
   info: {
-    activeStep: "bg-info-500 border-info-500 text-neutral-white shadow-xs",
-    applyButton: "bg-info-500 hover:bg-info-600 active:bg-info-700 text-neutral-white shadow-xs",
+    activeStep: "bg-info-500 border-info-500 text-white shadow-xs",
+    applyButton: "bg-info-500 hover:bg-info-600 active:bg-info-700 text-white shadow-xs",
   },
   neutral: {
-    activeStep: "bg-neutral-800 border-neutral-800 text-neutral-white shadow-xs",
-    applyButton: "bg-neutral-800 hover:bg-neutral-900 active:bg-neutral-950 text-neutral-white shadow-xs",
+    activeStep: "bg-neutral-800 border-neutral-800 text-white shadow-xs",
+    applyButton: "bg-neutral-800 hover:bg-neutral-900 active:bg-neutral-950 text-white shadow-xs",
   },
 };

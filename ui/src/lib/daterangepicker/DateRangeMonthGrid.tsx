@@ -74,7 +74,7 @@ export default function DateRangeMonthGrid({
     <div
       ref={gridRef}
       role="grid"
-      aria-label="Chọn tháng"
+      aria-label={loc.selectMonth}
       className="grid grid-cols-3 gap-2 py-2"
       onMouseLeave={() => onHoverMonth?.(null)}
     >

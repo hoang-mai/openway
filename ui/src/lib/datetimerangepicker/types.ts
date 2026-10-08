@@ -321,6 +321,11 @@ export interface DateTimeRangePickerProps {
   onClear?: () => void;
 
   /**
+   * Nhãn aria-label cho nút xóa
+   */
+  clearAriaLabel?: string;
+
+  /**
    * Vị trí mở popover chọn ngày giờ (Floating UI)
    * @default 'bottom-start'
    */

@@ -134,6 +134,11 @@ export interface ConfirmHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>,
   closeButtonClassName?: string;
 
   /**
+   * Nhãn aria-label cho nút đóng (X)
+   */
+  closeButtonAriaLabel?: string;
+
+  /**
    * Class CSS tùy biến cho toàn bộ header
    */
   className?: string;

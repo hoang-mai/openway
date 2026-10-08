@@ -172,7 +172,7 @@ export const uploadFileVariantColorConfig: Record<
       active: "bg-primary-50/50 border-primary-500 ring-2 ring-primary-500/20 text-primary-900",
       iconColor: "text-neutral-400 group-hover:text-neutral-600",
       titleHover: "group-hover:text-neutral-900",
-      itemBg: "bg-white hover:bg-neutral-50/80",
+      itemBg: "bg-neutral-white hover:bg-neutral-50/80",
       itemBorder: "border-neutral-200 hover:border-neutral-400",
     },
     secondary: {
@@ -180,7 +180,7 @@ export const uploadFileVariantColorConfig: Record<
       active: "bg-secondary-50/50 border-secondary-500 ring-2 ring-secondary-500/20 text-secondary-900",
       iconColor: "text-secondary-500",
       titleHover: "group-hover:text-secondary-600",
-      itemBg: "bg-white hover:bg-neutral-50/80",
+      itemBg: "bg-neutral-white hover:bg-neutral-50/80",
       itemBorder: "border-neutral-200 hover:border-secondary-300",
     },
     neutral: {
@@ -188,7 +188,7 @@ export const uploadFileVariantColorConfig: Record<
       active: "bg-neutral-100/70 border-neutral-500 ring-2 ring-neutral-500/20 text-neutral-900",
       iconColor: "text-neutral-500",
       titleHover: "group-hover:text-neutral-900",
-      itemBg: "bg-white hover:bg-neutral-50/80",
+      itemBg: "bg-neutral-white hover:bg-neutral-50/80",
       itemBorder: "border-neutral-200 hover:border-neutral-400",
     },
     error: {
@@ -196,7 +196,7 @@ export const uploadFileVariantColorConfig: Record<
       active: "bg-error-50/50 border-error-500 ring-2 ring-error-500/20 text-error-900",
       iconColor: "text-error-500",
       titleHover: "group-hover:text-error-600",
-      itemBg: "bg-white hover:bg-error-50/30",
+      itemBg: "bg-neutral-white hover:bg-error-50/30",
       itemBorder: "border-error-200 hover:border-error-300",
     },
     success: {
@@ -204,7 +204,7 @@ export const uploadFileVariantColorConfig: Record<
       active: "bg-success-50/50 border-success-500 ring-2 ring-success-500/20 text-success-900",
       iconColor: "text-success-500",
       titleHover: "group-hover:text-success-600",
-      itemBg: "bg-white hover:bg-success-50/30",
+      itemBg: "bg-neutral-white hover:bg-success-50/30",
       itemBorder: "border-success-200 hover:border-success-300",
     },
     warning: {
@@ -212,7 +212,7 @@ export const uploadFileVariantColorConfig: Record<
       active: "bg-warning-50/50 border-warning-500 ring-2 ring-warning-500/20 text-warning-900",
       iconColor: "text-warning-500",
       titleHover: "group-hover:text-warning-600",
-      itemBg: "bg-white hover:bg-warning-50/30",
+      itemBg: "bg-neutral-white hover:bg-warning-50/30",
       itemBorder: "border-warning-200 hover:border-warning-300",
     },
     info: {
@@ -220,7 +220,7 @@ export const uploadFileVariantColorConfig: Record<
       active: "bg-info-50/50 border-info-500 ring-2 ring-info-500/20 text-info-900",
       iconColor: "text-info-500",
       titleHover: "group-hover:text-info-600",
-      itemBg: "bg-white hover:bg-info-50/30",
+      itemBg: "bg-neutral-white hover:bg-info-50/30",
       itemBorder: "border-info-200 hover:border-info-300",
     },
   },

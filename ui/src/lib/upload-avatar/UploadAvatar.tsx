@@ -276,7 +276,7 @@ export default function UploadAvatar({
           {...getRootProps({
             role: "button",
             tabIndex: disabled || isLoading ? -1 : 0,
-            "aria-label": "Tải lên ảnh đại diện",
+            "aria-label": uploadLocale.uploadAvatarAriaLabel,
             "aria-disabled": disabled || isLoading,
             "aria-invalid": hasError,
             "aria-required": isRequired,
@@ -309,9 +309,9 @@ export default function UploadAvatar({
           {/* Loading Spinner Overlay */}
           {isLoading && showSpinner && (
             <div
-              className="absolute inset-0 bg-neutral-950/60 flex items-center justify-center text-neutral-white z-20"
+              className="absolute inset-0 bg-neutral-950/60 flex items-center justify-center text-white z-20"
               role="status"
-              aria-label="Đang tải"
+              aria-label={uploadLocale.loading}
             >
               <Spinner width={currentSize.iconSize} height={currentSize.iconSize} className="animate-spin" />
             </div>
@@ -319,14 +319,14 @@ export default function UploadAvatar({
 
           {/* Hover Action Overlay - ONLY when an image exists and not uploading/disabled */}
           {!isLoading && !disabled && currentItem && (
-            <div className="absolute inset-0 bg-neutral-950/20 opacity-0 group-hover/avatar:opacity-100 group-focus-visible/avatar:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-neutral-white z-10">
+            <div className="absolute inset-0 bg-neutral-950/20 opacity-0 group-hover/avatar:opacity-100 group-focus-visible/avatar:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white z-10">
               {/* Preview Button */}
               <button
                 type="button"
                 onClick={handlePreview}
-                aria-label="Xem trước ảnh đại diện"
-                title="Xem trước"
-                className="p-1 rounded-full text-neutral-white hover:bg-neutral-white/20 focus-visible:ring-2 focus-visible:ring-neutral-white focus-visible:outline-hidden cursor-pointer"
+                aria-label={uploadLocale.previewAvatarAriaLabel}
+                title={uploadLocale.preview}
+                className="p-1 rounded-full text-white hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-hidden cursor-pointer"
                 data-testid="avatar-preview-button"
               >
                 <EyeIcon width={14} height={14} />
@@ -337,9 +337,9 @@ export default function UploadAvatar({
                 <button
                   type="button"
                   onClick={handleRecrop}
-                  aria-label="Cắt ảnh đại diện"
-                  title="Cắt ảnh"
-                  className="p-1 rounded-full text-neutral-white hover:bg-neutral-white/20 focus-visible:ring-2 focus-visible:ring-neutral-white focus-visible:outline-hidden cursor-pointer"
+                  aria-label={uploadLocale.cropAvatarAriaLabel}
+                  title={uploadLocale.crop}
+                  className="p-1 rounded-full text-white hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-hidden cursor-pointer"
                   data-testid="avatar-crop-button"
                 >
                   <CropIcon width={14} height={14} />
@@ -351,9 +351,9 @@ export default function UploadAvatar({
                 <button
                   type="button"
                   onClick={handleRemove}
-                  aria-label="Xóa ảnh đại diện"
-                  title="Xóa ảnh"
-                  className="p-1 rounded-full text-error-300 hover:text-error-200 hover:bg-neutral-white/20 focus-visible:ring-2 focus-visible:ring-error-400 focus-visible:outline-hidden cursor-pointer"
+                  aria-label={uploadLocale.removeAvatarAriaLabel}
+                  title={uploadLocale.remove}
+                  className="p-1 rounded-full text-error-300 hover:text-error-200 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-error-400 focus-visible:outline-hidden cursor-pointer"
                   data-testid="avatar-remove-button"
                 >
                   <TrashIcon width={14} height={14} />
@@ -400,7 +400,7 @@ export default function UploadAvatar({
             open={isPreviewOpen}
             onClose={() => setIsPreviewOpen(false)}
             file={currentItem}
-            title={fileName || "Xem trước ảnh đại diện"}
+            title={fileName || uploadLocale.previewAvatarAriaLabel}
           >
             <FilePreview
               imageProps={{

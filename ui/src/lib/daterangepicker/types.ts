@@ -441,6 +441,11 @@ export interface DateRangePickerProps {
   onClear?: () => void;
 
   /**
+   * Nhãn aria-label cho nút xóa nhanh khoảng ngày
+   */
+  clearAriaLabel?: string;
+
+  /**
    * Vị trí neo mở popover lịch so với ô input (Floating UI)
    * @default "bottom-start"
    */

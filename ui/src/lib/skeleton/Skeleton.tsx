@@ -3,6 +3,7 @@ import { SkeletonProps } from "./types";
 import { variantConfig, radiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { toStyle } from "./utils";
+import { useLocale } from "@/locale";
 
 export default function Skeleton({
   ref,
@@ -17,6 +18,9 @@ export default function Skeleton({
   style,
   ...props
 }: SkeletonProps) {
+  const skeletonLocale = useLocale("skeleton", {
+    loading: props["aria-label"],
+  });
   const animationClass = getSafeConfig(variant, variantConfig, "pulse");
 
   // Circle: bỏ qua radius prop, luôn full-round
@@ -35,7 +39,7 @@ export default function Skeleton({
       <div
         ref={ref}
         role="status"
-        aria-label="Loading..."
+        aria-label={skeletonLocale.loading}
         className={["flex flex-col", className].filter(Boolean).join(" ")}
         style={{ gap: toStyle(gap), ...style }}
         {...props}
@@ -61,7 +65,7 @@ export default function Skeleton({
     <div
       ref={ref}
       role="status"
-      aria-label="Loading..."
+      aria-label={skeletonLocale.loading}
       className={[itemClass, className].filter(Boolean).join(" ")}
       style={baseStyle}
       {...props}

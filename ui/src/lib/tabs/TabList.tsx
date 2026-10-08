@@ -6,8 +6,10 @@ import { getSafeConfig } from "@/utils/function";
 import { useTabIndicator } from "./useTabIndicator";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
+import { useLocale } from "@/locale";
 
 export default function TabList({ children, className = "", extra, centered = false, ref, ...props }: TabListProps) {
+  const tabsLocale = useLocale("tabs");
   const {
     activeKey,
     orientation = "horizontal",
@@ -75,7 +77,7 @@ export default function TabList({ children, className = "", extra, centered = fa
       {!isVertical && hasOverflow && (
         <button
           type="button"
-          aria-label="Scroll tabs left"
+          aria-label={tabsLocale.scrollLeft}
           disabled={!canScrollLeft}
           onClick={handleScrollLeft}
           className="shrink-0 flex items-center justify-center size-7 rounded-md text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 disabled:opacity-20 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500"
@@ -102,7 +104,7 @@ export default function TabList({ children, className = "", extra, centered = fa
       {!isVertical && hasOverflow && (
         <button
           type="button"
-          aria-label="Scroll tabs right"
+          aria-label={tabsLocale.scrollRight}
           disabled={!canScrollRight}
           onClick={handleScrollRight}
           className="shrink-0 flex items-center justify-center size-7 rounded-md text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 disabled:opacity-20 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-primary-500"

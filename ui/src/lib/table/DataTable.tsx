@@ -121,7 +121,10 @@ export function DataTable<TData extends RowData = RowData>({
   className = "",
   containerClassName = "",
 }: DataTableProps<TData>) {
-  const tableLocale = useLocale("table");
+  const tableLocale = useLocale("table", {
+    emptyText,
+    searchPlaceholder,
+  });
   const [internalSorting, setInternalSorting] = useState<SortingState>([]);
   const [internalPagination, setInternalPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -353,7 +356,7 @@ export function DataTable<TData extends RowData = RowData>({
                 checked={table.getIsAllPageRowsSelected()}
                 config={{ indeterminate: table.getIsSomePageRowsSelected() }}
                 onChange={table.getToggleAllPageRowsSelectedHandler()}
-                aria-label="Chọn tất cả các dòng trên trang này"
+                aria-label={tableLocale.selectAllRows}
               />
             </div>
           ),
@@ -364,7 +367,7 @@ export function DataTable<TData extends RowData = RowData>({
                 checked={row.getIsSelected()}
                 disabled={!row.getCanSelect()}
                 onChange={row.getToggleSelectedHandler()}
-                aria-label={`Chọn dòng ${row.id}`}
+                aria-label={tableLocale.selectRow ? tableLocale.selectRow(row.id) : String(row.id)}
               />
             </div>
           ),
@@ -408,7 +411,15 @@ export function DataTable<TData extends RowData = RowData>({
                       row.toggleExpanded();
                     }}
                     aria-expanded={isExpanded}
-                    aria-label={isExpanded ? `Thu gọn dòng ${row.id}` : `Mở rộng dòng ${row.id}`}
+                    aria-label={
+                      isExpanded
+                        ? tableLocale.collapseRow
+                          ? tableLocale.collapseRow(row.id)
+                          : String(row.id)
+                        : tableLocale.expandRow
+                        ? tableLocale.expandRow(row.id)
+                        : String(row.id)
+                    }
                     data-testid={`table-row-expand-button-${row.id}`}
                   />
                 ) : row.depth > 0 ? (
@@ -642,8 +653,7 @@ export function DataTable<TData extends RowData = RowData>({
                   size="sm"
                   image={globalFilter ? "search" : "default"}
                   description={
-                    emptyText ||
-                    (globalFilter ? tableLocale.emptyFilteredText : tableLocale.emptyText)
+                    globalFilter ? tableLocale.emptyFilteredText : tableLocale.emptyText
                   }
                 />
               )}
@@ -708,7 +718,15 @@ export function DataTable<TData extends RowData = RowData>({
                                 row.toggleExpanded();
                               }}
                               aria-expanded={isRowExpanded}
-                              aria-label={isRowExpanded ? `Thu gọn dòng ${row.id}` : `Mở rộng dòng ${row.id}`}
+                              aria-label={
+                                isRowExpanded
+                                  ? tableLocale.collapseRow
+                                    ? tableLocale.collapseRow(row.id)
+                                    : String(row.id)
+                                  : tableLocale.expandRow
+                                  ? tableLocale.expandRow(row.id)
+                                  : String(row.id)
+                              }
                               data-testid={`table-row-expand-button-${row.id}`}
                             />
                           ) : row.depth > 0 ? (
@@ -761,7 +779,7 @@ export function DataTable<TData extends RowData = RowData>({
       {showToolbar && (
         <TableToolbar
           table={table}
-          searchPlaceholder={searchPlaceholder}
+          searchPlaceholder={tableLocale.searchPlaceholder}
           enableGlobalFilter={enableFiltering}
           enableColumnVisibility={enableColumnVisibility}
           isRefresh={isRefresh}

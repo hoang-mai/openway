@@ -40,6 +40,9 @@ export function OpenWayProvider({ children, locale = enUS }: OpenWayProviderProp
     return {
       ...enUS,
       ...locale,
+      alert: { ...enUS.alert, ...locale.alert },
+      breadcrumb: { ...enUS.breadcrumb, ...locale.breadcrumb },
+      carousel: { ...enUS.carousel, ...locale.carousel },
       confirm: { ...enUS.confirm, ...locale.confirm },
       table: { ...enUS.table, ...locale.table },
       empty: { ...enUS.empty, ...locale.empty },
@@ -47,8 +50,16 @@ export function OpenWayProvider({ children, locale = enUS }: OpenWayProviderProp
       radio: { ...enUS.radio, ...locale.radio },
       select: { ...enUS.select, ...locale.select },
       upload: { ...enUS.upload, ...locale.upload },
+      filePreview: { ...enUS.filePreview, ...locale.filePreview },
       datePicker: { ...enUS.datePicker, ...locale.datePicker },
       timePicker: { ...enUS.timePicker, ...locale.timePicker },
+      input: { ...enUS.input, ...locale.input },
+      modal: { ...enUS.modal, ...locale.modal },
+      otpModal: { ...enUS.otpModal, ...locale.otpModal },
+      skeleton: { ...enUS.skeleton, ...locale.skeleton },
+      tabs: { ...enUS.tabs, ...locale.tabs },
+      textarea: { ...enUS.textarea, ...locale.textarea },
+      typography: { ...enUS.typography, ...locale.typography },
       mutation: { ...enUS.mutation, ...locale.mutation },
     };
   }, [locale]);

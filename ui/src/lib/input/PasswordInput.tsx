@@ -2,16 +2,18 @@ import { useState } from "react";
 import { PasswordInputProps } from "./types";
 import Input from "./Input";
 import { EyeIcon, EyeOffIcon } from "@/lib/icons/EyeIcon";
+import { useLocale } from "@/locale";
 
 export default function PasswordInput({
   defaultVisible = false,
-  toggleAriaLabel = "Toggle password visibility",
+  toggleAriaLabel,
   onVisibilityChange,
   rightIcon,
   disabled,
   readOnly,
   ...props
 }: PasswordInputProps) {
+  const inputLocale = useLocale("input", { togglePassword: toggleAriaLabel });
   const [isVisible, setIsVisible] = useState(defaultVisible);
 
   const toggleVisibility = () => {
@@ -26,7 +28,7 @@ export default function PasswordInput({
       type="button"
       onClick={toggleVisibility}
       disabled={disabled || readOnly}
-      aria-label={toggleAriaLabel}
+      aria-label={inputLocale.togglePassword}
       className="inline-flex items-center justify-center size-full p-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded"
     >
       {isVisible ? <EyeOffIcon className="size-full" /> : <EyeIcon className="size-full" />}

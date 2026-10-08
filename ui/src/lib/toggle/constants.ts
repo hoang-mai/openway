@@ -180,48 +180,48 @@ export const variantColorConfig: Record<
       checked: {
         track:
           "bg-primary-50 border-2 border-primary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-primary-600 text-neutral-white shadow-sm",
+        thumb: "bg-primary-600 text-white shadow-sm",
       },
       unchecked: {
         track:
           "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-400 text-white shadow-sm",
       },
     },
     secondary: {
       checked: {
         track:
           "bg-secondary-50 border-2 border-secondary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-secondary-600 text-neutral-white shadow-sm",
+        thumb: "bg-secondary-600 text-white shadow-sm",
       },
       unchecked: {
         track:
           "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-400 text-white shadow-sm",
       },
     },
     error: {
       checked: {
         track:
           "bg-error-50 border-2 border-error-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-error-600 text-neutral-white shadow-sm",
+        thumb: "bg-error-600 text-white shadow-sm",
       },
       unchecked: {
         track:
           "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-400 text-white shadow-sm",
       },
     },
     success: {
       checked: {
         track:
           "bg-success-50 border-2 border-success-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-success-600 text-neutral-white shadow-sm",
+        thumb: "bg-success-600 text-white shadow-sm",
       },
       unchecked: {
         track:
           "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-400 text-white shadow-sm",
       },
     },
     warning: {
@@ -233,31 +233,31 @@ export const variantColorConfig: Record<
       unchecked: {
         track:
           "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400",
-        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-400 text-white shadow-sm",
       },
     },
     info: {
       checked: {
         track:
           "bg-info-50 border-2 border-info-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-info-600 text-neutral-white shadow-sm",
+        thumb: "bg-info-600 text-white shadow-sm",
       },
       unchecked: {
         track:
           "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-400 text-white shadow-sm",
       },
     },
     neutral: {
       checked: {
         track:
           "bg-neutral-100 border-2 border-neutral-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-800 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-800 text-white shadow-sm",
       },
       unchecked: {
         track:
           "bg-transparent border-2 border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-400 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-400 text-white shadow-sm",
       },
     },
   },
@@ -266,7 +266,7 @@ export const variantColorConfig: Record<
       checked: {
         track:
           "bg-primary-100 border border-primary-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400",
-        thumb: "bg-primary-600 text-neutral-white shadow-sm",
+        thumb: "bg-primary-600 text-white shadow-sm",
       },
       unchecked: {
         track:
@@ -278,7 +278,7 @@ export const variantColorConfig: Record<
       checked: {
         track:
           "bg-secondary-100 border border-secondary-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400",
-        thumb: "bg-secondary-600 text-neutral-white shadow-sm",
+        thumb: "bg-secondary-600 text-white shadow-sm",
       },
       unchecked: {
         track:
@@ -290,7 +290,7 @@ export const variantColorConfig: Record<
       checked: {
         track:
           "bg-error-100 border border-error-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400",
-        thumb: "bg-error-600 text-neutral-white shadow-sm",
+        thumb: "bg-error-600 text-white shadow-sm",
       },
       unchecked: {
         track:
@@ -302,7 +302,7 @@ export const variantColorConfig: Record<
       checked: {
         track:
           "bg-success-100 border border-success-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400",
-        thumb: "bg-success-600 text-neutral-white shadow-sm",
+        thumb: "bg-success-600 text-white shadow-sm",
       },
       unchecked: {
         track:
@@ -326,7 +326,7 @@ export const variantColorConfig: Record<
       checked: {
         track:
           "bg-info-100 border border-info-200 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400",
-        thumb: "bg-info-600 text-neutral-white shadow-sm",
+        thumb: "bg-info-600 text-white shadow-sm",
       },
       unchecked: {
         track:
@@ -338,7 +338,7 @@ export const variantColorConfig: Record<
       checked: {
         track:
           "bg-neutral-200 border border-neutral-300 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400",
-        thumb: "bg-neutral-800 text-neutral-white shadow-sm",
+        thumb: "bg-neutral-800 text-white shadow-sm",
       },
       unchecked: {
         track:

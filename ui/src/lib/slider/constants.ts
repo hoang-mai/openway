@@ -104,43 +104,43 @@ export const variantColorConfig: Record<SliderVariant, Record<SliderColor, Slide
       track: "bg-neutral-200",
       filler: "bg-primary-500",
       thumb:
-        "bg-white border-2 border-primary-500 text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-primary-500 text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-500/50 shadow-sm",
     },
     secondary: {
       track: "bg-neutral-200",
       filler: "bg-secondary-500",
       thumb:
-        "bg-white border-2 border-secondary-500 text-secondary-600 focus-visible:ring-2 focus-visible:ring-secondary-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-secondary-500 text-secondary-600 focus-visible:ring-2 focus-visible:ring-secondary-500/50 shadow-sm",
     },
     error: {
       track: "bg-neutral-200",
       filler: "bg-error-500",
       thumb:
-        "bg-white border-2 border-error-500 text-error-600 focus-visible:ring-2 focus-visible:ring-error-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-error-500 text-error-600 focus-visible:ring-2 focus-visible:ring-error-500/50 shadow-sm",
     },
     success: {
       track: "bg-neutral-200",
       filler: "bg-success-500",
       thumb:
-        "bg-white border-2 border-success-500 text-success-600 focus-visible:ring-2 focus-visible:ring-success-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-success-500 text-success-600 focus-visible:ring-2 focus-visible:ring-success-500/50 shadow-sm",
     },
     warning: {
       track: "bg-neutral-200",
       filler: "bg-warning-500",
       thumb:
-        "bg-white border-2 border-warning-500 text-warning-600 focus-visible:ring-2 focus-visible:ring-warning-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-warning-500 text-warning-600 focus-visible:ring-2 focus-visible:ring-warning-500/50 shadow-sm",
     },
     info: {
       track: "bg-neutral-200",
       filler: "bg-info-500",
       thumb:
-        "bg-white border-2 border-info-500 text-info-600 focus-visible:ring-2 focus-visible:ring-info-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-info-500 text-info-600 focus-visible:ring-2 focus-visible:ring-info-500/50 shadow-sm",
     },
     neutral: {
       track: "bg-neutral-200",
       filler: "bg-neutral-800",
       thumb:
-        "bg-white border-2 border-neutral-800 text-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-neutral-800 text-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500/50 shadow-sm",
     },
   },
 
@@ -149,43 +149,43 @@ export const variantColorConfig: Record<SliderVariant, Record<SliderColor, Slide
       track: "bg-primary-100",
       filler: "bg-primary-400",
       thumb:
-        "bg-white border-2 border-primary-400 text-primary-500 focus-visible:ring-2 focus-visible:ring-primary-400/50 shadow-sm",
+        "bg-neutral-white border-2 border-primary-400 text-primary-500 focus-visible:ring-2 focus-visible:ring-primary-400/50 shadow-sm",
     },
     secondary: {
       track: "bg-secondary-100",
       filler: "bg-secondary-400",
       thumb:
-        "bg-white border-2 border-secondary-400 text-secondary-500 focus-visible:ring-2 focus-visible:ring-secondary-400/50 shadow-sm",
+        "bg-neutral-white border-2 border-secondary-400 text-secondary-500 focus-visible:ring-2 focus-visible:ring-secondary-400/50 shadow-sm",
     },
     error: {
       track: "bg-error-100",
       filler: "bg-error-400",
       thumb:
-        "bg-white border-2 border-error-400 text-error-500 focus-visible:ring-2 focus-visible:ring-error-400/50 shadow-sm",
+        "bg-neutral-white border-2 border-error-400 text-error-500 focus-visible:ring-2 focus-visible:ring-error-400/50 shadow-sm",
     },
     success: {
       track: "bg-success-100",
       filler: "bg-success-400",
       thumb:
-        "bg-white border-2 border-success-400 text-success-500 focus-visible:ring-2 focus-visible:ring-success-400/50 shadow-sm",
+        "bg-neutral-white border-2 border-success-400 text-success-500 focus-visible:ring-2 focus-visible:ring-success-400/50 shadow-sm",
     },
     warning: {
       track: "bg-warning-100",
       filler: "bg-warning-400",
       thumb:
-        "bg-white border-2 border-warning-400 text-warning-500 focus-visible:ring-2 focus-visible:ring-warning-400/50 shadow-sm",
+        "bg-neutral-white border-2 border-warning-400 text-warning-500 focus-visible:ring-2 focus-visible:ring-warning-400/50 shadow-sm",
     },
     info: {
       track: "bg-info-100",
       filler: "bg-info-400",
       thumb:
-        "bg-white border-2 border-info-400 text-info-500 focus-visible:ring-2 focus-visible:ring-info-400/50 shadow-sm",
+        "bg-neutral-white border-2 border-info-400 text-info-500 focus-visible:ring-2 focus-visible:ring-info-400/50 shadow-sm",
     },
     neutral: {
       track: "bg-neutral-200",
       filler: "bg-neutral-600",
       thumb:
-        "bg-white border-2 border-neutral-600 text-neutral-600 focus-visible:ring-2 focus-visible:ring-neutral-400/50 shadow-sm",
+        "bg-neutral-white border-2 border-neutral-600 text-neutral-600 focus-visible:ring-2 focus-visible:ring-neutral-400/50 shadow-sm",
     },
   },
 
@@ -194,43 +194,43 @@ export const variantColorConfig: Record<SliderVariant, Record<SliderColor, Slide
       track: "bg-transparent border border-neutral-300",
       filler: "bg-primary-500",
       thumb:
-        "bg-white border-2 border-primary-500 text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-primary-500 text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-500/50 shadow-sm",
     },
     secondary: {
       track: "bg-transparent border border-neutral-300",
       filler: "bg-secondary-500",
       thumb:
-        "bg-white border-2 border-secondary-500 text-secondary-600 focus-visible:ring-2 focus-visible:ring-secondary-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-secondary-500 text-secondary-600 focus-visible:ring-2 focus-visible:ring-secondary-500/50 shadow-sm",
     },
     error: {
       track: "bg-transparent border border-neutral-300",
       filler: "bg-error-500",
       thumb:
-        "bg-white border-2 border-error-500 text-error-600 focus-visible:ring-2 focus-visible:ring-error-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-error-500 text-error-600 focus-visible:ring-2 focus-visible:ring-error-500/50 shadow-sm",
     },
     success: {
       track: "bg-transparent border border-neutral-300",
       filler: "bg-success-500",
       thumb:
-        "bg-white border-2 border-success-500 text-success-600 focus-visible:ring-2 focus-visible:ring-success-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-success-500 text-success-600 focus-visible:ring-2 focus-visible:ring-success-500/50 shadow-sm",
     },
     warning: {
       track: "bg-transparent border border-neutral-300",
       filler: "bg-warning-500",
       thumb:
-        "bg-white border-2 border-warning-500 text-warning-600 focus-visible:ring-2 focus-visible:ring-warning-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-warning-500 text-warning-600 focus-visible:ring-2 focus-visible:ring-warning-500/50 shadow-sm",
     },
     info: {
       track: "bg-transparent border border-neutral-300",
       filler: "bg-info-500",
       thumb:
-        "bg-white border-2 border-info-500 text-info-600 focus-visible:ring-2 focus-visible:ring-info-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-info-500 text-info-600 focus-visible:ring-2 focus-visible:ring-info-500/50 shadow-sm",
     },
     neutral: {
       track: "bg-transparent border border-neutral-300",
       filler: "bg-neutral-800",
       thumb:
-        "bg-white border-2 border-neutral-800 text-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500/50 shadow-sm",
+        "bg-neutral-white border-2 border-neutral-800 text-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500/50 shadow-sm",
     },
   },
 

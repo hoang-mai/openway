@@ -8,6 +8,7 @@ import Spinner from "@/lib/icons/Spinner";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import FieldLabel from "@/lib/common/FieldLabel";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function TextArea({
   size,
@@ -20,6 +21,7 @@ export default function TextArea({
   helperText,
   errorMessage,
   onClear,
+  clearAriaLabel,
   minRows = 3,
   maxRows,
   onHeightChange,
@@ -53,6 +55,8 @@ export default function TextArea({
     isFullWidth = true,
     autoResize = true,
   } = config ?? {};
+
+  const textareaLocale = useLocale("textarea", { clearAriaLabel });
 
   const generatedId = useId();
   const textareaId = id || generatedId;
@@ -211,7 +215,7 @@ export default function TextArea({
             <button
               type="button"
               onClick={handleClear}
-              aria-label="Xóa nội dung"
+              aria-label={textareaLocale.clearAriaLabel}
               tabIndex={hasValue ? 0 : -1}
               aria-hidden={!hasValue}
               className={`absolute top-2.5 right-2.5 inline-flex items-center justify-center text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full size-4 ${

@@ -34,8 +34,9 @@ export function TableToolbar<TData extends RowData = RowData>({
   onFilterReset,
   className = "",
 }: TableToolbarProps<TData>) {
-  const tableLocale = useLocale("table");
-  const searchPlaceholder = searchPlaceholderProp ?? tableLocale.searchPlaceholder;
+  const tableLocale = useLocale("table", {
+    searchPlaceholder: searchPlaceholderProp,
+  });
   const globalFilter = (table.state.globalFilter as string) ?? "";
   const hideableColumns = table.getAllLeafColumns().filter((col) => col.getCanHide());
 
@@ -65,7 +66,7 @@ export function TableToolbar<TData extends RowData = RowData>({
               type="text"
               value={globalFilter}
               onChange={handleSearchChange}
-              placeholder={searchPlaceholder}
+              placeholder={tableLocale.searchPlaceholder}
               data-testid="table-search-input"
               className={tableToolbarConfig.searchInput}
             />

@@ -102,8 +102,8 @@ export function formatFilterBadgeValue(
   historicalOptionLabels?: Map<string | number, ReactNode>,
   locale?: { notEntered?: string; notSelected?: string }
 ): string {
-  const notEntered = locale?.notEntered ?? "Chưa nhập";
-  const notSelected = locale?.notSelected ?? "Chưa chọn";
+  const notEntered = locale?.notEntered ?? "Not entered";
+  const notSelected = locale?.notSelected ?? "Not selected";
 
   if (val === undefined || val === null || val === "") {
     return notEntered;

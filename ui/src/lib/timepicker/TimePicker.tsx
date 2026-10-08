@@ -294,7 +294,7 @@ export default function TimePicker({
                 <TimeView
                   value={selectedTime}
                   onChange={handleTimeSelect}
-                  ariaLabel={typeof label === "string" ? `${label} selector` : "Time selector"}
+                  ariaLabel={typeof label === "string" ? label : undefined}
                   use12Hours={use12Hours}
                   showSeconds={showSeconds}
                   hourStep={hourStep}

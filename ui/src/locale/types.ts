@@ -34,6 +34,28 @@ export interface DatePickerLocale {
   nextYear?: string;
   /** Nhãn chuyển đổi chế độ xem lịch */
   switchView?: string;
+  /** Nhãn aria-label chọn ngày */
+  chooseDate?: string;
+  /** Nhãn aria-label xóa ngày */
+  clearDate?: string;
+  /** Nhãn aria-label chọn khoảng ngày */
+  chooseDateRange?: string;
+  /** Nhãn aria-label xóa khoảng ngày */
+  clearDateRange?: string;
+  /** Nhãn aria-label chọn ngày giờ */
+  chooseDateTime?: string;
+  /** Nhãn aria-label xóa ngày giờ */
+  clearDateTime?: string;
+  /** Nhãn aria-label chọn khoảng ngày giờ */
+  chooseDateTimeRange?: string;
+  /** Nhãn aria-label xóa khoảng ngày giờ */
+  clearDateTimeRange?: string;
+  /** Nhãn aria-label chọn tháng */
+  selectMonth?: string;
+  /** Nhãn aria-label chọn năm */
+  selectYear?: string;
+  /** Nhãn nút áp dụng / hoàn tất */
+  apply?: string;
 }
 
 /**
@@ -44,6 +66,8 @@ export interface ConfirmLocale {
   confirmText: string;
   /** Nhãn nút hủy / bỏ qua */
   cancelText: string;
+  /** Nhãn aria-label đóng hộp thoại */
+  closeAriaLabel?: string;
 }
 
 /**
@@ -90,6 +114,32 @@ export interface TableLocale {
   notEntered: string;
   /** Giá trị hiển thị khi trường chưa chọn dữ liệu */
   notSelected: string;
+  /** Nhãn aria-label chọn tất cả các dòng trên trang này */
+  selectAllRows?: string;
+  /** Hàm tạo nhãn aria-label chọn một dòng */
+  selectRow?: (id: string | number) => string;
+  /** Hàm tạo nhãn aria-label mở rộng dòng */
+  expandRow?: (id: string | number) => string;
+  /** Hàm tạo nhãn aria-label thu gọn dòng */
+  collapseRow?: (id: string | number) => string;
+  /** Tiêu đề nút đóng popover bộ lọc */
+  close?: string;
+  /** Nhãn nút xóa bộ lọc */
+  clearFilter?: string;
+  /** Nhãn nút hoàn thành chỉnh sửa bộ lọc */
+  done?: string;
+  /** Placeholder mặc định cho trường nhập từ khóa */
+  keywordPlaceholder?: string;
+  /** Placeholder mặc định cho trường nhập số */
+  numberPlaceholder?: string;
+  /** Placeholder mặc định cho trường chọn ngày */
+  datePlaceholder?: string;
+  /** Placeholder mặc định cho trường chọn khoảng ngày */
+  dateRangePlaceholder?: string;
+  /** Placeholder ô tìm kiếm tùy chọn lọc */
+  searchOptionsPlaceholder?: string;
+  /** Hàm tạo aria-label nút xóa bộ lọc */
+  deleteFilterAriaLabel?: (fieldLabel: string) => string;
 }
 
 /**
@@ -98,6 +148,8 @@ export interface TableLocale {
 export interface EmptyLocale {
   /** Văn bản mô tả trạng thái rỗng */
   description: string;
+  /** Nhãn alt mặc định cho ảnh trạng thái rỗng */
+  imageAlt?: string;
 }
 
 /**
@@ -106,6 +158,10 @@ export interface EmptyLocale {
 export interface CheckboxLocale {
   /** Văn bản hiển thị khi không tìm thấy lựa chọn */
   emptyText: string;
+  /** Placeholder ô tìm kiếm checkbox */
+  searchPlaceholder?: string;
+  /** Hàm tạo aria-label ô tìm kiếm checkbox */
+  searchAriaLabel?: (label?: string) => string;
 }
 
 /**
@@ -114,12 +170,18 @@ export interface CheckboxLocale {
 export interface RadioLocale {
   /** Văn bản hiển thị khi không tìm thấy lựa chọn */
   emptyText: string;
+  /** Placeholder ô tìm kiếm radio */
+  searchPlaceholder?: string;
+  /** Hàm tạo aria-label ô tìm kiếm radio */
+  searchAriaLabel?: (label?: string) => string;
 }
 
 /**
  * Cấu hình ngôn ngữ cho component Select
  */
 export interface SelectLocale {
+  /** Placeholder mặc định của ô chọn */
+  placeholder?: string;
   /** Placeholder ô tìm kiếm tùy chọn */
   searchPlaceholder: string;
   /** Văn bản khi không tìm thấy kết quả */
@@ -138,6 +200,28 @@ export interface SelectLocale {
   notEntered: string;
   /** Giá trị hiển thị khi trường chưa chọn dữ liệu */
   notSelected: string;
+  /** Nhãn nút xóa lựa chọn đã chọn */
+  clearSelection?: string;
+  /** Nhãn aria-label ô tìm kiếm */
+  searchAriaLabel?: string;
+  /** Tiêu đề nút đóng popover lọc */
+  close?: string;
+  /** Nhãn nút xóa bộ lọc */
+  clearFilter?: string;
+  /** Nhãn nút hoàn thành chỉnh sửa bộ lọc */
+  done?: string;
+  /** Placeholder mặc định cho trường nhập từ khóa */
+  keywordPlaceholder?: string;
+  /** Placeholder mặc định cho trường nhập số */
+  numberPlaceholder?: string;
+  /** Placeholder mặc định cho trường chọn ngày */
+  datePlaceholder?: string;
+  /** Placeholder mặc định cho trường chọn khoảng ngày */
+  dateRangePlaceholder?: string;
+  /** Placeholder ô tìm kiếm tùy chọn lọc */
+  searchOptionsPlaceholder?: string;
+  /** Hàm tạo aria-label nút xóa bộ lọc */
+  deleteFilterAriaLabel?: (fieldLabel: string) => string;
 }
 
 /**
@@ -190,6 +274,88 @@ export interface UploadLocale {
   avatarUploadedSr: string;
   /** Thông báo hỗ trợ màn hình (SR) khi cập nhật ảnh đại diện thành công */
   avatarUpdatedSr: string;
+  /** Nhãn aria-label tải lên ảnh đại diện */
+  uploadAvatarAriaLabel?: string;
+  /** Nhãn aria-label xem trước ảnh đại diện */
+  previewAvatarAriaLabel?: string;
+  /** Tiêu đề tooltip xem trước */
+  preview?: string;
+  /** Nhãn aria-label cắt ảnh đại diện */
+  cropAvatarAriaLabel?: string;
+  /** Tiêu đề tooltip cắt ảnh */
+  crop?: string;
+  /** Nhãn aria-label xóa ảnh đại diện */
+  removeAvatarAriaLabel?: string;
+  /** Tiêu đề tooltip xóa ảnh */
+  remove?: string;
+  /** Nhãn trạng thái đang tải */
+  loading?: string;
+  /** Nhãn nút chọn ảnh khác trong crop */
+  chooseAnotherImage?: string;
+  /** Nhãn phóng to */
+  zoomIn?: string;
+  /** Nhãn thu nhỏ */
+  zoomOut?: string;
+  /** Nhãn xoay ngược chiều kim đồng hồ */
+  rotateCcw?: string;
+  /** Nhãn xoay theo chiều kim đồng hồ */
+  rotateCw?: string;
+  /** Nhãn lật ngang */
+  flipHorizontal?: string;
+  /** Hàm tạo aria-label biểu tượng định dạng tệp */
+  fileFormatIcon?: (label: string) => string;
+  /** Nhãn aria-label vùng tải tệp thu gọn */
+  compactDropzoneAriaLabel?: string;
+  /** Nhãn aria-label vùng kéo thả tải tệp tin */
+  dropzoneAriaLabel?: string;
+  /** Nhãn trạng thái đang xử lý tệp */
+  processingFile?: string;
+  /** Nhãn aria-label danh sách tệp tin đã tải lên */
+  fileListAriaLabel?: string;
+  /** Hàm tạo aria-label cho từng tệp tin */
+  fileAriaLabel?: (fileName: string) => string;
+  /** Thông báo lỗi tải lên */
+  uploadError?: string;
+  /** Nhãn trạng thái đang tải lên */
+  uploading?: string;
+  /** Hàm tạo aria-label thử lại tải lên */
+  retryAriaLabel?: (fileName: string) => string;
+  /** Tiêu đề nút thử lại */
+  retry?: string;
+  /** Hàm tạo aria-label xem trước tệp */
+  previewFileAriaLabel?: (fileName: string) => string;
+  /** Hàm tạo aria-label tải xuống tệp */
+  downloadFileAriaLabel?: (fileName: string) => string;
+  /** Tiêu đề nút tải xuống */
+  download?: string;
+  /** Hàm tạo aria-label xóa tệp */
+  removeFileAriaLabel?: (fileName: string) => string;
+  /** Tiêu đề nút xóa tệp */
+  removeFile?: string;
+  /** Nhãn aria-label vùng kéo thả tải ảnh */
+  imageDropzoneAriaLabel?: string;
+  /** Nhãn aria-label thay đổi ảnh */
+  replaceImageAriaLabel?: string;
+  /** Tiêu đề nút thay đổi ảnh */
+  replaceImage?: string;
+  /** Nhãn aria-label xóa ảnh */
+  removeImageAriaLabel?: string;
+  /** Tiêu đề nút xóa ảnh */
+  removeImage?: string;
+  /** Nhãn trạng thái đang xử lý hình ảnh */
+  processingImage?: string;
+  /** Nhãn gợi ý thả ảnh để thay thế */
+  dropToReplace?: string;
+  /** Nhãn aria-label danh sách hình ảnh đã tải lên */
+  imageListAriaLabel?: string;
+  /** Hàm tạo aria-label cho hình ảnh */
+  imageAriaLabel?: (itemName: string) => string;
+  /** Nhãn aria-label thêm hình ảnh */
+  addImageAriaLabel?: string;
+  /** Tiêu đề nút thêm hình ảnh */
+  addImage?: string;
+  /** Hàm tạo mô tả hình ảnh đơn đã tải lên */
+  uploadedImageAriaLabel?: (itemName: string) => string;
 }
 
 /**
@@ -216,6 +382,10 @@ export interface TimePickerLocale {
   startTime: string;
   /** Nhãn thời gian kết thúc trong TimeRangePicker */
   endTime: string;
+  /** Nhãn aria-label nút xóa thời gian */
+  clearAriaLabel?: string;
+  /** Nhãn aria-label nút chọn thời gian */
+  chooseTime?: string;
 }
 
 /**
@@ -247,11 +417,173 @@ export interface MutationLocale {
 }
 
 /**
+ * Cấu hình ngôn ngữ cho Alert
+ */
+export interface AlertLocale {
+  /** Nhãn aria-label nút đóng cảnh báo */
+  closeAriaLabel: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho Breadcrumb
+ */
+export interface BreadcrumbLocale {
+  /** Nhãn aria-label nút thu gọn ba chấm */
+  ellipsisAriaLabel: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho Carousel
+ */
+export interface CarouselLocale {
+  /** Nhãn aria-label vùng băng chuyền */
+  carouselAriaLabel: string;
+  /** Nhãn aria-label phân trang băng chuyền */
+  paginationAriaLabel: string;
+  /** Hàm tạo nhãn aria-label cho từng slide */
+  slideAriaLabel: (index: number) => string;
+  /** Nhãn aria-label slide trước */
+  prevSlide: string;
+  /** Nhãn aria-label slide tiếp theo */
+  nextSlide: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho FilePreview & ImagePreview
+ */
+export interface FilePreviewLocale {
+  /** Thông báo định dạng file chưa hỗ trợ xem trực tiếp */
+  unsupportedFormat: string;
+  /** Nhãn nút tải xuống file */
+  downloadFile: string;
+  /** Nhãn nút phóng to */
+  zoomIn: string;
+  /** Nhãn nút thu nhỏ */
+  zoomOut: string;
+  /** Nhãn thanh trượt thu phóng */
+  zoomSlider: string;
+  /** Nhãn đặt lại kích thước ban đầu */
+  reset: string;
+  /** Nhãn xoay ngược chiều kim đồng hồ */
+  rotateCcw: string;
+  /** Nhãn xoay theo chiều kim đồng hồ */
+  rotateCw: string;
+  /** Nhãn lật ảnh theo chiều ngang */
+  flipHorizontal: string;
+  /** Nhãn nút tải ảnh xuống */
+  download: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho các input (Input, PasswordInput, MultiInput, OtpInput)
+ */
+export interface InputLocale {
+  /** Nhãn nút xóa nội dung trong Input */
+  clearAriaLabel: string;
+  /** Nhãn nút ẩn/hiện mật khẩu trong PasswordInput */
+  togglePassword: string;
+  /** Placeholder mặc định trong MultiInput */
+  multiInputPlaceholder: string;
+  /** Nhãn nút thêm thẻ trong MultiInput */
+  addTagAriaLabel: string;
+  /** Nhãn trạng thái đang tải */
+  loading: string;
+  /** Nhãn nút xóa tất cả thẻ trong MultiInput */
+  clearAllTagsAriaLabel: string;
+  /** Hàm tạo nhãn aria-label từng ô nhập OTP */
+  otpCharAriaLabel: (index: number, length: number) => string;
+  /** Nhãn aria-label nhóm ô nhập OTP */
+  otpAriaLabel?: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho Modal
+ */
+export interface ModalLocale {
+  /** Nhãn aria-label nút đóng modal */
+  closeAriaLabel: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho OtpModal
+ */
+export interface OtpModalLocale {
+  /** Tiêu đề modal xác thực OTP */
+  title: string;
+  /** Câu thông báo số điện thoại/email nhận OTP */
+  phonePromptText: string;
+  /** Nhãn nút gửi xác nhận */
+  submitText: string;
+  /** Thông báo lỗi khi chưa nhập đủ ký tự */
+  errorDigitsText: string;
+  /** Nhãn nút đóng modal */
+  closeAriaLabel: string;
+  /** Đoạn chữ đếm ngược gửi lại mã */
+  resendInText: string;
+  /** Đoạn hỏi chưa nhận được mã */
+  dontReceiveText: string;
+  /** Nhãn nút bấm gửi lại OTP */
+  resendText: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho Skeleton & LoadingImage
+ */
+export interface SkeletonLocale {
+  /** Nhãn trạng thái đang tải */
+  loading: string;
+  /** Thông báo lỗi tải ảnh */
+  imageError: string;
+  /** Tiêu đề nút mở xem ảnh */
+  viewImage: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho Tabs
+ */
+export interface TabsLocale {
+  /** Nhãn nút đóng tab */
+  closeTab: string;
+  /** Nhãn nút cuộn tab sang trái */
+  scrollLeft: string;
+  /** Nhãn nút cuộn tab sang phải */
+  scrollRight: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho TextArea
+ */
+export interface TextAreaLocale {
+  /** Nhãn nút xóa nội dung văn bản */
+  clearAriaLabel: string;
+}
+
+/**
+ * Cấu hình ngôn ngữ cho Typography
+ */
+export interface TypographyLocale {
+  /** Nhãn nút sao chép */
+  copy: string;
+  /** Nhãn thông báo đã sao chép */
+  copied: string;
+  /** Nhãn nút xem thêm */
+  expand: string;
+  /** Nhãn nút thu gọn */
+  collapse: string;
+}
+
+/**
  * Định nghĩa toàn bộ schema ngôn ngữ cho hệ sinh thái OpenWay UI
  */
 export interface OpenWayLocale {
   /** Mã ngôn ngữ (ví dụ: 'en-US', 'vi-VN') */
   locale: string;
+  /** Cảnh báo Alert */
+  alert: AlertLocale;
+  /** Đường dẫn Breadcrumb */
+  breadcrumb: BreadcrumbLocale;
+  /** Băng chuyền Carousel */
+  carousel: CarouselLocale;
   /** Hộp thoại xác nhận */
   confirm: ConfirmLocale;
   /** Bảng dữ liệu */
@@ -266,10 +598,26 @@ export interface OpenWayLocale {
   select: SelectLocale;
   /** Upload */
   upload: UploadLocale;
+  /** Xem trước tệp & ảnh */
+  filePreview: FilePreviewLocale;
   /** Bộ chọn ngày */
   datePicker: DatePickerLocale;
   /** Bộ chọn thời gian */
   timePicker: TimePickerLocale;
+  /** Các thành phần Input */
+  input: InputLocale;
+  /** Hộp thoại Modal */
+  modal: ModalLocale;
+  /** Modal xác thực OTP */
+  otpModal: OtpModalLocale;
+  /** Khung tải Skeleton & LoadingImage */
+  skeleton: SkeletonLocale;
+  /** Điều hướng Tabs */
+  tabs: TabsLocale;
+  /** Ô nhập văn bản nhiều dòng TextArea */
+  textarea: TextAreaLocale;
+  /** Định dạng văn bản Typography */
+  typography: TypographyLocale;
   /** Lỗi Mutation */
   mutation: MutationLocale;
 }

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { YearGridProps } from "./types";
 import { datePickerSizeConfig, datePickerColorConfig, datePickerRadiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function YearGrid({
   currentMonth,
@@ -11,6 +12,7 @@ export default function YearGrid({
   color = "primary",
   radius,
 }: YearGridProps) {
+  const loc = useLocale("datePicker");
   const sizeStyles = getSafeConfig(size, datePickerSizeConfig, "md");
   const colorStyles = getSafeConfig(color, datePickerColorConfig, "primary");
   const radiusClass = getSafeConfig(radius, datePickerRadiusConfig, "lg");
@@ -75,7 +77,7 @@ export default function YearGrid({
   };
 
   return (
-    <div ref={gridRef} role="grid" aria-label="Chọn năm" className="grid grid-cols-3 gap-2 py-2">
+    <div ref={gridRef} role="grid" aria-label={loc.selectYear} className="grid grid-cols-3 gap-2 py-2">
       {years.map((yr, idx) => {
         const isSelected = yr === selectedYear;
         const isCurrentYear = yr === todayYear;

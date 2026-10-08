@@ -4,6 +4,7 @@ import ChevronRightIcon from "@/lib/icons/ChevronRightIcon";
 import { CarouselNavigationProps } from "./types";
 import { useCarouselContext } from "./context";
 import { navVariantConfig, sizeConfig } from "./constants";
+import { useLocale } from "@/locale";
 
 export function CarouselPrevious({
   variant = "glass",
@@ -14,6 +15,9 @@ export function CarouselPrevious({
   ref,
   ...props
 }: CarouselNavigationProps) {
+  const carouselLocale = useLocale("carousel", {
+    prevSlide: props["aria-label"],
+  });
   const { scrollPrev, canScrollPrev, size } = useCarouselContext();
 
   const isDisabled = disabled !== undefined ? disabled : !canScrollPrev;
@@ -33,7 +37,7 @@ export function CarouselPrevious({
     <button
       ref={ref}
       type="button"
-      aria-label={props["aria-label"] || "Previous slide"}
+      aria-label={carouselLocale.prevSlide}
       disabled={isDisabled}
       onClick={(e) => {
         scrollPrev();
@@ -56,6 +60,9 @@ export function CarouselNext({
   ref,
   ...props
 }: CarouselNavigationProps) {
+  const carouselLocale = useLocale("carousel", {
+    nextSlide: props["aria-label"],
+  });
   const { scrollNext, canScrollNext, size } = useCarouselContext();
 
   const isDisabled = disabled !== undefined ? disabled : !canScrollNext;
@@ -75,7 +82,7 @@ export function CarouselNext({
     <button
       ref={ref}
       type="button"
-      aria-label={props["aria-label"] || "Next slide"}
+      aria-label={carouselLocale.nextSlide}
       disabled={isDisabled}
       onClick={(e) => {
         scrollNext();

@@ -20,7 +20,7 @@ import TimeColumn from "./TimeColumn";
 export default function TimeView({
   value,
   onChange,
-  ariaLabel = "Time selector",
+  ariaLabel,
   use12Hours = false,
   showSeconds = true,
   hourStep = 1,
@@ -36,7 +36,9 @@ export default function TimeView({
   radius,
   className = "",
 }: TimeViewProps) {
-  const timePickerLocale = useLocale("timePicker");
+  const timePickerLocale = useLocale("timePicker", {
+    chooseTime: ariaLabel,
+  });
   const minTime = useMemo(() => parseTimeToDate(customMinTime), [customMinTime]);
   const maxTime = useMemo(() => parseTimeToDate(customMaxTime), [customMaxTime]);
 
@@ -231,7 +233,7 @@ export default function TimeView({
 
   return (
     <div
-      aria-label={ariaLabel}
+      aria-label={timePickerLocale.chooseTime}
       className={`inline-flex flex-col bg-neutral-white border border-neutral-200/80 shadow-xl overflow-hidden select-none ${radiusClass} ${className}`}
     >
       {/* Header with currently selected time */}

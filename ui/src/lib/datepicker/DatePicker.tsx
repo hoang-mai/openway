@@ -53,6 +53,7 @@ export default function DatePicker({
   view: controlledView,
   onViewChange,
   onClear,
+  clearAriaLabel,
   placement = "bottom-start",
   disabled = false,
   readOnly = false,
@@ -66,7 +67,9 @@ export default function DatePicker({
   helperClassName = "",
   popoverClassName = "",
 }: DatePickerProps) {
-  const datePickerLocale = useLocale("datePicker");
+  const datePickerLocale = useLocale("datePicker", {
+    clearDate: clearAriaLabel,
+  });
   const {
     isRequired = false,
     isInvalid = false,
@@ -319,7 +322,7 @@ export default function DatePicker({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Clear date"
+                aria-label={datePickerLocale.clearDate}
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${sizeStyles.icon} ${
@@ -349,7 +352,7 @@ export default function DatePicker({
                 ref={setFloating}
                 id={popoverId}
                 role="dialog"
-                aria-label="Choose date"
+                aria-label={datePickerLocale.chooseDate ?? "Choose date"}
                 style={{
                   ...floatingStyles,
                   ...transitionStyles,

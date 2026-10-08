@@ -4,6 +4,7 @@ import { FILE_CATEGORY_CONFIG, uploadFileSizeConfig } from "./constants";
 import { getFileCategory } from "./utils";
 import { getFileName } from "@/lib/file-preview/utils";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function FileIcon({
   file,
@@ -12,6 +13,7 @@ export default function FileIcon({
   size = "md",
   className = "",
 }: FileIconProps) {
+  const uploadLocale = useLocale("upload");
   const targetCategory: FileCategory = useMemo(() => {
     if (explicitCategory) return explicitCategory;
     const name = fileName || (file ? getFileName(file) : "");
@@ -31,7 +33,11 @@ export default function FileIcon({
   return (
     <div
       role="img"
-      aria-label={`Biểu tượng định dạng tệp ${config.label}`}
+      aria-label={
+        uploadLocale.fileFormatIcon
+          ? uploadLocale.fileFormatIcon(config.label)
+          : config.label
+      }
       style={{ width: pixelSize, height: pixelSize }}
       className={`relative inline-flex items-center justify-center shrink-0 select-none ${className}`}
     >

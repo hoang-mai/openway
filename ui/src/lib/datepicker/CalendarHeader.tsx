@@ -81,11 +81,6 @@ export default function CalendarHeader({
     return `${loc.months[month]} ${year}`;
   };
 
-  const prevYearLabel = loc.prevYear;
-  const prevMonthLabel = loc.prevMonth;
-  const nextMonthLabel = loc.nextMonth;
-  const nextYearLabel = loc.nextYear;
-
   return (
     <div className="flex items-center justify-between px-1 pb-1.5 border-b border-neutral-200">
       <div className="flex items-center space-x-0.5">
@@ -94,7 +89,7 @@ export default function CalendarHeader({
           <button
             type="button"
             onClick={onPrevYear}
-            aria-label={prevYearLabel}
+            aria-label={loc.prevYear}
             className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors`}
           >
             <DoubleChevronLeftIcon width={14} height={14} />
@@ -106,7 +101,7 @@ export default function CalendarHeader({
           <button
             type="button"
             onClick={handlePrev}
-            aria-label={prevMonthLabel}
+            aria-label={loc.prevMonth}
             className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors`}
           >
             <ChevronLeftIcon width={14} height={14} />
@@ -129,7 +124,7 @@ export default function CalendarHeader({
           <button
             type="button"
             onClick={handleNext}
-            aria-label={nextMonthLabel}
+            aria-label={loc.nextMonth}
             className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors`}
           >
             <ChevronRightIcon width={14} height={14} />
@@ -141,7 +136,7 @@ export default function CalendarHeader({
           <button
             type="button"
             onClick={onNextYear}
-            aria-label={nextYearLabel}
+            aria-label={loc.nextYear}
             className={`flex items-center justify-center ${sizeStyles.headerButtonSize} rounded-md text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors`}
           >
             <DoubleChevronRightIcon width={14} height={14} />

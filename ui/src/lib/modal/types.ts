@@ -103,6 +103,11 @@ export interface ModalHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, "
   closeButtonClassName?: string;
 
   /**
+   * Nhãn aria-label cho nút bấm đóng (X)
+   */
+  closeButtonAriaLabel?: string;
+
+  /**
    * Class tùy biến CSS cho toàn bộ khối header
    */
   className?: string;

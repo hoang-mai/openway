@@ -10,8 +10,7 @@ import FilePreview from "../file-preview/FilePreview";
 import { isServerFile } from "../file-preview/utils";
 import type { PreviewFile } from "../file-preview/types";
 import { getSourceKey } from "./utils";
-
-
+import { useLocale } from "@/locale";
 
 export default function LoadingImage({
   src,
@@ -33,6 +32,7 @@ export default function LoadingImage({
   ref,
   ...imageProps
 }: LoadingImageProps) {
+  const skeletonLocale = useLocale("skeleton");
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
@@ -186,7 +186,7 @@ export default function LoadingImage({
         {hasError && (
           <div
             role="img"
-            aria-label="Image failed to load"
+            aria-label={skeletonLocale.imageError}
             className={["absolute inset-0 flex items-center justify-center", "bg-neutral-100 text-neutral-400"].join(
               " "
             )}
@@ -202,7 +202,7 @@ export default function LoadingImage({
           open={isPreviewOpen}
           onClose={() => setIsPreviewOpen(false)}
           file={previewFile}
-          title={displayAlt || "Xem ảnh"}
+          title={displayAlt || skeletonLocale.viewImage}
         >
           <FilePreview />
         </FileContainer>

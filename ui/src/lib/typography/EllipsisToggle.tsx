@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { EllipsisConfig } from "./types";
 import ChevronDownIcon from "@/lib/icons/ChevronDownIcon";
+import { useLocale } from "@/locale";
 
 export interface EllipsisToggleProps {
   ellipsis?: boolean | EllipsisConfig;
@@ -9,12 +10,13 @@ export interface EllipsisToggleProps {
 }
 
 export default function EllipsisToggle({ ellipsis, isExpanded, onToggle }: EllipsisToggleProps) {
+  const typographyLocale = useLocale("typography");
   if (!ellipsis) return null;
 
   const ellipsisConfig: EllipsisConfig = typeof ellipsis === "object" ? ellipsis : {};
   if (!ellipsisConfig.expandable) return null;
 
-  const defaultSymbol = isExpanded ? "Thu gọn" : "Xem thêm";
+  const defaultSymbol = isExpanded ? typographyLocale.collapse : typographyLocale.expand;
   const symbolNode: ReactNode =
     typeof ellipsisConfig.symbol === "function"
       ? ellipsisConfig.symbol(isExpanded)

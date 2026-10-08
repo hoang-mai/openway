@@ -131,7 +131,7 @@ export const dateRangePickerColorConfig: Record<
   }
 > = {
   primary: {
-    selected: "bg-primary-500 text-neutral-white hover:bg-primary-600",
+    selected: "bg-primary-500 text-white hover:bg-primary-600",
     rangeBg: "bg-primary-100",
     rangeText: "text-primary-900",
     hoverBg: "hover:bg-primary-200 hover:text-primary-900",
@@ -140,7 +140,7 @@ export const dateRangePickerColorConfig: Record<
     badge: "bg-primary-100 text-primary-700",
   },
   secondary: {
-    selected: "bg-secondary-500 text-neutral-white hover:bg-secondary-600",
+    selected: "bg-secondary-500 text-white hover:bg-secondary-600",
     rangeBg: "bg-secondary-100",
     rangeText: "text-secondary-900",
     hoverBg: "hover:bg-secondary-200 hover:text-secondary-900",
@@ -149,7 +149,7 @@ export const dateRangePickerColorConfig: Record<
     badge: "bg-secondary-100 text-secondary-700",
   },
   neutral: {
-    selected: "bg-neutral-800 text-neutral-white hover:bg-neutral-900",
+    selected: "bg-neutral-800 text-white hover:bg-neutral-900",
     rangeBg: "bg-neutral-200",
     rangeText: "text-neutral-900",
     hoverBg: "hover:bg-neutral-300 hover:text-neutral-900",
@@ -158,7 +158,7 @@ export const dateRangePickerColorConfig: Record<
     badge: "bg-neutral-200 text-neutral-800",
   },
   error: {
-    selected: "bg-error-500 text-neutral-white hover:bg-error-600",
+    selected: "bg-error-500 text-white hover:bg-error-600",
     rangeBg: "bg-error-100",
     rangeText: "text-error-900",
     hoverBg: "hover:bg-error-200 hover:text-error-900",
@@ -167,7 +167,7 @@ export const dateRangePickerColorConfig: Record<
     badge: "bg-error-100 text-error-700",
   },
   success: {
-    selected: "bg-success-500 text-neutral-white hover:bg-success-600",
+    selected: "bg-success-500 text-white hover:bg-success-600",
     rangeBg: "bg-success-100",
     rangeText: "text-success-900",
     hoverBg: "hover:bg-success-200 hover:text-success-900",
@@ -185,7 +185,7 @@ export const dateRangePickerColorConfig: Record<
     badge: "bg-warning-100 text-warning-700",
   },
   info: {
-    selected: "bg-info-500 text-neutral-white hover:bg-info-600",
+    selected: "bg-info-500 text-white hover:bg-info-600",
     rangeBg: "bg-info-100",
     rangeText: "text-info-900",
     hoverBg: "hover:bg-info-200 hover:text-info-900",

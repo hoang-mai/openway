@@ -3,6 +3,7 @@ import { CarouselProps } from "./types";
 import { CarouselContext } from "./context";
 import { useCarousel } from "./useCarousel";
 import { radiusConfig } from "./constants";
+import { useLocale } from "@/locale";
 
 export function Carousel({
   currentIndex,
@@ -26,6 +27,9 @@ export function Carousel({
   ref,
   ...props
 }: CarouselProps) {
+  const carouselLocale = useLocale("carousel", {
+    carouselAriaLabel: props["aria-label"],
+  });
   const carousel = useCarousel({
     currentIndex,
     defaultIndex,
@@ -52,7 +56,7 @@ export function Carousel({
         ref={ref}
         role="region"
         aria-roledescription="carousel"
-        aria-label="Băng chuyền"
+        aria-label={carouselLocale.carouselAriaLabel}
         tabIndex={0}
         onKeyDown={carousel.handleKeyDown}
         onMouseEnter={carousel.handleMouseEnter}

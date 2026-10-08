@@ -153,31 +153,31 @@ export const timePickerColorConfig: Record<
   }
 > = {
   primary: {
-    selected: "bg-primary-500 text-neutral-white font-semibold shadow-xs hover:bg-primary-600",
+    selected: "bg-primary-500 text-white font-semibold shadow-xs hover:bg-primary-600",
     hoverBg: "hover:bg-primary-100 hover:text-primary-900",
     activeText: "text-primary-600",
     accentBg: "bg-primary-500",
   },
   secondary: {
-    selected: "bg-secondary-500 text-neutral-white font-semibold shadow-xs hover:bg-secondary-600",
+    selected: "bg-secondary-500 text-white font-semibold shadow-xs hover:bg-secondary-600",
     hoverBg: "hover:bg-secondary-100 hover:text-secondary-900",
     activeText: "text-secondary-600",
     accentBg: "bg-secondary-500",
   },
   neutral: {
-    selected: "bg-neutral-800 text-neutral-white font-semibold shadow-xs hover:bg-neutral-900",
+    selected: "bg-neutral-800 text-white font-semibold shadow-xs hover:bg-neutral-900",
     hoverBg: "hover:bg-neutral-200 hover:text-neutral-900",
     activeText: "text-neutral-800",
     accentBg: "bg-neutral-800",
   },
   error: {
-    selected: "bg-error-500 text-neutral-white font-semibold shadow-xs hover:bg-error-600",
+    selected: "bg-error-500 text-white font-semibold shadow-xs hover:bg-error-600",
     hoverBg: "hover:bg-error-100 hover:text-error-900",
     activeText: "text-error-600",
     accentBg: "bg-error-500",
   },
   success: {
-    selected: "bg-success-500 text-neutral-white font-semibold shadow-xs hover:bg-success-600",
+    selected: "bg-success-500 text-white font-semibold shadow-xs hover:bg-success-600",
     hoverBg: "hover:bg-success-100 hover:text-success-900",
     activeText: "text-success-600",
     accentBg: "bg-success-500",
@@ -189,7 +189,7 @@ export const timePickerColorConfig: Record<
     accentBg: "bg-warning-500",
   },
   info: {
-    selected: "bg-info-500 text-neutral-white font-semibold shadow-xs hover:bg-info-600",
+    selected: "bg-info-500 text-white font-semibold shadow-xs hover:bg-info-600",
     hoverBg: "hover:bg-info-100 hover:text-info-900",
     activeText: "text-info-600",
     accentBg: "bg-info-500",

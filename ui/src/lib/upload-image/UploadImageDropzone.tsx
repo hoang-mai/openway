@@ -40,7 +40,10 @@ export default function UploadImageDropzone({
   className = "",
   describedById,
 }: UploadImageDropzoneProps) {
-  const uploadLocale = useLocale("upload");
+  const uploadLocale = useLocale("upload", {
+    dragDropText: typeof dropzoneTitle === "string" ? dropzoneTitle : undefined,
+    imageDropzoneDescription: typeof dropzoneDescription === "string" ? dropzoneDescription : undefined,
+  });
   const currentSize = getSafeConfig(size, uploadImageSizeConfig, "md");
   const effectiveRadius = getSafeConfig(radius, uploadImageRadiusConfig, "md");
 
@@ -49,9 +52,6 @@ export default function UploadImageDropzone({
   const effectiveColor = isInvalid ? "error" : color;
   const variantConfig = variant !== "other" ? getSafeConfig(variant, uploadImageVariantColorConfig, "outline") : null;
   const colorStyles = variantConfig ? getSafeConfig(effectiveColor, variantConfig, "primary") : null;
-
-  const defaultTitle = uploadLocale.dragDropText;
-  const defaultDesc = uploadLocale.imageDropzoneDescription;
 
   const isDragActive = dragStatus === "active";
   const isDragReject = dragStatus === "reject";
@@ -76,10 +76,11 @@ export default function UploadImageDropzone({
 
   const defaultProps = {
     role: "button",
-    tabIndex: disabled ? -1 : 0,
     "aria-label": item
-      ? `Hình ảnh đã tải lên: ${itemName}. Nhấn để xem trước, hoặc dùng nút ở góc phải để thay đổi hoặc xóa ảnh.`
-      : "Khu vực kéo thả và tải ảnh lên",
+      ? uploadLocale.uploadedImageAriaLabel
+        ? uploadLocale.uploadedImageAriaLabel(itemName)
+        : itemName
+      : uploadLocale.imageDropzoneAriaLabel,
     "aria-disabled": disabled,
     "aria-invalid": isInvalid,
     "aria-describedby": describedById,
@@ -130,9 +131,9 @@ export default function UploadImageDropzone({
                     e.stopPropagation();
                     onTriggerUpload?.();
                   }}
-                  aria-label="Thay đổi ảnh"
-                  title="Thay đổi ảnh"
-                  className="p-1.5 rounded-lg bg-neutral-900/60 hover:bg-neutral-900/80 text-neutral-white backdrop-blur-xs transition-colors shadow-xs cursor-pointer focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden"
+                  aria-label={uploadLocale.replaceImageAriaLabel}
+                  title={uploadLocale.replaceImage}
+                  className="p-1.5 rounded-lg bg-neutral-900/60 hover:bg-neutral-900/80 text-white backdrop-blur-xs transition-colors shadow-xs cursor-pointer focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden"
                   data-testid="dropzone-replace-button"
                 >
                   <ResetIcon width={16} height={16} />
@@ -147,9 +148,9 @@ export default function UploadImageDropzone({
                     e.stopPropagation();
                     onRemove?.();
                   }}
-                  aria-label="Xóa ảnh"
-                  title="Xóa ảnh"
-                  className="p-1.5 rounded-lg bg-neutral-900/60 hover:bg-error-600 text-neutral-white backdrop-blur-xs transition-colors shadow-xs cursor-pointer focus-visible:ring-2 focus-visible:ring-error-500 focus-visible:outline-hidden"
+                  aria-label={uploadLocale.removeImageAriaLabel}
+                  title={uploadLocale.removeImage}
+                  className="p-1.5 rounded-lg bg-neutral-900/60 hover:bg-error-600 text-white backdrop-blur-xs transition-colors shadow-xs cursor-pointer focus-visible:ring-2 focus-visible:ring-error-500 focus-visible:outline-hidden"
                   data-testid="dropzone-remove-button"
                 >
                   <TrashIcon width={16} height={16} />
@@ -160,17 +161,17 @@ export default function UploadImageDropzone({
 
           {/* Loading Spinner Overlay */}
           {isLoading && (
-            <div className="absolute inset-0 bg-neutral-950/60 flex flex-col items-center justify-center text-neutral-white z-20">
+            <div className="absolute inset-0 bg-neutral-950/60 flex flex-col items-center justify-center text-white z-20">
               <Spinner width={currentSize.iconSize * 0.8} height={currentSize.iconSize * 0.8} className="animate-spin" />
-              <span className={`${currentSize.titleSize} font-medium mt-1`}>Đang xử lý hình ảnh...</span>
+              <span className={`${currentSize.titleSize} font-medium mt-1`}>{uploadLocale.processingImage}</span>
             </div>
           )}
 
           {/* Drag Overlay */}
           {isDrag && (
-            <div className="absolute inset-0 bg-primary-950/50 backdrop-blur-xs flex flex-col items-center justify-center text-neutral-white z-20 transition-opacity">
+            <div className="absolute inset-0 bg-primary-950/50 backdrop-blur-xs flex flex-col items-center justify-center text-white z-20 transition-opacity">
               <UploadIcon width={currentSize.iconSize} height={currentSize.iconSize} className="animate-bounce" />
-              <span className={`${currentSize.titleSize} font-medium mt-1`}>Thả hình ảnh để thay thế</span>
+              <span className={`${currentSize.titleSize} font-medium mt-1`}>{uploadLocale.dropToReplace}</span>
             </div>
           )}
         </>
@@ -179,7 +180,7 @@ export default function UploadImageDropzone({
           className={`flex flex-col items-center justify-center gap-2 ${colorStyles?.iconColor || "text-primary-600"}`}
         >
           <Spinner width={currentSize.iconSize * 0.8} height={currentSize.iconSize * 0.8} />
-          <span className={`${currentSize.titleSize} font-medium`}>Đang xử lý hình ảnh...</span>
+          <span className={`${currentSize.titleSize} font-medium`}>{uploadLocale.processingImage}</span>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-2">
@@ -194,12 +195,12 @@ export default function UploadImageDropzone({
               colorStyles?.titleHover || "group-hover:text-neutral-900"
             } transition-colors`}
           >
-            {dropzoneTitle ?? defaultTitle}
+            {dropzoneTitle ?? uploadLocale.dragDropText}
           </div>
 
           {/* Description */}
           <div id={describedById} className={`${currentSize.descSize} text-neutral-600`}>
-            {dropzoneDescription ?? defaultDesc}
+            {dropzoneDescription ?? uploadLocale.imageDropzoneDescription}
           </div>
         </div>
       )}

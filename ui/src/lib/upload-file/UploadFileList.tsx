@@ -3,6 +3,7 @@ import { UploadFileListProps } from "./types";
 import { getPreviewItemKey } from "./utils";
 import { uploadFileSizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function UploadFileList({
   items,
@@ -22,6 +23,7 @@ export default function UploadFileList({
   renderItem,
   className = "",
 }: UploadFileListProps) {
+  const uploadLocale = useLocale("upload");
   const currentSize = getSafeConfig(size, uploadFileSizeConfig, "md");
 
   const containerClasses =
@@ -32,7 +34,7 @@ export default function UploadFileList({
   if (!items || items.length === 0) return null;
 
   return (
-    <ul aria-label="Danh sách tệp tin đã tải lên" className={containerClasses}>
+    <ul aria-label={uploadLocale.fileListAriaLabel} className={containerClasses}>
       {items.map((item, index) => {
         const itemKey = getPreviewItemKey(item, index);
         return (

@@ -59,10 +59,10 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
   ref,
   ...props
 }: RadioGroupProps<TData, TValue>) {
-  const radioLocale = useLocale("radio");
-  const selectLocale = useLocale("select");
-  const searchPlaceholder = searchPlaceholderProp ?? selectLocale.searchPlaceholder;
-  const emptyText = emptyTextProp ?? radioLocale.emptyText;
+  const radioLocale = useLocale("radio", {
+    searchPlaceholder: searchPlaceholderProp,
+    emptyText: typeof emptyTextProp === "string" ? emptyTextProp : undefined,
+  });
   const {
     isRequired = false,
     isInvalid: isInvalidProp,
@@ -280,7 +280,7 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
             color={color}
             value={currentSearch}
             onChange={handleSearchInputChange}
-            placeholder={searchPlaceholder}
+            placeholder={radioLocale.searchPlaceholder}
             disabled={disabled}
             leftIcon={<SearchIcon className="size-4 text-neutral-400" />}
             rightIcon={
@@ -289,7 +289,13 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
               ) : undefined
             }
             onClear={handleClearSearch}
-            aria-label={typeof label === "string" ? `Tìm kiếm ${label}` : "Tìm kiếm"}
+            aria-label={
+              radioLocale.searchAriaLabel
+                ? radioLocale.searchAriaLabel(typeof label === "string" ? label : undefined)
+                : typeof label === "string"
+                ? `Search ${label}`
+                : "Search"
+            }
             config={{
               isClearable: !effectiveIsSearching,
               isFullWidth: true,
@@ -400,8 +406,8 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
                 image={searchable || searchMode === "server" ? "search" : "default"}
                 description={
                   !currentSearch.trim() && searchMode === "server"
-                    ? searchPlaceholder
-                    : emptyText
+                    ? radioLocale.searchPlaceholder
+                    : (emptyTextProp ?? radioLocale.emptyText)
                 }
                 className="py-1"
                 {...emptyProps}

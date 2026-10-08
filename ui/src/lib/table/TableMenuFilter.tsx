@@ -35,8 +35,8 @@ export function formatTableFilterBadgeValue(
   historicalOptionLabels?: Map<string | number, ReactNode>,
   locale?: TableLocale
 ): string {
-  const notEntered = locale?.notEntered ?? "Chưa nhập";
-  const notSelected = locale?.notSelected ?? "Chưa chọn";
+  const notEntered = locale?.notEntered ?? "Not entered";
+  const notSelected = locale?.notSelected ?? "Not selected";
 
   if (val === undefined || val === null || val === "") {
     return notEntered;
@@ -49,11 +49,7 @@ export function formatTableFilterBadgeValue(
   if (Array.isArray(val)) {
     if (val.length === 0) return notSelected;
     // Date range
-    if (
-      field.type === "date-range" ||
-      val[0] instanceof Date ||
-      val[1] instanceof Date
-    ) {
+    if (field.type === "date-range" || val[0] instanceof Date || val[1] instanceof Date) {
       const formatPart = (d: unknown) => {
         if (!d) return "";
         if (d instanceof Date) return d.toLocaleDateString();
@@ -67,20 +63,12 @@ export function formatTableFilterBadgeValue(
     }
     // Checkbox group / Options (multi-select / select)
     const getOptionLabel = (item: unknown) => {
-      if (
-        (field.type === "checkbox-group" || field.type === "select") &&
-        field.options &&
-        field.options.length > 0
-      ) {
-        const found = field.options.find(
-          (o) => String(o.value) === String(item)
-        );
+      if ((field.type === "checkbox-group" || field.type === "select") && field.options && field.options.length > 0) {
+        const found = field.options.find((o) => String(o.value) === String(item));
         if (found) return String(found.label);
       }
       if (historicalOptionLabels) {
-        const cached =
-          historicalOptionLabels.get(String(item)) ??
-          historicalOptionLabels.get(item as string | number);
+        const cached = historicalOptionLabels.get(String(item)) ?? historicalOptionLabels.get(item as string | number);
         if (cached !== undefined && cached !== null) return String(cached);
       }
       return String(item);
@@ -94,18 +82,12 @@ export function formatTableFilterBadgeValue(
     return `${firstLabel}, +${val.length - 1}`;
   }
 
-  if (
-    (field.type === "checkbox-group" || field.type === "select") &&
-    field.options &&
-    field.options.length > 0
-  ) {
+  if ((field.type === "checkbox-group" || field.type === "select") && field.options && field.options.length > 0) {
     const found = field.options.find((o) => String(o.value) === String(val));
     if (found) return String(found.label);
   }
   if (historicalOptionLabels) {
-    const cached =
-      historicalOptionLabels.get(String(val)) ??
-      historicalOptionLabels.get(val as string | number);
+    const cached = historicalOptionLabels.get(String(val)) ?? historicalOptionLabels.get(val as string | number);
     if (cached !== undefined && cached !== null) return String(cached);
   }
 
@@ -142,16 +124,11 @@ function TableFilterBadgeChip({
     onOpenChange,
     placement: "bottom-start",
     transform: false,
-    middleware: [
-      offsetMiddleware(6),
-      flipMiddleware(),
-      shiftMiddleware({ padding: 8 }),
-    ],
+    middleware: [offsetMiddleware(6), flipMiddleware(), shiftMiddleware({ padding: 8 })],
     whileElementsMounted: autoUpdate,
   });
 
-  const { isMounted, styles: transitionStyles } =
-    useFloatingTransition(context);
+  const { isMounted, styles: transitionStyles } = useFloatingTransition(context);
 
   const click = useClick(context);
   const dismiss = useDismiss(context, {
@@ -163,10 +140,7 @@ function TableFilterBadgeChip({
       return true;
     },
   });
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    click,
-    dismiss,
-  ]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -211,13 +185,10 @@ function TableFilterBadgeChip({
     currentValue !== undefined &&
     currentValue !== null &&
     currentValue !== "" &&
-    (!Array.isArray(currentValue) ||
-      (currentValue.length > 0 &&
-        (currentValue[0] != null || currentValue[1] != null)));
+    (!Array.isArray(currentValue) || (currentValue.length > 0 && (currentValue[0] != null || currentValue[1] != null)));
 
   const displayVal = formatTableFilterBadgeValue(field, currentValue, historicalOptionLabels, tableLocale);
-  const isDateOrDateRange =
-    field.type === "date" || field.type === "date-range";
+  const isDateOrDateRange = field.type === "date" || field.type === "date-range";
 
   const renderEditor = () => {
     if (field.type === "custom") {
@@ -236,7 +207,7 @@ function TableFilterBadgeChip({
           portal={false}
           size="sm"
           radius="md"
-          placeholder={field.placeholder || "Chọn khoảng ngày"}
+          placeholder={field.placeholder || tableLocale.dateRangePlaceholder}
           value={rangeVal}
           onChange={(range) => {
             onChange({
@@ -255,7 +226,7 @@ function TableFilterBadgeChip({
           portal={false}
           size="sm"
           radius="md"
-          placeholder={field.placeholder || "Chọn ngày"}
+          placeholder={field.placeholder || tableLocale.datePlaceholder}
           minDate={field.minDate}
           maxDate={field.maxDate}
           value={currentValue as Date | null | undefined}
@@ -271,11 +242,13 @@ function TableFilterBadgeChip({
           ref={inputRef}
           size="sm"
           radius="md"
-          placeholder={field.placeholder || "Nhập số..."}
+          placeholder={field.placeholder || tableLocale.numberPlaceholder}
           min={field.min}
           max={field.max}
           step={field.step}
-          value={currentValue !== undefined && currentValue !== null && currentValue !== "" ? (currentValue as number) : ""}
+          value={
+            currentValue !== undefined && currentValue !== null && currentValue !== "" ? (currentValue as number) : ""
+          }
           onChange={(val) => {
             onChange({ [field.name]: val !== undefined ? val : "" });
           }}
@@ -285,11 +258,10 @@ function TableFilterBadgeChip({
       );
     }
 
-    if (
-      field.type === "select" ||
-      field.type === "checkbox-group"
-    ) {
-      const rawOptions = (field.options || (field.props?.options as CheckboxOptionItem[]) || []) as CheckboxOptionItem[];
+    if (field.type === "select" || field.type === "checkbox-group") {
+      const rawOptions = (field.options ||
+        (field.props?.options as CheckboxOptionItem[]) ||
+        []) as CheckboxOptionItem[];
       const formattedOptions = rawOptions.map((opt) => ({
         value: String(opt.value),
         label: opt.label,
@@ -298,14 +270,9 @@ function TableFilterBadgeChip({
         data: opt.data,
       }));
 
-      const isSearchable =
-        field.searchable ??
-        Boolean(field.props?.config?.searchable);
-      const preserveSelected =
-        field.preserveSelected ??
-        Boolean(field.props?.config?.preserveSelected);
-      const searchMode =
-        field.searchMode ?? (field.props?.searchMode as "client" | "server") ?? "client";
+      const isSearchable = field.searchable ?? Boolean(field.props?.config?.searchable);
+      const preserveSelected = field.preserveSelected ?? Boolean(field.props?.config?.preserveSelected);
+      const searchMode = field.searchMode ?? (field.props?.searchMode as "client" | "server") ?? "client";
 
       return (
         <div className="w-64 min-w-60 p-1">
@@ -332,7 +299,7 @@ function TableFilterBadgeChip({
               preserveSelected,
             }}
             searchMode={searchMode}
-            searchPlaceholder={field.searchPlaceholder || "Tìm kiếm lựa chọn..."}
+            searchPlaceholder={field.searchPlaceholder || tableLocale.searchOptionsPlaceholder}
             onSearch={field.onSearch || field.props?.onSearch}
             onSearchChange={field.onSearchChange || field.props?.onSearchChange}
             isLoading={field.isLoading ?? field.props?.isLoading}
@@ -356,7 +323,7 @@ function TableFilterBadgeChip({
         ref={inputRef}
         size="sm"
         radius="md"
-        placeholder={field.placeholder || "Nhập từ khóa..."}
+        placeholder={field.placeholder || tableLocale.keywordPlaceholder}
         value={(currentValue as string) || ""}
         onChange={(e) => onChange({ [field.name]: e.target.value })}
         {...(stringProps || {})}
@@ -386,7 +353,11 @@ function TableFilterBadgeChip({
             }
           }}
           onDelete={() => onRemove()}
-          deleteAriaLabel={`${tableLocale.resetFilter} ${field.label}`}
+          deleteAriaLabel={
+            tableLocale.deleteFilterAriaLabel
+              ? tableLocale.deleteFilterAriaLabel(String(field.label))
+              : `${tableLocale.resetFilter} ${field.label}`
+          }
           variant="soft"
           color={isOpen ? "primary" : "neutral"}
           radius="md"
@@ -396,16 +367,13 @@ function TableFilterBadgeChip({
             isOpen
               ? tableFilterConfig.chipOpen
               : hasValue
-              ? tableFilterConfig.chipActive
-              : tableFilterConfig.chipInactive
+                ? tableFilterConfig.chipActive
+                : tableFilterConfig.chipInactive
           }`}
           title={`${field.label}: ${displayVal}`}
         >
           <span className={tableFilterConfig.chipLabel}>{field.label}:</span>
-          <span
-            data-testid={`filter-chip-val-${fieldName}`}
-            className={tableFilterConfig.chipValue}
-          >
+          <span data-testid={`filter-chip-val-${fieldName}`} className={tableFilterConfig.chipValue}>
             {displayVal}
           </span>
         </Badge>
@@ -427,21 +395,19 @@ function TableFilterBadgeChip({
                 isDateOrDateRange
                   ? tableFilterConfig.popoverDate
                   : field.type === "checkbox-group"
-                  ? tableFilterConfig.popoverCheckbox
-                  : tableFilterConfig.popoverDefault
+                    ? tableFilterConfig.popoverCheckbox
+                    : tableFilterConfig.popoverDefault
               }`,
             })}
           >
             {/* Popover Header */}
             <div className={tableFilterConfig.popoverHeader}>
-              <span className={tableFilterConfig.popoverTitle}>
-                {field.label}
-              </span>
+              <span className={tableFilterConfig.popoverTitle}>{field.label}</span>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
                 className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-xs transition-colors cursor-pointer"
-                title="Đóng"
+                title={tableLocale.close}
               >
                 <CloseIcon className="size-3.5" />
               </button>
@@ -452,19 +418,11 @@ function TableFilterBadgeChip({
 
             {/* Popover Footer */}
             <div className={tableFilterConfig.popoverFooter}>
-              <button
-                type="button"
-                onClick={onRemove}
-                className={tableFilterConfig.popoverRemoveButton}
-              >
-                Xóa bộ lọc
+              <button type="button" onClick={onRemove} className={tableFilterConfig.popoverRemoveButton}>
+                {tableLocale.clearFilter}
               </button>
-              <button
-                type="button"
-                onClick={() => onOpenChange(false)}
-                className={tableFilterConfig.popoverDoneButton}
-              >
-                Xong
+              <button type="button" onClick={() => onOpenChange(false)} className={tableFilterConfig.popoverDoneButton}>
+                {tableLocale.done}
               </button>
             </div>
           </div>
@@ -483,13 +441,7 @@ export interface TableMenuFilterProps {
   className?: string;
 }
 
-export function TableMenuFilter({
-  filters,
-  values,
-  onChange,
-  onReset,
-  className = "",
-}: TableMenuFilterProps) {
+export function TableMenuFilter({ filters, values, onChange, onReset, className = "" }: TableMenuFilterProps) {
   const tableLocale = useLocale("table");
   const [manuallyAddedFields, setManuallyAddedFields] = useState<string[]>([]);
 
@@ -513,8 +465,7 @@ export function TableMenuFilter({
         val !== undefined &&
         val !== null &&
         val !== "" &&
-        (!Array.isArray(val) ||
-          (val.length > 0 && (val[0] != null || val[1] != null)));
+        (!Array.isArray(val) || (val.length > 0 && (val[0] != null || val[1] != null)));
       if (hasVal) {
         list.push(f.name);
         seen.add(f.name);
@@ -532,15 +483,10 @@ export function TableMenuFilter({
     return list;
   }, [filters, values, manuallyAddedFields]);
 
-  const activeFieldSet = useMemo(
-    () => new Set(activeFieldNames),
-    [activeFieldNames]
-  );
+  const activeFieldSet = useMemo(() => new Set(activeFieldNames), [activeFieldNames]);
 
   // Field nào đang mở popover chỉnh sửa
-  const [activeEditorFieldName, setActiveEditorFieldName] = useState<
-    string | null
-  >(null);
+  const [activeEditorFieldName, setActiveEditorFieldName] = useState<string | null>(null);
 
   // Trạng thái menu dropdown của nút "+ Bộ lọc"
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
@@ -553,18 +499,13 @@ export function TableMenuFilter({
     onOpenChange: setIsAddMenuOpen,
     placement: "bottom-start",
     transform: false,
-    middleware: [
-      offsetMiddleware(6),
-      flipMiddleware(),
-      shiftMiddleware({ padding: 8 }),
-    ],
+    middleware: [offsetMiddleware(6), flipMiddleware(), shiftMiddleware({ padding: 8 })],
     whileElementsMounted: autoUpdate,
   });
 
-  const { isMounted: isAddMenuMounted, styles: addMenuTransitionStyles } =
-    useFloatingTransition(addMenuContext, {
-      duration: 120,
-    });
+  const { isMounted: isAddMenuMounted, styles: addMenuTransitionStyles } = useFloatingTransition(addMenuContext, {
+    duration: 120,
+  });
 
   const addClick = useClick(addMenuContext);
   const addDismiss = useDismiss(addMenuContext, {
@@ -576,8 +517,10 @@ export function TableMenuFilter({
       return true;
     },
   });
-  const { getReferenceProps: getAddRefProps, getFloatingProps: getAddFloatingProps } =
-    useInteractions([addClick, addDismiss]);
+  const { getReferenceProps: getAddRefProps, getFloatingProps: getAddFloatingProps } = useInteractions([
+    addClick,
+    addDismiss,
+  ]);
 
   // Chọn thêm một field từ menu
   const handleSelectFieldToAdd = (field: TableFilterDef) => {
@@ -634,9 +577,7 @@ export function TableMenuFilter({
           <PlusIcon className="size-3.5 text-neutral-400" />
           <span>{tableLocale.filter}</span>
           <ChevronDownIcon
-            className={`size-3 text-neutral-400 transition-transform ${
-              isAddMenuOpen ? "rotate-180" : ""
-            }`}
+            className={`size-3 text-neutral-400 transition-transform ${isAddMenuOpen ? "rotate-180" : ""}`}
           />
         </button>
 
@@ -677,9 +618,7 @@ export function TableMenuFilter({
                     >
                       <span>{field.label}</span>
                       {isAlreadyActive && (
-                        <span className="text-[0.625rem] text-neutral-400">
-                          {tableLocale.filtering}
-                        </span>
+                        <span className="text-[0.625rem] text-neutral-400">{tableLocale.filtering}</span>
                       )}
                     </button>
                   );

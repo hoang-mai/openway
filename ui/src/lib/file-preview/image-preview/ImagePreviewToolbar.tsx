@@ -9,6 +9,7 @@ import DownloadIcon from "../../icons/DownloadIcon";
 import Slider from "../../slider/Slider";
 import { SliderValue } from "../../slider/types";
 import { downloadFile } from "../utils";
+import { useLocale } from "@/locale";
 
 export default function ImagePreviewToolbar({
   zoom = 1,
@@ -27,6 +28,7 @@ export default function ImagePreviewToolbar({
   tools,
   className = "",
 }: ImagePreviewToolbarProps) {
+  const filePreviewLocale = useLocale("filePreview");
   const {
     zoomIn = true,
     zoomOut = true,
@@ -63,8 +65,8 @@ export default function ImagePreviewToolbar({
       {zoomOut && (
         <button
           type="button"
-          aria-label="Thu nhỏ"
-          title="Thu nhỏ (-)"
+          aria-label={filePreviewLocale.zoomOut}
+          title={`${filePreviewLocale.zoomOut} (-)`}
           disabled={zoom <= minZoom}
           onClick={onZoomOut}
           className={buttonBaseClass}
@@ -87,7 +89,7 @@ export default function ImagePreviewToolbar({
             className="w-20 sm:w-28"
             disabled={!onZoomChange && !sliderProps?.onChange}
             onChange={handleSliderChange}
-            aria-label="Thanh trượt thu phóng"
+            aria-label={filePreviewLocale.zoomSlider}
             {...sliderProps}
           />
         </div>
@@ -97,8 +99,8 @@ export default function ImagePreviewToolbar({
       {zoomIn && (
         <button
           type="button"
-          aria-label="Phóng to"
-          title="Phóng to (+)"
+          aria-label={filePreviewLocale.zoomIn}
+          title={`${filePreviewLocale.zoomIn} (+)`}
           disabled={zoom >= maxZoom}
           onClick={onZoomIn}
           className={buttonBaseClass}
@@ -111,8 +113,8 @@ export default function ImagePreviewToolbar({
       {reset && (
         <button
           type="button"
-          aria-label="Đặt lại kích thước và góc xoay"
-          title="Đặt lại (1:1)"
+          aria-label={filePreviewLocale.reset}
+          title={`${filePreviewLocale.reset} (1:1)`}
           onClick={onReset}
           className="px-2 py-1 text-xs font-semibold text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 rounded-full transition-colors cursor-pointer"
         >
@@ -126,8 +128,8 @@ export default function ImagePreviewToolbar({
       {rotate && (
         <button
           type="button"
-          aria-label="Xoay ngược chiều kim đồng hồ"
-          title="Xoay ngược chiều kim đồng hồ"
+          aria-label={filePreviewLocale.rotateCcw}
+          title={filePreviewLocale.rotateCcw}
           onClick={onRotateCcw}
           className={buttonBaseClass}
         >
@@ -139,8 +141,8 @@ export default function ImagePreviewToolbar({
       {rotate && (
         <button
           type="button"
-          aria-label="Xoay theo chiều kim đồng hồ"
-          title="Xoay theo chiều kim đồng hồ (r)"
+          aria-label={filePreviewLocale.rotateCw}
+          title={`${filePreviewLocale.rotateCw} (r)`}
           onClick={onRotateCw}
           className={buttonBaseClass}
         >
@@ -152,8 +154,8 @@ export default function ImagePreviewToolbar({
       {flip && (
         <button
           type="button"
-          aria-label="Lật ngang"
-          title="Lật ngang"
+          aria-label={filePreviewLocale.flipHorizontal}
+          title={filePreviewLocale.flipHorizontal}
           onClick={onFlipHorizontal}
           className={buttonBaseClass}
         >
@@ -165,8 +167,8 @@ export default function ImagePreviewToolbar({
       {download && (
         <button
           type="button"
-          aria-label="Tải ảnh xuống"
-          title="Tải ảnh xuống"
+          aria-label={filePreviewLocale.download}
+          title={filePreviewLocale.download}
           onClick={handleDownload}
           className={buttonBaseClass}
         >

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { DateRangeYearGridProps } from "./types";
 import { dateRangePickerSizeConfig, dateRangePickerColorConfig, dateRangePickerRadiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function DateRangeYearGrid({
   currentMonth,
@@ -14,6 +15,7 @@ export default function DateRangeYearGrid({
   hoveredDate,
   onHoverYear,
 }: DateRangeYearGridProps) {
+  const loc = useLocale("datePicker");
   const sizeStyles = getSafeConfig(size, dateRangePickerSizeConfig, "md");
   const colorStyles = getSafeConfig(color, dateRangePickerColorConfig, "primary");
   const radiusClass = getSafeConfig(radius, dateRangePickerRadiusConfig, "lg");
@@ -81,7 +83,7 @@ export default function DateRangeYearGrid({
     <div
       ref={gridRef}
       role="grid"
-      aria-label="Chọn năm"
+      aria-label={loc.selectYear}
       className="grid grid-cols-3 gap-2 py-2"
       onMouseLeave={() => onHoverYear?.(null)}
     >

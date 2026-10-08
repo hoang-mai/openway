@@ -79,9 +79,10 @@ export default function TimeRangePicker({
   helperClassName = "",
   popoverClassName = "",
 }: TimeRangePickerProps) {
-  const timePickerLocale = useLocale("timePicker");
-  const startLabel = startLabelProp ?? timePickerLocale.startTime;
-  const endLabel = endLabelProp ?? timePickerLocale.endTime;
+  const timePickerLocale = useLocale("timePicker", {
+    startTime: startLabelProp,
+    endTime: endLabelProp,
+  });
 
   const {
     isRequired = false,
@@ -351,12 +352,12 @@ export default function TimeRangePicker({
                 {/* Start Time panel */}
                 <div className="flex flex-col">
                   <div className="px-3 py-1.5 bg-neutral-50 text-xs font-semibold text-neutral-600 border-b border-neutral-200 text-center">
-                    {startLabel}
+                    {timePickerLocale.startTime}
                   </div>
                   <TimeView
                     value={selectedRange[0]}
                     onChange={handleStartTimeSelect}
-                    ariaLabel={startLabel}
+                    ariaLabel={timePickerLocale.startTime}
                     use12Hours={use12Hours}
                     showSeconds={showSeconds}
                     hourStep={hourStep}
@@ -377,12 +378,12 @@ export default function TimeRangePicker({
                 {/* End Time panel */}
                 <div className="flex flex-col">
                   <div className="px-3 py-1.5 bg-neutral-50 text-xs font-semibold text-neutral-600 border-b border-neutral-200 text-center">
-                    {endLabel}
+                    {timePickerLocale.endTime}
                   </div>
                   <TimeView
                     value={selectedRange[1]}
                     onChange={handleEndTimeSelect}
-                    ariaLabel={endLabel}
+                    ariaLabel={timePickerLocale.endTime}
                     use12Hours={use12Hours}
                     showSeconds={showSeconds}
                     hourStep={hourStep}

@@ -59,16 +59,16 @@ export const radiusConfig: Record<CheckboxRadius, string> = {
 export const variantColorConfig: Record<Exclude<CheckboxVariant, "other">, Record<CheckboxColor, string>> = {
   filled: {
     primary:
-      "bg-primary-600 text-neutral-white border-primary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500",
+      "bg-primary-600 text-white border-primary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500",
     secondary:
-      "bg-secondary-600 text-neutral-white border-secondary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400 peer-focus-visible:border-secondary-500",
+      "bg-secondary-600 text-white border-secondary-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-secondary-400 peer-focus-visible:border-secondary-500",
     error:
-      "bg-error-600 text-neutral-white border-error-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400 peer-focus-visible:border-error-500",
+      "bg-error-600 text-white border-error-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400 peer-focus-visible:border-error-500",
     success:
-      "bg-success-600 text-neutral-white border-success-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400 peer-focus-visible:border-success-500",
+      "bg-success-600 text-white border-success-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-success-400 peer-focus-visible:border-success-500",
     warning:
       "bg-warning-500 text-neutral-950 border-warning-500 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-warning-400 peer-focus-visible:border-warning-500",
-    info: "bg-info-600 text-neutral-white border-info-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400 peer-focus-visible:border-info-500",
+    info: "bg-info-600 text-white border-info-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-info-400 peer-focus-visible:border-info-500",
     neutral:
       "bg-neutral-800 text-neutral-white border-neutral-800 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-neutral-400 peer-focus-visible:border-neutral-500",
   },

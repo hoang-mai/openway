@@ -53,7 +53,9 @@ export default function UploadFile({
   helperClassName = "",
   config,
 }: UploadFileProps) {
-  const uploadLocale = useLocale("upload");
+  const uploadLocale = useLocale("upload", {
+    browseButton: typeof buttonTextProp === "string" ? buttonTextProp : undefined,
+  });
   const buttonText = buttonTextProp ?? uploadLocale.browseButton;
   const {
     isRequired = false,

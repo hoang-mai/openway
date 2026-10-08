@@ -52,14 +52,9 @@ export default function Calendar({
   const loc = useLocale("datePicker");
 
   const tabItems = useMemo(() => {
-    const tabLabels = loc.viewTabs || {
-      days: "Ngày",
-      months: "Tháng",
-      years: "Năm",
-    };
     return (viewTabs || ["days", "months", "years"]).map((v) => ({
       key: v,
-      label: tabLabels[v] || v,
+      label: loc.viewTabs?.[v] || v,
     }));
   }, [viewTabs, loc.viewTabs]);
 

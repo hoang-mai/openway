@@ -7,6 +7,7 @@ import Spinner from "@/lib/icons/Spinner";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import FieldLabel from "@/lib/common/FieldLabel";
 import { getSafeConfig } from "@/utils/function";
+import { useLocale } from "@/locale";
 
 export default function Input({
   size,
@@ -23,6 +24,7 @@ export default function Input({
   rightIcon,
   rightAddon,
   onClear,
+  clearAriaLabel,
   wrapperClassName = "",
   inputWrapperClassName = "",
   labelClassName = "",
@@ -39,6 +41,7 @@ export default function Input({
   ref,
   ...props
 }: InputProps) {
+  const inputLocale = useLocale("input", { clearAriaLabel });
   const {
     isRequired = false,
     isInvalid = false,
@@ -203,7 +206,7 @@ export default function Input({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Clear input"
+                aria-label={inputLocale.clearAriaLabel}
                 tabIndex={hasValue ? 0 : -1}
                 aria-hidden={!hasValue}
                 className={`inline-flex items-center justify-center mr-2 shrink-0 text-neutral-400 hover:text-neutral-600 active:scale-95 transition-opacity duration-150 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current rounded-full ${currentSize.icon} ${

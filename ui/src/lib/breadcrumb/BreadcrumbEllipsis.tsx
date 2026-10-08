@@ -6,16 +6,18 @@ import { FOCUS_RING, radiusConfig, sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import MoreHorizontalIcon from "../icons/MoreHorizontalIcon";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "../dropdown";
+import { useLocale } from "@/locale";
 
 export default function BreadcrumbEllipsis({
   items,
-  ariaLabel = "Hiển thị thêm đường dẫn",
+  ariaLabel,
   onExpand,
   children,
   className = "",
   ref,
   ...props
 }: BreadcrumbEllipsisProps) {
+  const breadcrumbLocale = useLocale("breadcrumb", { ellipsisAriaLabel: ariaLabel });
   const { size, radius } = useBreadcrumbContext();
   const currentSize = getSafeConfig(size, sizeConfig, "md");
   const roundedClass = getSafeConfig(radius, radiusConfig, "md");
@@ -34,7 +36,7 @@ export default function BreadcrumbEllipsis({
           <button
             ref={ref as React.Ref<HTMLButtonElement>}
             type="button"
-            aria-label={ariaLabel}
+            aria-label={breadcrumbLocale.ellipsisAriaLabel}
             className={buttonClasses}
             {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
           >
@@ -89,7 +91,7 @@ export default function BreadcrumbEllipsis({
         ref={ref as React.Ref<HTMLButtonElement>}
         type="button"
         onClick={onExpand}
-        aria-label={ariaLabel}
+        aria-label={breadcrumbLocale.ellipsisAriaLabel}
         className={buttonClasses}
         {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
@@ -108,7 +110,7 @@ export default function BreadcrumbEllipsis({
       {...props}
     >
       {iconContent}
-      <span className="sr-only">{ariaLabel}</span>
+      <span className="sr-only">{breadcrumbLocale.ellipsisAriaLabel}</span>
     </span>
   );
 }

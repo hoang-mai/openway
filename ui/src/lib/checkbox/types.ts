@@ -287,7 +287,7 @@ export interface CheckboxGroupProps<TData = unknown, TValue extends string | num
    * Callback được gọi khi người dùng gõ tìm kiếm (ở Server mode).
    */
   onSearch?: (query: string, ...args: unknown[]) => void | Promise<void>;
-  
+
   /**
    * Nội dung hiển thị ở đáy danh sách các checkbox (dùng cho Sentinel / Skeleton loading khi phân trang vô tận)
    */
@@ -320,7 +320,7 @@ export interface CheckboxGroupProps<TData = unknown, TValue extends string | num
    * Nội dung hiển thị khi không có kết quả tìm kiếm
    * @default 'Không tìm thấy kết quả'
    */
-  emptyText?: ReactNode;
+  emptyText?: string;
 
   /**
    * Tùy biến props truyền vào component Empty khi không có dữ liệu

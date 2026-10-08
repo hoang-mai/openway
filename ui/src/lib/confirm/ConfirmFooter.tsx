@@ -25,7 +25,10 @@ export default function ConfirmFooter({
   children,
   ...props
 }: ConfirmFooterProps) {
-  const confirmLocale = useLocale("confirm");
+  const confirmLocale = useLocale("confirm", {
+    confirmText: typeof confirmTextProp === "string" ? confirmTextProp : undefined,
+    cancelText: typeof cancelTextProp === "string" ? cancelTextProp : undefined,
+  });
   const confirmText = confirmTextProp ?? confirmLocale.confirmText;
   const cancelText = cancelTextProp ?? confirmLocale.cancelText;
   const confirmContext = useConfirmContext();

@@ -14,6 +14,7 @@ import Spinner from "@/lib/icons/Spinner";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
 import { isValidOtpChar, sanitizeOtpString } from "./utils";
+import { useLocale } from "@/locale";
 export default function OtpInput({
   ref,
   config,
@@ -35,7 +36,7 @@ export default function OtpInput({
   readOnly = false,
   groupSize,
   separator = "-",
-  ariaLabel = "One-time password",
+  ariaLabel,
   getSlotAriaLabel,
   allowOneTimeCode = true,
   label,
@@ -47,6 +48,7 @@ export default function OtpInput({
   wrapperClassName = "",
   labelClassName = "",
   helperClassName = "",
+  "data-testid": dataTestId,
 }: OtpInputProps) {
   const {
     isRequired = false,
@@ -54,6 +56,10 @@ export default function OtpInput({
     isLoading = false,
     showSpinner = false,
   } = config ?? {};
+
+  const inputLocale = useLocale("input", {
+    otpAriaLabel: ariaLabel,
+  });
 
   const generatedId = useId();
   const baseId = id || generatedId;
@@ -321,13 +327,16 @@ export default function OtpInput({
   const isHorizontal = labelPlacement === "left";
 
   return (
-    <div className={`group/otp flex ${isHorizontal ? "flex-row items-start gap-3" : "flex-col"} ${wrapperClassName}`}>
+    <div
+      data-testid={dataTestId}
+      className={`group/otp flex ${isHorizontal ? "flex-row items-start gap-3" : "flex-col"} ${wrapperClassName}`}
+    >
       {renderLabel()}
 
       <div className="flex flex-col">
         <div
           role="group"
-          aria-label={ariaLabel}
+          aria-label={inputLocale.otpAriaLabel}
           aria-describedby={errorMessage || helperText ? errorHelperId : undefined}
           className={`inline-flex items-center ${currentSize.gap} ${className}`}
         >
@@ -335,7 +344,7 @@ export default function OtpInput({
             const isMasked = Boolean(mask || type === "password");
             const slotAriaLabel = getSlotAriaLabel
               ? getSlotAriaLabel(index, length)
-              : `Ký tự ${index + 1} trên ${length}`;
+              : inputLocale.otpCharAriaLabel(index + 1, length);
 
             const shouldRenderSeparator =
               Boolean(groupSize && groupSize > 0) && (index + 1) % (groupSize || 1) === 0 && index < length - 1;
@@ -390,7 +399,7 @@ export default function OtpInput({
           {isLoading && showSpinner && (
             <div
               role="status"
-              aria-label="Đang tải"
+              aria-label={inputLocale.loading}
               className="inline-flex items-center justify-center pl-1.5 shrink-0 text-neutral-400"
             >
               <Spinner className={`animate-spin ${sizeStyles.icon}`} />

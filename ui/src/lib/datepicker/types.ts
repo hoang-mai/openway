@@ -466,6 +466,11 @@ export interface DatePickerProps {
    */
   onClear?: () => void;
 
+  /**
+   * Nhãn aria-label cho nút xóa nhanh
+   */
+  clearAriaLabel?: string;
+
   // Popover props
   /**
    * Vị trí hiển thị của popover lịch so với ô input

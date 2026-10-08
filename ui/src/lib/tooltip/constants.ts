@@ -46,12 +46,12 @@ export const radiusConfig: Record<TooltipRadius, string> = {
 
 export const variantColorConfig: Record<Exclude<TooltipVariant, "other">, Record<TooltipColor, string>> = {
   filled: {
-    primary: "bg-primary-500 text-neutral-white border border-transparent shadow-md",
-    secondary: "bg-secondary-500 text-neutral-white border border-transparent shadow-md",
-    error: "bg-error-500 text-neutral-white border border-transparent shadow-md",
-    success: "bg-success-500 text-neutral-white border border-transparent shadow-md",
+    primary: "bg-primary-500 text-white border border-transparent shadow-md",
+    secondary: "bg-secondary-500 text-white border border-transparent shadow-md",
+    error: "bg-error-500 text-white border border-transparent shadow-md",
+    success: "bg-success-500 text-white border border-transparent shadow-md",
     warning: "bg-warning-500 text-neutral-950 border border-transparent shadow-md",
-    info: "bg-info-500 text-neutral-white border border-transparent shadow-md",
+    info: "bg-info-500 text-white border border-transparent shadow-md",
     neutral: "bg-neutral-800 text-neutral-white border border-transparent shadow-md",
   },
   soft: {

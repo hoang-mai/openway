@@ -180,8 +180,8 @@ export function UploadAvatarCropContent({
           <button
             type="button"
             onClick={handleChangeImageClick}
-            aria-label="Chọn ảnh khác"
-            title="Chọn ảnh khác"
+            aria-label={uploadLocale.chooseAnotherImage}
+            title={uploadLocale.chooseAnotherImage}
             className={`${toolbarBtnClass} text-neutral-700 hover:text-primary-600`}
             data-testid="avatar-crop-change-image-button"
           >
@@ -195,8 +195,8 @@ export function UploadAvatarCropContent({
             type="button"
             onClick={handleZoomOut}
             disabled={zoom <= minZoom}
-            aria-label="Thu nhỏ"
-            title="Thu nhỏ (-)"
+            aria-label={uploadLocale.zoomOut}
+            title={uploadLocale.zoomOut}
             className={toolbarBtnClass}
           >
             <ZoomOutIcon width={16} height={16} />
@@ -207,8 +207,8 @@ export function UploadAvatarCropContent({
             type="button"
             onClick={handleZoomIn}
             disabled={zoom >= maxZoom}
-            aria-label="Phóng to"
-            title="Phóng to (+)"
+            aria-label={uploadLocale.zoomIn}
+            title={uploadLocale.zoomIn}
             className={toolbarBtnClass}
           >
             <ZoomInIcon width={16} height={16} />
@@ -218,8 +218,8 @@ export function UploadAvatarCropContent({
           <button
             type="button"
             onClick={handleRotateCcw}
-            title="Xoay ngược chiều kim đồng hồ"
-            aria-label="Xoay ngược chiều kim đồng hồ"
+            title={uploadLocale.rotateCcw}
+            aria-label={uploadLocale.rotateCcw}
             className={toolbarBtnClass}
           >
             <RotateCcwIcon width={16} height={16} />
@@ -229,8 +229,8 @@ export function UploadAvatarCropContent({
           <button
             type="button"
             onClick={handleRotateCw}
-            title="Xoay theo chiều kim đồng hồ"
-            aria-label="Xoay theo chiều kim đồng hồ"
+            title={uploadLocale.rotateCw}
+            aria-label={uploadLocale.rotateCw}
             className={toolbarBtnClass}
           >
             <RotateCwIcon width={16} height={16} />
@@ -240,8 +240,8 @@ export function UploadAvatarCropContent({
           <button
             type="button"
             onClick={handleFlipHorizontal}
-            title="Lật ngang"
-            aria-label="Lật ngang"
+            title={uploadLocale.flipHorizontal}
+            aria-label={uploadLocale.flipHorizontal}
             className={toolbarBtnClass}
           >
             <FlipHorizontalIcon width={16} height={16} />
@@ -298,8 +298,9 @@ export function UploadAvatarCropModal({
   onApply,
   ...restProps
 }: UploadAvatarCropModalProps) {
-  const uploadLocale = useLocale("upload");
-  const modalTitle = modalTitleProp ?? uploadLocale.cropTitle;
+  const uploadLocale = useLocale("upload", {
+    cropTitle: modalTitleProp,
+  });
   const handleClose = () => {
     onCancel?.();
     onClose?.();
@@ -325,7 +326,7 @@ export function UploadAvatarCropModal({
         <ModalHeader
           title={
             <span className="font-semibold text-neutral-900" data-testid="avatar-crop-modal-title">
-              {modalTitle}
+              {uploadLocale.cropTitle}
             </span>
           }
           className="px-5 py-3.5 border-b border-neutral-200"

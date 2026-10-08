@@ -11,6 +11,7 @@ import { formatBytes } from "../upload-image/utils";
 import { getPreviewFileSize, getPreviewItemStatus } from "./utils";
 import { getSafeConfig } from "@/utils/function";
 import { getFileName } from "@/lib/file-preview/utils";
+import { useLocale } from "@/locale";
 
 export default function UploadFileItemRow({
   item,
@@ -30,6 +31,7 @@ export default function UploadFileItemRow({
   renderItem,
   className = "",
 }: UploadFileItemRowProps) {
+  const uploadLocale = useLocale("upload");
   const currentSize = getSafeConfig(size, uploadFileSizeConfig, "md");
   const effectiveRadius = getSafeConfig(radius, uploadFileRadiusConfig, "md");
 
@@ -86,8 +88,8 @@ export default function UploadFileItemRow({
         data-testid="upload-file-item"
         tabIndex={disabled ? -1 : 0}
         onKeyDown={handleKeyDown}
-        aria-label={`Tệp tin ${fileName}`}
-        className={`group relative list-none flex flex-col justify-between p-3 ${effectiveRadius} border border-neutral-200 bg-white hover:border-primary-300 hover:shadow-xs transition-colors duration-150 ease-in-out focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden ${
+        aria-label={uploadLocale.fileAriaLabel ? uploadLocale.fileAriaLabel(fileName) : fileName}
+        className={`group relative list-none flex flex-col justify-between p-3 ${effectiveRadius} border border-neutral-200 bg-neutral-white hover:border-primary-300 hover:shadow-xs transition-colors duration-150 ease-in-out focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden ${
           disabled ? "opacity-50 pointer-events-none bg-neutral-50" : ""
         } ${isError ? "border-error-300 bg-error-50/20" : ""} ${className}`}
       >
@@ -113,11 +115,11 @@ export default function UploadFileItemRow({
             )}
             <p className={`text-neutral-500 ${currentSize.fileMetaSize}`}>
               {isError ? (
-                <span className="text-error-600 font-medium truncate block">{error || "Lỗi tải lên"}</span>
+                <span className="text-error-600 font-medium truncate block">{error || uploadLocale.uploadError}</span>
               ) : isUploading ? (
                 <span className="text-primary-600 flex items-center gap-1 font-medium">
                   <Spinner width={12} height={12} className="animate-spin inline" />
-                  Đang tải... {progress !== undefined ? `${progress}%` : ""}
+                  {uploadLocale.uploading} {progress !== undefined ? `${progress}%` : ""}
                 </span>
               ) : fileSize !== undefined ? (
                 formatBytes(fileSize)
@@ -143,8 +145,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handleRetry}
-              aria-label={`Thử lại tải lên ${fileName}`}
-              title="Thử lại"
+              aria-label={uploadLocale.retryAriaLabel ? uploadLocale.retryAriaLabel(fileName) : fileName}
+              title={uploadLocale.retry}
               className={`text-neutral-500 hover:text-primary-600 hover:bg-primary-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <ResetIcon width={14} height={14} />
@@ -156,8 +158,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handlePreview}
-              aria-label={`Xem trước tệp ${fileName}`}
-              title="Xem trước"
+              aria-label={uploadLocale.previewFileAriaLabel ? uploadLocale.previewFileAriaLabel(fileName) : fileName}
+              title={uploadLocale.preview}
               className={`text-neutral-500 hover:text-primary-600 hover:bg-primary-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <EyeIcon width={14} height={14} />
@@ -169,8 +171,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handleDownload}
-              aria-label={`Tải xuống tệp ${fileName}`}
-              title="Tải xuống"
+              aria-label={uploadLocale.downloadFileAriaLabel ? uploadLocale.downloadFileAriaLabel(fileName) : fileName}
+              title={uploadLocale.download}
               className={`text-neutral-500 hover:text-primary-600 hover:bg-primary-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <DownloadIcon width={14} height={14} />
@@ -182,8 +184,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handleRemove}
-              aria-label={`Xóa tệp ${fileName}`}
-              title="Xóa tệp"
+              aria-label={uploadLocale.removeFileAriaLabel ? uploadLocale.removeFileAriaLabel(fileName) : fileName}
+              title={uploadLocale.removeFile}
               className={`text-neutral-400 hover:text-error-600 hover:bg-error-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <TrashIcon width={14} height={14} />
@@ -200,8 +202,8 @@ export default function UploadFileItemRow({
       data-testid="upload-file-item"
       tabIndex={disabled ? -1 : 0}
       onKeyDown={handleKeyDown}
-      aria-label={`Tệp tin ${fileName}`}
-      className={`group relative list-none flex flex-col w-full ${currentSize.itemPadding} ${effectiveRadius} border border-neutral-200 bg-white hover:border-primary-300 hover:bg-neutral-50/50 transition-colors duration-150 ease-in-out focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden ${
+      aria-label={uploadLocale.fileAriaLabel ? uploadLocale.fileAriaLabel(fileName) : fileName}
+      className={`group relative list-none flex flex-col w-full ${currentSize.itemPadding} ${effectiveRadius} border border-neutral-200 bg-neutral-white hover:border-primary-300 hover:bg-neutral-50/50 transition-colors duration-150 ease-in-out focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-hidden ${
         disabled ? "opacity-50 pointer-events-none bg-neutral-50" : ""
       } ${isError ? "border-error-300 bg-error-50/20" : ""} ${className}`}
     >
@@ -233,11 +235,11 @@ export default function UploadFileItemRow({
 
             <div className={`flex items-center gap-2 text-neutral-500 ${currentSize.fileMetaSize}`}>
               {isError ? (
-                <span className="text-error-600 font-medium truncate">{error || "Lỗi tải lên"}</span>
+                <span className="text-error-600 font-medium truncate">{error || uploadLocale.uploadError}</span>
               ) : isUploading ? (
                 <span className="text-primary-600 flex items-center gap-1 font-medium">
                   <Spinner width={12} height={12} className="animate-spin inline" />
-                  Đang tải lên... {progress !== undefined ? `${progress}%` : ""}
+                  {uploadLocale.uploading} {progress !== undefined ? `${progress}%` : ""}
                 </span>
               ) : fileSize !== undefined ? (
                 <span>{formatBytes(fileSize)}</span>
@@ -253,8 +255,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handleRetry}
-              aria-label={`Thử lại tải lên ${fileName}`}
-              title="Thử lại"
+              aria-label={uploadLocale.retryAriaLabel ? uploadLocale.retryAriaLabel(fileName) : fileName}
+              title={uploadLocale.retry}
               className={`text-neutral-500 hover:text-primary-600 hover:bg-primary-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <ResetIcon width={15} height={15} />
@@ -266,8 +268,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handlePreview}
-              aria-label={`Xem trước tệp ${fileName}`}
-              title="Xem trước"
+              aria-label={uploadLocale.previewFileAriaLabel ? uploadLocale.previewFileAriaLabel(fileName) : fileName}
+              title={uploadLocale.preview}
               className={`text-neutral-500 hover:text-primary-600 hover:bg-primary-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <EyeIcon width={15} height={15} />
@@ -279,8 +281,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handleDownload}
-              aria-label={`Tải xuống tệp ${fileName}`}
-              title="Tải xuống"
+              aria-label={uploadLocale.downloadFileAriaLabel ? uploadLocale.downloadFileAriaLabel(fileName) : fileName}
+              title={uploadLocale.download}
               className={`text-neutral-500 hover:text-primary-600 hover:bg-primary-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <DownloadIcon width={15} height={15} />
@@ -292,8 +294,8 @@ export default function UploadFileItemRow({
               type="button"
               disabled={disabled}
               onClick={handleRemove}
-              aria-label={`Xóa tệp ${fileName}`}
-              title="Xóa tệp"
+              aria-label={uploadLocale.removeFileAriaLabel ? uploadLocale.removeFileAriaLabel(fileName) : fileName}
+              title={uploadLocale.removeFile}
               className={`text-neutral-400 hover:text-error-600 hover:bg-error-50 ${currentSize.actionButtonPadding} rounded-md transition-colors cursor-pointer`}
             >
               <TrashIcon width={15} height={15} />

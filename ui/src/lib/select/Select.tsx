@@ -9,6 +9,7 @@ import { useSelectSearch } from "./hooks/useSelectSearch";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { getSelectedOption } from "./utils";
+import { useLocale } from "@/locale";
 
 const DEFAULT_OPTIONS: never[] = [];
 
@@ -25,7 +26,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   id: idProp,
   label,
   labelPlacement = "floating",
-  placeholder = "Chọn...",
+  placeholder,
   helperText,
   errorMessage,
   isDisabled = false,
@@ -73,6 +74,13 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   "aria-labelledby": ariaLabelledByProp,
   ...props
 }: SelectProps<TData, TFilters>) {
+  const selectLocale = useLocale("select", {
+    placeholder,
+    searchPlaceholder,
+    emptyText: typeof emptyText === "string" ? emptyText : undefined,
+    resetFilter: typeof resetFiltersText === "string" ? resetFiltersText : undefined,
+  });
+
   const {
     isRequired = false,
     isInvalid: isInvalidConfig = false,
@@ -267,7 +275,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
   const ariaLabel =
     ariaLabelProp ||
     (typeof label === "string" ? label : undefined) ||
-    placeholder;
+    selectLocale.placeholder;
   const ariaLabelledBy = label ? labelId : ariaLabelledByProp;
 
   const renderLabel = () => (
@@ -319,7 +327,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
             variant={variant}
             color={color}
             radius={radius}
-            placeholder={searchPlaceholder || placeholder}
+            placeholder={selectLocale.searchPlaceholder || selectLocale.placeholder}
             disabled={isDisabled}
             readOnly={readOnly}
             isInvalid={isInvalid}
@@ -356,7 +364,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
             portalRoot={portalRoot}
             reference={reference}
             maxMenuHeight={maxMenuHeight}
-            emptyText={emptyText}
+            emptyText={emptyText ?? selectLocale.emptyText}
             emptyProps={emptyProps}
             menuHeader={menuHeader}
             menuFooter={menuFooter}
@@ -366,7 +374,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
             menuFilterLayout={menuFilterLayout}
             menuFilterGridCols={menuFilterGridCols}
             showResetFilters={showResetFilters}
-            resetFiltersText={resetFiltersText}
+            resetFiltersText={resetFiltersText ?? selectLocale.resetFilter}
             onMenuFilterChange={handleFilterChange}
             onResetFilters={handleResetFilters}
             renderOption={renderOption}

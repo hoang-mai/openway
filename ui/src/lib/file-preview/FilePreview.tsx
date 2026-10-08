@@ -4,6 +4,7 @@ import { normalizePreviewFile, downloadFile } from "./utils";
 import { useFileContext } from "./FileContext";
 import ImagePreview from "./image-preview/ImagePreview";
 import DownloadIcon from "../icons/DownloadIcon";
+import { useLocale } from "@/locale";
 
 /**
  * Component `<FilePreview>`: Nhận file và headerTitle qua useFileContext(),
@@ -14,6 +15,7 @@ export default function FilePreview({
   imageProps,
   className = "",
 }: FilePreviewProps) {
+  const filePreviewLocale = useLocale("filePreview");
   const fileContext = useFileContext();
   const file = fileContext?.file;
   const headerTitle = fileContext?.headerTitle;
@@ -73,7 +75,7 @@ export default function FilePreview({
         {headerTitle ?? displayName}
       </h3>
       <p className="text-sm text-neutral-500 mb-6">
-        Định dạng file chưa hỗ trợ xem trực tiếp. Bạn có thể tải file về để xem.
+        {filePreviewLocale.unsupportedFormat}
       </p>
 
       <button
@@ -82,7 +84,7 @@ export default function FilePreview({
         className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-xl transition-colors shadow-md cursor-pointer"
       >
         <DownloadIcon width={18} height={18} />
-        <span>Tải xuống file</span>
+        <span>{filePreviewLocale.downloadFile}</span>
       </button>
     </div>
   );

@@ -67,10 +67,10 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
   ref,
   ...props
 }: CheckboxGroupProps<TData, TValue>) {
-  const checkboxLocale = useLocale("checkbox");
-  const selectLocale = useLocale("select");
-  const searchPlaceholder = searchPlaceholderProp ?? selectLocale.searchPlaceholder;
-  const emptyText = emptyTextProp ?? checkboxLocale.emptyText;
+  const checkboxLocale = useLocale("checkbox", {
+    searchPlaceholder: searchPlaceholderProp,
+    emptyText: emptyTextProp,
+  });
   const {
     isRequired = false,
     isInvalid: isInvalidProp,
@@ -295,7 +295,7 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
             color={color}
             value={currentSearch}
             onChange={handleSearchInputChange}
-            placeholder={searchPlaceholder}
+            placeholder={checkboxLocale.searchPlaceholder}
             disabled={disabled}
             leftIcon={<SearchIcon className="size-4 text-neutral-400" />}
             rightIcon={
@@ -304,7 +304,13 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
               ) : undefined
             }
             onClear={handleClearSearch}
-            aria-label={typeof label === "string" ? `Tìm kiếm ${label}` : "Tìm kiếm"}
+            aria-label={
+              checkboxLocale.searchAriaLabel
+                ? checkboxLocale.searchAriaLabel(typeof label === "string" ? label : undefined)
+                : typeof label === "string"
+                ? `Search ${label}`
+                : "Search"
+            }
             config={{
               isClearable: !effectiveIsSearching,
               isFullWidth: true,
@@ -420,8 +426,8 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
                 image={searchable || searchMode === "server" ? "search" : "default"}
                 description={
                   !currentSearch.trim() && searchMode === "server"
-                    ? searchPlaceholder
-                    : emptyText
+                    ? checkboxLocale.searchPlaceholder
+                    : checkboxLocale.emptyText
                 }
                 className="py-1"
                 {...emptyProps}

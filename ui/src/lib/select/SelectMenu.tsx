@@ -103,7 +103,9 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
   listElementsRef,
   className = "",
 }: SelectMenuProps<TData, TFilters>) {
-  const selectLocale = useLocale("select");
+  const selectLocale = useLocale("select", {
+    emptyText: typeof emptyText === "string" ? emptyText : undefined,
+  });
   const effectivePortalRoot = useFloatingPortalRoot({
     portalRoot,
     reference,
@@ -203,7 +205,7 @@ export function SelectMenu<TData = unknown, TFilters extends Record<string, unkn
               <Empty
                 size="sm"
                 image="search"
-                description={emptyText || selectLocale.emptyText}
+                description={emptyText ?? selectLocale.emptyText}
                 className="py-2"
                 {...emptyProps}
               />
