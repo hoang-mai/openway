@@ -13,6 +13,7 @@ export interface CopyButtonProps {
 }
 
 export default function CopyButton({ copyable, children, hasHoverAction }: CopyButtonProps) {
+
   const [isCopied, setIsCopied] = useState(false);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -47,13 +48,14 @@ export default function CopyButton({ copyable, children, hasHoverAction }: CopyB
     [children, copyable]
   );
 
-  if (!copyable) return null;
-
   const copyConf: CopyConfig = typeof copyable === "object" ? copyable : {};
   const typographyLocale = useLocale("typography", {
     copy: Array.isArray(copyConf.tooltips) ? String(copyConf.tooltips[0]) : undefined,
     copied: Array.isArray(copyConf.tooltips) ? String(copyConf.tooltips[1]) : undefined,
   });
+
+  if (!copyable) return null;
+
   const showTooltip = copyConf.tooltips !== false;
 
   const buttonElement = (

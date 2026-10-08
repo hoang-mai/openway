@@ -457,19 +457,7 @@ export function DataTable<TData extends RowData = RowData>({
     }
 
     return processedCols;
-  }, [
-    columns,
-    enableRowSelection,
-    manualFiltering,
-    filters,
-    isExpandingEnabled,
-    shouldShowExpandColumn,
-    expandColumnMode,
-    expandColumnPosition,
-    maxIndentDepth,
-    indentSize,
-    filterValues,
-  ]);
+  }, [columns, manualFiltering, filters, enableRowSelection, isExpandingEnabled, shouldShowExpandColumn, expandColumnMode, filterValues, tableLocale, expandColumnPosition, maxIndentDepth, indentSize]);
 
   const table = useDataTable<TData>({
     data,
