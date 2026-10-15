@@ -373,7 +373,7 @@ function TableFilterBadgeChip({
           title={`${field.label}: ${displayVal}`}
         >
           <span className={tableFilterConfig.chipLabel}>{field.label}:</span>
-          <span data-testid={`filter-chip-val-${fieldName}`} className={tableFilterConfig.chipValue}>
+          <span data-testid={`filter-chip-val-${fieldName}`} className={hasValue ? tableFilterConfig.chipValue : `${tableFilterConfig.chipValue} opacity-75 italic text-neutral-400 dark:text-neutral-400`}>
             {displayVal}
           </span>
         </Badge>
@@ -406,7 +406,7 @@ function TableFilterBadgeChip({
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-xs transition-colors cursor-pointer"
+                className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 p-0.5 rounded-xs transition-colors cursor-pointer"
                 title={tableLocale.close}
               >
                 <CloseIcon className="size-3.5" />

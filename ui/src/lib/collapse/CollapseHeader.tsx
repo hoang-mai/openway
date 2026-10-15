@@ -37,7 +37,7 @@ export default function CollapseHeader({
     if (typeof expandIcon === "function") {
       return (
         <span
-          className={`inline-flex items-center justify-center shrink-0 transition-transform duration-200 text-neutral-400 ${
+          className={`inline-flex items-center justify-center shrink-0 transition-transform duration-200 text-neutral-500 ${
             isActive ? "rotate-180" : "rotate-0"
           }`}
           aria-hidden="true"
@@ -50,7 +50,7 @@ export default function CollapseHeader({
     if (expandIcon) {
       return (
         <span
-          className={`inline-flex items-center justify-center shrink-0 transition-transform duration-200 text-neutral-400 ${
+          className={`inline-flex items-center justify-center shrink-0 transition-transform duration-200 text-neutral-500 ${
             isActive ? "rotate-180" : "rotate-0"
           }`}
           aria-hidden="true"
@@ -62,8 +62,8 @@ export default function CollapseHeader({
 
     return (
       <span
-        className={`inline-flex items-center justify-center shrink-0 transition-transform duration-200 text-neutral-400 ${
-          isActive ? "rotate-180 text-neutral-700" : "rotate-0"
+        className={`inline-flex items-center justify-center shrink-0 transition-transform duration-200 text-neutral-500 ${
+          isActive ? "rotate-180 text-neutral-900" : "rotate-0"
         }`}
         aria-hidden="true"
       >
@@ -87,7 +87,7 @@ export default function CollapseHeader({
     currentSize.gap,
     disabled
       ? "cursor-not-allowed pointer-events-none"
-      : `${currentColor.focusRing} focus-visible:ring-2 focus-visible:ring-offset-1 rounded-lg`,
+      : `${currentColor.focusRing} focus-visible:ring-2 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-neutral-white rounded-lg`,
   ]
     .filter(Boolean)
     .join(" ");

@@ -77,14 +77,14 @@ export const colorConfig: Record<
   }
 > = {
   primary: {
-    active: "bg-primary-50 text-primary-900",
-    selected: "bg-primary-100 text-primary-900 font-medium",
-    focus: "focus:bg-primary-50 focus:text-primary-900",
+    active: "bg-primary-50 text-primary-900 dark:bg-primary-950/70 dark:text-primary-200",
+    selected: "bg-primary-100 text-primary-900 font-medium dark:bg-primary-900/40 dark:text-primary-100",
+    focus: "focus:bg-primary-50 focus:text-primary-900 dark:focus:bg-primary-950/70 dark:focus:text-primary-200",
   },
   secondary: {
-    active: "bg-secondary-50 text-secondary-900",
-    selected: "bg-secondary-100 text-secondary-900 font-medium",
-    focus: "focus:bg-secondary-50 focus:text-secondary-900",
+    active: "bg-secondary-50 text-secondary-900 dark:bg-secondary-950/70 dark:text-secondary-200",
+    selected: "bg-secondary-100 text-secondary-900 font-medium dark:bg-secondary-900/40 dark:text-secondary-100",
+    focus: "focus:bg-secondary-50 focus:text-secondary-900 dark:focus:bg-secondary-950/70 dark:focus:text-secondary-200",
   },
   neutral: {
     active: "bg-neutral-100 text-neutral-900",
@@ -92,29 +92,29 @@ export const colorConfig: Record<
     focus: "focus:bg-neutral-100 focus:text-neutral-900",
   },
   error: {
-    active: "bg-error-50 text-error-900",
-    selected: "bg-error-100 text-error-900 font-medium",
-    focus: "focus:bg-error-50 focus:text-error-900",
+    active: "bg-error-50 text-error-900 dark:bg-error-950/70 dark:text-error-200",
+    selected: "bg-error-100 text-error-900 font-medium dark:bg-error-900/40 dark:text-error-100",
+    focus: "focus:bg-error-50 focus:text-error-900 dark:focus:bg-error-950/70 dark:focus:text-error-200",
   },
   success: {
-    active: "bg-success-50 text-success-900",
-    selected: "bg-success-100 text-success-900 font-medium",
-    focus: "focus:bg-success-50 focus:text-success-900",
+    active: "bg-success-50 text-success-900 dark:bg-success-950/70 dark:text-success-200",
+    selected: "bg-success-100 text-success-900 font-medium dark:bg-success-900/40 dark:text-success-100",
+    focus: "focus:bg-success-50 focus:text-success-900 dark:focus:bg-success-950/70 dark:focus:text-success-200",
   },
   warning: {
-    active: "bg-warning-50 text-warning-900",
-    selected: "bg-warning-100 text-warning-900 font-medium",
-    focus: "focus:bg-warning-50 focus:text-warning-900",
+    active: "bg-warning-50 text-warning-900 dark:bg-warning-950/70 dark:text-warning-200",
+    selected: "bg-warning-100 text-warning-900 font-medium dark:bg-warning-900/40 dark:text-warning-100",
+    focus: "focus:bg-warning-50 focus:text-warning-900 dark:focus:bg-warning-950/70 dark:focus:text-warning-200",
   },
   info: {
-    active: "bg-info-50 text-info-900",
-    selected: "bg-info-100 text-info-900 font-medium",
-    focus: "focus:bg-info-50 focus:text-info-900",
+    active: "bg-info-50 text-info-900 dark:bg-info-950/70 dark:text-info-200",
+    selected: "bg-info-100 text-info-900 font-medium dark:bg-info-900/40 dark:text-info-100",
+    focus: "focus:bg-info-50 focus:text-info-900 dark:focus:bg-info-950/70 dark:focus:text-info-200",
   },
 };
 
 export const dangerStyles = {
-  default: "text-error-600 hover:bg-error-50 hover:text-error-700",
-  active: "bg-error-50 text-error-700",
-  focus: "focus:bg-error-50 focus:text-error-700",
+  default: "text-error-600 hover:bg-error-50 hover:text-error-700 dark:text-error-400 dark:hover:bg-error-950/40 dark:hover:text-error-300",
+  active: "bg-error-50 text-error-700 dark:bg-error-950/70 dark:text-error-300",
+  focus: "focus:bg-error-50 focus:text-error-700 dark:focus:bg-error-950/70 dark:focus:text-error-300",
 };

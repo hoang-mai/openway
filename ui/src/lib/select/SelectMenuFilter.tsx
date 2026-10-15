@@ -323,15 +323,15 @@ function FilterBadgeChip({
           size={size}
           className={`select-none cursor-pointer transition-all duration-150 border font-normal ${sizeStyles.chip} ${
             isOpen
-              ? "bg-primary-50 text-primary-900 border-primary-300/80 shadow-xs ring-1 ring-primary-500/25"
+              ? "bg-primary-50 text-primary-900 border-primary-300/80 shadow-xs ring-1 ring-primary-500/25 dark:bg-primary-950/70 dark:text-primary-200 dark:border-primary-500/50 dark:ring-primary-500/30"
               : hasValue
-              ? "bg-neutral-100/80 hover:bg-neutral-200/60 border-neutral-200/60 text-neutral-800"
-              : "bg-neutral-50 hover:bg-neutral-100/80 border-neutral-200/40 text-neutral-500"
+              ? "bg-neutral-100/80 hover:bg-neutral-200/60 border-neutral-200/60 text-neutral-800 dark:bg-neutral-100/40 dark:border-neutral-200/40 dark:text-neutral-200"
+              : "bg-neutral-50 hover:bg-neutral-100/80 border-neutral-200/40 text-neutral-500 dark:bg-neutral-50/30 dark:text-neutral-400"
           }`}
           title={`${field.label}: ${displayVal}`}
         >
           <span className="text-neutral-400 font-normal">{field.label}:</span>
-          <span className={hasValue ? "font-medium text-neutral-800 ml-1" : "opacity-70 italic text-neutral-400 ml-1"}>
+          <span className={hasValue ? "font-medium text-neutral-800 dark:text-neutral-100 ml-1" : "opacity-75 italic text-neutral-400 dark:text-neutral-400 ml-1"}>
             {displayVal}
           </span>
         </Badge>
@@ -359,11 +359,11 @@ function FilterBadgeChip({
           >
             {/* Popover Header */}
             <div className="flex items-center justify-between pb-1.5 mb-2 border-b border-neutral-100">
-              <span className={`font-medium text-neutral-600 ${sizeStyles.popoverHeader}`}>{field.label}</span>
+              <span className={`font-medium text-neutral-600 dark:text-neutral-300 ${sizeStyles.popoverHeader}`}>{field.label}</span>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-xs hover:bg-neutral-100 transition-colors cursor-pointer"
+                className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 p-0.5 rounded-xs hover:bg-neutral-100 transition-colors cursor-pointer"
                 title={selectLocale.close}
               >
                 <CloseIcon className="size-3" />
@@ -378,14 +378,14 @@ function FilterBadgeChip({
               <button
                 type="button"
                 onClick={onRemove}
-                className={`text-neutral-500 hover:text-error-600 hover:bg-error-50 px-1.5 py-0.5 rounded-sm transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
+                className={`text-neutral-500 hover:text-error-600 hover:bg-error-50 dark:hover:bg-error-950/40 dark:hover:text-error-400 px-1.5 py-0.5 rounded-sm transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
               >
                 {selectLocale.clearFilter}
               </button>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className={`font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 px-2 py-0.5 rounded-sm border border-neutral-200 transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
+                className={`font-medium text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-200/60 px-2 py-0.5 rounded-sm border border-neutral-200 transition-colors cursor-pointer ${sizeStyles.popoverFooter}`}
               >
                 {selectLocale.done}
               </button>
@@ -521,7 +521,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
             ref={setReference}
             type="button"
             {...getAddRefProps({
-              className: `inline-flex items-center text-neutral-500 hover:text-neutral-800 bg-neutral-white hover:bg-neutral-100/70 border border-neutral-200/70 hover:border-neutral-300 transition-colors shadow-none cursor-pointer select-none ${sizeStyles.button}`,
+              className: `inline-flex items-center text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 bg-neutral-white hover:bg-neutral-100/70 border border-neutral-200/70 hover:border-neutral-300 transition-colors shadow-none cursor-pointer select-none ${sizeStyles.button}`,
             })}
           >
             <PlusIcon className={`${sizeStyles.buttonIcon} text-neutral-400`} />
@@ -567,7 +567,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                         }}
                         className={`w-full flex items-center justify-between px-2 py-1.5 text-xs rounded-sm text-left transition-colors cursor-pointer ${
                           isAlreadyActive
-                            ? "text-primary-700 font-medium bg-primary-50/60 hover:bg-primary-50"
+                            ? "text-primary-700 dark:text-primary-300 font-medium bg-primary-50/60 hover:bg-primary-50 dark:bg-primary-950/70 dark:hover:bg-primary-900/60"
                             : "text-neutral-700 hover:bg-neutral-100"
                         }`}
                       >

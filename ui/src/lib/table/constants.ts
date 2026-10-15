@@ -86,31 +86,31 @@ export const tableFilterConfig = {
     "bg-neutral-white border border-neutral-200/90 rounded-lg p-1 shadow-ui-dropdown min-w-48",
   addMenuItem:
     "w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-sm text-left transition-colors cursor-pointer text-neutral-700 hover:bg-neutral-100/70",
-  addMenuItemActive: "text-primary-700 font-medium bg-primary-50/70 hover:bg-primary-50",
+  addMenuItemActive: "text-primary-700 dark:text-primary-300 font-medium bg-primary-50/70 hover:bg-primary-50 dark:bg-primary-950/70 dark:hover:bg-primary-900/60",
   chip:
     "inline-flex items-center h-8 px-2.5 gap-1.5 rounded-md text-xs font-normal border transition-all duration-120 cursor-pointer select-none",
   chipActive:
-    "bg-neutral-100/80 hover:bg-neutral-200/60 border-neutral-200/60 text-neutral-800",
+    "bg-neutral-100/80 hover:bg-neutral-200/60 border-neutral-200/60 text-neutral-800 dark:bg-neutral-100/40 dark:border-neutral-200/40 dark:text-neutral-200",
   chipInactive:
-    "bg-neutral-50 hover:bg-neutral-100/80 border-neutral-200/40 text-neutral-500",
+    "bg-neutral-50 hover:bg-neutral-100/80 border-neutral-200/40 text-neutral-500 dark:bg-neutral-50/30 dark:text-neutral-400",
   chipOpen:
-    "bg-primary-50 text-primary-900 border-primary-300/80 shadow-xs ring-1 ring-primary-500/25",
+    "bg-primary-50 text-primary-900 border-primary-300/80 shadow-xs ring-1 ring-primary-500/25 dark:bg-primary-950/70 dark:text-primary-200 dark:border-primary-500/50 dark:ring-primary-500/30",
   chipLabel: "text-neutral-400 font-normal",
-  chipValue: "font-medium text-neutral-800 ml-1",
+  chipValue: "font-medium text-neutral-800 dark:text-neutral-100 ml-1",
   chipCloseButton:
-    "ml-0.5 p-0.5 rounded-xs hover:bg-neutral-200/70 text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer inline-flex items-center justify-center",
+    "ml-0.5 p-0.5 rounded-xs hover:bg-neutral-200/70 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors cursor-pointer inline-flex items-center justify-center",
   resetButton:
-    "inline-flex items-center gap-1 h-8 px-2 text-xs font-medium text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100/70 rounded-md transition-colors cursor-pointer select-none",
+    "inline-flex items-center gap-1 h-8 px-2 text-xs font-medium text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-neutral-100/70 rounded-md transition-colors cursor-pointer select-none",
   popoverContent:
     "bg-neutral-white border border-neutral-200/90 rounded-lg p-3 shadow-ui-dropdown",
   popoverHeader: "flex items-center justify-between pb-1.5 mb-2 border-b border-neutral-100",
-  popoverTitle: "text-xs font-medium text-neutral-600",
+  popoverTitle: "text-xs font-medium text-neutral-600 dark:text-neutral-300",
   popoverFooter:
     "flex items-center justify-between mt-2.5 pt-2 border-t border-neutral-100",
   popoverRemoveButton:
-    "text-xs text-neutral-500 hover:text-error-600 hover:bg-error-50 px-2 py-0.5 rounded-sm transition-colors cursor-pointer",
+    "text-xs text-neutral-500 hover:text-error-600 hover:bg-error-50 dark:hover:bg-error-950/40 dark:hover:text-error-400 px-2 py-0.5 rounded-sm transition-colors cursor-pointer",
   popoverDoneButton:
-    "text-xs font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 px-2.5 py-0.5 rounded-sm border border-neutral-200 transition-colors cursor-pointer",
+    "text-xs font-medium text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-200/60 px-2.5 py-0.5 rounded-sm border border-neutral-200 transition-colors cursor-pointer",
   popoverDate: "w-[17.5rem]",
   popoverCheckbox: "w-[16.25rem]",
   popoverDefault: "w-[15rem]",

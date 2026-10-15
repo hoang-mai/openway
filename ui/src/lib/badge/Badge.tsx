@@ -82,7 +82,7 @@ export default function Badge({
             onDelete();
           }}
           aria-label={deleteAriaLabel}
-          className={`inline-flex items-center justify-center shrink-0 rounded-full hover:bg-black/10 active:bg-black/20 transition-colors p-0.5 -mr-0.5 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current ${currentSize.deleteIcon}`}
+          className={`inline-flex items-center justify-center shrink-0 rounded-full hover:bg-black/10 dark:hover:bg-white/10 active:bg-black/20 dark:active:bg-white/20 transition-colors p-0.5 -mr-0.5 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-current ${currentSize.deleteIcon}`}
         >
           <CloseIcon className="size-full" />
         </button>

@@ -128,12 +128,12 @@ export const variantColorConfig: Record<Exclude<SelectVariant, "other">, Record<
     secondary:
       "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-secondary-500 focus-within:hover:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-secondary-500 data-[state=open]:hover:border-secondary-500 data-[state=open]:ring-2 data-[state=open]:ring-secondary-500/20 aria-expanded:bg-neutral-white aria-expanded:border-secondary-500 aria-expanded:hover:border-secondary-500 aria-expanded:ring-2 aria-expanded:ring-secondary-500/20 text-neutral-900",
     error:
-      "bg-error-50/70 border-error-300 hover:border-error-400 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:hover:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-error-500 data-[state=open]:hover:border-error-500 data-[state=open]:ring-2 data-[state=open]:ring-error-500/20 aria-expanded:bg-neutral-white aria-expanded:border-error-500 aria-expanded:hover:border-error-500 aria-expanded:ring-2 aria-expanded:ring-error-500/20 text-neutral-900",
+      "bg-error-50/70 dark:bg-error-950/40 border-error-300 dark:border-error-800 hover:border-error-400 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:hover:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-error-500 data-[state=open]:hover:border-error-500 data-[state=open]:ring-2 data-[state=open]:ring-error-500/20 aria-expanded:bg-neutral-white aria-expanded:border-error-500 aria-expanded:hover:border-error-500 aria-expanded:ring-2 aria-expanded:ring-error-500/20 text-neutral-900",
     success:
-      "bg-success-50/70 border-success-300 hover:border-success-400 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:hover:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-success-500 data-[state=open]:hover:border-success-500 data-[state=open]:ring-2 data-[state=open]:ring-success-500/20 aria-expanded:bg-neutral-white aria-expanded:border-success-500 aria-expanded:hover:border-success-500 aria-expanded:ring-2 aria-expanded:ring-success-500/20 text-neutral-900",
+      "bg-success-50/70 dark:bg-success-950/40 border-success-300 dark:border-success-800 hover:border-success-400 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:hover:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-success-500 data-[state=open]:hover:border-success-500 data-[state=open]:ring-2 data-[state=open]:ring-success-500/20 aria-expanded:bg-neutral-white aria-expanded:border-success-500 aria-expanded:hover:border-success-500 aria-expanded:ring-2 aria-expanded:ring-success-500/20 text-neutral-900",
     warning:
-      "bg-warning-50/70 border-warning-300 hover:border-warning-400 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:hover:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-warning-500 data-[state=open]:hover:border-warning-500 data-[state=open]:ring-2 data-[state=open]:ring-warning-500/20 aria-expanded:bg-neutral-white aria-expanded:border-warning-500 aria-expanded:hover:border-warning-500 aria-expanded:ring-2 aria-expanded:ring-warning-500/20 text-neutral-900",
-    info: "bg-info-50/70 border-info-300 hover:border-info-400 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:hover:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-info-500 data-[state=open]:hover:border-info-500 data-[state=open]:ring-2 data-[state=open]:ring-info-500/20 aria-expanded:bg-neutral-white aria-expanded:border-info-500 aria-expanded:hover:border-info-500 aria-expanded:ring-2 aria-expanded:ring-info-500/20 text-neutral-900",
+      "bg-warning-50/70 dark:bg-warning-950/40 border-warning-300 dark:border-warning-800 hover:border-warning-400 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:hover:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-warning-500 data-[state=open]:hover:border-warning-500 data-[state=open]:ring-2 data-[state=open]:ring-warning-500/20 aria-expanded:bg-neutral-white aria-expanded:border-warning-500 aria-expanded:hover:border-warning-500 aria-expanded:ring-2 aria-expanded:ring-warning-500/20 text-neutral-900",
+    info: "bg-info-50/70 dark:bg-info-950/40 border-info-300 dark:border-info-800 hover:border-info-400 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:hover:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-info-500 data-[state=open]:hover:border-info-500 data-[state=open]:ring-2 data-[state=open]:ring-info-500/20 aria-expanded:bg-neutral-white aria-expanded:border-info-500 aria-expanded:hover:border-info-500 aria-expanded:ring-2 aria-expanded:ring-info-500/20 text-neutral-900",
     neutral:
       "bg-neutral-100 border-neutral-200 hover:bg-neutral-200/70 focus-within:bg-neutral-white focus-within:border-neutral-600 focus-within:hover:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-neutral-600 data-[state=open]:hover:border-neutral-600 data-[state=open]:ring-2 data-[state=open]:ring-neutral-500/20 aria-expanded:bg-neutral-white aria-expanded:border-neutral-600 aria-expanded:hover:border-neutral-600 aria-expanded:ring-2 aria-expanded:ring-neutral-500/20 text-neutral-900",
   },
@@ -143,35 +143,35 @@ export const variantColorConfig: Record<Exclude<SelectVariant, "other">, Record<
     secondary:
       "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-secondary-500 focus-within:hover:border-secondary-500 focus-within:ring-2 focus-within:ring-secondary-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-secondary-500 data-[state=open]:hover:border-secondary-500 data-[state=open]:ring-2 data-[state=open]:ring-secondary-500/20 aria-expanded:bg-neutral-white aria-expanded:border-secondary-500 aria-expanded:hover:border-secondary-500 aria-expanded:ring-2 aria-expanded:ring-secondary-500/20 text-neutral-900",
     error:
-      "bg-transparent border-transparent hover:bg-error-50 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:hover:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-error-500 data-[state=open]:hover:border-error-500 data-[state=open]:ring-2 data-[state=open]:ring-error-500/20 aria-expanded:bg-neutral-white aria-expanded:border-error-500 aria-expanded:hover:border-error-500 aria-expanded:ring-2 aria-expanded:ring-error-500/20 text-neutral-900",
+      "bg-transparent border-transparent hover:bg-error-50 dark:hover:bg-error-950/40 focus-within:bg-neutral-white focus-within:border-error-500 focus-within:hover:border-error-500 focus-within:ring-2 focus-within:ring-error-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-error-500 data-[state=open]:hover:border-error-500 data-[state=open]:ring-2 data-[state=open]:ring-error-500/20 aria-expanded:bg-neutral-white aria-expanded:border-error-500 aria-expanded:hover:border-error-500 aria-expanded:ring-2 aria-expanded:ring-error-500/20 text-neutral-900",
     success:
-      "bg-transparent border-transparent hover:bg-success-50 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:hover:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-success-500 data-[state=open]:hover:border-success-500 data-[state=open]:ring-2 data-[state=open]:ring-success-500/20 aria-expanded:bg-neutral-white aria-expanded:border-success-500 aria-expanded:hover:border-success-500 aria-expanded:ring-2 aria-expanded:ring-success-500/20 text-neutral-900",
+      "bg-transparent border-transparent hover:bg-success-50 dark:hover:bg-success-950/40 focus-within:bg-neutral-white focus-within:border-success-500 focus-within:hover:border-success-500 focus-within:ring-2 focus-within:ring-success-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-success-500 data-[state=open]:hover:border-success-500 data-[state=open]:ring-2 data-[state=open]:ring-success-500/20 aria-expanded:bg-neutral-white aria-expanded:border-success-500 aria-expanded:hover:border-success-500 aria-expanded:ring-2 aria-expanded:ring-success-500/20 text-neutral-900",
     warning:
-      "bg-transparent border-transparent hover:bg-warning-50 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:hover:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-warning-500 data-[state=open]:hover:border-warning-500 data-[state=open]:ring-2 data-[state=open]:ring-warning-500/20 aria-expanded:bg-neutral-white aria-expanded:border-warning-500 aria-expanded:hover:border-warning-500 aria-expanded:ring-2 aria-expanded:ring-warning-500/20 text-neutral-900",
-    info: "bg-transparent border-transparent hover:bg-info-50 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:hover:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-info-500 data-[state=open]:hover:border-info-500 data-[state=open]:ring-2 data-[state=open]:ring-info-500/20 aria-expanded:bg-neutral-white aria-expanded:border-info-500 aria-expanded:hover:border-info-500 aria-expanded:ring-2 aria-expanded:ring-info-500/20 text-neutral-900",
+      "bg-transparent border-transparent hover:bg-warning-50 dark:hover:bg-warning-950/40 focus-within:bg-neutral-white focus-within:border-warning-500 focus-within:hover:border-warning-500 focus-within:ring-2 focus-within:ring-warning-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-warning-500 data-[state=open]:hover:border-warning-500 data-[state=open]:ring-2 data-[state=open]:ring-warning-500/20 aria-expanded:bg-neutral-white aria-expanded:border-warning-500 aria-expanded:hover:border-warning-500 aria-expanded:ring-2 aria-expanded:ring-warning-500/20 text-neutral-900",
+    info: "bg-transparent border-transparent hover:bg-info-50 dark:hover:bg-info-950/40 focus-within:bg-neutral-white focus-within:border-info-500 focus-within:hover:border-info-500 focus-within:ring-2 focus-within:ring-info-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-info-500 data-[state=open]:hover:border-info-500 data-[state=open]:ring-2 data-[state=open]:ring-info-500/20 aria-expanded:bg-neutral-white aria-expanded:border-info-500 aria-expanded:hover:border-info-500 aria-expanded:ring-2 aria-expanded:ring-info-500/20 text-neutral-900",
     neutral:
       "bg-transparent border-transparent hover:bg-neutral-100/70 focus-within:bg-neutral-white focus-within:border-neutral-600 focus-within:hover:border-neutral-600 focus-within:ring-2 focus-within:ring-neutral-500/20 data-[state=open]:bg-neutral-white data-[state=open]:border-neutral-600 data-[state=open]:hover:border-neutral-600 data-[state=open]:ring-2 data-[state=open]:ring-neutral-500/20 aria-expanded:bg-neutral-white aria-expanded:border-neutral-600 aria-expanded:hover:border-neutral-600 aria-expanded:ring-2 aria-expanded:ring-neutral-500/20 text-neutral-900",
   },
 };
 
 export const optionSelectedColorConfig: Record<SelectColor, string> = {
-  primary: "bg-primary-50 text-primary-700 font-medium",
-  secondary: "bg-secondary-50 text-secondary-700 font-medium",
-  error: "bg-error-50 text-error-700 font-medium",
-  success: "bg-success-50 text-success-700 font-medium",
-  warning: "bg-warning-50 text-warning-700 font-medium",
-  info: "bg-info-50 text-info-700 font-medium",
-  neutral: "bg-neutral-100 text-neutral-900 font-medium",
+  primary: "bg-primary-50 text-primary-700 font-medium dark:bg-primary-950/70 dark:text-primary-300",
+  secondary: "bg-secondary-50 text-secondary-700 font-medium dark:bg-secondary-950/70 dark:text-secondary-300",
+  error: "bg-error-50 text-error-700 font-medium dark:bg-error-950/70 dark:text-error-300",
+  success: "bg-success-50 text-success-700 font-medium dark:bg-success-950/70 dark:text-success-300",
+  warning: "bg-warning-50 text-warning-700 font-medium dark:bg-warning-950/70 dark:text-warning-300",
+  info: "bg-info-50 text-info-700 font-medium dark:bg-info-950/70 dark:text-info-300",
+  neutral: "bg-neutral-100 text-neutral-900 font-medium dark:bg-neutral-200/80 dark:text-neutral-950",
 };
 
 export const optionActiveColorConfig: Record<SelectColor, string> = {
-  primary: "bg-primary-50/60",
-  secondary: "bg-secondary-50/60",
-  error: "bg-error-50/60",
-  success: "bg-success-50/60",
-  warning: "bg-warning-50/60",
-  info: "bg-info-50/60",
-  neutral: "bg-neutral-100",
+  primary: "bg-primary-50/60 dark:bg-primary-900/30",
+  secondary: "bg-secondary-50/60 dark:bg-secondary-900/30",
+  error: "bg-error-50/60 dark:bg-error-900/30",
+  success: "bg-success-50/60 dark:bg-success-900/30",
+  warning: "bg-warning-50/60 dark:bg-warning-900/30",
+  info: "bg-info-50/60 dark:bg-info-900/30",
+  neutral: "bg-neutral-100 dark:bg-neutral-200/50",
 };
 
 export const labelPlacementConfig: Record<

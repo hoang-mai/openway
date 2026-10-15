@@ -126,7 +126,7 @@ export function TableRow({
   const { variantStyles } = useTableStyles();
 
   const selectedClass = isSelected
-    ? "bg-primary-50/60 hover:bg-primary-50/80 text-neutral-900 font-medium"
+    ? "bg-primary-50/60 hover:bg-primary-50/80 dark:bg-primary-950/40 dark:hover:bg-primary-950/60 text-neutral-900 font-medium"
     : "";
   const hoverClass = isHoverable && !isSelected ? variantStyles.row : "";
 
