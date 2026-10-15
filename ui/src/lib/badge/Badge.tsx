@@ -26,7 +26,10 @@ export default function Badge({
   const variantStyles =
     variant === "other" ? "" : getSafeConfig(color, getSafeConfig(variant, variantColorConfig, "soft"), "primary");
 
-  const dotBg = getSafeConfig(color, dotColorConfig, "primary");
+  const dotBg =
+    variant === "filled"
+      ? "bg-current"
+      : getSafeConfig(color, dotColorConfig, "primary");
 
   const roundedClass = getSafeConfig(radius, radiusConfig, "full");
 

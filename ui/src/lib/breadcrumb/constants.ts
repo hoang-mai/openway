@@ -92,49 +92,49 @@ export const variantColorConfig: Record<
     neutral:
       "text-neutral-600 hover:text-neutral-900 active:text-neutral-950",
     primary:
-      "text-neutral-600 hover:text-primary-600 active:text-primary-700",
+      "text-neutral-600 hover:text-primary-600 dark:hover:text-primary-400 active:text-primary-700 dark:active:text-primary-300",
     secondary:
-      "text-neutral-600 hover:text-secondary-600 active:text-secondary-700",
+      "text-neutral-600 hover:text-secondary-600 dark:hover:text-secondary-400 active:text-secondary-700 dark:active:text-secondary-300",
     error:
-      "text-neutral-600 hover:text-error-600 active:text-error-700",
+      "text-neutral-600 hover:text-error-600 dark:hover:text-error-400 active:text-error-700 dark:active:text-error-300",
     success:
-      "text-neutral-600 hover:text-success-600 active:text-success-700",
+      "text-neutral-600 hover:text-success-600 dark:hover:text-success-400 active:text-success-700 dark:active:text-success-300",
     warning:
-      "text-neutral-600 hover:text-warning-800 active:text-warning-900",
+      "text-neutral-600 hover:text-warning-800 dark:hover:text-warning-400 active:text-warning-900 dark:active:text-warning-300",
     info:
-      "text-neutral-600 hover:text-info-600 active:text-info-700",
+      "text-neutral-600 hover:text-info-600 dark:hover:text-info-400 active:text-info-700 dark:active:text-info-300",
   },
   solid: {
     neutral:
-      "bg-neutral-100 text-neutral-700 hover:bg-neutral-200/80 hover:text-neutral-900 active:bg-neutral-300/80",
+      "bg-neutral-100 text-neutral-700 hover:bg-neutral-200/80 hover:text-neutral-900 active:bg-neutral-300/80 dark:bg-neutral-100/80 dark:text-neutral-700 dark:hover:bg-neutral-200 dark:hover:text-neutral-900",
     primary:
-      "bg-primary-50 text-primary-700 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200",
+      "bg-primary-50 text-primary-700 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 dark:bg-primary-950/60 dark:text-primary-300 dark:hover:bg-primary-900/60 dark:hover:text-primary-200",
     secondary:
-      "bg-secondary-50 text-secondary-700 hover:bg-secondary-100 hover:text-secondary-800 active:bg-secondary-200",
+      "bg-secondary-50 text-secondary-700 hover:bg-secondary-100 hover:text-secondary-800 active:bg-secondary-200 dark:bg-secondary-950/60 dark:text-secondary-300 dark:hover:bg-secondary-900/60 dark:hover:text-secondary-200",
     error:
-      "bg-error-50 text-error-700 hover:bg-error-100 hover:text-error-800 active:bg-error-200",
+      "bg-error-50 text-error-700 hover:bg-error-100 hover:text-error-800 active:bg-error-200 dark:bg-error-950/60 dark:text-error-300 dark:hover:bg-error-900/60 dark:hover:text-error-200",
     success:
-      "bg-success-50 text-success-700 hover:bg-success-100 hover:text-success-800 active:bg-success-200",
+      "bg-success-50 text-success-700 hover:bg-success-100 hover:text-success-800 active:bg-success-200 dark:bg-success-950/60 dark:text-success-300 dark:hover:bg-success-900/60 dark:hover:text-success-200",
     warning:
-      "bg-warning-50 text-warning-800 hover:bg-warning-100 hover:text-warning-900 active:bg-warning-200",
+      "bg-warning-50 text-warning-800 hover:bg-warning-100 hover:text-warning-900 active:bg-warning-200 dark:bg-warning-950/60 dark:text-warning-300 dark:hover:bg-warning-900/60 dark:hover:text-warning-200",
     info:
-      "bg-info-50 text-info-700 hover:bg-info-100 hover:text-info-800 active:bg-info-200",
+      "bg-info-50 text-info-700 hover:bg-info-100 hover:text-info-800 active:bg-info-200 dark:bg-info-950/60 dark:text-info-300 dark:hover:bg-info-900/60 dark:hover:text-info-200",
   },
   bordered: {
     neutral:
-      "border border-neutral-200/80 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-900",
+      "border border-neutral-200/80 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-900 dark:border-neutral-200/60 dark:text-neutral-700 dark:hover:border-neutral-400 dark:hover:bg-neutral-100/50 dark:hover:text-neutral-900",
     primary:
-      "border border-primary-200/80 text-primary-700 hover:border-primary-300 hover:bg-primary-50/60",
+      "border border-primary-200/80 text-primary-700 hover:border-primary-300 hover:bg-primary-50/60 dark:text-primary-300 dark:border-primary-800/80 dark:hover:border-primary-600 dark:hover:bg-primary-950/60 dark:hover:text-primary-200",
     secondary:
-      "border border-secondary-200/80 text-secondary-700 hover:border-secondary-300 hover:bg-secondary-50/60",
+      "border border-secondary-200/80 text-secondary-700 hover:border-secondary-300 hover:bg-secondary-50/60 dark:text-secondary-300 dark:border-secondary-800/80 dark:hover:border-secondary-600 dark:hover:bg-secondary-950/60 dark:hover:text-secondary-200",
     error:
-      "border border-error-200/80 text-error-700 hover:border-error-300 hover:bg-error-50/60",
+      "border border-error-200/80 text-error-700 hover:border-error-300 hover:bg-error-50/60 dark:text-error-300 dark:border-error-800/80 dark:hover:border-error-600 dark:hover:bg-error-950/60 dark:hover:text-error-200",
     success:
-      "border border-success-200/80 text-success-700 hover:border-success-300 hover:bg-success-50/60",
+      "border border-success-200/80 text-success-700 hover:border-success-300 hover:bg-success-50/60 dark:text-success-300 dark:border-success-800/80 dark:hover:border-success-600 dark:hover:bg-success-950/60 dark:hover:text-success-200",
     warning:
-      "border border-warning-200/80 text-warning-800 hover:border-warning-300 hover:bg-warning-50/60",
+      "border border-warning-200/80 text-warning-800 hover:border-warning-300 hover:bg-warning-50/60 dark:text-warning-300 dark:border-warning-800/80 dark:hover:border-warning-600 dark:hover:bg-warning-950/60 dark:hover:text-warning-200",
     info:
-      "border border-info-200/80 text-info-700 hover:border-info-300 hover:bg-info-50/60",
+      "border border-info-200/80 text-info-700 hover:border-info-300 hover:bg-info-50/60 dark:text-info-300 dark:border-info-800/80 dark:hover:border-info-600 dark:hover:bg-info-950/60 dark:hover:text-info-200",
   },
 };
 
@@ -146,10 +146,10 @@ export const currentPageColorConfig: Record<
   string
 > = {
   neutral: "text-neutral-900 font-medium",
-  primary: "text-primary-700 font-semibold",
-  secondary: "text-secondary-700 font-semibold",
-  error: "text-error-700 font-semibold",
-  success: "text-success-700 font-semibold",
-  warning: "text-warning-900 font-semibold",
-  info: "text-info-700 font-semibold",
+  primary: "text-primary-700 dark:text-primary-400 font-semibold",
+  secondary: "text-secondary-700 dark:text-secondary-400 font-semibold",
+  error: "text-error-700 dark:text-error-400 font-semibold",
+  success: "text-success-700 dark:text-success-400 font-semibold",
+  warning: "text-warning-900 dark:text-warning-400 font-semibold",
+  info: "text-info-700 dark:text-info-400 font-semibold",
 };

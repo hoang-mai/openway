@@ -27,7 +27,7 @@ export default function Button({
   const roundedClass = getSafeConfig(radius, radiusConfig, "lg");
 
   const classNames = [
-    "inline-flex items-center justify-center font-medium leading-none border transition-colors duration-150 cursor-pointer select-none whitespace-nowrap outline-none disabled:cursor-not-allowed disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] transition-transform",
+    "inline-flex items-center justify-center font-medium leading-none border transition-colors duration-150 cursor-pointer select-none whitespace-nowrap outline-none disabled:cursor-not-allowed disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-white active:scale-[0.98] transition-transform",
     currentSize.button,
     roundedClass,
     variantStyles,

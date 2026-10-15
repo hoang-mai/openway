@@ -51,7 +51,7 @@ export const variantColorConfig: Record<Exclude<ButtonVariant, "other">, Record<
     secondary:
       "bg-secondary-500 text-white shadow-xs border-transparent hover:bg-secondary-600 hover:shadow-sm active:bg-secondary-700 active:shadow-none focus-visible:ring-secondary-700",
     neutral:
-      "bg-neutral-800 text-neutral-white shadow-xs border-transparent hover:bg-neutral-900 hover:shadow-sm active:bg-neutral-950 active:shadow-none focus-visible:ring-neutral-700",
+      "bg-neutral-800 text-neutral-white shadow-xs border-transparent hover:bg-neutral-900 hover:shadow-sm active:bg-neutral-950 active:shadow-none focus-visible:ring-neutral-700 dark:bg-neutral-200 dark:text-neutral-900 dark:hover:bg-neutral-300 dark:active:bg-neutral-400",
     error:
       "bg-error-500 text-white shadow-xs border-transparent hover:bg-error-600 hover:shadow-sm active:bg-error-700 active:shadow-none focus-visible:ring-error-700",
     success:
@@ -62,62 +62,62 @@ export const variantColorConfig: Record<Exclude<ButtonVariant, "other">, Record<
   },
   soft: {
     primary:
-      "bg-primary-50 text-primary-700 border-primary-200/60 hover:bg-primary-100/70 hover:text-primary-800 active:bg-primary-200 focus-visible:ring-primary-700",
+      "bg-primary-50 text-primary-700 border-primary-200/60 hover:bg-primary-100/70 hover:text-primary-800 active:bg-primary-200 focus-visible:ring-primary-700 dark:bg-primary-950/60 dark:text-primary-300 dark:border-primary-800/60 dark:hover:bg-primary-900/60 dark:hover:text-primary-200 dark:active:bg-primary-800/60",
     secondary:
-      "bg-secondary-50 text-secondary-700 border-secondary-200/60 hover:bg-secondary-100/70 hover:text-secondary-800 active:bg-secondary-200 focus-visible:ring-secondary-700",
+      "bg-secondary-50 text-secondary-700 border-secondary-200/60 hover:bg-secondary-100/70 hover:text-secondary-800 active:bg-secondary-200 focus-visible:ring-secondary-700 dark:bg-secondary-950/60 dark:text-secondary-300 dark:border-secondary-800/60 dark:hover:bg-secondary-900/60 dark:hover:text-secondary-200 dark:active:bg-secondary-800/60",
     neutral:
-      "bg-neutral-100 text-neutral-800 border-neutral-200/60 hover:bg-neutral-200 hover:text-neutral-900 active:bg-neutral-300 focus-visible:ring-neutral-700",
+      "bg-neutral-100 text-neutral-800 border-neutral-200/60 hover:bg-neutral-200 hover:text-neutral-900 active:bg-neutral-300 focus-visible:ring-neutral-700 dark:bg-neutral-50/80 dark:text-neutral-700 dark:border-neutral-200/60 dark:hover:bg-neutral-100/80 dark:hover:text-neutral-900 dark:active:bg-neutral-200",
     error:
-      "bg-error-50 text-error-700 border-error-200/60 hover:bg-error-100/70 hover:text-error-800 active:bg-error-200 focus-visible:ring-error-700",
+      "bg-error-50 text-error-700 border-error-200/60 hover:bg-error-100/70 hover:text-error-800 active:bg-error-200 focus-visible:ring-error-700 dark:bg-error-950/60 dark:text-error-300 dark:border-error-800/60 dark:hover:bg-error-900/60 dark:hover:text-error-200 dark:active:bg-error-800/60",
     success:
-      "bg-success-50 text-success-700 border-success-200/60 hover:bg-success-100/70 hover:text-success-800 active:bg-success-200 focus-visible:ring-success-700",
+      "bg-success-50 text-success-700 border-success-200/60 hover:bg-success-100/70 hover:text-success-800 active:bg-success-200 focus-visible:ring-success-700 dark:bg-success-950/60 dark:text-success-300 dark:border-success-800/60 dark:hover:bg-success-900/60 dark:hover:text-success-200 dark:active:bg-success-800/60",
     warning:
-      "bg-warning-50 text-warning-800 border-warning-200/60 hover:bg-warning-100/70 hover:text-warning-900 active:bg-warning-200 focus-visible:ring-warning-700",
-    info: "bg-info-50 text-info-700 border-info-200/60 hover:bg-info-100/70 hover:text-info-800 active:bg-info-200 focus-visible:ring-info-700",
+      "bg-warning-50 text-warning-800 border-warning-200/60 hover:bg-warning-100/70 hover:text-warning-900 active:bg-warning-200 focus-visible:ring-warning-700 dark:bg-warning-950/60 dark:text-warning-300 dark:border-warning-800/60 dark:hover:bg-warning-900/60 dark:hover:text-warning-200 dark:active:bg-warning-800/60",
+    info: "bg-info-50 text-info-700 border-info-200/60 hover:bg-info-100/70 hover:text-info-800 active:bg-info-200 focus-visible:ring-info-700 dark:bg-info-950/60 dark:text-info-300 dark:border-info-800/60 dark:hover:bg-info-900/60 dark:hover:text-info-200 dark:active:bg-info-800/60",
   },
   ghost: {
     primary:
-      "bg-transparent text-primary-700 border-transparent hover:bg-primary-50 hover:text-primary-800 active:bg-primary-100 focus-visible:ring-primary-700",
+      "bg-transparent text-primary-700 border-transparent hover:bg-primary-50 hover:text-primary-800 active:bg-primary-100 focus-visible:ring-primary-700 dark:text-primary-300 dark:hover:bg-primary-950/60 dark:hover:text-primary-200 dark:active:bg-primary-900/60",
     secondary:
-      "bg-transparent text-secondary-700 border-transparent hover:bg-secondary-50 hover:text-secondary-800 active:bg-secondary-100 focus-visible:ring-secondary-700",
+      "bg-transparent text-secondary-700 border-transparent hover:bg-secondary-50 hover:text-secondary-800 active:bg-secondary-100 focus-visible:ring-secondary-700 dark:text-secondary-300 dark:hover:bg-secondary-950/60 dark:hover:text-secondary-200 dark:active:bg-secondary-900/60",
     neutral:
-      "bg-transparent text-neutral-700 border-transparent hover:bg-neutral-100 hover:text-neutral-900 active:bg-neutral-200 focus-visible:ring-neutral-700",
+      "bg-transparent text-neutral-700 border-transparent hover:bg-neutral-100 hover:text-neutral-900 active:bg-neutral-200 focus-visible:ring-neutral-700 dark:text-neutral-700 dark:hover:bg-neutral-100/80 dark:hover:text-neutral-900 dark:active:bg-neutral-200/80",
     error:
-      "bg-transparent text-error-700 border-transparent hover:bg-error-50 hover:text-error-800 active:bg-error-100 focus-visible:ring-error-700",
+      "bg-transparent text-error-700 border-transparent hover:bg-error-50 hover:text-error-800 active:bg-error-100 focus-visible:ring-error-700 dark:text-error-300 dark:hover:bg-error-950/60 dark:hover:text-error-200 dark:active:bg-error-900/60",
     success:
-      "bg-transparent text-success-700 border-transparent hover:bg-success-50 hover:text-success-800 active:bg-success-100 focus-visible:ring-success-700",
+      "bg-transparent text-success-700 border-transparent hover:bg-success-50 hover:text-success-800 active:bg-success-100 focus-visible:ring-success-700 dark:text-success-300 dark:hover:bg-success-950/60 dark:hover:text-success-200 dark:active:bg-success-900/60",
     warning:
-      "bg-transparent text-warning-700 border-transparent hover:bg-warning-50 hover:text-warning-800 active:bg-warning-100 focus-visible:ring-warning-700",
-    info: "bg-transparent text-info-700 border-transparent hover:bg-info-50 hover:text-info-800 active:bg-info-100 focus-visible:ring-info-700",
+      "bg-transparent text-warning-700 border-transparent hover:bg-warning-50 hover:text-warning-800 active:bg-warning-100 focus-visible:ring-warning-700 dark:text-warning-300 dark:hover:bg-warning-950/60 dark:hover:text-warning-200 dark:active:bg-warning-900/60",
+    info: "bg-transparent text-info-700 border-transparent hover:bg-info-50 hover:text-info-800 active:bg-info-100 focus-visible:ring-info-700 dark:text-info-300 dark:hover:bg-info-950/60 dark:hover:text-info-200 dark:active:bg-info-900/60",
   },
   text: {
     primary:
-      "bg-transparent text-primary-600 border-transparent px-1 hover:text-primary-700 active:text-primary-800 focus-visible:ring-primary-700",
+      "bg-transparent text-primary-600 border-transparent px-1 hover:text-primary-700 active:text-primary-800 focus-visible:ring-primary-700 dark:text-primary-300 dark:hover:text-primary-200 dark:active:text-primary-100",
     secondary:
-      "bg-transparent text-secondary-600 border-transparent px-1 hover:text-secondary-700 active:text-secondary-800 focus-visible:ring-secondary-700",
+      "bg-transparent text-secondary-600 border-transparent px-1 hover:text-secondary-700 active:text-secondary-800 focus-visible:ring-secondary-700 dark:text-secondary-300 dark:hover:text-secondary-200 dark:active:text-secondary-100",
     neutral:
-      "bg-transparent text-neutral-700 border-transparent px-1 hover:text-neutral-800 active:text-neutral-900 focus-visible:ring-neutral-700",
+      "bg-transparent text-neutral-700 border-transparent px-1 hover:text-neutral-800 active:text-neutral-900 focus-visible:ring-neutral-700 dark:text-neutral-700 dark:hover:text-neutral-900 dark:active:text-neutral-950",
     error:
-      "bg-transparent text-error-600 border-transparent px-1 hover:text-error-700 active:text-error-800 focus-visible:ring-error-700",
+      "bg-transparent text-error-600 border-transparent px-1 hover:text-error-700 active:text-error-800 focus-visible:ring-error-700 dark:text-error-300 dark:hover:text-error-200 dark:active:text-error-100",
     success:
-      "bg-transparent text-success-600 border-transparent px-1 hover:text-success-700 active:text-success-800 focus-visible:ring-success-700",
+      "bg-transparent text-success-600 border-transparent px-1 hover:text-success-700 active:text-success-800 focus-visible:ring-success-700 dark:text-success-300 dark:hover:text-success-200 dark:active:text-success-100",
     warning:
-      "bg-transparent text-warning-600 border-transparent px-1 hover:text-warning-700 active:text-warning-800 focus-visible:ring-warning-700",
-    info: "bg-transparent text-info-700 border-transparent px-1 hover:text-info-800 active:text-info-900 focus-visible:ring-info-700",
+      "bg-transparent text-warning-600 border-transparent px-1 hover:text-warning-700 active:text-warning-800 focus-visible:ring-warning-700 dark:text-warning-300 dark:hover:text-warning-200 dark:active:text-warning-100",
+    info: "bg-transparent text-info-700 border-transparent px-1 hover:text-info-800 active:text-info-900 focus-visible:ring-info-700 dark:text-info-300 dark:hover:text-info-200 dark:active:text-info-100",
   },
   outline: {
     primary:
-      "bg-transparent text-primary-700 border-primary-300 hover:bg-primary-50/70 hover:border-primary-500 hover:text-primary-800 active:bg-primary-100 focus-visible:ring-primary-700",
+      "bg-transparent text-primary-700 border-primary-300 hover:bg-primary-50/70 hover:border-primary-500 hover:text-primary-800 active:bg-primary-100 focus-visible:ring-primary-700 dark:text-primary-300 dark:border-primary-700/80 dark:hover:bg-primary-950/60 dark:hover:border-primary-500 dark:hover:text-primary-200 dark:active:bg-primary-900/60",
     secondary:
-      "bg-transparent text-secondary-700 border-secondary-300 hover:bg-secondary-50/70 hover:border-secondary-500 hover:text-secondary-800 active:bg-secondary-100 focus-visible:ring-secondary-700",
+      "bg-transparent text-secondary-700 border-secondary-300 hover:bg-secondary-50/70 hover:border-secondary-500 hover:text-secondary-800 active:bg-secondary-100 focus-visible:ring-secondary-700 dark:text-secondary-300 dark:border-secondary-700/80 dark:hover:bg-secondary-950/60 dark:hover:border-secondary-500 dark:hover:text-secondary-200 dark:active:bg-secondary-900/60",
     neutral:
-      "bg-transparent text-neutral-700 border-neutral-300 hover:bg-neutral-50 hover:border-neutral-400 hover:text-neutral-900 active:bg-neutral-100 focus-visible:ring-neutral-700",
+      "bg-transparent text-neutral-700 border-neutral-300 hover:bg-neutral-50 hover:border-neutral-400 hover:text-neutral-900 active:bg-neutral-100 focus-visible:ring-neutral-700 dark:text-neutral-700 dark:border-neutral-300/80 dark:hover:bg-neutral-100/80 dark:hover:border-neutral-400 dark:hover:text-neutral-900 dark:active:bg-neutral-200/80",
     error:
-      "bg-transparent text-error-700 border-error-300 hover:bg-error-50/70 hover:border-error-500 hover:text-error-800 active:bg-error-100 focus-visible:ring-error-700",
+      "bg-transparent text-error-700 border-error-300 hover:bg-error-50/70 hover:border-error-500 hover:text-error-800 active:bg-error-100 focus-visible:ring-error-700 dark:text-error-300 dark:border-error-700/80 dark:hover:bg-error-950/60 dark:hover:border-error-500 dark:hover:text-error-200 dark:active:bg-error-900/60",
     success:
-      "bg-transparent text-success-700 border-success-300 hover:bg-success-50/70 hover:border-success-500 hover:text-success-800 active:bg-success-100 focus-visible:ring-success-700",
+      "bg-transparent text-success-700 border-success-300 hover:bg-success-50/70 hover:border-success-500 hover:text-success-800 active:bg-success-100 focus-visible:ring-success-700 dark:text-success-300 dark:border-success-700/80 dark:hover:bg-success-950/60 dark:hover:border-success-500 dark:hover:text-success-200 dark:active:bg-success-900/60",
     warning:
-      "bg-transparent text-warning-700 border-warning-300 hover:bg-warning-50/70 hover:border-warning-500 hover:text-warning-800 active:bg-warning-100 focus-visible:ring-warning-700",
-    info: "bg-transparent text-info-700 border-info-300 hover:bg-info-50/70 hover:border-info-500 hover:text-info-800 active:bg-info-100 focus-visible:ring-info-700",
+      "bg-transparent text-warning-700 border-warning-300 hover:bg-warning-50/70 hover:border-warning-500 hover:text-warning-800 active:bg-warning-100 focus-visible:ring-warning-700 dark:text-warning-300 dark:border-warning-700/80 dark:hover:bg-warning-950/60 dark:hover:border-warning-500 dark:hover:text-warning-200 dark:active:bg-warning-900/60",
+    info: "bg-transparent text-info-700 border-info-300 hover:bg-info-50/70 hover:border-info-500 hover:text-info-800 active:bg-info-100 focus-visible:ring-info-700 dark:text-info-300 dark:border-info-700/80 dark:hover:bg-info-950/60 dark:hover:border-info-500 dark:hover:text-info-200 dark:active:bg-info-900/60",
   },
 };
