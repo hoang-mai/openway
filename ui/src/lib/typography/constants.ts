@@ -29,7 +29,7 @@ export const variantStyleMap: Record<TypographyType, string> = {
   h4: "text-lg font-semibold leading-normal text-neutral-900 my-1.5 block",
   h5: "text-base font-semibold leading-normal text-neutral-900 my-1 block",
   h6: "text-sm font-semibold leading-normal text-neutral-900 my-0.5 block",
-  p: "text-sm sm:text-base leading-relaxed mb-3 last:mb-0 text-neutral-900 block",
+  p: "text-sm leading-relaxed mb-3 last:mb-0 text-neutral-900 block",
   span: "text-sm leading-normal inline",
   callout: "ui-callout text-sm text-neutral-900 my-2.5",
   blockquote: "ui-quote text-neutral-800 block",

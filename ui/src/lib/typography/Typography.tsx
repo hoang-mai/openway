@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { cn } from "cn";
 import {
   CopyConfig,
   EllipsisConfig,
@@ -120,7 +121,7 @@ export default function Typography({
   const isCode = code || componentType === "code";
   const isKbd = keyboard || componentType === "kbd";
 
-  const modifierClasses = [
+  const modifierClasses = cn(
     strong && "font-semibold",
     italic && "italic",
     underline && "underline underline-offset-2",
@@ -130,10 +131,8 @@ export default function Typography({
       "font-mono text-[0.6875rem] leading-none px-1.5 py-1 rounded-xs bg-neutral-100 border border-neutral-200 text-neutral-700 shadow-xs",
     tabular && "tabular-nums font-feature-settings-tnum",
     disabled && "opacity-50 select-none cursor-not-allowed pointer-events-none",
-    markClass,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    markClass
+  );
 
   // Ellipsis CSS classes & Animation (Chuẩn theo Collapse: CSS Grid transition)
   let ellipsisClass = "";
@@ -152,7 +151,7 @@ export default function Typography({
     copyable && (typeof copyable !== "object" || (copyable as CopyConfig).hoverOnly !== false)
   );
 
-  const containerClasses = [
+  const containerClasses = cn(
     baseVariantStyle,
     colorClass,
     sizeClass,
@@ -161,10 +160,8 @@ export default function Typography({
     modifierClasses,
     ellipsisConfig && "block",
     hasHoverAction && "ui-hover-trigger group relative",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   // Khối các nút tương tác bổ trợ (Copy, Ellipsis)
   const interactiveActions = (
@@ -210,9 +207,9 @@ export default function Typography({
 
   // 4. Render theo componentType bằng switch với props phẳng (Flat Props)
   switch (componentType) {
-    /* ========================================================================
+  /* ========================================================================
      * 1. XỬ LÝ RENDER TYPE="a" (Next.js Link & Thẻ liên kết)
-     * ======================================================================== */
+   * ======================================================================== */
     case "a": {
       const finalTarget = external ? "_blank" : target;
       const finalRel = external
@@ -243,9 +240,9 @@ export default function Typography({
     }
     /* ==================== KẾT THÚC XỬ LÝ TYPE="a" ==================== */
 
-    /* ========================================================================
+  /* ========================================================================
      * 2. XỬ LÝ RENDER TYPE="callout" (Notion Callout Box)
-     * ======================================================================== */
+   * ======================================================================== */
     case "callout": {
       const calloutIcon = icon ?? <LightbulbIcon className="size-5 text-current" />;
 
@@ -264,9 +261,9 @@ export default function Typography({
     }
     /* ==================== KẾT THÚC XỬ LÝ TYPE="callout" ==================== */
 
-    /* ========================================================================
+  /* ========================================================================
      * 3. XỬ LÝ RENDER CÁC THẺ TIÊU CHUẨN (h1–h6, p, span, blockquote, code, kbd)
-     * ======================================================================== */
+   * ======================================================================== */
     default: {
       const ComponentTag = (variantTagMap[componentType] || "span") as ElementType<{
         className?: string;

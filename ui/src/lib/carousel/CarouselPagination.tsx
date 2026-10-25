@@ -1,4 +1,4 @@
-import { getSafeConfig } from "@/utils/function";
+﻿import { getSafeConfig } from "@/utils/function";
 import { CarouselPaginationProps } from "./types";
 import { useCarouselContext } from "./context";
 import { dotStyleConfig, glassPaginationWrapper, sizeConfig } from "./constants";

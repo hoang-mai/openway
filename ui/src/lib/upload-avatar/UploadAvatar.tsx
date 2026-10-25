@@ -23,6 +23,7 @@ import CropIcon from "../icons/CropIcon";
 import Spinner from "../icons/Spinner";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 import { PreviewFile } from "@/lib/file-preview/types";
 import { useLocale } from "@/locale";
 
@@ -228,26 +229,27 @@ export default function UploadAvatar({
       ? dragActiveStyle
       : "";
 
-  const avatarBoxClasses = [
+  const avatarBoxClasses = cn(
     inputContainerBase,
     currentSize.avatarSize,
     roundedClass,
     variantStyles,
     disabledStyles,
     dragStyles,
-    avatarClassName || avatarWrapperClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    avatarClassName || avatarWrapperClassName
+  );
 
   const isHorizontal = labelPlacement === "left";
   const effectiveWrapperClassName = wrapperClassName || className;
 
   return (
     <div
-      className={`group/field flex ${
-        isHorizontal ? "flex-row items-center gap-3" : "flex-col"
-      } ${isFullWidth ? "w-full" : "inline-flex"} ${effectiveWrapperClassName}`}
+      className={cn(
+        "group/field flex",
+        isHorizontal ? "flex-row items-center gap-3" : "flex-col",
+        isFullWidth ? "w-full" : "inline-flex",
+        effectiveWrapperClassName
+      )}
     >
       {/* Hidden File Input (react-dropzone) */}
       <input

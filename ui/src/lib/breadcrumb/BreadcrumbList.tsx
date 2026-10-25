@@ -3,6 +3,7 @@ import { BreadcrumbListProps } from "./types";
 import { useBreadcrumbContext } from "./context";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export default function BreadcrumbList({
   children,
@@ -16,7 +17,7 @@ export default function BreadcrumbList({
   return (
     <ol
       ref={ref}
-      className={`flex flex-wrap items-center list-none m-0 p-0 ${currentSize.list} ${className}`.trim()}
+      className={cn("flex flex-wrap items-center list-none m-0 p-0", currentSize.list, className)}
       {...props}
     >
       {children}

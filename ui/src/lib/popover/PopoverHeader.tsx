@@ -2,6 +2,7 @@ import { usePopoverContext } from "./context";
 import { PopoverHeaderProps } from "./types";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export function PopoverHeader({ children, className = "", ...rest }: PopoverHeaderProps) {
   const { size } = usePopoverContext();
@@ -9,9 +10,7 @@ export function PopoverHeader({ children, className = "", ...rest }: PopoverHead
 
   return (
     <h2
-      className={["text-neutral-900 border-b border-neutral-100 font-semibold", currentSize.header, className]
-        .filter(Boolean)
-        .join(" ")}
+      className={cn("text-neutral-900 border-b border-neutral-100 font-semibold", currentSize.header, className)}
       {...rest}
     >
       {children}

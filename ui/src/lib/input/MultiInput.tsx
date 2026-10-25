@@ -16,6 +16,7 @@ import FieldLabel from "@/lib/common/FieldLabel";
 import { getSafeConfig } from "@/utils/function";
 import { splitTagsFromText } from "./utils";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function MultiInput({
   size,
@@ -318,17 +319,15 @@ export default function MultiInput({
 
   const disabledStyles = disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : "cursor-text";
 
-  const containerClasses = [
+  const containerClasses = cn(
     "group/input relative flex items-center transition-all duration-150 ease-in-out border",
     currentSize.wrapper,
     roundedClass,
     variantStyles,
     disabledStyles,
     isFullWidth ? "w-full" : "w-auto min-w-[12.5rem]",
-    inputWrapperClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    inputWrapperClassName
+  );
 
   const isHorizontal = labelPlacement === "left";
 
@@ -340,9 +339,14 @@ export default function MultiInput({
       data-testid={dataTestId}
       role="group"
       aria-labelledby={labelId}
-      className={`group/field relative flex ${
-        isHorizontal ? "flex-row items-center gap-3" : "flex-col"
-      } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${wrapperClassName}`}
+      className={cn(
+        "group/field relative flex",
+        isHorizontal ? "flex-row items-center gap-3" : "flex-col",
+        hasFloatingLabel && "pt-2",
+        isFullWidth ? "w-full" : "inline-flex",
+        wrapperClassName,
+        className
+      )}
     >
       {/* Screen Reader Live Region */}
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">

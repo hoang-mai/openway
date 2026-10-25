@@ -5,6 +5,7 @@ import { useCollapseContext, CollapsePanelContext, CollapsePanelContextValue } f
 import { radiusConfig, variantPanelConfig } from "./constants";
 import CollapseHeader from "./CollapseHeader";
 import CollapseContent from "./CollapseContent";
+import { cn } from "cn";
 
 export default function CollapsePanel({
   value,
@@ -51,15 +52,13 @@ export default function CollapsePanel({
           "primary"
         );
 
-  const itemClassNames = [
+  const itemClassNames = cn(
     "group",
     itemVariantStyle,
     itemRounded,
-    disabled ? "opacity-50 cursor-not-allowed" : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    disabled && "opacity-50 cursor-not-allowed",
+    className
+  );
 
   return (
     <CollapsePanelContext.Provider value={panelContextValue}>

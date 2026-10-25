@@ -14,6 +14,7 @@ import { normalizeAccept } from "./utils";
 import { getSafeConfig } from "@/utils/function";
 import { PreviewFile } from "@/lib/file-preview/types";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function UploadFile({
   value,
@@ -244,7 +245,7 @@ export default function UploadFile({
   const effectiveListClassName = previewClassName || listClassName;
 
   return (
-    <div className={`group/field relative flex flex-col w-full ${className}`}>
+    <div className={cn("group/field relative flex flex-col w-full", className)}>
       {/* Hidden File Input (react-dropzone) */}
       <input
         {...getInputProps({

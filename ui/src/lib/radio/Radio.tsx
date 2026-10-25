@@ -5,6 +5,7 @@ import RadioDotIcon from "@/lib/icons/RadioDotIcon";
 import Spinner from "@/lib/icons/Spinner";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export default function Radio({
   size = "md",
@@ -75,35 +76,29 @@ export default function Radio({
     ? safeVariantStyles
     : "bg-neutral-white border-neutral-300 hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary-400 peer-focus-visible:border-primary-500";
 
-  const boxClasses = [
+  const boxClasses = cn(
     "inline-flex items-center justify-center shrink-0 border rounded-full transition-all duration-150 select-none",
     currentSize.box,
     boxVariantStyles,
-    !disabled && !readOnly && !isLoading ? "active:scale-95" : "",
-    boxClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    !disabled && !readOnly && !isLoading && "active:scale-95",
+    boxClassName
+  );
 
-  const labelClasses = [
+  const labelClasses = cn(
     "select-none font-medium text-neutral-900 transition-colors",
     currentSize.label,
-    disabled ? "opacity-60" : "",
-    labelClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    disabled && "opacity-60",
+    labelClassName
+  );
 
-  const wrapperClasses = [
+  const wrapperClasses = cn(
     "group inline-flex relative",
     labelPlacement === "left" ? "flex-row-reverse justify-between" : "flex-row",
     currentSize.gap,
     disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
     wrapperClassName,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   const renderDot = () => {
     if (isLoading) {

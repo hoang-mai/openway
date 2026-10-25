@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+﻿import { MouseEvent } from "react";
 import type { RowData } from "@tanstack/react-table";
 import type { TableColumnHeaderProps } from "./types";
 import ArrowUpDownIcon from "../icons/ArrowUpDownIcon";

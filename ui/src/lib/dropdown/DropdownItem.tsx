@@ -4,6 +4,7 @@ import { useDropdownContext } from "./context";
 import { DropdownItemProps } from "./types";
 import { sizeConfig, colorConfig, dangerStyles } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export function DropdownItem({
   ref: propRef,
@@ -50,15 +51,13 @@ export function DropdownItem({
         ? `${colorStyles.selected} cursor-pointer`
         : `${isActive ? colorStyles.active : "text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900"} cursor-pointer`;
 
-  const itemClasses = [
+  const itemClasses = cn(
     "w-full text-left flex items-center select-none transition-colors duration-100 outline-none focus:outline-none",
     currentSize.item,
     currentSize.itemGap,
     stateClasses,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   return (
     <button

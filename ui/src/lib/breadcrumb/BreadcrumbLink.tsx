@@ -11,6 +11,7 @@ import {
 } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import ExternalLinkIcon from "../icons/ExternalLinkIcon";
+import { cn } from "cn";
 
 export default function BreadcrumbLink({
   href,
@@ -62,7 +63,16 @@ export default function BreadcrumbLink({
     ? "opacity-50 cursor-not-allowed pointer-events-none select-none"
     : "cursor-pointer";
 
-  const linkClasses = `group inline-flex items-center select-none transition-colors duration-150 ${currentSize.link} ${roundedClass} ${underlineClass} ${variantColorStyle} ${FOCUS_RING} ${disabledClasses} ${className}`.trim();
+  const linkClasses = cn(
+    "group inline-flex items-center select-none transition-colors duration-150",
+    currentSize.link,
+    roundedClass,
+    underlineClass,
+    variantColorStyle,
+    FOCUS_RING,
+    disabledClasses,
+    className
+  );
 
   // 1. Trường hợp asChild: Chuyển toàn bộ style và props sang React Element con
   if (asChild && isValidElement(children)) {
@@ -71,7 +81,7 @@ export default function BreadcrumbLink({
       children?: React.ReactNode;
     }>;
     return cloneElement(childElement, {
-      className: `${linkClasses} ${childElement.props.className || ""}`.trim(),
+      className: cn(linkClasses, childElement.props.className),
       children: (
         <>
           {startIcon && (

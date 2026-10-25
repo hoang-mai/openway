@@ -11,6 +11,7 @@ import { isServerFile } from "../file-preview/utils";
 import type { PreviewFile } from "../file-preview/types";
 import { getSourceKey } from "./utils";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function LoadingImage({
   src,
@@ -136,14 +137,12 @@ export default function LoadingImage({
         tabIndex={isInteractive ? 0 : undefined}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
-        className={[
+        className={cn(
           "relative overflow-hidden inline-block",
           roundedClass,
-          isInteractive ? "cursor-pointer" : "",
-          wrapperClassName,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+          isInteractive && "cursor-pointer",
+          wrapperClassName
+        )}
         style={computedWrapperStyle}
       >
         {/* Skeleton placeholder — hiển thị khi chưa load xong và chưa có lỗi */}
@@ -166,15 +165,13 @@ export default function LoadingImage({
             height={!fill ? height : undefined}
             fill={fill}
             unoptimized={isUnoptimizedSource ? true : imageProps.unoptimized}
-            className={[
+            className={cn(
               "block w-full h-full transition-opacity duration-200",
               objectFitClass,
               roundedClass,
               isLoaded ? "opacity-100" : "opacity-0",
-              className,
-            ]
-              .filter(Boolean)
-              .join(" ")}
+              className
+            )}
             style={style}
             onLoad={handleLoad}
             onError={handleError}

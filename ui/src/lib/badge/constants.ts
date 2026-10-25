@@ -143,6 +143,32 @@ export const variantColorConfig: Record<Exclude<BadgeVariant, "other">, Record<B
     pink: "bg-transparent text-ui-pink border border-ui-pink/40 hover:bg-ui-bg-pink",
     red: "bg-transparent text-ui-red border border-ui-red/40 hover:bg-ui-bg-red",
   },
+  dash: {
+    primary:
+      "bg-transparent text-primary-700 border border-dashed border-primary-300 hover:bg-primary-50/70 dark:text-primary-300 dark:border-primary-700 dark:hover:bg-primary-950/50",
+    secondary:
+      "bg-transparent text-secondary-700 border border-dashed border-secondary-300 hover:bg-secondary-50/70 dark:text-secondary-300 dark:border-secondary-700 dark:hover:bg-secondary-950/50",
+    error:
+      "bg-transparent text-error-700 border border-dashed border-error-300 hover:bg-error-50/70 dark:text-error-300 dark:border-error-700 dark:hover:bg-error-950/50",
+    success:
+      "bg-transparent text-success-700 border border-dashed border-success-300 hover:bg-success-50/70 dark:text-success-300 dark:border-success-700 dark:hover:bg-success-950/50",
+    warning:
+      "bg-transparent text-warning-800 border border-dashed border-warning-300 hover:bg-warning-50/70 dark:text-warning-300 dark:border-warning-700 dark:hover:bg-warning-950/50",
+    info:
+      "bg-transparent text-info-700 border border-dashed border-info-300 hover:bg-info-50/70 dark:text-info-300 dark:border-info-700 dark:hover:bg-info-950/50",
+    neutral:
+      "bg-transparent text-neutral-700 border border-dashed border-neutral-300 hover:bg-neutral-100/70 dark:text-neutral-700 dark:border-neutral-300/80 dark:hover:bg-neutral-100/20",
+    default: "bg-transparent text-ui-default border border-dashed border-ui-default/40 hover:bg-ui-bg-default",
+    gray: "bg-transparent text-ui-gray border border-dashed border-ui-gray/40 hover:bg-ui-bg-gray",
+    brown: "bg-transparent text-ui-brown border border-dashed border-ui-brown/40 hover:bg-ui-bg-brown",
+    orange: "bg-transparent text-ui-orange border border-dashed border-ui-orange/40 hover:bg-ui-bg-orange",
+    yellow: "bg-transparent text-ui-yellow border border-dashed border-ui-yellow/40 hover:bg-ui-bg-yellow",
+    green: "bg-transparent text-ui-green border border-dashed border-ui-green/40 hover:bg-ui-bg-green",
+    blue: "bg-transparent text-ui-blue border border-dashed border-ui-blue/40 hover:bg-ui-bg-blue",
+    purple: "bg-transparent text-ui-purple border border-dashed border-ui-purple/40 hover:bg-ui-bg-purple",
+    pink: "bg-transparent text-ui-pink border border-dashed border-ui-pink/40 hover:bg-ui-bg-pink",
+    red: "bg-transparent text-ui-red border border-dashed border-ui-red/40 hover:bg-ui-bg-red",
+  },
   ghost: {
     primary:
       "bg-transparent text-primary-700 border-transparent hover:bg-primary-50 dark:text-primary-300 dark:hover:bg-primary-950/50",

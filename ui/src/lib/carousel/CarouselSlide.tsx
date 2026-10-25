@@ -1,4 +1,4 @@
-import { useId, useEffect, CSSProperties } from "react";
+﻿import { useId, useEffect, CSSProperties } from "react";
 import { CarouselSlideProps } from "./types";
 import { useCarouselContext } from "./context";
 

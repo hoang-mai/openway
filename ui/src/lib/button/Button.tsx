@@ -2,6 +2,7 @@ import { ButtonProps } from "./types";
 import { sizeConfig, radiusConfig, variantColorConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import Spinner from "../icons/Spinner";
+import { cn } from "cn";
 
 export default function Button({
   size,
@@ -26,17 +27,15 @@ export default function Button({
     variant === "other" ? "" : getSafeConfig(color, getSafeConfig(variant, variantColorConfig, "filled"), "primary");
   const roundedClass = getSafeConfig(radius, radiusConfig, "lg");
 
-  const classNames = [
+  const classNames = cn(
     "inline-flex items-center justify-center font-medium leading-none border transition-colors duration-150 cursor-pointer select-none whitespace-nowrap outline-none disabled:cursor-not-allowed disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-white active:scale-[0.98] transition-transform",
     currentSize.button,
     roundedClass,
     variantStyles,
-    isFullWidth ? "w-full" : "",
-    disabled ? "opacity-50" : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    isFullWidth && "w-full",
+    disabled && "opacity-50",
+    className
+  );
 
   const renderIconWrapper = (iconNode: React.ReactNode) => (
     <span

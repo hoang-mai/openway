@@ -18,6 +18,7 @@ import {
 import { useFloatingTransition } from "@/hooks/useFloatingTransition";
 import { TooltipProps } from "./types";
 import { sizeConfig, radiusConfig, variantColorConfig, arrowColorConfig } from "./constants";
+import { cn } from "cn";
 import { getSafeConfig } from "@/utils/function";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
@@ -53,7 +54,7 @@ function Slot({
     ...childProps,
     ref: mergedChildRef,
     disabled: disabled ? true : childProps.disabled,
-    className: [childProps.className, className].filter(Boolean).join(" "),
+    className: cn(childProps.className, className),
   });
 }
 
@@ -149,15 +150,13 @@ export default function Tooltip({
   const arrowColorClass =
     variant === "other" ? "" : getSafeConfig(color, getSafeConfig(variant, arrowColorConfig, "filled"), "neutral");
 
-  const classNames = [
+  const classNames = cn(
     "select-none max-w-xs break-words",
     currentSize.box,
     roundedClass,
     variantStyles,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   const triggerProps = getReferenceProps();
 
@@ -182,7 +181,7 @@ export default function Tooltip({
           width={currentSize.arrowWidth}
           height={currentSize.arrowHeight}
           strokeWidth={variant === "outline" || variant === "soft" ? 1 : 0}
-          className={[arrowColorClass, arrowClassName].filter(Boolean).join(" ")}
+          className={cn(arrowColorClass, arrowClassName)}
         />
       )}
     </div>

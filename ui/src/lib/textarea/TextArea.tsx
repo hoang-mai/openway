@@ -9,6 +9,7 @@ import HelperErrorText from "@/lib/common/HelperErrorText";
 import FieldLabel from "@/lib/common/FieldLabel";
 import { getSafeConfig } from "@/utils/function";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function TextArea({
   size,
@@ -133,29 +134,25 @@ export default function TextArea({
     />
   );
 
-  const containerClasses = [
+  const containerClasses = cn(
     "group/textarea relative flex flex-col transition-all duration-150 ease-in-out border",
     roundedClass,
     variantStyles,
-    disabled ? "opacity-50" : "",
+    disabled && "opacity-50",
     isFullWidth ? "w-full" : "w-auto",
-    textareaWrapperClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    textareaWrapperClassName
+  );
 
   const hasTopRightAction = isClearable || (isLoading && showSpinner);
 
-  const textareaClasses = [
+  const textareaClasses = cn(
     "w-full bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400 disabled:cursor-not-allowed ui-scrollbar rounded-[inherit]",
     currentSize.textarea,
-    hasTopRightAction ? "pr-8" : "",
-    showCount ? "pb-6" : "",
+    hasTopRightAction && "pr-8",
+    showCount && "pb-6",
     resizeClass,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   const isHorizontal = labelPlacement === "left";
 

@@ -10,6 +10,7 @@ import Empty from "@/lib/empty/Empty";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import { rankAndFilterItems, getSafeConfig } from "@/utils/function";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 const DEFAULT_OPTIONS: never[] = [];
 
@@ -226,13 +227,11 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
   const currentSize = getSafeConfig(size, sizeConfig, "md");
   const searchInputSize = searchInputSizeProp ?? getSafeConfig(size, searchInputSizeConfig, "md");
 
-  const groupLabelClasses = [
+  const groupLabelClasses = cn(
     "text-sm font-semibold text-neutral-900 mb-1.5 select-none",
-    disabled ? "opacity-60" : "",
-    labelClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    disabled && "opacity-60",
+    labelClassName
+  );
 
   const scrollableStyles: React.CSSProperties = maxHeight
     ? {
@@ -255,7 +254,7 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
       aria-disabled={disabled || isLoadingConfig ? "true" : undefined}
       aria-readonly={isReadOnly ? "true" : undefined}
       aria-busy={isLoadingConfig || Boolean(isLoadingProp) || effectiveIsSearching ? "true" : undefined}
-      className={`inline-flex flex-col ${wrapperClassName}`}
+      className={cn("inline-flex flex-col", wrapperClassName)}
       {...props}
     >
       {/* Group Title / Label */}
@@ -307,7 +306,7 @@ export default function RadioGroup<TData = unknown, TValue extends string | numb
       {/* Danh sách Radio & Vùng cuộn & ListFooter */}
       <div
         style={scrollableStyles}
-        className={`${orientationClasses} ${scrollableClasses} ${className}`}
+        className={cn(orientationClasses, scrollableClasses, className)}
       >
         {Boolean(isLoadingProp) && displayOptions.length === 0 ? (
           <>

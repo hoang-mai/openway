@@ -4,6 +4,7 @@ import { sizeConfig, radiusConfig, variantColorConfig, iconColorConfig, defaultI
 import CloseIcon from "../icons/CloseIcon";
 import { getSafeConfig } from "@/utils/function";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function Alert({
   size,
@@ -78,15 +79,13 @@ export default function Alert({
     );
   };
 
-  const containerClasses = [
+  const containerClasses = cn(
     "relative flex w-full",
     currentSize.container,
     roundedClass,
     variantStyles,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   return (
     <div ref={ref} role={activeRole} aria-live={ariaLive} className={containerClasses} {...props}>

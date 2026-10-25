@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { TabsProps } from "./types";
 import { TabsContext } from "./context";
+import { cn } from "cn";
 
 export default function Tabs({
   activeKey: activeKeyProp,
@@ -85,7 +86,7 @@ export default function Tabs({
     layoutClasses = placement === "bottom" ? "flex flex-col-reverse gap-3" : "flex flex-col gap-3";
   }
 
-  const containerClasses = ["w-full", layoutClasses, className].filter(Boolean).join(" ");
+  const containerClasses = cn("w-full", layoutClasses, className);
 
   return (
     <div ref={ref} className={containerClasses} {...props}>

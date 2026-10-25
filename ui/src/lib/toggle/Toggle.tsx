@@ -5,6 +5,7 @@ import { sizeConfig, radiusConfig, variantColorConfig } from "./constants";
 import Spinner from "@/lib/icons/Spinner";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export default function Toggle({
   size,
@@ -93,49 +94,41 @@ export default function Toggle({
   const trackStyles = variantStyles ? (isChecked ? variantStyles.checked.track : variantStyles.unchecked.track) : "";
   const thumbStyles = variantStyles ? (isChecked ? variantStyles.checked.thumb : variantStyles.unchecked.thumb) : "";
 
-  const trackClasses = [
+  const trackClasses = cn(
     "relative inline-flex items-center shrink-0 border box-border transition-colors duration-200 ease-in-out cursor-pointer select-none",
     currentSize.track,
     trackRadiusClass,
     trackStyles,
-    disabled ? "opacity-50" : "",
-    trackClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    disabled && "opacity-50",
+    trackClassName
+  );
 
-  const thumbClasses = [
+  const thumbClasses = cn(
     "pointer-events-none inline-flex items-center justify-center transition-transform duration-200 ease-in-out select-none",
     currentSize.thumb,
     thumbRadiusClass,
     thumbStyles,
     isChecked ? currentSize.translate : "translate-x-0",
-    thumbClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    thumbClassName
+  );
 
-  const labelClasses = [
+  const labelClasses = cn(
     "select-none font-medium text-neutral-900 transition-colors",
     currentSize.label,
-    disabled ? "opacity-50" : "",
-    labelClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    disabled && "opacity-50",
+    labelClassName
+  );
 
   const isHorizontalReverse = labelPlacement === "left";
 
-  const wrapperClasses = [
+  const wrapperClasses = cn(
     "group inline-flex items-center relative",
     isHorizontalReverse ? "flex-row-reverse justify-between" : "flex-row",
     currentSize.gap,
     disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
     wrapperClassName,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   const renderThumbIcon = () => {
     if (isLoading && showSpinner) {

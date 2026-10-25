@@ -3,6 +3,7 @@ import { getSafeConfig } from "@/utils/function";
 import { CollapseProps, CollapseActiveKey, CollapseContextValue } from "./types";
 import { radiusConfig, variantContainerConfig } from "./constants";
 import { CollapseContext } from "./context";
+import { cn } from "cn";
 
 function normalizeKeys(keys?: CollapseActiveKey): (string | number)[] {
   if (keys === undefined || keys === null) return [];
@@ -77,14 +78,12 @@ export default function Collapse({
       ? getSafeConfig(radius, radiusConfig, "md")
       : "";
 
-  const containerClassNames = [
+  const containerClassNames = cn(
     "w-full transition-colors",
     containerVariantStyle,
     containerRounded,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   const contextValue: CollapseContextValue = useMemo(
     () => ({

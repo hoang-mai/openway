@@ -10,6 +10,7 @@ import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { getSelectedOption } from "./utils";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 const DEFAULT_OPTIONS: never[] = [];
 
@@ -90,7 +91,7 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
     isFullWidth = true,
   } = config ?? {};
 
-  const isInvalid = Boolean(isInvalidConfig ?? !!errorMessage);
+  const isInvalid = Boolean(isInvalidConfig || errorMessage);
   const currentSize = getSafeConfig(size, sizeConfig, "md");
 
   // Tách bạch rõ ràng 2 trạng thái:
@@ -300,9 +301,13 @@ export function Select<TData = unknown, TFilters extends Record<string, unknown>
     <div
       ref={ref}
       id={idProp}
-      className={`group/field relative flex ${
-        isHorizontal ? "flex-row items-center gap-3" : "flex-col"
-      } ${hasFloatingLabel ? "pt-2" : ""} ${isFullWidth ? "w-full" : "inline-flex"} ${className}`}
+      className={cn(
+        "group/field relative flex",
+        isHorizontal ? "flex-row items-center gap-3" : "flex-col",
+        hasFloatingLabel && "pt-2",
+        isFullWidth ? "w-full" : "inline-flex",
+        className
+      )}
       data-state={isOpen ? "open" : "closed"}
       data-disabled={isDisabled}
       data-invalid={isInvalid}

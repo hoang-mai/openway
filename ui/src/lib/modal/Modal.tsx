@@ -3,6 +3,7 @@ import { sizeConfig, radiusConfig } from "./constants";
 import { ModalProps } from "./types";
 import { useModalContext } from "./ModalContext";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export default function Modal({
   size,
@@ -16,14 +17,12 @@ export default function Modal({
   const currentSize = getSafeConfig(size ?? modalContext?.size, sizeConfig, "md");
   const roundedClass = getSafeConfig(radius, radiusConfig, "lg");
 
-  const containerClasses = [
+  const containerClasses = cn(
     "relative flex flex-col w-full bg-neutral-white border border-neutral-200/80 outline-none text-neutral-900 pointer-events-auto",
     currentSize.dialog,
     roundedClass,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   return (
     <div

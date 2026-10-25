@@ -4,6 +4,7 @@ import { CarouselContext } from "./context";
 import { useCarousel } from "./useCarousel";
 import { radiusConfig } from "./constants";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export function Carousel({
   currentIndex,
@@ -63,7 +64,7 @@ export function Carousel({
         onMouseLeave={carousel.handleMouseLeave}
         onFocus={carousel.handleFocus}
         onBlur={carousel.handleBlur}
-        className={`relative overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 ${roundedClass} ${className}`}
+        className={cn("relative overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50", roundedClass, className)}
         style={style}
         {...props}
       >

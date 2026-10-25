@@ -6,6 +6,7 @@ import { sizeConfig, radiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { cn } from "cn";
 
 export function PopoverContent({
   ref: propRef,
@@ -55,7 +56,7 @@ export function PopoverContent({
   const baseClasses =
     "bg-neutral-white shadow-ui-dropdown outline-none focus:outline-none flex flex-col border border-neutral-200/80";
 
-  const contentClassNames = [baseClasses, currentSize.container, roundedClass, className].filter(Boolean).join(" ");
+  const contentClassNames = cn(baseClasses, currentSize.container, roundedClass, className);
 
   const content = (
     <FloatingFocusManager context={context} modal={modal}>

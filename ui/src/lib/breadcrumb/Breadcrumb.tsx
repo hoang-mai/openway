@@ -7,6 +7,7 @@ import BreadcrumbLink from "./BreadcrumbLink";
 import BreadcrumbPage from "./BreadcrumbPage";
 import BreadcrumbSeparator from "./BreadcrumbSeparator";
 import BreadcrumbEllipsis from "./BreadcrumbEllipsis";
+import { cn } from "cn";
 
 export default function Breadcrumb({
   size = "md",
@@ -172,7 +173,7 @@ export default function Breadcrumb({
       <nav
         ref={ref}
         aria-label={ariaLabel}
-        className={`w-full ${className}`.trim()}
+        className={cn("w-full", className)}
         {...props}
       >
         {items ? renderDataDrivenItems() : children}

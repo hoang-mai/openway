@@ -2,6 +2,7 @@ import React, { cloneElement, isValidElement, ReactNode, HTMLAttributes } from "
 import { usePopoverContext } from "./context";
 import { PopoverTriggerProps } from "./types";
 import { useMergeRefs } from "@floating-ui/react";
+import { cn } from "cn";
 
 interface SlotProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
@@ -36,7 +37,7 @@ function Slot({
     ...childProps,
     ref: mergedChildRef,
     disabled: disabled ? true : childProps.disabled,
-    className: [childProps.className, className].filter(Boolean).join(" "),
+    className: cn(childProps.className, className),
   });
 }
 

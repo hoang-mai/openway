@@ -15,6 +15,7 @@ import Spinner from "@/lib/icons/Spinner";
 import Skeleton from "@/lib/skeleton/Skeleton";
 import Empty from "@/lib/empty/Empty";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 const DEFAULT_OPTIONS: never[] = [];
 const DEFAULT_VALUE: never[] = [];
@@ -238,13 +239,11 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
 
   const orientationClasses = getSafeConfig(orientation, orientationConfig, "vertical");
 
-  const groupLabelClasses = [
+  const groupLabelClasses = cn(
     "text-sm font-semibold text-neutral-900 mb-1.5 select-none",
-    disabled ? "opacity-60" : "",
-    labelClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    disabled && "opacity-60",
+    labelClassName
+  );
 
   const currentSize = getSafeConfig(size, sizeConfig, "md");
   const searchInputSize = getSafeConfig(size, searchInputSizeConfig, "md");
@@ -271,7 +270,7 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
       aria-describedby={errorMessage || helperText ? helperId : undefined}
       aria-disabled={disabled || isLoadingConfig ? "true" : undefined}
       aria-busy={isLoadingConfig || Boolean(isLoadingProp) || effectiveIsSearching ? "true" : undefined}
-      className={`inline-flex flex-col ${wrapperClassName}`}
+      className={cn("inline-flex flex-col", wrapperClassName)}
       {...props}
     >
       {label && (
@@ -322,7 +321,7 @@ export default function CheckboxGroup<TData = unknown, TValue extends string | n
       {/* Danh sách Checkbox & Vùng cuộn & ListFooter */}
       <div
         style={scrollableStyles}
-        className={`${orientationClasses} ${scrollableClasses} ${className}`}
+        className={cn(orientationClasses, scrollableClasses, className)}
       >
         {children ? (
           children

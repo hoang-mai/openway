@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, Ref } from "react";
+import { cn } from "cn";
 import { getSafeConfig } from "@/utils/function";
 import { calloutColorConfig } from "./constants";
 import LightbulbIcon from "@/lib/icons/LightbulbIcon";
@@ -24,7 +25,11 @@ export default function CalloutView({
   return (
     <div
       ref={ref}
-      className={`ui-callout flex items-start gap-3 p-3.5 sm:p-4 rounded-md border text-sm transition-colors duration-150 ${colorClass} ${className}`.trim()}
+      className={cn(
+        "ui-callout flex items-start gap-3 p-3.5 sm:p-4 rounded-md border text-sm transition-colors duration-150",
+        colorClass,
+        className
+      )}
       {...restProps}
     >
       {icon && (

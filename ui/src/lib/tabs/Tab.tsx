@@ -6,6 +6,7 @@ import { sizeConfig, radiusConfig, colorTabConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import CloseIcon from "../icons/CloseIcon";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function Tab({
   value,
@@ -68,31 +69,27 @@ export default function Tab({
   const stateClass = isActive ? colorStyles.active : colorStyles.inactive;
   const isVertical = orientation === "vertical";
 
-  const containerClasses = [
+  const containerClasses = cn(
     "group relative z-10 inline-flex items-center select-none",
     isVertical ? "justify-start text-left w-full" : "justify-center text-center",
-    variant !== "line" ? currentRadius : "",
-    fullWidth && !isVertical ? "flex-1 text-center" : "",
-    isDisabled ? "opacity-40 cursor-not-allowed pointer-events-none" : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    variant !== "line" && currentRadius,
+    fullWidth && !isVertical && "flex-1 text-center",
+    isDisabled && "opacity-40 cursor-not-allowed pointer-events-none",
+    className
+  );
 
-  const tabButtonClasses = [
+  const tabButtonClasses = cn(
     "inline-flex items-center cursor-pointer select-none bg-transparent",
     isVertical ? "justify-start text-left w-full" : "justify-center text-center",
     "transition-colors duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40 focus-visible:ring-offset-1",
-    variant !== "line" ? currentRadius : "",
+    variant !== "line" && currentRadius,
     currentSize.tab,
     currentSize.gap,
-    closable ? "pr-1.5" : "",
-    fullWidth && !isVertical ? "flex-1 text-center" : "",
+    closable && "pr-1.5",
+    fullWidth && !isVertical && "flex-1 text-center",
     stateClass,
-    isDisabled ? "opacity-40 cursor-not-allowed pointer-events-none" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+    isDisabled && "opacity-40 cursor-not-allowed pointer-events-none"
+  );
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (closable && (e.key === "Delete" || e.key === "Backspace")) {

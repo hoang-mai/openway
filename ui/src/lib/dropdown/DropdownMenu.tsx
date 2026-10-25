@@ -7,6 +7,7 @@ import { sizeConfig, radiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { DEFAULT_Z_INDEX } from "@/constants";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
+import { cn } from "cn";
 
 export default function DropdownMenu({
   ref: propRef,
@@ -53,14 +54,12 @@ export default function DropdownMenu({
   const currentSize = getSafeConfig(size, sizeConfig, "md");
   const roundedClass = getSafeConfig(radius, radiusConfig, "md");
 
-  const menuClassNames = [
+  const menuClassNames = cn(
     "bg-neutral-white border border-neutral-200/80 shadow-ui-dropdown outline-none focus:outline-none flex flex-col max-h-80 overflow-y-auto ui-scrollbar",
     currentSize.menu,
     roundedClass,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   return (
     <FloatingPortal root={effectivePortalRoot}>

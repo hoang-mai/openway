@@ -7,6 +7,7 @@ import CheckIcon from "@/lib/icons/CheckIcon";
 import MinusIcon from "@/lib/icons/MinusIcon";
 import Spinner from "@/lib/icons/Spinner";
 import HelperErrorText from "@/lib/common/HelperErrorText";
+import { cn } from "cn";
 
 export default function Checkbox({
   size = "md",
@@ -103,36 +104,30 @@ export default function Checkbox({
       : "bg-neutral-white border-error-500 hover:border-error-600 text-error-600 peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-error-400 peer-focus-visible:border-error-500";
   }
 
-  const boxClasses = [
+  const boxClasses = cn(
     "inline-flex items-center justify-center shrink-0 border transition-all duration-150 select-none",
     currentSize.box,
     roundedClass,
     boxVariantStyles,
-    !disabled && !readOnly && !isLoading ? "active:scale-95" : "",
-    boxClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    !disabled && !readOnly && !isLoading && "active:scale-95",
+    boxClassName
+  );
 
-  const labelClasses = [
+  const labelClasses = cn(
     "select-none font-medium text-neutral-900 transition-colors",
     currentSize.label,
-    disabled ? "opacity-60" : "",
-    labelClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    disabled && "opacity-60",
+    labelClassName
+  );
 
-  const wrapperClasses = [
+  const wrapperClasses = cn(
     "group inline-flex relative",
     labelPlacement === "left" ? "flex-row-reverse justify-between" : "flex-row",
     currentSize.gap,
     disabled ? "opacity-50" : "cursor-pointer",
     wrapperClassName,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   const renderIcon = () => {
     if (isLoading && showSpinner) {

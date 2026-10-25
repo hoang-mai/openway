@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Toaster as SonnerToaster } from "sonner";
 import { ToasterProps } from "./types";
 import { DEFAULT_TOAST_DURATION } from "./constants";
+import { cn } from "cn";
 
 export default function Toaster({
   position = "top-right",
@@ -34,7 +35,7 @@ export default function Toaster({
             el.hidePopover();
             el.showPopover();
           } catch {
-            /* empty */
+      /* empty */
           }
           break;
         }
@@ -60,7 +61,7 @@ export default function Toaster({
         expand={expand}
         duration={duration}
         closeButton={closeButton}
-        className={`toaster group pointer-events-auto ${className}`}
+        className={cn("toaster group pointer-events-auto", className)}
         toastOptions={{
           unstyled: true,
           className: "w-full max-w-md pointer-events-auto",

@@ -7,6 +7,7 @@ import { useTabIndicator } from "./useTabIndicator";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function TabList({ children, className = "", extra, centered = false, ref, ...props }: TabListProps) {
   const tabsLocale = useLocale("tabs");
@@ -48,24 +49,20 @@ export default function TabList({ children, className = "", extra, centered = fa
         fullWidth ? "w-full" : ""
       }`;
 
-  const containerClasses = [
+  const containerClasses = cn(
     "relative flex-1 min-w-0",
     layoutClasses,
-    centered && !isVertical ? "justify-center" : "",
-    variant !== "line" ? currentRadius : "",
+    centered && !isVertical && "justify-center",
+    variant !== "line" && currentRadius,
     variantClass,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
-  const indicatorClasses = [
+  const indicatorClasses = cn(
     "absolute pointer-events-none z-0 transition-all duration-300 ease-out",
-    variant !== "line" ? currentRadius : "",
-    currentIndicatorClass,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    variant !== "line" && currentRadius,
+    currentIndicatorClass
+  );
 
   const wrapperClasses = isVertical
     ? "flex flex-col items-start gap-2 shrink-0 min-w-44"

@@ -3,6 +3,7 @@ import { sizeConfig, radiusConfig, variantColorConfig, dotColorConfig } from "./
 import { getSafeConfig } from "@/utils/function";
 import CloseIcon from "@/lib/icons/CloseIcon";
 import { ReactNode } from "react";
+import { cn } from "cn";
 
 export default function Badge({
   size = "md",
@@ -33,16 +34,14 @@ export default function Badge({
 
   const roundedClass = getSafeConfig(radius, radiusConfig, "full");
 
-  const classNames = [
+  const classNames = cn(
     "inline-flex items-center justify-center font-medium leading-none border transition-colors duration-150 whitespace-nowrap",
     currentSize.badge,
     roundedClass,
     variantStyles,
-    onClick ? "cursor-pointer select-none active:scale-[0.98] transition-transform duration-100" : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    onClick && "cursor-pointer select-none active:scale-[0.98] transition-transform duration-100",
+    className
+  );
 
   const renderIconWrapper = (iconNode: ReactNode) => (
     <span

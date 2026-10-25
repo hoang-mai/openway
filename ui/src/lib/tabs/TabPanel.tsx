@@ -1,5 +1,6 @@
 import { TabPanelProps } from "./types";
 import { useTabsContext } from "./context";
+import { cn } from "cn";
 
 export default function TabPanel({
   value,
@@ -21,7 +22,7 @@ export default function TabPanel({
   const tabId = `tab-${value}`;
   const panelId = `tabpanel-${value}`;
 
-  const classes = ["focus-visible:outline-hidden", !isActive ? "hidden" : "", className].filter(Boolean).join(" ");
+  const classes = cn("focus-visible:outline-hidden", !isActive && "hidden", className);
 
   return (
     <div

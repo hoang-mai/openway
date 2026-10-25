@@ -3,6 +3,7 @@ import ChevronDownIcon from "@/lib/icons/ChevronDownIcon";
 import CloseIcon from "@/lib/icons/CloseIcon";
 import Spinner from "@/lib/icons/Spinner";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export interface SelectTriggerContainerProps {
   id?: string;
@@ -78,9 +79,15 @@ export function SelectTriggerContainer({
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledBy,
         "data-state": isOpen ? "open" : "closed",
-        className: `group relative flex items-center justify-between transition-all duration-150 ease-in-out border select-none ${roundedClass} ${
-          currentSize.trigger
-        } ${currentSize.gap} ${variantStyle} ${statusStyles} ${className}`,
+        className: cn(
+          "group relative flex items-center justify-between transition-all duration-150 ease-in-out border select-none",
+          roundedClass,
+          currentSize.trigger,
+          currentSize.gap,
+          variantStyle,
+          statusStyles,
+          className
+        ),
         "aria-expanded": isOpen,
         "aria-haspopup": "listbox",
       })}

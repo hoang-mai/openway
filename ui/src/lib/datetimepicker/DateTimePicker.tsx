@@ -32,6 +32,7 @@ import { getSafeConfig } from "@/utils/function";
 import { CalendarView } from "../datepicker/types";
 import { useFloatingPortalRoot } from "@/hooks/useFloatingPortalRoot";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 /**
  * Component DateTimePicker - Ô chọn Ngày & Giờ tích hợp theo Design System.
@@ -243,36 +244,30 @@ export default function DateTimePicker({
 
   const hasFloatingLabel = isFloating && Boolean(label);
 
-  const fieldWrapperClasses = [
+  const fieldWrapperClasses = cn(
     "group/field group/datetimepicker relative flex",
     isHorizontal ? "flex-row items-center gap-3" : "flex-col",
-    hasFloatingLabel ? "pt-2" : "",
+    hasFloatingLabel && "pt-2",
     isFullWidth ? "w-full" : "inline-flex",
-    wrapperClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    wrapperClassName
+  );
 
-  const containerClasses = [
+  const containerClasses = cn(
     "group/input relative flex items-center transition-all duration-150 ease-in-out border select-none cursor-pointer",
     sizeStyles.inputHeight,
     radiusClass,
     variantClass,
-    disabled ? "opacity-50" : "",
+    disabled && "opacity-50",
     isFullWidth ? "w-full" : "w-auto",
-    inputWrapperClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    inputWrapperClassName
+  );
 
-  const inputClasses = [
+  const inputClasses = cn(
     "w-full h-full bg-transparent outline-none border-none text-neutral-800 placeholder-neutral-400 cursor-pointer select-none caret-transparent focus:outline-none",
     sizeStyles.inputText,
     sizeStyles.inputPadding,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   return (
     <div

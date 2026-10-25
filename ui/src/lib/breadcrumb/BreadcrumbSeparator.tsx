@@ -4,6 +4,7 @@ import { useBreadcrumbContext } from "./context";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
+import { cn } from "cn";
 
 export default function BreadcrumbSeparator({
   children,
@@ -26,7 +27,7 @@ export default function BreadcrumbSeparator({
       ref={ref}
       role="presentation"
       aria-hidden="true"
-      className={`inline-flex items-center select-none shrink-0 ${className}`}
+      className={cn("inline-flex items-center select-none shrink-0", className)}
       {...props}
     >
       {children ?? defaultContent}

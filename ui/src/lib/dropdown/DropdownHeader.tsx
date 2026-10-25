@@ -3,6 +3,7 @@ import { useDropdownContext } from "./context";
 import { DropdownHeaderProps } from "./types";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export function DropdownHeader({ children, className = "", ...rest }: DropdownHeaderProps) {
   const { size } = useDropdownContext();
@@ -11,9 +12,7 @@ export function DropdownHeader({ children, className = "", ...rest }: DropdownHe
   return (
     <div
       role="presentation"
-      className={["font-semibold text-neutral-500 uppercase tracking-wider select-none", currentSize.header, className]
-        .filter(Boolean)
-        .join(" ")}
+      className={cn("font-semibold text-neutral-500 uppercase tracking-wider select-none", currentSize.header, className)}
       {...rest}
     >
       {children}

@@ -39,6 +39,7 @@ import IconButton from "../button/IconButton";
 import ChevronRightIcon from "../icons/ChevronRightIcon";
 import { DEFAULT_PAGE_SIZE } from "./constants";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export function DataTable<TData extends RowData = RowData>({
   columns,
@@ -427,7 +428,7 @@ export function DataTable<TData extends RowData = RowData>({
                     className="inline-flex items-center justify-center w-6 h-6 text-neutral-300 select-none text-xs"
                     aria-hidden="true"
                   >
-                    ↳
+                    â†³
                   </span>
                 ) : (
                   <span className="w-6 h-6 inline-block" aria-hidden="true" />
@@ -722,7 +723,7 @@ export function DataTable<TData extends RowData = RowData>({
                               className="inline-flex items-center justify-center w-5 h-5 text-neutral-300 select-none text-xs shrink-0"
                               aria-hidden="true"
                             >
-                              ↳
+                              â†³
                             </span>
                           ) : canSomeRowsExpand ? (
                             <span className="w-5 h-5 shrink-0 inline-block" aria-hidden="true" />
@@ -762,7 +763,7 @@ export function DataTable<TData extends RowData = RowData>({
   );
 
   return (
-    <div className={`w-full space-y-2 ${className}`.trim()}>
+    <div className={cn("w-full space-y-2", className)}>
       {/* Toolbar */}
       {showToolbar && (
         <TableToolbar

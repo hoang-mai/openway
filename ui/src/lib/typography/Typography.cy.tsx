@@ -324,4 +324,71 @@ describe("<Typography /> Notion Design Component Showcase", () => {
     // 5.6 Ellipsis with Suffix
     cy.contains("[Hết]").should("exist");
   });
+
+  describe("Typography - Custom Size & Style Override (cn Last-one-wins)", () => {
+    it("should allow custom size to override default variant font size", () => {
+      cy.mount(
+        <div className="flex flex-col gap-4 p-4">
+          {/* 1. Size override: h1 mặc định text-3xl nhưng truyền size='xs' */}
+          <Typography type="h1" size="xs" data-testid="override-size">
+            Heading 1 with xs size
+          </Typography>
+
+          {/* 2. Weight override: h1 mặc định font-bold nhưng truyền weight='normal' */}
+          <Typography type="h1" weight="normal" data-testid="override-weight">
+            Heading 1 with normal weight
+          </Typography>
+
+          {/* 3. Color override: h1 mặc định text-neutral-900 nhưng truyền color='red' */}
+          <Typography type="h1" color="red" data-testid="override-color">
+            Heading 1 with red color
+          </Typography>
+
+          {/* 4. External className override */}
+          <Typography
+            type="h1"
+            className="text-xs font-normal text-amber-500"
+            data-testid="override-classname"
+          >
+            Heading 1 with custom className
+          </Typography>
+
+          {/* 5. Paragraph size override */}
+          <Typography type="p" size="xs" data-testid="override-p-size">
+            Paragraph with xs size
+          </Typography>
+        </div>
+      );
+
+      // Kiểm tra 1: h1 có text-xs và KHÔNG có text-3xl
+      cy.get("[data-testid='override-size']")
+        .should("have.class", "text-xs")
+        .and("not.have.class", "text-3xl");
+
+      // Kiểm tra 2: h1 có font-normal và KHÔNG có font-bold
+      cy.get("[data-testid='override-weight']")
+        .should("have.class", "font-normal")
+        .and("not.have.class", "font-bold");
+
+      // Kiểm tra 3: h1 có text-[#d44c47] và KHÔNG có text-neutral-900
+      cy.get("[data-testid='override-color']")
+        .should("have.class", "text-[#d44c47]")
+        .and("not.have.class", "text-neutral-900");
+
+      // Kiểm tra 4: className ngoài ghi đè toàn bộ text-3xl, font-bold, text-neutral-900
+      cy.get("[data-testid='override-classname']")
+        .should("have.class", "text-xs")
+        .and("have.class", "font-normal")
+        .and("have.class", "text-amber-500")
+        .and("not.have.class", "text-3xl")
+        .and("not.have.class", "font-bold")
+        .and("not.have.class", "text-neutral-900");
+
+      // Kiểm tra 5: Thẻ p có text-xs và KHÔNG có text-sm hay sm:text-base
+      cy.get("[data-testid='override-p-size']")
+        .should("have.class", "text-xs")
+        .and("not.have.class", "text-sm")
+        .and("not.have.class", "sm:text-base");
+    });
+  });
 });

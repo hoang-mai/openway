@@ -4,6 +4,7 @@ import { variantConfig, radiusConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import { toStyle } from "./utils";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function Skeleton({
   ref,
@@ -32,7 +33,7 @@ export default function Skeleton({
     ...style,
   };
 
-  const itemClass = ["bg-neutral-200", animationClass, roundedClass].filter(Boolean).join(" ");
+  const itemClass = cn("bg-neutral-200", animationClass, roundedClass);
 
   if (lines > 1) {
     return (
@@ -40,7 +41,7 @@ export default function Skeleton({
         ref={ref}
         role="status"
         aria-label={skeletonLocale.loading}
-        className={["flex flex-col", className].filter(Boolean).join(" ")}
+        className={cn("flex flex-col", className)}
         style={{ gap: toStyle(gap), ...style }}
         {...props}
       >
@@ -66,7 +67,7 @@ export default function Skeleton({
       ref={ref}
       role="status"
       aria-label={skeletonLocale.loading}
-      className={[itemClass, className].filter(Boolean).join(" ")}
+      className={cn(itemClass, className)}
       style={baseStyle}
       {...props}
     />

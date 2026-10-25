@@ -6,6 +6,7 @@ import { getSafeConfig } from "@/utils/function";
 import EmptyIllustration from "./EmptyIllustration";
 import { isPresetImage, isUrlString, getImageInlineStyle } from "./utils";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function Empty({
   size = "md",
@@ -73,38 +74,32 @@ export default function Empty({
     );
   };
 
-  const imageWrapperClasses = [
+  const imageWrapperClasses = cn(
     "flex items-center justify-center shrink-0",
-    !imageSize ? currentSize.imageWrapper : "",
-    imageClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    !imageSize && currentSize.imageWrapper,
+    imageClassName
+  );
 
-  const containerClasses = [
+  const containerClasses = cn(
     "w-full transition-all",
     currentLayout.container,
     currentSize.container,
     currentSize.gap,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
-  const contentClasses = [currentLayout.content, currentSize.contentGap].filter(Boolean).join(" ");
+  const contentClasses = cn(currentLayout.content, currentSize.contentGap);
 
-  const titleClasses = [currentSize.title, titleClassName].filter(Boolean).join(" ");
+  const titleClasses = cn(currentSize.title, titleClassName);
 
-  const descriptionClasses = [currentSize.description, descriptionClassName].filter(Boolean).join(" ");
+  const descriptionClasses = cn(currentSize.description, descriptionClassName);
 
-  const actionsClasses = [
+  const actionsClasses = cn(
     "flex flex-wrap items-center gap-2",
     currentSize.actionsGap,
     layout === "vertical" ? "justify-center" : "justify-start",
-    actionsClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    actionsClassName
+  );
 
   return (
     <div ref={ref} role={role} aria-live="polite" className={containerClasses} {...props}>

@@ -14,6 +14,7 @@ import UploadImageDropzone from "./UploadImageDropzone";
 import UploadImageList from "./UploadImageList";
 import { PreviewFile } from "@/lib/file-preview/types";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function UploadImage({
   value,
@@ -203,7 +204,7 @@ export default function UploadImage({
   };
 
   return (
-    <div className={`group/field relative flex flex-col w-full ${className}`}>
+    <div className={cn("group/field relative flex flex-col w-full", className)}>
       {/* Hidden File Input (react-dropzone) */}
       <input
         {...getInputProps({

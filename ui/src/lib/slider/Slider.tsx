@@ -6,6 +6,7 @@ import SliderThumb from "./SliderThumb";
 import { SliderMarks, SliderStepDots } from "./SliderMarks";
 import HelperErrorText from "@/lib/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export default function Slider({
   config,
@@ -180,9 +181,13 @@ export default function Slider({
   return (
     <div
       ref={ref}
-      className={`group/field flex flex-col ${isFullWidth ? "w-full" : "inline-flex"} ${
-        disabled ? "opacity-60 cursor-not-allowed" : ""
-      } ${wrapperClassName || className}`}
+      className={cn(
+        "group/field flex flex-col",
+        isFullWidth ? "w-full" : "inline-flex",
+        disabled && "opacity-60 cursor-not-allowed",
+        wrapperClassName,
+        className
+      )}
     >
       {/* Label Placement Top */}
       {labelPlacement === "top" && renderLabel()}

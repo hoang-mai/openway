@@ -3,6 +3,7 @@ import { CollapseHeaderProps } from "./types";
 import { useCollapseContext, useCollapsePanelContext } from "./context";
 import { sizeConfig, colorConfig, variantHeaderConfig } from "./constants";
 import ChevronDownIcon from "@/lib/icons/ChevronDownIcon";
+import { cn } from "cn";
 
 export default function CollapseHeader({
   startIcon,
@@ -72,25 +73,21 @@ export default function CollapseHeader({
     );
   };
 
-  const headerContainerClassNames = [
+  const headerContainerClassNames = cn(
     "w-full flex items-center justify-between transition-colors duration-150 select-none",
     currentSize.header,
     currentSize.gap,
     disabled ? "cursor-not-allowed opacity-60" : currentHeaderBg,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
-  const triggerButtonClassNames = [
+  const triggerButtonClassNames = cn(
     "flex items-center flex-1 min-w-0 text-left outline-none cursor-pointer bg-transparent border-0 p-0",
     currentSize.gap,
     disabled
       ? "cursor-not-allowed pointer-events-none"
-      : `${currentColor.focusRing} focus-visible:ring-2 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-neutral-white rounded-lg`,
-  ]
-    .filter(Boolean)
-    .join(" ");
+      : `${currentColor.focusRing} focus-visible:ring-2 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-neutral-white rounded-lg`
+  );
 
   return (
     <div className={headerContainerClassNames}>

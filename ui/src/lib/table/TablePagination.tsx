@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import type { RowData } from "@tanstack/react-table";
 import type { TablePaginationProps } from "./types";
 import { DEFAULT_PAGE_SIZE_OPTIONS, tablePaginationConfig } from "./constants";

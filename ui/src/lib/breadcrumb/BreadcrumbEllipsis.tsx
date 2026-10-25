@@ -7,6 +7,7 @@ import { getSafeConfig } from "@/utils/function";
 import MoreHorizontalIcon from "../icons/MoreHorizontalIcon";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "../dropdown";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function BreadcrumbEllipsis({
   items,
@@ -26,7 +27,13 @@ export default function BreadcrumbEllipsis({
     <MoreHorizontalIcon className={currentSize.icon} aria-hidden="true" />
   );
 
-  const buttonClasses = `inline-flex items-center justify-center text-neutral-500 hover:text-neutral-900 transition-colors select-none ${currentSize.ellipsis} ${roundedClass} ${FOCUS_RING} ${className}`.trim();
+  const buttonClasses = cn(
+    "inline-flex items-center justify-center text-neutral-500 hover:text-neutral-900 transition-colors select-none",
+    currentSize.ellipsis,
+    roundedClass,
+    FOCUS_RING,
+    className
+  );
 
   // 1. Nếu có danh sách items thu gọn -> Mở Dropdown menu
   if (items && items.length > 0) {
@@ -106,7 +113,7 @@ export default function BreadcrumbEllipsis({
       ref={ref}
       role="presentation"
       aria-hidden="true"
-      className={`inline-flex items-center justify-center text-neutral-400 select-none ${currentSize.ellipsis} ${className}`.trim()}
+      className={cn("inline-flex items-center justify-center text-neutral-400 select-none", currentSize.ellipsis, className)}
       {...props}
     >
       {iconContent}

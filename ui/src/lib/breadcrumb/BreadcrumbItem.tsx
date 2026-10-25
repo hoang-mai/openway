@@ -4,6 +4,7 @@ import { useBreadcrumbContext, BreadcrumbItemContext } from "./context";
 import { sizeConfig } from "./constants";
 import { getSafeConfig } from "@/utils/function";
 import BreadcrumbPage from "./BreadcrumbPage";
+import { cn } from "cn";
 
 export default function BreadcrumbItem({
   current = false,
@@ -25,9 +26,12 @@ export default function BreadcrumbItem({
     <BreadcrumbItemContext.Provider value={contextValue}>
       <li
         ref={ref}
-        className={`inline-flex items-center shrink-0 ${currentSize.item} ${
-          disabled ? "opacity-50 pointer-events-none" : ""
-        } ${className}`.trim()}
+        className={cn(
+          "inline-flex items-center shrink-0",
+          currentSize.item,
+          disabled && "opacity-50 pointer-events-none",
+          className
+        )}
         aria-current={current ? "page" : undefined}
         {...props}
       >

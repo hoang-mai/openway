@@ -7,6 +7,7 @@ import {
   sizeConfig,
 } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 export default function BreadcrumbPage({
   children,
@@ -38,7 +39,14 @@ export default function BreadcrumbPage({
     <span
       ref={ref}
       aria-current="page"
-      className={`inline-flex items-center max-w-70 sm:max-w-105 md:max-w-none cursor-default select-none font-medium transition-colors ${currentSize.page} ${roundedClass} ${currentColorClass} ${variantStyle} ${className}`.trim()}
+      className={cn(
+        "inline-flex items-center max-w-70 sm:max-w-105 md:max-w-none cursor-default select-none font-medium transition-colors",
+        currentSize.page,
+        roundedClass,
+        currentColorClass,
+        variantStyle,
+        className
+      )}
       {...props}
     >
       {startIcon && (

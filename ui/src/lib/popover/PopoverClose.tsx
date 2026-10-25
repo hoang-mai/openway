@@ -2,6 +2,7 @@ import React, { cloneElement, isValidElement, MouseEvent, ReactNode, ButtonHTMLA
 import { usePopoverContext } from "./context";
 import { PopoverCloseProps } from "./types";
 import { useMergeRefs } from "@floating-ui/react";
+import { cn } from "cn";
 
 interface SlotProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -34,7 +35,7 @@ function Slot({
     ...props,
     ...childProps,
     ref: mergedChildRef,
-    className: [childProps.className, className].filter(Boolean).join(" "),
+    className: cn(childProps.className, className),
     onClick: (e: MouseEvent<HTMLButtonElement>) => {
       childProps.onClick?.(e);
       onClick?.(e);

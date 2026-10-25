@@ -17,6 +17,7 @@ import {
   tableAlignConfig,
 } from "./constants";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 interface TableContextValue {
   size: TableSize;
@@ -46,12 +47,12 @@ export function Table({
   return (
     <TableContext.Provider value={contextValue}>
       <div
-        className={`w-full overflow-x-auto ui-scrollbar rounded-lg ${variantStyles.container} ${containerClassName}`.trim()}
+        className={cn("w-full overflow-x-auto ui-scrollbar rounded-lg", variantStyles.container, containerClassName)}
         {...wrapperProps}
       >
         <table
           ref={ref}
-          className={`w-full text-left caption-bottom ${variantStyles.table} ${className}`.trim()}
+          className={cn("w-full text-left caption-bottom", variantStyles.table, className)}
           {...props}
         >
           {children}
@@ -72,7 +73,7 @@ export function TableHeader({
   return (
     <thead
       ref={ref}
-      className={`${variantStyles.head} ${className}`.trim()}
+      className={cn(variantStyles.head, className)}
       {...props}
     >
       {children}
@@ -90,7 +91,7 @@ export function TableBody({
   return (
     <tbody
       ref={ref}
-      className={`divide-y divide-neutral-100 ${className}`.trim()}
+      className={cn("divide-y divide-neutral-100", className)}
       {...props}
     >
       {children}
@@ -135,7 +136,7 @@ export function TableRow({
       ref={ref}
       data-state={isSelected ? "selected" : undefined}
       aria-selected={isSelected}
-      className={`${hoverClass} ${selectedClass} ${className}`.trim()}
+      className={cn(hoverClass, selectedClass, className)}
       {...props}
     >
       {children}
@@ -158,7 +159,7 @@ export function TableHead({
   return (
     <th
       ref={ref}
-      className={`tracking-wider ${sizeStyles.head} ${alignClass} ${className}`.trim()}
+      className={cn("tracking-wider", sizeStyles.head, alignClass, className)}
       {...props}
     >
       {children}
@@ -180,7 +181,7 @@ export function TableCell({
   return (
     <td
       ref={ref}
-      className={`align-middle ${sizeStyles.cell} ${variantStyles.cell} ${alignClass} ${className}`.trim()}
+      className={cn("align-middle", sizeStyles.cell, variantStyles.cell, alignClass, className)}
       {...props}
     >
       {children}
@@ -197,7 +198,7 @@ export function TableCaption({
   return (
     <caption
       ref={ref}
-      className={`mt-3 text-xs text-neutral-500 ${className}`.trim()}
+      className={cn("mt-3 text-xs text-neutral-500", className)}
       {...props}
     >
       {children}

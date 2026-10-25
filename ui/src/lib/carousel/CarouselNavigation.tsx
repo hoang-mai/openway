@@ -5,6 +5,7 @@ import { CarouselNavigationProps } from "./types";
 import { useCarouselContext } from "./context";
 import { navVariantConfig, sizeConfig } from "./constants";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export function CarouselPrevious({
   variant = "glass",
@@ -26,12 +27,12 @@ export function CarouselPrevious({
 
   const defaultIcon = <ChevronLeftIcon className={currentSize.arrowIcon} />;
 
-  const previousClassNames = [
+  const previousClassNames = cn(
     "absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center font-medium leading-none rounded-full transition-all duration-200 cursor-pointer select-none outline-none disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-25 focus-visible:ring-2 focus-visible:ring-primary-500/50 active:scale-90 z-10",
     variantStyles,
     currentSize.arrowBtn,
-    className,
-  ].filter(Boolean).join(" ");
+    className
+  );
 
   return (
     <button
@@ -71,12 +72,12 @@ export function CarouselNext({
 
   const defaultIcon = <ChevronRightIcon className={currentSize.arrowIcon} />;
 
-  const nextClassNames = [
+  const nextClassNames = cn(
     "absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center font-medium leading-none rounded-full transition-all duration-200 cursor-pointer select-none outline-none disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-25 focus-visible:ring-2 focus-visible:ring-primary-500/50 active:scale-90 z-10",
     variantStyles,
     currentSize.arrowBtn,
-    className,
-  ].filter(Boolean).join(" ");
+    className
+  );
 
   return (
     <button

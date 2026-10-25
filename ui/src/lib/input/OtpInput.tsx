@@ -15,6 +15,7 @@ import HelperErrorText from "@/lib/common/HelperErrorText";
 import { getSafeConfig } from "@/utils/function";
 import { isValidOtpChar, sanitizeOtpString } from "./utils";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 export default function OtpInput({
   ref,
   config,
@@ -329,7 +330,7 @@ export default function OtpInput({
   return (
     <div
       data-testid={dataTestId}
-      className={`group/otp flex ${isHorizontal ? "flex-row items-start gap-3" : "flex-col"} ${wrapperClassName}`}
+      className={cn("group/otp flex", isHorizontal ? "flex-row items-start gap-3" : "flex-col", wrapperClassName)}
     >
       {renderLabel()}
 
@@ -338,7 +339,7 @@ export default function OtpInput({
           role="group"
           aria-label={inputLocale.otpAriaLabel}
           aria-describedby={errorMessage || helperText ? errorHelperId : undefined}
-          className={`inline-flex items-center ${currentSize.gap} ${className}`}
+          className={cn("inline-flex items-center", currentSize.gap, className)}
         >
           {Array.from({ length }).map((_, index) => {
             const isMasked = Boolean(mask || type === "password");
@@ -380,9 +381,15 @@ export default function OtpInput({
                   data-1p-ignore="true"
                   data-lpignore="true"
                   data-form-type="other"
-                  className={`border text-center p-0 outline-none transition-all duration-150 ease-in-out text-neutral-900 ${
-                    currentSize.slot
-                  } ${currentSize.text} ${roundedClass} ${variantStyles} ${disabledStyles} ${slotClassName}`}
+                  className={cn(
+                    "border text-center p-0 outline-none transition-all duration-150 ease-in-out text-neutral-900",
+                    currentSize.slot,
+                    currentSize.text,
+                    roundedClass,
+                    variantStyles,
+                    disabledStyles,
+                    slotClassName
+                  )}
                 />
                 {shouldRenderSeparator && (
                   <span

@@ -8,6 +8,7 @@ import HelperErrorText from "@/lib/common/HelperErrorText";
 import FieldLabel from "@/lib/common/FieldLabel";
 import { getSafeConfig } from "@/utils/function";
 import { useLocale } from "@/locale";
+import { cn } from "cn";
 
 export default function Input({
   size,
@@ -124,27 +125,23 @@ export default function Input({
     />
   );
 
-  const containerClasses = [
+  const containerClasses = cn(
     "group/input relative flex items-center transition-all duration-150 ease-in-out border",
     currentSize.wrapper,
     roundedClass,
     variantStyles,
-    disabled ? "opacity-50" : "",
+    disabled && "opacity-50",
     isFullWidth ? "w-full" : "w-auto",
-    inputWrapperClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    inputWrapperClassName
+  );
 
-  const inputClasses = [
+  const inputClasses = cn(
     "w-full h-full bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400 disabled:cursor-not-allowed rounded-[inherit]",
     currentSize.input,
-    leftIcon ? "pl-1.5" : "",
-    rightIcon || isClearable || isLoading ? "pr-1.5" : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    leftIcon && "pl-1.5",
+    (rightIcon || isClearable || isLoading) && "pr-1.5",
+    className
+  );
 
   const isHorizontal = labelPlacement === "left";
 

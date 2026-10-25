@@ -3,6 +3,7 @@ import { sizeConfig, radiusConfig } from "./constants";
 import { ConfirmProps } from "./types";
 import { useConfirmContext } from "./ConfirmContext";
 import { getSafeConfig } from "@/utils/function";
+import { cn } from "cn";
 
 /**
  * Khung giao diện hộp thoại xác nhận (Confirm Dialog Box).
@@ -21,14 +22,12 @@ export default function Confirm({
   const currentSize = getSafeConfig(size ?? confirmContext?.size, sizeConfig, "md");
   const roundedClass = getSafeConfig(radius, radiusConfig, "lg");
 
-  const containerClasses = [
+  const containerClasses = cn(
     "relative flex flex-col w-full bg-neutral-white border border-neutral-200/80 outline-none text-neutral-900 pointer-events-auto",
     currentSize.dialog,
     roundedClass,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className
+  );
 
   return (
     <div
