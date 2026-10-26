@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, startTransition, addTransitionType } from "react";
 import { TabsProps } from "./types";
 import { TabsContext } from "./context";
 import { cn } from "cn";
@@ -17,6 +17,7 @@ export default function Tabs({
   fullWidth = false,
   disabled = false,
   destroyInactiveTabPane = false,
+  animated = true,
   className = "",
   children,
   ref,
@@ -29,12 +30,24 @@ export default function Tabs({
 
   const handleActiveKeyChange = useCallback(
     (key: string | number) => {
-      if (!isControlled) {
-        setInternalActiveKey(key);
+      if (key === currentActiveKey) return;
+
+      if (animated) {
+        startTransition(() => {
+          addTransitionType("tab-change");
+          if (!isControlled) {
+            setInternalActiveKey(key);
+          }
+          onChange?.(key);
+        });
+      } else {
+        if (!isControlled) {
+          setInternalActiveKey(key);
+        }
+        onChange?.(key);
       }
-      onChange?.(key);
     },
-    [isControlled, onChange]
+    [animated, currentActiveKey, isControlled, onChange]
   );
 
   const handleClose = useCallback(
@@ -57,6 +70,7 @@ export default function Tabs({
       fullWidth,
       disabled,
       destroyInactiveTabPane,
+      animated,
       onCloseTab: handleClose,
     }),
     [
@@ -71,6 +85,7 @@ export default function Tabs({
       fullWidth,
       disabled,
       destroyInactiveTabPane,
+      animated,
       handleClose,
     ]
   );

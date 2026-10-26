@@ -13,6 +13,7 @@ export interface TabsContextValue {
   fullWidth: boolean;
   disabled: boolean;
   destroyInactiveTabPane: boolean;
+  animated: boolean;
   onCloseTab?: (key: string | number) => void;
 }
 

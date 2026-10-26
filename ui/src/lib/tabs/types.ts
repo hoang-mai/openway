@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref } from "react";
+import { ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref, ViewTransitionClass } from "react";
 
 /**
  * Kích thước hiển thị của Tabs (sm: nhỏ, md: vừa, lg: lớn)
@@ -139,6 +139,12 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChang
   destroyInactiveTabPane?: boolean;
 
   /**
+   * Bật/tắt hiệu ứng chuyển cảnh `<ViewTransition>` của React khi chuyển đổi giữa các tab panels
+   * @default true
+   */
+  animated?: boolean;
+
+  /**
    * Các compound components con (`TabList`, `TabPanels`, v.v.)
    */
   children?: ReactNode;
@@ -255,6 +261,12 @@ export interface TabPanelsProps extends HTMLAttributes<HTMLDivElement> {
    * Class CSS tùy biến cho TabPanels container
    */
   className?: string;
+
+  /**
+   * Tên class cho `view-transition-class` của `<ViewTransition>`
+   * @default 'auto'
+   */
+  transitionClassName?: ViewTransitionClass;
 }
 
 /**

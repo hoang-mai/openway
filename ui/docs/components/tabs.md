@@ -346,6 +346,7 @@ Inherits HTML attributes `HTMLAttributes<HTMLDivElement>` except `onChange`:
 | `fullWidth` | `boolean` | `false` | Stretches tabs equally to fill 100% width of container. |
 | `disabled` | `boolean` | `false` | Disables all tabs in the group. |
 | `destroyInactiveTabPane` | `boolean` | `false` | Unmounts content from DOM when tab is inactive. |
+| `animated` | `boolean` | `true` | Enables React `<ViewTransition>` animation when switching tab panels. |
 | `children` | `ReactNode` | `undefined` | Child components (`<TabList>`, `<TabPanels>`). |
 | `className` | `string` | `""` | Custom CSS class for outer container. |
 | `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref forwarded to Tabs container. |
@@ -392,6 +393,7 @@ Inherits `ButtonHTMLAttributes<HTMLButtonElement>` except `value`:
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `children` | `ReactNode` | `undefined` | Array of child `<TabPanel>` components. |
+| `transitionClassName` | `ViewTransitionClass` | `"auto"` | Custom `view-transition-class` passed to React `<ViewTransition>`. |
 | `className` | `string` | `""` | Custom CSS class for TabPanels container. |
 | `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref forwarded to TabPanels container. |
 
