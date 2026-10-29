@@ -686,6 +686,11 @@ const SelectComprehensiveShowcase = ({ onSingleChange, onMultiChange }: HarnessP
 // CYPRESS TEST SUITE
 // ==========================================
 describe("<Select /> Component Tests (Single Mount Harness)", () => {
+  beforeEach(() => {
+    // Đặt khung nhìn chuẩn màn hình Laptop 1366 x 768
+    cy.viewport(1366, 768);
+  });
+
   it("verifies all Select variants, rich layouts and interactive workflows in a single mount showcase", () => {
     const onSingleChange = cy.stub().as("onSingleChange");
     const onMultiChange = cy.stub().as("onMultiChange");
@@ -855,6 +860,12 @@ describe("<Select /> Component Tests (Single Mount Harness)", () => {
 
     // Badge chip for Khoảng thu hoạch appears
     cy.contains("span", "Khoảng thu hoạch:").should("be.visible");
+
+    // Popover editor có chiều rộng >= 500px bao bọc trọn vẹn cả 2 tháng
+    cy.get("[data-select-filter-popover='true']")
+      .should("be.visible")
+      .invoke("outerWidth")
+      .should("be.gte", 500);
 
     // Calendar is rendered directly inline inside the filter popover (no extra input/dropdown)
     // Pick start day 1 and end day 5

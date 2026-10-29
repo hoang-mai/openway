@@ -263,6 +263,7 @@ const DateRangePickerShowcase = ({ onRangeChange, onRangeIOChange }: HarnessProp
               id="drp-format-us"
               label="US Format (MM/DD/YYYY)"
               format="MM/DD/YYYY"
+              defaultValue={["08/01/2026", "08/15/2026"]}
               config={{ showViewTabs: true }}
               onChange={setUsRange}
             />
@@ -279,6 +280,7 @@ const DateRangePickerShowcase = ({ onRangeChange, onRangeIOChange }: HarnessProp
               id="drp-format-iso"
               label="ISO Format (YYYY-MM-DD)"
               format="YYYY-MM-DD"
+              defaultValue={["2026-08-05", "2026-08-18"]}
               config={{ showViewTabs: true }}
               onChange={setIsoRange}
             />
@@ -295,6 +297,7 @@ const DateRangePickerShowcase = ({ onRangeChange, onRangeIOChange }: HarnessProp
               id="drp-format-io"
               label="Format ISO, Display VN"
               format="YYYY-MM-DD"
+              defaultValue={["2026-08-05", "2026-08-18"]}
               displayFormat="DD/MM/YYYY"
               config={{ showViewTabs: true }}
               onChange={(r) => {
@@ -347,6 +350,10 @@ const DateRangePickerShowcase = ({ onRangeChange, onRangeIOChange }: HarnessProp
 // SINGLE MOUNT TEST SUITE FOR VISUAL INSPECTION
 // ============================================================================
 describe("<DateRangePicker /> Component Showcase", () => {
+  beforeEach(() => {
+    // Đặt khung nhìn chuẩn màn hình Laptop 1366 x 768
+    cy.viewport(1366, 768);
+  });
   it("renders comprehensive DateRangePicker showcase in a single mount and performs interactions", () => {
     const onRangeChangeSpy = cy.spy().as("onRangeChange");
     const onRangeIOChangeSpy = cy.spy().as("onRangeIOChange");
@@ -374,17 +381,17 @@ describe("<DateRangePicker /> Component Showcase", () => {
     cy.get("#drp-state-invalid").should("contain.text", "Khoảng ngày đã chọn không hợp lệ.");
 
     // 6. Verify Formats (Input, Display & Output Formats)
-    cy.get("#drp-format-us input").should("have.value", "08/01/2026 - 08/15/2026");
-    cy.get("#drp-format-iso input").should("have.value", "2026-08-01 - 2026-08-15");
-    cy.get("#drp-custom-separator input").should("have.value", "01/08/2026 to 15/08/2026");
+    cy.get("#drp-format-us").should("have.value", "08/01/2026 - 08/15/2026");
+    cy.get("#drp-format-iso").should("have.value", "2026-08-01 - 2026-08-15");
+    cy.get("#drp-custom-separator").should("have.value", "01/08/2026 to 15/08/2026");
     // drp-format-io: Input ISO ["2026-08-05", "2026-08-18"] -> Display VN "05/08/2026 - 18/08/2026"
-    cy.get("#drp-format-io input").should("have.value", "05/08/2026 - 18/08/2026");
+    cy.get("#drp-format-io").should("have.value", "05/08/2026 - 18/08/2026");
     // Select days 10 and 25 in drp-format-io: Output emits ISO ["2026-08-10", "2026-08-25"] while Input displays "10/08/2026 - 25/08/2026"
-    cy.get("#drp-format-io input").click();
+    cy.get("#drp-format-io").click();
     cy.get('[role="dialog"]').should("be.visible");
     cy.contains("button", /^10$/).click();
     cy.contains("button", /^25$/).click();
-    cy.get("#drp-format-io input").should("have.value", "10/08/2026 - 25/08/2026");
+    cy.get("#drp-format-io").should("have.value", "10/08/2026 - 25/08/2026");
     cy.get("@onRangeIOChange").should("have.been.calledWith", ["2026-08-10", "2026-08-25"]);
 
     // 7. Verify Standalone Calendars & showWeekNumbers

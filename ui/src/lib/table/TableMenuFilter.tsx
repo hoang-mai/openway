@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect, useMemo, ReactNode } from "react";
+import React, { useState, useRef, useEffect, useMemo, ReactNode } from "react";
 import {
   useFloating,
   autoUpdate,
@@ -188,7 +188,8 @@ function TableFilterBadgeChip({
     (!Array.isArray(currentValue) || (currentValue.length > 0 && (currentValue[0] != null || currentValue[1] != null)));
 
   const displayVal = formatTableFilterBadgeValue(field, currentValue, historicalOptionLabels, tableLocale);
-  const isDateOrDateRange = field.type === "date" || field.type === "date-range";
+  const isDate = field.type === "date";
+  const isDateRange = field.type === "date-range";
 
   const renderEditor = () => {
     if (field.type === "custom") {
@@ -392,11 +393,13 @@ function TableFilterBadgeChip({
             }}
             {...getFloatingProps({
               className: `${tableFilterConfig.popoverContent} ${
-                isDateOrDateRange
-                  ? tableFilterConfig.popoverDate
-                  : field.type === "checkbox-group"
-                    ? tableFilterConfig.popoverCheckbox
-                    : tableFilterConfig.popoverDefault
+                isDateRange
+                  ? tableFilterConfig.popoverDateRange
+                  : isDate
+                    ? tableFilterConfig.popoverDate
+                    : field.type === "checkbox-group"
+                      ? tableFilterConfig.popoverCheckbox
+                      : tableFilterConfig.popoverDefault
               }`,
             })}
           >
@@ -414,7 +417,7 @@ function TableFilterBadgeChip({
             </div>
 
             {/* Popover Body Editor */}
-            <div className="mt-1">{renderEditor()}</div>
+            <div className="mt-1 overflow-x-auto ui-scrollbar">{renderEditor()}</div>
 
             {/* Popover Footer */}
             <div className={tableFilterConfig.popoverFooter}>

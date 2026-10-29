@@ -1489,9 +1489,26 @@ describe("Table & DataTable Component Tests", () => {
           .and("have.class", "rounded-md");
       });
 
-      // Popover editor cho DateRange xuất hiện chứa lịch chọn khoảng ngày giống SelectMenuFilter
-      cy.get("[data-testid='filter-popover-createdAt']").should("be.visible");
+      // Popover editor cho DateRange xuất hiện chứa lịch 2 tháng song song
+      cy.get("[data-testid='filter-popover-createdAt']")
+        .should("be.visible")
+        .invoke("outerWidth")
+        .should("be.gte", 500);
+
+      // Chọn khoảng ngày trong popover
+      cy.get("[data-testid='filter-popover-createdAt']").within(() => {
+        cy.contains("button", /^1$/).click({ force: true });
+        cy.contains("button", /^15$/).click({ force: true });
+      });
+
+      // Xác nhận chip hiển thị giá trị khoảng ngày đã chọn
+      cy.get("[data-testid='client-filter-datatable-section']").within(() => {
+        cy.get("[data-testid='filter-chip-val-createdAt']").should("not.contain.text", "Chưa nhập");
+      });
+
+      // Đóng popover bằng nút Xong
       cy.get("[data-testid='filter-popover-createdAt']").contains("button", "Xong").click();
+      cy.get("[data-testid='filter-popover-createdAt']").should("not.exist");
 
       // Xóa chip DateRange
       cy.get("[data-testid='client-filter-datatable-section']").within(() => {
@@ -2129,6 +2146,25 @@ describe("Table & DataTable Component Tests", () => {
       filters: { name: "Thao", age: 28, role: ["Admin"] },
     }));
     cy.get("[data-testid='filter-popover-role']").contains("button", "Xong").click();
+
+    // 3.1 Kiểm tra bộ lọc DateRange (Khoảng ngày)
+    cy.get("[data-testid='server-debounce-section']").within(() => {
+      cy.get("[data-testid='table-add-filter-button']").click();
+    });
+    cy.get("[data-testid='table-add-filter-menu']").should("be.visible");
+    cy.get("[data-testid='filter-option-createdAt']").click();
+
+    cy.get("[data-testid='filter-popover-createdAt']")
+      .should("be.visible")
+      .invoke("outerWidth")
+      .should("be.gte", 500);
+
+    cy.get("[data-testid='filter-popover-createdAt']").within(() => {
+      cy.contains("button", /^1$/).click({ force: true });
+      cy.contains("button", /^10$/).click({ force: true });
+    });
+    cy.get("[data-testid='filter-popover-createdAt']").contains("button", "Xong").click();
+    cy.get("[data-testid='filter-chip-createdAt']").should("be.visible");
 
     // 4. Kiểm tra xóa chip bộ lọc: phát tín hiệu ngay lập tức
     cy.get("[data-testid='filter-chip-age'] button[aria-label='Xóa bộ lọc Tuổi']").click();

@@ -240,9 +240,9 @@ export const filterSizeConfig: Record<
   },
   md: {
     container: "px-1.5 py-1 gap-1",
-    chip: "h-5 text-[10.5px] gap-1 px-1.5 rounded-xs",
-    chipText: "text-[10.5px]",
-    button: "h-5 px-1.5 text-[10.5px] gap-1 rounded-xs",
+    chip: "h-5 text-[0.65625rem] gap-1 px-1.5 rounded-xs",
+    chipText: "text-[0.65625rem]",
+    button: "h-5 px-1.5 text-[0.65625rem] gap-1 rounded-xs",
     buttonIcon: "size-2.5",
     chevronIcon: "size-2",
     closeIcon: "size-2",

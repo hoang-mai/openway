@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect, useMemo, ReactNode } from "react";
+import React, { useState, useRef, useEffect, useMemo, ReactNode } from "react";
 import {
   useFloating,
   autoUpdate,
@@ -349,11 +349,13 @@ function FilterBadgeChip({
             }}
             {...getFloatingProps({
               className: `bg-neutral-white border border-neutral-200/90 rounded-lg p-2.5 shadow-ui-dropdown ${
-                field.type === "date" || field.type === "date-range"
-                  ? "w-[272px]"
+                field.type === "date-range"
+                  ? "w-fit max-w-[calc(100vw-2rem)]"
+                  : field.type === "date"
+                  ? "w-[17rem]"
                   : field.type === "checkbox-group"
                   ? "w-[15rem]"
-                  : "w-[220px]"
+                  : "w-[13.75rem]"
               }`,
             })}
           >
@@ -371,7 +373,7 @@ function FilterBadgeChip({
             </div>
 
             {/* Popover Body Editor */}
-            <div className="mt-1">{renderEditor()}</div>
+            <div className="mt-1 overflow-x-auto ui-scrollbar">{renderEditor()}</div>
 
             {/* Popover Footer */}
             <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-neutral-100">
@@ -546,7 +548,7 @@ export function SelectMenuFilter<TFilters extends Record<string, unknown> = Reco
                 }}
                 {...getAddFloatingProps({
                   className:
-                    "bg-neutral-white border border-neutral-200/80 rounded-md p-1 shadow-ui-dropdown min-w-[160px]",
+                    "bg-neutral-white border border-neutral-200/80 rounded-md p-1 shadow-ui-dropdown min-w-40",
                 })}
               >
                 <div className="px-2 py-1 text-[0.6875rem] font-medium text-neutral-400 uppercase tracking-wider select-none">

@@ -112,6 +112,7 @@ export const tableFilterConfig = {
   popoverDoneButton:
     "text-xs font-medium text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-200/60 px-2.5 py-0.5 rounded-sm border border-neutral-200 transition-colors cursor-pointer",
   popoverDate: "w-[17.5rem]",
+  popoverDateRange: "w-fit max-w-[calc(100vw-2rem)]",
   popoverCheckbox: "w-[16.25rem]",
   popoverDefault: "w-[15rem]",
 };
