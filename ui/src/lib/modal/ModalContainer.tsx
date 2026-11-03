@@ -167,7 +167,7 @@ export default function ModalContainer({
             onClick={handleOverlayClick}
             className="fixed inset-0 -z-10"
           />
-          <div className={`w-full flex items-center justify-center pointer-events-none ${dialogAnimation} ${className}`}>
+          <div className={`w-full max-h-full flex items-center justify-center pointer-events-none ${dialogAnimation} ${className}`}>
             {children}
           </div>
         </dialog>

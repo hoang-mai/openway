@@ -18,7 +18,7 @@ export default function Modal({
   const roundedClass = getSafeConfig(radius, radiusConfig, "lg");
 
   const containerClasses = cn(
-    "relative flex flex-col w-full bg-neutral-white border border-neutral-200/80 outline-none text-neutral-900 pointer-events-auto",
+    "relative flex flex-col w-full max-h-[calc(100dvh-2rem)] bg-neutral-white border border-neutral-200/80 outline-none text-neutral-900 pointer-events-auto",
     currentSize.dialog,
     roundedClass,
     className

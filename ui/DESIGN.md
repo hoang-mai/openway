@@ -425,7 +425,7 @@ Tránh xung đột chồng lớp giữa các component:
 - **Hộp thoại (Dialog Panel)**: Nền trắng `#ffffff`, bo góc `rounded-lg (8px) - rounded-[10px]`, đổ bóng `.shadow-openway-modal`, viền `1px solid rgba(55, 53, 47, 0.12)`.
 - **Header**: `px-5 py-4 border-b border-[#ebeae8] flex items-center justify-between`. Tiêu đề `text-base font-semibold text-[#37352f]`.
 - **ModalBody (Quy tắc căn lề chuẩn)**:
-  - Cấu hình bắt buộc: `w-auto -mx-2 px-2 max-h-[calc(100vh-8rem)] overflow-y-auto ui-scrollbar`.
+  - Cấu hình bắt buộc: `w-auto -mx-2 px-2 flex-1 min-h-0 overflow-y-auto ui-scrollbar`.
   - **Tác dụng**: Căn lề các ô input bên trong thẳng hàng 100% với Header, đồng thời nới rộng vùng cắt xén tràn lề thêm 8px giúp vòng hào quang `ring-2` không bao giờ bị cắt cụt viền.
 - **Footer**: `px-5 py-3.5 border-t border-[#ebeae8] bg-[#fcfbf9] rounded-b-lg flex justify-end gap-2.5`.
 - **Confirm Dialog**: Thiết kế tinh gọn, nút Xác nhận màu `#eb5757` (cho tác vụ Xóa/Nguy hiểm) hoặc `#2383e2` (cho tác vụ chuẩn).

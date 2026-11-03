@@ -10,7 +10,7 @@ export default function ModalFooter({ size, className = "", children, ...props }
 
   return (
     <div
-      className={`flex items-center justify-end w-full border-t border-neutral-100 pt-2 ${currentSize.footer} ${currentSize.buttonGap} ${className}`}
+      className={`flex items-center justify-end w-full shrink-0 border-t border-neutral-100 pt-2 ${currentSize.footer} ${currentSize.buttonGap} ${className}`}
       {...props}
     >
       {children}

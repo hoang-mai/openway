@@ -34,7 +34,7 @@ export default function ModalHeader({
 
   return (
     <div
-      className={`flex items-start justify-between w-full border-b border-neutral-100 pb-2 ${currentSize.header} ${className}`}
+      className={`flex items-start justify-between w-full shrink-0 border-b border-neutral-100 pb-2 ${currentSize.header} ${className}`}
       {...props}
     >
       <div className="flex-1 min-w-0 flex flex-col justify-center">
