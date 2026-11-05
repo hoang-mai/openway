@@ -346,7 +346,7 @@ Inherits HTML attributes `HTMLAttributes<HTMLDivElement>` except `onChange`:
 | `fullWidth` | `boolean` | `false` | Stretches tabs equally to fill 100% width of container. |
 | `disabled` | `boolean` | `false` | Disables all tabs in the group. |
 | `destroyInactiveTabPane` | `boolean` | `false` | Unmounts content from DOM when tab is inactive. |
-| `animated` | `boolean` | `true` | Enables React `<ViewTransition>` animation when switching tab panels. |
+| `animated` | `boolean` | `true` | Enables React `<ViewTransition>` animation when switching tab panels. Always off inside a `Modal` or `Confirm`: their native `<dialog>` sits in the browser top layer, which View Transitions cannot snapshot. |
 | `children` | `ReactNode` | `undefined` | Child components (`<TabList>`, `<TabPanels>`). |
 | `className` | `string` | `""` | Custom CSS class for outer container. |
 | `ref` | `Ref<HTMLDivElement>` | `undefined` | Ref forwarded to Tabs container. |

@@ -1,5 +1,6 @@
 import { useState, ComponentProps } from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel, TabSize, TabVariant, TabColor, TabRadius } from "./index";
+import { Modal, ModalBody, ModalContainer } from "@/lib/modal";
 
 const HomeIcon = () => (
   <svg
@@ -734,5 +735,73 @@ describe("<Tabs /> Comprehensive Component Tests", () => {
       .find('button[aria-label="Scroll tabs right"]')
       .should("be.visible")
       .click();
+  });
+});
+
+// Tabs inside a Modal / Confirm (a native <dialog> in the top layer) must not run a View
+// Transition: the browser cannot snapshot top-layer content, so switching tabs broke.
+describe("<Tabs /> inside a Modal", () => {
+  function TabsShowcase() {
+    return (
+      <Tabs defaultActiveKey="overview">
+        <TabList>
+          <Tab value="overview" label="Overview" />
+          <Tab value="payload" label="Payload" />
+        </TabList>
+        <TabPanels>
+          <TabPanel value="overview">
+            <div data-testid="panel-overview">Overview content</div>
+          </TabPanel>
+          <TabPanel value="payload">
+            <div data-testid="panel-payload">Payload content</div>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    );
+  }
+
+  function spyOnViewTransition() {
+    cy.document().then((doc) => {
+      if (typeof doc.startViewTransition === "function") {
+        cy.spy(doc, "startViewTransition").as("startViewTransition");
+      } else {
+        cy.wrap(null).as("startViewTransition");
+      }
+    });
+  }
+
+  it("switches tabs inside a Modal without a View Transition", () => {
+    spyOnViewTransition();
+    cy.mount(
+      <ModalContainer open onClose={() => undefined}>
+        <Modal size="md">
+          <ModalBody>
+            <TabsShowcase />
+          </ModalBody>
+        </Modal>
+      </ModalContainer>
+    );
+
+    cy.get('[data-testid="panel-overview"]').should("be.visible");
+    cy.get('[role="tab"]').contains("Payload").click();
+    cy.get('[data-testid="panel-payload"]').should("be.visible");
+    cy.get('[data-testid="panel-overview"]').should("not.be.visible");
+    cy.get("dialog").should("have.prop", "open", true);
+
+    cy.get("@startViewTransition").then((spy) => {
+      if (spy) expect(spy).not.to.have.been.called;
+    });
+  });
+
+  it("keeps the View Transition for Tabs outside a Modal", () => {
+    spyOnViewTransition();
+    cy.mount(<TabsShowcase />);
+
+    cy.get('[role="tab"]').contains("Payload").click();
+    cy.get('[data-testid="panel-payload"]').should("be.visible");
+
+    cy.get("@startViewTransition").then((spy) => {
+      if (spy) expect(spy).to.have.been.called;
+    });
   });
 });
