@@ -1,6 +1,6 @@
 import { useState, ComponentProps } from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel, TabSize, TabVariant, TabColor, TabRadius } from "./index";
-import { Modal, ModalBody, ModalContainer } from "@/lib/modal";
+import { Modal, ModalBody, ModalClose, ModalContainer, ModalFooter, ModalHeader } from "@/lib/modal";
 
 const HomeIcon = () => (
   <svg
@@ -130,6 +130,107 @@ describe("<Tabs /> Comprehensive Component Tests", () => {
         </div>
       );
     }
+
+    // Section 10: Tabs inside a Modal (native <dialog> in the top layer). A tab change must
+    // animate only the panel; capturing the page root too made the modal fade and flicker.
+    function ModalTabsSection() {
+      const [open, setOpen] = useState(false);
+      return (
+        <div>
+          <button
+            type="button"
+            data-testid="btn-open-modal-tabs"
+            onClick={() => setOpen(true)}
+            style={{
+              padding: "8px 14px",
+              borderRadius: "8px",
+              border: "1px solid #2383e2",
+              background: "#2383e2",
+              color: "#ffffff",
+              fontSize: "13px",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            Mở Modal có Tabs
+          </button>
+
+          <ModalContainer open={open} onClose={() => setOpen(false)}>
+            <Modal size="md">
+              <ModalHeader title="Tabs trong Modal" description="Đổi tab: chỉ panel được animate, modal giữ nguyên." />
+              <ModalBody>
+                <Tabs defaultActiveKey="overview">
+                  <TabList>
+                    <Tab value="overview" label="Overview" />
+                    <Tab value="payload" label="Payload" />
+                    <Tab value="context" label="Workflow Context" />
+                  </TabList>
+                  <TabPanels>
+                    <TabPanel value="overview">
+                      <div data-testid="modal-panel-overview" style={{ fontSize: "13px", color: "#37352f" }}>
+                        Task ID, Queue, Status, Retry Count...
+                      </div>
+                    </TabPanel>
+                    <TabPanel value="payload">
+                      <pre
+                        data-testid="modal-panel-payload"
+                        style={{
+                          margin: 0,
+                          fontSize: "12px",
+                          background: "#f7f6f3",
+                          padding: "12px",
+                          borderRadius: "8px",
+                        }}
+                      >
+                        {JSON.stringify({ caseId: "0300970436", amount: 1500000, currency: "VND" }, null, 2)}
+                      </pre>
+                    </TabPanel>
+                    <TabPanel value="context">
+                      <div data-testid="modal-panel-context" style={{ fontSize: "13px", color: "#37352f" }}>
+                        workflowType: COPY · lifecycleState: WAITING_NAPAS_RESPONSE
+                      </div>
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </ModalBody>
+              <ModalFooter>
+                <ModalClose>
+                  <button
+                    type="button"
+                    data-testid="btn-close-modal-tabs"
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: "8px",
+                      border: "1px solid #d3d1cb",
+                      background: "#ffffff",
+                      fontSize: "13px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Đóng
+                  </button>
+                </ModalClose>
+              </ModalFooter>
+            </Modal>
+          </ModalContainer>
+        </div>
+      );
+    }
+
+    // Records the root's view-transition-name while each View Transition runs.
+    const rootNames: string[] = [];
+    cy.document().then((doc) => {
+      const start = doc.startViewTransition?.bind(doc);
+      if (!start) return;
+      doc.startViewTransition = ((arg: Parameters<typeof start>[0]) => {
+        const transition = start(arg);
+        transition.ready
+          .then(() => rootNames.push(getComputedStyle(doc.documentElement).viewTransitionName))
+          .catch(() => rootNames.push("skipped"));
+        return transition;
+      }) as typeof doc.startViewTransition;
+    });
+    const supportsViewTransition = () => cy.document().then((doc) => typeof doc.startViewTransition === "function");
 
     cy.mount(
       <div
@@ -645,6 +746,22 @@ describe("<Tabs /> Comprehensive Component Tests", () => {
             </Tabs>
           </div>
         </section>
+
+        {/* Section 10: Tabs inside a Modal (ViewTransition in the top layer) */}
+        <section
+          data-testid="section-modal"
+          style={{
+            background: "#ffffff",
+            padding: "20px",
+            borderRadius: "12px",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+          }}
+        >
+          <h2 style={{ fontSize: "16px", margin: "0 0 16px 0", color: "#325972" }}>
+            10. Tabs trong Modal (ViewTransition chỉ animate panel)
+          </h2>
+          <ModalTabsSection />
+        </section>
       </div>
     );
 
@@ -664,6 +781,7 @@ describe("<Tabs /> Comprehensive Component Tests", () => {
     cy.get('[data-testid="section-compound"]').should("exist");
     cy.get('[data-testid="section-interactive"]').should("exist");
     cy.get('[data-testid="section-scrollable"]').should("exist");
+    cy.get('[data-testid="section-modal"]').should("exist");
 
     // 1b. ViewTransition Rich Dashboard switching verification
     cy.get('[data-testid="vt-panel-dashboard"]').should("be.visible");
@@ -673,6 +791,11 @@ describe("<Tabs /> Comprehensive Component Tests", () => {
     cy.get('[data-testid="vt-panel-team"]').should("be.visible");
     cy.get('[data-testid="section-view-transition"]').contains('[role="tab"]', "Tổng quan kinh doanh").click();
     cy.get('[data-testid="vt-panel-dashboard"]').should("be.visible");
+
+    // 1c. Tab changes outside a Modal still run a View Transition
+    supportsViewTransition().then((supported) => {
+      if (supported) cy.wrap(rootNames).should("have.length.at.least", 1);
+    });
 
     // 2. Extra content rendering
     cy.get('[data-testid="btn-extra"]').should("be.visible").and("contain.text", "+ Thêm mới");
@@ -735,73 +858,29 @@ describe("<Tabs /> Comprehensive Component Tests", () => {
       .find('button[aria-label="Scroll tabs right"]')
       .should("be.visible")
       .click();
-  });
-});
 
-// Tabs inside a Modal / Confirm (a native <dialog> in the top layer) must not run a View
-// Transition: the browser cannot snapshot top-layer content, so switching tabs broke.
-describe("<Tabs /> inside a Modal", () => {
-  function TabsShowcase() {
-    return (
-      <Tabs defaultActiveKey="overview">
-        <TabList>
-          <Tab value="overview" label="Overview" />
-          <Tab value="payload" label="Payload" />
-        </TabList>
-        <TabPanels>
-          <TabPanel value="overview">
-            <div data-testid="panel-overview">Overview content</div>
-          </TabPanel>
-          <TabPanel value="payload">
-            <div data-testid="panel-payload">Payload content</div>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    );
-  }
-
-  function spyOnViewTransition() {
-    cy.document().then((doc) => {
-      if (typeof doc.startViewTransition === "function") {
-        cy.spy(doc, "startViewTransition").as("startViewTransition");
-      } else {
-        cy.wrap(null).as("startViewTransition");
-      }
+    // 11. Tabs inside a Modal: switch with a View Transition that leaves the page root out
+    cy.then(() => {
+      rootNames.length = 0;
     });
-  }
+    cy.get('[data-testid="btn-open-modal-tabs"]').click();
+    cy.get("dialog").should("have.prop", "open", true);
+    cy.get('[data-testid="modal-panel-overview"]').should("be.visible");
 
-  it("switches tabs inside a Modal without a View Transition", () => {
-    spyOnViewTransition();
-    cy.mount(
-      <ModalContainer open onClose={() => undefined}>
-        <Modal size="md">
-          <ModalBody>
-            <TabsShowcase />
-          </ModalBody>
-        </Modal>
-      </ModalContainer>
-    );
-
-    cy.get('[data-testid="panel-overview"]').should("be.visible");
-    cy.get('[role="tab"]').contains("Payload").click();
-    cy.get('[data-testid="panel-payload"]').should("be.visible");
-    cy.get('[data-testid="panel-overview"]').should("not.be.visible");
+    cy.get("dialog").contains('[role="tab"]', "Payload").click();
+    cy.get('[data-testid="modal-panel-payload"]').should("be.visible");
+    cy.get('[data-testid="modal-panel-overview"]').should("not.be.visible");
+    cy.get("dialog").contains('[role="tab"]', "Workflow Context").click();
+    cy.get('[data-testid="modal-panel-context"]').should("be.visible");
     cy.get("dialog").should("have.prop", "open", true);
 
-    cy.get("@startViewTransition").then((spy) => {
-      if (spy) expect(spy).not.to.have.been.called;
+    supportsViewTransition().then((supported) => {
+      if (!supported) return;
+      cy.wrap(rootNames).should("have.length.at.least", 2);
+      cy.wrap(rootNames).each((name) => expect(name).to.equal("none"));
     });
-  });
 
-  it("keeps the View Transition for Tabs outside a Modal", () => {
-    spyOnViewTransition();
-    cy.mount(<TabsShowcase />);
-
-    cy.get('[role="tab"]').contains("Payload").click();
-    cy.get('[data-testid="panel-payload"]').should("be.visible");
-
-    cy.get("@startViewTransition").then((spy) => {
-      if (spy) expect(spy).to.have.been.called;
-    });
+    cy.get('[data-testid="btn-close-modal-tabs"]').click();
+    cy.get("dialog").should("not.exist");
   });
 });

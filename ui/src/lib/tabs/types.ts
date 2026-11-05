@@ -140,8 +140,7 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChang
 
   /**
    * Bật/tắt hiệu ứng chuyển cảnh `<ViewTransition>` của React khi chuyển đổi giữa các tab panels.
-   * Luôn tắt khi Tabs nằm trong `Modal` / `Confirm`: `<dialog>` của chúng ở top layer của trình duyệt,
-   * View Transition không chụp được nội dung ở đó nên chuyển tab bị lỗi.
+   * Chỉ panel được animate (không chụp cả trang), nên dùng được cả trong `Modal` / `Confirm`.
    * @default true
    */
   animated?: boolean;

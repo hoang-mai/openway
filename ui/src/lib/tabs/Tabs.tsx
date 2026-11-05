@@ -1,7 +1,6 @@
 import { useState, useMemo, useCallback, startTransition, addTransitionType } from "react";
 import { TabsProps } from "./types";
 import { TabsContext } from "./context";
-import { usePortalRootContext } from "@/lib/portal/PortalRootContext";
 import { cn } from "cn";
 
 export default function Tabs({
@@ -29,14 +28,11 @@ export default function Tabs({
 
   const currentActiveKey = isControlled ? activeKeyProp : internalActiveKey;
 
-  const isInsideDialog = usePortalRootContext() !== null;
-  const canAnimate = animated && !isInsideDialog;
-
   const handleActiveKeyChange = useCallback(
     (key: string | number) => {
       if (key === currentActiveKey) return;
 
-      if (canAnimate) {
+      if (animated) {
         startTransition(() => {
           addTransitionType("tab-change");
           if (!isControlled) {
@@ -51,7 +47,7 @@ export default function Tabs({
         onChange?.(key);
       }
     },
-    [canAnimate, currentActiveKey, isControlled, onChange]
+    [animated, currentActiveKey, isControlled, onChange]
   );
 
   const handleClose = useCallback(
@@ -74,7 +70,7 @@ export default function Tabs({
       fullWidth,
       disabled,
       destroyInactiveTabPane,
-      animated: canAnimate,
+      animated,
       onCloseTab: handleClose,
     }),
     [
@@ -89,7 +85,7 @@ export default function Tabs({
       fullWidth,
       disabled,
       destroyInactiveTabPane,
-      canAnimate,
+      animated,
       handleClose,
     ]
   );

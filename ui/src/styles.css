@@ -766,6 +766,15 @@ dialog::backdrop {
   animation: tableSubrowFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/*
+ * Tabs: a tab change animates only the tab panel, not the whole page.
+ * Capturing the root also crossfades a snapshot of the page that misses top-layer
+ * content, so Tabs inside a Modal / Confirm (<dialog>) faded and flickered.
+ */
+:root:active-view-transition-type(tab-change) {
+  view-transition-name: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(*),
   ::view-transition-new(*),
